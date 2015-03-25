@@ -1,0 +1,101 @@
+/* app css stylesheet */
+
+body {
+  display:none;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  background-color: #61030A;
+  color: #fff;
+  padding: 0px 100px;
+}
+
+header h1 {
+  margin-top: 0px;
+  padding-top: 12px;
+}
+
+footer {
+  font-size: .8em;
+  padding: 0 2%;
+}
+
+button {
+  margin: 10px;
+  text-transform: capitalize;
+}
+
+label {
+  padding: 8px;
+}
+
+.container {
+  margin: 0 10%;
+  padding: 0 5%;
+}
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+.table > tbody > tr.highlight {
+  background-color: #99D6AD;
+}
+
+#adminModal {
+  display:none;
+}
+
+#adminAssumer {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+.table > tbody > tr td.loading {
+    background-image: url("../images/loader.gif");
+    background-size: 28px auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.table > tbody > tr td span {
+  padding: 6 12px;
+}
+
+.table > tbody > tr td.loading btn.btn {
+  display: none;
+}
+
+.table > tbody > tr td.renewed span {
+  display: inline-block;
+}

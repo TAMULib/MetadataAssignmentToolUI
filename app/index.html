@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myLibrary" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myLibrary" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myLibrary" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<base href="/seed/">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>My Library :: Texas A&amp;M Libraries</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
+
+	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+	
+	<link rel="stylesheet" href="resources/styles/app.css">
+	<link rel="stylesheet" href="resources/styles/main.css">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+	
+</head>
+<body>
+	<!--[if lt IE 7]>
+    	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+
+	<!-- Content placed here will appear on every pager -->
+
+	<h1> Welcome: <username><username> </h1>
+
+	<div ng-view></div>
+
+
+	<footer style="margin-left:20px;">
+		MySeedApp Version: <span app-version></span>
+	</footer>
+
+
+	<!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
+
+	
+	<!-- Bower component -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-loader/angular-loader.js"></script>
+	<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+	
+	
+	<!-- Modules -->
+	<script src="components/version/version.js"></script>
+	<script src="components/version/version-directive.js"></script>
+	<script src="components/version/interpolate-filter.js"></script>
+	
+	
+	<!-- build:js resources/scripts/vendor_concat.js -->
+	<!--  Vendor libraries -->
+	<script src="resources/scripts/vendor/stomp.js"></script>
+	<script src="resources/scripts/vendor/sockjs-0.3.4.js"></script>
+
+	<!-- endbuild -->
+	
+
+	<!-- build:js resources/scripts/app_concat.js -->
+	
+    <!-- Configuration -->
+    <script src="config/appConfig.js"></script>
+
+    <!-- Application Start -->
+    <script src="setup.js"></script>
+    <script src="app.js"></script>
+    <script src="config/logging.js"></script>
+    <script src="config/runTime.js"></script>
+    <script src="config/routes.js"></script>
+
+    <!-- Directives -->
+    <script src="directives/userDirective.js"></script>
+
+    <!-- Services -->
+    <script src="services/wsservice.js"></script>
+    <script src="services/mylibrarywsapi.js"></script>
+  	<script src="services/authserviceapi.js"></script>
+
+    <!-- Factories -->
+
+    <!-- Models -->
+    <script src="model/abstractModel.js"></script>
+    <script src="model/userModel.js"></script>
+
+    <!-- Controllers -->
+    <script src="controllers/userController.js"></script>
+    <script src="controllers/adminController.js"></script>
+    
+    <!-- endbuild -->
+
+	
+	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+	<script>
+		(function(b, o, i, l, e, r) {
+			b.GoogleAnalyticsObject = l;
+			b[l] || (b[l] = function() {
+				(b[l].q = b[l].q || []).push(arguments)
+			});
+			b[l].l = +new Date;
+			e = o.createElement(i);
+			r = o.getElementsByTagName(i)[0];
+			e.src = '//www.google-analytics.com/analytics.js';
+			r.parentNode.insertBefore(e, r)
+		}(window, document, 'script', 'ga'));
+		ga('create', 'UA-XXXXX-X');
+		ga('send', 'pageview');
+	</script>
+
+	
+</body>
+</html>
