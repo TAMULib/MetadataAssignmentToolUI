@@ -28,9 +28,13 @@
     	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 
-	<!-- Content placed here will appear on every pager -->
+	<!-- Content placed here will appear on every page -->
+	
+	<a href="/seed">Home</a>
+	
+	<div ng-controller="AdminController"><a ng-show="admin" ng-if="isMocking()==false" href="admin">Admin</a></div>
 
-	<h1> Welcome: <username><username> </h1>
+	<h1> Welcome: <username></username> </h1>
 
 	<div ng-view></div>
 
