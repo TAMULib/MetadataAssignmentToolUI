@@ -17,7 +17,8 @@ myLibrary.service("AuthServiceApi",function($http, $timeout) {
 					$timeout(function() {
 						AuthServiceApi.pendingAssumptions[assume.netid] = null;
 					});
-					if(cb) cb();    
+					if(cb) cb();
+					return response;   
 			});
 		}
 		return AuthServiceApi.pendingAssumptions[assume.netid];
