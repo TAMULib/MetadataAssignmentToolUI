@@ -24,3 +24,12 @@ myLibrary.directive('useruin', function () {
 		controller: 'UserController'
 	};
 });
+
+myLibrary.directive('userrole', function () {
+	return {
+		template: '<span>{{user.role}}</span>',
+		restrict: 'E',
+		scope:true,
+		controller: 'UserController'
+	};
+});
