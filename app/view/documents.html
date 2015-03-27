@@ -1,0 +1,36 @@
+
+<p>DOCUMENTS</p>
+
+<a href="index">Index</a>
+
+<a href="myview">My View</a>
+
+
+<div class="row">
+	<div class="col-9 col-lg-9">
+		<div class="panel panel-default " ng-controller="DocumentController">			
+			<div class="panel-heading">
+				<h3 class="panel-title">Documents</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>FileName</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="doc in documents">
+						<tr>
+							<td>{{doc.id}}</td>
+							<td>{{doc.filename}}</td>
+							<td>{{doc.status}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+	
