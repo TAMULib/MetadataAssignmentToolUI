@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" ng-app="myLibrary" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-	<base href="/seed/">
+	<base href="/metadatatool/">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>My Library :: Texas A&amp;M Libraries</title>
@@ -30,7 +30,7 @@
 
 	<!-- Content placed here will appear on every page -->
 	
-	<a href="/seed">Home</a>
+	<a href="/metadatatool">Home</a>
 	
 	<div ng-controller="AdminController"><a ng-show="admin" ng-if="isMocking()==false" href="admin">Admin</a></div>
 
@@ -39,7 +39,7 @@
 	<div ng-view></div>
 
 
-	<footer style="margin-left:20px;">
+	<footer>
 		MySeedApp Version: <span app-version></span>
 	</footer>
 
@@ -96,10 +96,12 @@
     <!-- Models -->
     <script src="model/abstractModel.js"></script>
     <script src="model/userModel.js"></script>
+    <script src="model/documentModel.js"></script>
 
     <!-- Controllers -->
     <script src="controllers/userController.js"></script>
     <script src="controllers/adminController.js"></script>
+    <script src="controllers/documentController.js"></script>
     
     <!-- endbuild -->
 
