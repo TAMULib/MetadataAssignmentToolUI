@@ -1,15 +1,15 @@
 
 describe('model: User', function() {
 	
-	var User, MyLibraryWsApi;
+	var User, WsApi;
 	
-	beforeEach(module('myLibrary'));
+	beforeEach(module('metadataTool'));
 	
-	beforeEach(module('mock.myLibraryWsApi'));
+	beforeEach(module('mock.wsApi'));
 	
-	beforeEach(inject(function(_User_, _MyLibraryWsApi_) {
+	beforeEach(inject(function(_User_, _WsApi_) {
         User = _User_;
-        MyLibraryWsApi = _MyLibraryWsApi_; 
+        WsApi = _WsApi_; 
     }));
 
 	describe('model is defined', function() {

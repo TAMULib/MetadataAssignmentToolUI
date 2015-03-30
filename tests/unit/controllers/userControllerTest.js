@@ -3,7 +3,7 @@ describe('controller: UserController', function() {
 	
 	var controller, scope, User;
 
-	beforeEach(module('myLibrary'));
+	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.user'));
 	

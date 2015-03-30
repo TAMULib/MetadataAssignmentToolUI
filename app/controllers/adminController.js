@@ -1,4 +1,4 @@
-myLibrary.controller('AdminController', function ($scope, $http, User, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $http, User, AuthServiceApi) {
 
 	$scope.user = User.get();
 	

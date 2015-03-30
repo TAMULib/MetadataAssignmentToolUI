@@ -1,4 +1,4 @@
-myLibrary.service("AuthServiceApi",function($http, $timeout) {
+metadataTool.service("AuthServiceApi",function($http, $timeout) {
 
 	var AuthServiceApi = this;
 
