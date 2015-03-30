@@ -1,4 +1,4 @@
-myLibrary.service("AbstractModel", function () {
+metadataTool.service("AbstractModel", function () {
 
 	var AbstractModel = function(data) {
 		angular.extend(this, data);

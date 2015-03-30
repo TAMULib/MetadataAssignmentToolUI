@@ -1,9 +1,9 @@
-var myLibrary = angular.module('myLibrary', 
+var metadataTool = angular.module('metadataTool', 
 		[
 		 'ngRoute',
 		 'myLibrary.version'
 		 ]).constant('globalConfig',globalConfig);
 
 setUpApp(function() {
-	angular.bootstrap(document, ['myLibrary']);
+	angular.bootstrap(document, ['metadataTool']);
 });

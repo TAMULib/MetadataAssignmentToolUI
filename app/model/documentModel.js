@@ -1,4 +1,4 @@
-myLibrary.service("Document", function(MyLibraryWsApi, AbstractModel) {
+metadataTool.service("Document", function(WsApi, AbstractModel) {
 
 	var self;
 
@@ -22,7 +22,7 @@ myLibrary.service("Document", function(MyLibraryWsApi, AbstractModel) {
 
 		if(Document.data && !action) return Document.data;
 
-		var newDocumentPromise = MyLibraryWsApi.fetch({
+		var newDocumentPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'document', 
 				method: 'all',

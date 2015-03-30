@@ -1,4 +1,4 @@
-myLibrary.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 	$routeProvider.
 		when('/documents', {
@@ -11,6 +11,6 @@ myLibrary.config(['$routeProvider', '$locationProvider', function($routeProvider
 			templateUrl: 'view/admin.html'
 		}).
 		otherwise({redirectTo: '/',
-			templateUrl: 'view/index.html'
+			templateUrl: 'view/home.html'
 		});
 }]);

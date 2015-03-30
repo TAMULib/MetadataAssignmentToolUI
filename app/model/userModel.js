@@ -1,4 +1,4 @@
-myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
+metadataTool.service("User", function(WsApi, AbstractModel) {
 
 	var self;
 
@@ -22,7 +22,7 @@ myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
 
 		if(User.data && !action) return User.data;
 
-		var newUserPromise = MyLibraryWsApi.fetch({
+		var newUserPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'user', 
 				method: 'credentials',
