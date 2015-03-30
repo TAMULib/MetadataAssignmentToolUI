@@ -25,7 +25,7 @@ metadataTool.directive('useruin', function () {
 	};
 });
 
-myLibrary.directive('userrole', function () {
+metadataTool.directive('userrole', function () {
 	return {
 		template: '<span>{{user.role}}</span>',
 		restrict: 'E',

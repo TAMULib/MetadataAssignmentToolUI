@@ -11,7 +11,7 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 		self.unwrap(self, futureData, "Credentials");
 		
 	};
-
+	
 	User.data = null;
 	
 	User.set = function(data) {
@@ -30,7 +30,6 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 
 		if(action) {
 			newUserPromise.then(function(data) {
-				console.log("Inside Promise");
 				User.set(JSON.parse(data.body).content.Credentials);
 			});
 		}
@@ -41,7 +40,7 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 		return User.data;
 	
 	};
-		
+
 	return User;
 	
 });

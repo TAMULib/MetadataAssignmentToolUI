@@ -30,14 +30,23 @@
 
 	<!-- Content placed here will appear on every page -->
 	
-	<a href="/metadatatool">Home</a>
+	<div ng-controller="AdminController">
 	
-	<div ng-controller="AdminController"><a ng-show="admin" ng-if="isMocking()==false" href="admin">Admin</a></div>
+		<a ng-show="isAdmin()" ng-if="isMocking()==false" href="admin">Admin</a>
 
-	<h1> Welcome: <username></username> </h1>
+		<h1> Welcome: <username></username> </h1>
+		
+		<a href="home">Home</a> |
 
+		<a href="myview">My View</a> |
+
+		<a href="documents">Documents</a> |
+
+		<a href="users" ng-if="isAdmin() || isManager()">Users</a>
+
+	</div>
+	
 	<div ng-view></div>
-
 
 	<footer>
 		MySeedApp Version: <span app-version></span>
@@ -96,6 +105,7 @@
     <!-- Models -->
     <script src="model/abstractModel.js"></script>
     <script src="model/userModel.js"></script>
+    <script src="model/userRepoModel.js"></script>
     <script src="model/documentModel.js"></script>
 
     <!-- Controllers -->
