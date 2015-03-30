@@ -1,6 +1,8 @@
-metadataTool.controller('AdminController', function ($scope, $http, User, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $http, User, UserRepo, AuthServiceApi) {
 
 	$scope.user = User.get();
+	
+	$scope.users = UserRepo.get();
 	
 	$scope.showModal = false;
 
@@ -19,7 +21,21 @@ metadataTool.controller('AdminController', function ($scope, $http, User, AuthSe
 			$scope.admin = false;
 		}
 	});
-
+	
+	$scope.isAdmin = function() {
+		if(sessionStorage.role == "ROLE_ADMIN") {
+			return true;
+		}
+		return false;
+	}
+	
+	$scope.isManager = function() {
+		if(sessionStorage.role == "ROLE_MANAGER") {
+			return true;
+		}
+		return false;
+	}
+	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
 			return true;
@@ -27,9 +43,9 @@ metadataTool.controller('AdminController', function ($scope, $http, User, AuthSe
 		else {
 			return false;
 		}
-	}
+	};
 
-	$scope.assumeUser = function(assume) {		
+	$scope.assumeUser = function(assume) {
 		
 		if(!sessionStorage.assumedUser) {
 			if ((typeof assume !== 'undefined') && assume.netid) {				
