@@ -14,14 +14,20 @@
 							<th>FirstName</th>
 							<th>LastName</th>
 							<th>Role</th>
+							<th>Change Role To</th>
 						</tr>
 					</thead>
-					<tbody ng-repeat="user in users">
-						<tr>
+					<tbody>
+						<tr ng-repeat="user in userRepo">
 							<td>{{user.uin}}</td>
 							<td>{{user.firstName}}</td>
 							<td>{{user.lastName}}</td>
 							<td>{{user.role}}</td>
+							<td>
+								<select ng-if="user.uin && (isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" >
+									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
+								</select>
+							</td>
 						</tr>
 					</tbody>
 				</table>

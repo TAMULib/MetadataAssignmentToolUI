@@ -2,10 +2,10 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 
 	$scope.user = User.get();
 	
-	$scope.users = UserRepo.get();
+	$scope.userRepo = UserRepo.get();
 	
 	$scope.showModal = false;
-
+	
 	if(sessionStorage.assumedUser) {
 		$scope.assume = JSON.parse(sessionStorage.assumedUser);
 		$scope.assumeBtn = 'Unassume';
@@ -13,14 +13,37 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		$scope.assumeBtn = 'Assume';
 	}
 	
-	$scope.$watch('user.role', function() {
+	$scope.$watch('user.role', function() {		
 		sessionStorage.role = $scope.user.role;
-		if ($scope.user.role == 'ROLE_ADMIN') {						
+		if ($scope.user.role == 'ROLE_ADMIN') {
 			$scope.admin = true;
-		} else {
+		} 
+		else if ($scope.user.role == 'ROLE_MANAGER') {
 			$scope.admin = false;
 		}
+		else {
+			$scope.admin = false;
+		}		
 	});
+	
+	$scope.allowableRoles = function(userRole) {
+		if(sessionStorage.role == 'ROLE_ADMIN') {
+			return ['ROLE_ADMIN','ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
+		}
+		else if(sessionStorage.role == 'ROLE_MANAGER') {
+			if(userRole == 'ROLE_ADMIN') {
+				return ['ROLE_ADMIN'];
+			}
+			return ['ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
+		}
+		else {
+			return [userRole];
+		}
+	}
+
+	$scope.updateRole = function(uin, role) {
+		UserRepo.updateRole(uin, role);
+	}
 	
 	$scope.isAdmin = function() {
 		if(sessionStorage.role == "ROLE_ADMIN") {
