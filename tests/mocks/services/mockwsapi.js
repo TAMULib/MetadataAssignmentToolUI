@@ -20,6 +20,10 @@ angular.module('mock.wsApi', []).
 	        			return {'content':{}};
 	        		}
 	        	}
+	        	case 'update_role': {	        		
+	        		mockUserRepo1['HashMap'][2].role = JSON.parse(apiReq['data']).role;
+	        		return mockUserRepo1;
+	        	}
 	        	default: return {'content':{}};
         	}
         	            
