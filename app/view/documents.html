@@ -27,7 +27,7 @@
 							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true && availableAnnotators().length == 0">
 								No Annotators
 							</td>
-							<td ng-if="(isAdmin() || isManager()) == false && !doc.annotator">
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == false">
 								<button ng-click="updateAnnotator(doc.filename)">
 									Claim
 								</button>
