@@ -12,12 +12,27 @@
 						<tr>
 							<th>FileName</th>
 							<th>Status</th>
+							<th>Annotator</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="doc in documents">
+						<tr ng-repeat="doc in documents.list track by doc.filename">
 							<td>{{doc.filename}}</td>
 							<td>{{doc.status}}</td>
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true && availableAnnotators().length > 0">							
+								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, doc.annotator)" >
+									<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
+								</select>
+							</td>
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true && availableAnnotators().length == 0">
+								No Annotators
+							</td>
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == false">
+								<button ng-click="updateAnnotator(doc.filename)">
+									Claim
+								</button>
+							</td>
+							<td ng-if="doc.annotator">{{doc.annotator}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -25,6 +40,3 @@
 		</div>
 	</div>
 </div>
-
-
-	
