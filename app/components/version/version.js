@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myLibrary.version', [
-  'myLibrary.version.interpolate-filter',
-  'myLibrary.version.version-directive'
+angular.module('metadataTool.version', [
+  'metadataTool.version.interpolate-filter',
+  'metadataTool.version.version-directive'
 ])
 
 .value('version', '0.1');
