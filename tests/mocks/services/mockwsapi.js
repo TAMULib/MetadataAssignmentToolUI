@@ -14,11 +14,19 @@ angular.module('mock.wsApi', []).
 	        			return {'content':mockUserRepo1};
 	        		}
 	        		else if(apiReq.controller == 'document') {
-	        			return {'content':mockDocument1};
+	        			return {'content':mockDocumentRepo1};
         			}
 	        		else {
 	        			return {'content':{}};
 	        		}
+	        	}
+	        	case 'update_role': {	        		
+	        		mockUserRepo1['HashMap'][2].role = JSON.parse(apiReq['data']).role;
+	        		return mockUserRepo1;
+	        	}
+	        	case 'update_annotator': {	        		
+	        		mockDocumentRepo1['HashMap'].annatator = JSON.parse(apiReq['data']).annotator;
+	        		return mockDocumentRepo1;
 	        	}
 	        	default: return {'content':{}};
         	}

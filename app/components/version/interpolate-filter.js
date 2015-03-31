@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myLibrary.version.interpolate-filter', [])
+angular.module('metadataTool.version.interpolate-filter', [])
 
 .filter('interpolate', ['version', function(version) {
   return function(text) {

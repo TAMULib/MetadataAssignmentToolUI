@@ -41,15 +41,17 @@
 		<a href="myview">My View</a> |
 
 		<a href="documents">Documents</a> |
+		
+		<a href="assignments" ng-if="(isAdmin() || isManager()) == false">My Assigned Documents</a> | 
 
-		<a href="users" ng-if="isAdmin() || isManager()">Users</a>
+		<a href="users" ng-if="(isAdmin() || isManager()) == true">Users</a>
 
 	</div>
 	
 	<div ng-view></div>
 
 	<footer>
-		MySeedApp Version: <span app-version></span>
+		MetadataTool Version: <span app-version></span>
 	</footer>
 
 
@@ -106,7 +108,7 @@
     <script src="model/abstractModel.js"></script>
     <script src="model/userModel.js"></script>
     <script src="model/userRepoModel.js"></script>
-    <script src="model/documentModel.js"></script>
+    <script src="model/documentRepoModel.js"></script>
 
     <!-- Controllers -->
     <script src="controllers/userController.js"></script>

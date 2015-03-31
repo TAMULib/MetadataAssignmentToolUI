@@ -4,6 +4,9 @@ metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvi
 		when('/users', {
 			templateUrl: 'view/users.html'
 		}).
+		when('/assignments', {
+			templateUrl: 'view/assignments.html'
+		}).
 		when('/documents', {
 			templateUrl: 'view/documents.html'
 		}).
