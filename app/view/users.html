@@ -15,6 +15,7 @@
 							<th>LastName</th>
 							<th>Role</th>
 							<th>Change Role To</th>
+							<th ng-if="(isAdmin() || isManager())">Assignments</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -28,10 +29,52 @@
 									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
 								</select>
 							</td>
+							<td ng-if="(isAdmin() || isManager())">
+								<button ng-if="user.role == 'ROLE_ANNOTATOR'" ng-click="showAssignmentsModal(user)">
+									View Assignments
+								</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			
+			<modal id="assignmentsModal" title="Assigned Documents" visible="showModal" style="display:none;">
+				<div class="row">
+					<div class="col-9 col-lg-9">
+						<div class="panel panel-default " ng-controller="DocumentController">			
+							<div class="panel-heading">
+								<h3 class="panel-title">Documents Assigned to {{selectedUser.firstName}} {{selectedUser.lastName}}</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-hover table-condensed">
+									<thead>
+										<tr>
+											<th>FileName</th>
+											<th>Status</th>
+											<th>Unnassign</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+										<tr ng-if="isAdmin() || isManager()" ng-repeat="doc in documents.list track by doc.filename">
+											<td ng-if="doc.annotator == selectedUser.uin">{{doc.filename}}</td>
+											<td ng-if="doc.annotator == selectedUser.uin">{{doc.status}}</td>	
+											<td ng-if="doc.annotator == selectedUser.uin">
+												<button ng-click="updateAnnotator(doc.filename, selectedUser.uin, 'Unassigned')">
+													Unassign
+												</button>
+											</td>									
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</modal>
+			
 		</div>
 	</div>
 </div>

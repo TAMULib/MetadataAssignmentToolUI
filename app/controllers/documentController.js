@@ -42,25 +42,25 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 		return annotators;
 	};
 	
-	$scope.updateAnnotator = function(filename, annotator) {
+	$scope.updateAnnotator = function(filename, annotator, status) {
 		if(!annotator) {
 			annotator = User.get();
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		DocumentRepo.updateAnnotator(filename, annotator.uin);
+		DocumentRepo.updateAnnotator(filename, annotator.uin, status);
 		
 		for(var key in $scope.documents.list) {
 			var doc = $scope.documents.list[key];
 			if(doc.filename == filename) {
 				console.log($scope.documents.list[key]);
-				$scope.documents.list[key].status = "Assigned";
+				$scope.documents.list[key].status = status;
 			}
 		}
 		
 	};
-	
+		
 	$scope.isAssignedToMe = function(annotator) {
 		return (annotator == user.uin);
 	}

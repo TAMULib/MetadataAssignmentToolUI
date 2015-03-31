@@ -41,10 +41,11 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	
 	};
 	
-	Documents.updateAnnotator = function(filename, uin) {
+	Documents.updateAnnotator = function(filename, uin, status) {
 		var change = {
 			'filename': filename,
-			'uin': uin
+			'uin': uin,
+			'status': status
 		};
 		
 		var updateUserRolePromise = WsApi.fetch({

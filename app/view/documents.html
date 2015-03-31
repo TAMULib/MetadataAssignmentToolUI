@@ -32,7 +32,7 @@
 							<td>{{doc.filename}}</td>
 							<td>{{doc.status}}</td>
 							<td ng-if="!doc.annotator && availableAnnotators().length > 0">							
-								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, doc.annotator)" >
+								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, doc.annotator, 'Assigned')" >
 									<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
 								</select>
 							</td>
