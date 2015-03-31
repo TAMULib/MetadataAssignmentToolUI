@@ -31,5 +31,14 @@ describe('model: UserRepo', function() {
 			expect(userRepo.content).toEqual(mockUserRepo2);
 		});
 	});
-
+	
+	describe('update method should udpate a user in the UserRepo', function() {
+		it('the user was updated in the UserRepo', function() {
+			var userRepo = UserRepo.get();			
+			UserRepo.updateRole("192837465","ROLE_MANAGER");			
+			userRepo.content['HashMap'][2].role = "ROLE_MANAGER";			
+			expect(userRepo.content).toEqual(mockUserRepo1);
+		});
+	});
+	
 });

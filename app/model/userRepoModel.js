@@ -46,17 +46,14 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel) {
 			'uin': uin,
 			'role': role
 		};
+		
 		var updateUserRolePromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'user', 
 			method: 'update_role',
 			data: JSON.stringify(change)
 		});
-		
-		updateUserRolePromise.then(function(data) {
-			console.log(data);
-		});
-		
+				
 	}
 	
 	return Users;

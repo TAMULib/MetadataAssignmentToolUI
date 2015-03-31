@@ -39,7 +39,7 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		else {
 			return [userRole];
 		}
-	}
+	};
 
 	$scope.updateRole = function(uin, role) {
 		UserRepo.updateRole(uin, role);
@@ -50,14 +50,14 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 			return true;
 		}
 		return false;
-	}
+	};
 	
 	$scope.isManager = function() {
 		if(sessionStorage.role == "ROLE_MANAGER") {
 			return true;
 		}
 		return false;
-	}
+	};
 	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
