@@ -19,10 +19,13 @@
 						<tr ng-repeat="doc in documents.list track by doc.filename">
 							<td>{{doc.filename}}</td>
 							<td>{{doc.status}}</td>
-							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true">
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true && availableAnnotators().length > 0">							
 								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, doc.annotator)" >
 									<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
 								</select>
+							</td>
+							<td ng-if="!doc.annotator && (isAdmin() || isManager()) == true && availableAnnotators().length == 0">
+								No Annotators
 							</td>
 							<td ng-if="(isAdmin() || isManager()) == false && !doc.annotator">
 								<button ng-click="updateAnnotator(doc.filename)">

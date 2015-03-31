@@ -29,7 +29,7 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 					annotators.push(user);
 				}
 			}
-		}		
+		}
 		return annotators;
 	};
 	
