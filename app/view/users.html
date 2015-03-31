@@ -18,13 +18,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="user in userRepo">
+						<tr ng-repeat="user in userRepo.list track by user.uin">
 							<td>{{user.uin}}</td>
 							<td>{{user.firstName}}</td>
 							<td>{{user.lastName}}</td>
 							<td>{{user.role}}</td>
 							<td>
-								<select ng-if="user.uin && (isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" >
+								<select ng-if="(isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" >
 									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
 								</select>
 							</td>
