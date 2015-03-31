@@ -2,6 +2,8 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 
 	var userRepo;
 	
+	var user = User.get();
+	
 	var annotators = [];
 	
 	$scope.documents = DocumentRepo.get();
@@ -15,6 +17,13 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 	
 	$scope.isManager = function() {
 		if(sessionStorage.role == "ROLE_MANAGER") {
+			return true;
+		}
+		return false;
+	};
+	
+	$scope.isAnnotator = function() {
+		if(sessionStorage.role == "ROLE_ANNOTATOR") {
 			return true;
 		}
 		return false;
@@ -52,8 +61,8 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 		
 	};
 	
-	$scope.test = function() {
-		return "claim";
+	$scope.isAssignedToMe = function(annotator) {
+		return (annotator == user.uin);
 	}
 	
 });

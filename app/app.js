@@ -1,7 +1,7 @@
 var metadataTool = angular.module('metadataTool', 
 		[
 		 'ngRoute',
-		 'myLibrary.version'
+		 'metadataTool.version'
 		 ]).constant('globalConfig',globalConfig);
 
 setUpApp(function() {
