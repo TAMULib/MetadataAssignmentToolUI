@@ -1,19 +1,25 @@
 
 describe('controller: DocumentController', function() {
 	
-	var controller, scope, DocumentRepo;
+	var controller, scope, DocumentRepo, User, UserRepo;
 
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.documentRepo'));
+	beforeEach(module('mock.user'));
+	beforeEach(module('mock.userRepo'));
 	
-	beforeEach(inject(function($controller, $rootScope, _DocumentRepo_) {
+	beforeEach(inject(function($controller, $rootScope, _DocumentRepo_, _User_, _UserRepo_) {
         scope = $rootScope.$new(); 
         controller = $controller('DocumentController', {
             $scope: scope,
-            DocumentRepo: _DocumentRepo_
+            DocumentRepo: _DocumentRepo_,
+            User: _User_,
+            UserRepo: _UserRepo_
         });
         DocumentRepo = _DocumentRepo_; 
+        User = _User_;
+        UserRepo = _UserRepo_;
     }));
 
 	describe('Is the controller defined', function() {
