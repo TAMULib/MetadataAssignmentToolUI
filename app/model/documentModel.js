@@ -27,15 +27,11 @@ metadataTool.service("Document", function(WsApi, AbstractModel) {
 				data: JSON.stringify({'filename': filename})
 		});
 
-		
-		delete Document.data;
 		Document.data = new Document(newDocumentPromise);	
 		
 		return Document.data;
 	
 	};
-	
-	
 		
 	return Document;
 	
