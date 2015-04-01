@@ -1,7 +1,7 @@
 'use strict';
 
 describe('metadataTool.version module', function() {
-  beforeEach(module('myLibrary.version'));
+  beforeEach(module('metadataTool.version'));
 
   describe('interpolate filter', function() {
     beforeEach(module(function($provide) {

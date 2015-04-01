@@ -12,14 +12,14 @@
 						<tr>
 							<th>FileName</th>
 							<th>Status</th>
-							<th>Annotator</th>
+							<th>Annotate Document</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="doc in documents.list track by doc.filename">
 							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.filename}}</td>
-							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.status}}</td>							
-							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.annotator}}</td>
+							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.status}}</td>
+							<td ng-if="isAssignedToMe(doc.annotator)"><a href="annotate/{{doc.filename}}">Annotate</a></td>
 						</tr>
 					</tbody>
 				</table>

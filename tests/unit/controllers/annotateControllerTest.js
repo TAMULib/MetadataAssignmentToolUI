@@ -1,25 +1,21 @@
 
-describe('controller: DocumentController', function() {
+describe('controller: AnnotateController', function() {
 	
-	var controller, scope, DocumentRepo, User, UserRepo;
+	var controller, scope, routeParams, Document;
 
 	beforeEach(module('metadataTool'));
 	
-	beforeEach(module('mock.documentRepo'));
-	beforeEach(module('mock.user'));
-	beforeEach(module('mock.userRepo'));
+	beforeEach(module('mock.document'));
 	
-	beforeEach(inject(function($controller, $rootScope, _DocumentRepo_, _User_, _UserRepo_) {
+	beforeEach(inject(function($controller, $rootScope, $routeParams, _Document_) {
         scope = $rootScope.$new(); 
-        controller = $controller('DocumentController', {
+        routeParams = $routeParams;
+        controller = $controller('AnnotateController', {
             $scope: scope,
-            DocumentRepo: _DocumentRepo_,
-            User: _User_,
-            UserRepo: _UserRepo_
+            $routeParams: routeParams,
+            Document: _Document_
         });
-        DocumentRepo = _DocumentRepo_; 
-        User = _User_;
-        UserRepo = _UserRepo_;
+        Document = _Document_;
     }));
 
 	describe('Is the controller defined', function() {
@@ -36,28 +32,28 @@ describe('controller: DocumentController', function() {
 	
 	describe('Does the scope have a Document', function() {
 		it('Document should be on the scope', function() {
-			expect(scope.documents).toBeDefined();
+			expect(scope.document).toBeDefined();
 		});
 	});
 	
 	describe('Does the Document have expected credentials', function() {
 		it('Document should have expected credentials', function() {
-			expect(scope.documents).toEqual(mockDocumentRepo1);
+			expect(scope.document).toEqual(mockDocument1);
 		});
 	});
 	
 	describe('Should be able to set a Document', function() {
 		it('should have set the Document', function() {			
-			DocumentRepo.set(mockDocumentRepo2)			
-			expect(scope.documents).toEqual(mockDocumentRepo2);
+			Document.set(mockDocument2)			
+			expect(scope.document).toEqual(mockDocument2);
 		});
 	});
 	
 	describe('Should be able to fetch a Document', function() {		
 		it('should have set the fetched Document', function() {			
-			DocumentRepo.fetch().then(function(data) {
-				DocumentRepo.set(data);
-				expect(scope.documents).toEqual(mockDocumentRepo3);
+			Document.fetch().then(function(data) {
+				Document.set(data);
+				expect(scope.document).toEqual(mockDocument3);
 			});
 		});		
 	});	
