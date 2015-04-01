@@ -42,7 +42,7 @@
 
 		<a href="documents">Documents</a> |
 		
-		<a href="assignments" ng-if="(isAdmin() || isManager()) == false">My Assigned Documents</a> | 
+		<a href="assignments">My Assigned Documents</a> | 
 
 		<a href="users" ng-if="(isAdmin() || isManager()) == true">Users</a>
 
@@ -96,6 +96,7 @@
 
     <!-- Directives -->
     <script src="directives/userDirective.js"></script>
+    <script src="directives/modalDirective.js"></script>
 
     <!-- Services -->
     <script src="services/wsservice.js"></script>

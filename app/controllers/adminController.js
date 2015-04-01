@@ -59,6 +59,18 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		return false;
 	};
 	
+	$scope.isAnnotator = function() {
+		if(sessionStorage.role == "ROLE_ANNOTATOR") {
+			return true;
+		}
+		return false;
+	};
+	
+	$scope.showAssignmentsModal = function(user) {
+		$scope.selectedUser = user;
+		$scope.showModal = !$scope.showModal;
+	}
+	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
 			return true;
