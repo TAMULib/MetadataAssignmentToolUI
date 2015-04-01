@@ -61,7 +61,7 @@
 											<td ng-if="doc.annotator == selectedUser.uin">{{doc.filename}}</td>
 											<td ng-if="doc.annotator == selectedUser.uin">{{doc.status}}</td>	
 											<td ng-if="doc.annotator == selectedUser.uin">
-												<button ng-click="updateAnnotator(doc.filename, selectedUser.uin, 'Unassigned')">
+												<button ng-click="updateAnnotator(doc.filename, 'Unassigned', selectedUser.uin)">
 													Unassign
 												</button>
 											</td>									

@@ -42,7 +42,8 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 		return annotators;
 	};
 	
-	$scope.updateAnnotator = function(filename, annotator, status) {
+	$scope.updateAnnotator = function(filename, status, annotator) {
+		console.log(status);
 		if(!annotator) {
 			annotator = User.get();
 		}

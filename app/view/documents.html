@@ -21,7 +21,7 @@
 							<td ng-if="doc.status == 'Unassigned'">{{doc.filename}}</td>
 							<td ng-if="doc.status == 'Unassigned'">{{doc.status}}</td>							
 							<td ng-if="!doc.annotator && doc.status == 'Unassigned'">
-								<button ng-click="updateAnnotator(doc.filename)">
+								<button ng-click="updateAnnotator(doc.filename, 'Assigned')">
 									Claim
 								</button>
 							</td>
@@ -32,7 +32,7 @@
 							<td>{{doc.filename}}</td>
 							<td>{{doc.status}}</td>
 							<td ng-if="!doc.annotator && availableAnnotators().length > 0">							
-								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, doc.annotator, 'Assigned')" >
+								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" >
 									<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
 								</select>
 							</td>
