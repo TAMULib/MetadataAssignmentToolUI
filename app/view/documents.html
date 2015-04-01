@@ -12,7 +12,6 @@
 						<tr>
 							<th>FileName</th>
 							<th>Status</th>
-							<th>Annotate Document</th>
 							<th>Annotator</th>
 						</tr>
 					</thead>
@@ -32,7 +31,6 @@
 						<tr ng-if="isAdmin() || isManager()" ng-repeat="doc in documents.list track by doc.filename">
 							<td>{{doc.filename}}</td>
 							<td>{{doc.status}}</td>
-							<td><a href="annotate/{{doc.filename}}">Annotate</a></td>
 							<td ng-if="!doc.annotator && availableAnnotators().length > 0">							
 								<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" >
 									<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
