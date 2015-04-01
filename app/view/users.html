@@ -30,7 +30,7 @@
 								</select>
 							</td>
 							<td ng-if="(isAdmin() || isManager())">
-								<button ng-if="user.role == 'ROLE_ANNOTATOR'" ng-click="showAssignmentsModal(user)">
+								<button ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'" ng-click="showAssignmentsModal(user)">
 									View Assignments
 								</button>
 							</td>
