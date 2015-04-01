@@ -1,30 +1,29 @@
 <p>DOCUMENTS</p>
 
-<div class="row">
-	<div class="col-9 col-lg-9">
-		<div class="panel panel-default " ng-controller="DocumentController">			
-			<div class="panel-heading">
-				<h3 class="panel-title">Document List Here</h3>
+<div class="container-fluid" ng-controller="AnnotateController">
+	<div class="col-6 col-lg-6">		
+			<div class="container">
+				<h3>Document</h3>
+				<textarea rows="25" cols="60">
+					{{document.text}}
+				</textarea>
 			</div>
-			<div class="panel-body">
-				<table class="table table-hover table-condensed">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>FileName</th>
-							<th>Status</th>
-						</tr>
-					</thead>
-					<tbody ng-repeat="doc in documents">
-						<tr>
-							<td>{{doc.id}}</td>
-							<td>{{doc.filename}}</td>
-							<td>{{doc.status}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		
+	</div>
+	<div class="col-4 col-lg-4">
+		<div class="row">		
+				<div class="container">
+					<h3>Abstract</h3>
+					<input type="text"/>
+				</div>
 		</div>
+		<div class="row">		
+				<div class="container">
+					<h3>Committee members</h3>
+					<input type="text"/>
+				</div>
+		</div>
+		
 	</div>
 </div>
 
