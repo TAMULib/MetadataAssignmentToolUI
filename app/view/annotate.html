@@ -2,9 +2,9 @@
 
 <div class="container-fluid" ng-controller="AnnotateController">
 	<div class="col-6 col-lg-6">		
-			<div class="container">
+			<div class="span6">
 				<h3>Document</h3>
-				<textarea rows="25" cols="60">
+				<textarea rows="25" cols="100" style="width:95%;">
 					{{document.text}}
 				</textarea>
 			</div>
@@ -12,15 +12,18 @@
 	</div>
 	<div class="col-4 col-lg-4">
 		<div class="row">		
-				<div class="container">
+				<div class="span4">
 					<h3>Abstract</h3>
-					<input type="text"/>
+					<input type="text" style="height:200px; width:95%;"/>
 				</div>
 		</div>
 		<div class="row">		
 				<div class="container">
 					<h3>Committee members</h3>
-					<input type="text"/>
+					<div class="row"><label>1:</label><input type="text"/></div>
+					<div class="row"><label>2:</label><input type="text"/></div>
+					<div class="row"><label>3:</label><input type="text"/></div>
+					<div class="row"><label>4:</label><input type="text"/></div>
 				</div>
 		</div>
 		
