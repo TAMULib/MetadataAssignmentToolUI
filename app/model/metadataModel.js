@@ -50,7 +50,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 
 		if(addMetadataSubmitPromise.$$state) {
 			addMetadataSubmitPromise.then(function(data) {
-				console.log(data);
+				logger.log(data);
 			});
 		}
 		

@@ -32,7 +32,7 @@
 					<button ng-click="updateMetadata(document.filename)">
 						Update
 					</button>
-					<button ng-click="complete(document.filename)">
+					<button ng-if="readyToSubmit()" ng-click="complete(document.filename)">
 						Complete
 					</button>
 				</div>

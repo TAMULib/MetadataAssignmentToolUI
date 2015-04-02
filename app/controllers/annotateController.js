@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($scope, $routeParams, Document, DocumentRepo, Metadata, User) {
+metadataTool.controller('AnnotateController', function($scope, $location, $routeParams, Document, DocumentRepo, Metadata, User) {
 	
 	var annotator = User.get();
 	
@@ -23,8 +23,27 @@ metadataTool.controller('AnnotateController', function($scope, $routeParams, Doc
 		
 	}
 	
-	$scope.complete = function(filename) {		
-		DocumentRepo.update(filename, annotator.uin, 'Complete');		
+	$scope.complete = function(filename) {
+		$scope.updateMetadata(filename);
+		DocumentRepo.update(filename, annotator.uin, 'Complete');
+		$location.path('/assignments');
+	}
+	
+	$scope.readyToSubmit = function() {		
+		var ready = false;
+		if($scope.document.metadata.abstract) {
+			ready = true;
+		}
+		var memberCount = 0;
+		for(var index in $scope.document.metadata.committee) {
+			if($scope.document.metadata.committee[index].length > 0) {
+				memberCount++;
+			}
+		}
+		if(memberCount == 0) {
+			ready = false;
+		}
+		return ready;
 	}
 	
 });
