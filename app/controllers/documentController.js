@@ -60,7 +60,6 @@ metadataTool.controller('DocumentController', function ($scope, $location, Docum
 		for(var key in $scope.documents.list) {
 			var doc = $scope.documents.list[key];
 			if(doc.filename == filename) {
-				console.log($scope.documents.list[key]);
 				$scope.documents.list[key].status = status;
 			}
 		}

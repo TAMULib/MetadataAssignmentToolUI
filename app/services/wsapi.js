@@ -3,6 +3,7 @@ metadataTool.service("WsApi",function($q, $http, wsservice, AuthServiceApi) {
 	var WsApi = this;
 
 	WsApi.listen = function(apiReq) {
+		console.log(apiReq);
 		var request = '/ws/'+apiReq.controller+'/' + apiReq.method;
 		var channel = '/' + apiReq.endpoint + "/" + apiReq.controller;
 		
