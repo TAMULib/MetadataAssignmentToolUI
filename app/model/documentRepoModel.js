@@ -41,20 +41,20 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	
 	};
 	
-	Documents.updateAnnotator = function(filename, uin, status) {
+	Documents.update = function(filename, uin, status) {
 		var change = {
 			'filename': filename,
 			'uin': uin,
 			'status': status
 		};
-		
+				
 		var updateUserRolePromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'update_annotator',
 			data: JSON.stringify(change)
 		});
-		
+				
 		if(updateUserRolePromise.$$state) {
 			updateUserRolePromise.then(function(data) {			
 				for(var key in Documents.data.list) {

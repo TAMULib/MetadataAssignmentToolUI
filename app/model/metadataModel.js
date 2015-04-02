@@ -35,25 +35,27 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 	
 	Metadata.add = function(document, label, isRepeatable, index) {
 
-		var newMetadataSubmitPromise = WsApi.fetch({
+		var addMetadataSubmitPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'add',
 				data: JSON.stringify({
 					'filename': document.filename,
 					'label': label,
-					'value': (isRepeatable) ? document[label][index] : document[label],					
+					'value': (isRepeatable) ? document.metadata[label][index] : document.metadata[label],					
 					'isRepeatable': isRepeatable,
 					'index': index
 				})
 		});
 
-		newMetadataSubmitPromise.then(function(data) {
-			console.log(data);
-		});
+		if(addMetadataSubmitPromise.$$state) {
+			addMetadataSubmitPromise.then(function(data) {
+				console.log(data);
+			});
+		}
 		
 	};
-		
+			
 	return Metadata;
 	
 });

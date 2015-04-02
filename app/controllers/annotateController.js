@@ -1,38 +1,30 @@
-metadataTool.controller('AnnotateController', function($scope, $routeParams, Document, Metadata) {
+metadataTool.controller('AnnotateController', function($scope, $routeParams, Document, DocumentRepo, Metadata, User) {
+	
+	var annotator = User.get();
 	
 	$scope.document = Document.get($routeParams.documentKey);
 	
-	//$scope.document = Metadata.get($routeParams.documentKey);
-	
 	$scope.document.filename = $routeParams.documentKey;
 	
-	$scope.document.abstract = 'Hello, World!';
-	
-	$scope.document.committee = {
-		'1': 'George',
-		'2': 'Jeb',
-		'3': 'George W.'
-	};
+	angular.extend($scope.document, {'metadata':Metadata.get($routeParams.documentKey)});
 		
 	$scope.updateMetadata = function(filename) {
 		
-		if($scope.document.abstract.length < 1) {
-			alert("Must have an abstract!");
-		}
-		else {
+		if($scope.document.metadata.abstract.length > 0) {
 			Metadata.add($scope.document, 'abstract', false, 0);
 		}
-		
-		for(var member in $scope.document.committee) {
-			Metadata.add($scope.document, 'committee', true, member);
+		else {
+			alert("Must have an abstract!");
 		}
-				
+		
+		for(var index in $scope.document.metadata.committee) {
+			Metadata.add($scope.document, 'committee', true, index);
+		}
+		
 	}
 	
-	$scope.complete = function(filename) {
-		
-		console.log("Complete");
-				
+	$scope.complete = function(filename) {		
+		DocumentRepo.update(filename, annotator.uin, 'Complete');		
 	}
 	
 });

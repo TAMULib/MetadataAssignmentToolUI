@@ -47,14 +47,15 @@ metadataTool.controller('DocumentController', function ($scope, $location, Docum
 	};
 	
 	$scope.updateAnnotator = function(filename, status, annotator) {
-		console.log(status);
+		
 		if(!annotator) {
 			annotator = User.get();
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		DocumentRepo.updateAnnotator(filename, annotator.uin, status);
+		
+		DocumentRepo.update(filename, annotator.uin, status);
 		
 		for(var key in $scope.documents.list) {
 			var doc = $scope.documents.list[key];

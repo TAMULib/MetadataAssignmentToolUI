@@ -17,9 +17,9 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="doc in documents.list track by doc.filename">
-							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.filename}}</td>
-							<td ng-if="isAssignedToMe(doc.annotator)">{{doc.status}}</td>
-							<td ng-if="isAssignedToMe(doc.annotator)">
+							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">{{doc.filename}}</td>
+							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">{{doc.status}}</td>
+							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">
 								<!-- <a href="annotate/{{doc.filename}}">Annotate</a> -->
 								<button ng-click="go('/annotate/'+doc.filename)">
 									Annotate
