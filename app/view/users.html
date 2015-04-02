@@ -58,9 +58,9 @@
 									<tbody>
 									
 										<tr ng-if="isAdmin() || isManager()" ng-repeat="doc in documents.list track by doc.filename">
-											<td ng-if="doc.annotator == selectedUser.uin">{{doc.filename}}</td>
-											<td ng-if="doc.annotator == selectedUser.uin">{{doc.status}}</td>	
-											<td ng-if="doc.annotator == selectedUser.uin">
+											<td ng-if="doc.annotator == selectedUser.uin && doc.status != 'Complete'">{{doc.filename}}</td>
+											<td ng-if="doc.annotator == selectedUser.uin && doc.status != 'Complete'">{{doc.status}}</td>	
+											<td ng-if="doc.annotator == selectedUser.uin && doc.status != 'Complete'">
 												<button ng-click="updateAnnotator(doc.filename, 'Unassigned', selectedUser.uin)">
 													Unassign
 												</button>
