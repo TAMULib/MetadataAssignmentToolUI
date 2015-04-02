@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($scope, DocumentRepo, User, UserRepo) {
+metadataTool.controller('DocumentController', function ($scope, $location, DocumentRepo, User, UserRepo) {
 
 	var userRepo;
 	
@@ -7,6 +7,10 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 	var annotators = [];
 	
 	$scope.documents = DocumentRepo.get();
+	
+	$scope.go = function(route) {
+		 $location.path(route);
+	}
 	
 	$scope.isAdmin = function() {
 		if(sessionStorage.role == "ROLE_ADMIN") {
