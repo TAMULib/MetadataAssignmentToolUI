@@ -72,7 +72,7 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel, User) {
 		
 		if(updateUserRolePromise.$$state) {
 			updateUserRolePromise.then(function(data) {
-				console.log(data);
+				logger.log(data);
 			});
 		}		
 	}
