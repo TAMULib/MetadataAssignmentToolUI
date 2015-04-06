@@ -25,9 +25,9 @@ describe('model: Document', function() {
 
 	describe('set method should set a Document', function() {
 		it('the Document was set', function() {
-			var documents = Document.get();
+			var document = Document.get();
 			Document.set({"unwrap":function(){}, "content":mockDocument2});
-			expect(documents.content).toEqual(mockDocument2);
+			expect(document.content).toEqual(mockDocument2);
 		});
 	});
 
