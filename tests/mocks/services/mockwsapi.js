@@ -9,19 +9,20 @@ angular.module('mock.wsApi', []).
         	
         	switch(apiReq.method) {
 	        	case 'credentials': return {'content':mockUser1};
-	        	case 'all': {
-	        		if(apiReq.controller == 'user') {
-	        			return {'content':mockUserRepo1};
-	        		}
-	        		else if(apiReq.controller == 'document') {
-	        			return {'content':mockDocumentRepo1};
-        			}
-	        		else {
-	        			return {'content':{}};
-	        		}
+	        	case 'all': {	        		
+	        		switch(apiReq.controller) {
+	        			case 'user': return {'content':mockUserRepo1};
+	        			case 'document': return {'content':mockDocumentRepo1};
+	        			default: return {'content':{}};
+	        		}	        		
 	        	}
-	        	case 'get': return {
-	        		'content': mockDocument1
+	        	case 'get': {	        		
+	        		switch(apiReq.controller) {
+	        		case 'user': return {'content':mockUser1};
+	        		case 'document': return {'content':mockDocument1};
+	        		case 'metadata': return {'content':mockMetadata1};
+	        		default: return {'content':{}};
+	        		}	        		
 	        	}
 	        	case 'update_role': {	        		
 	        		mockUserRepo1['HashMap'][2].role = JSON.parse(apiReq['data']).role;
@@ -33,6 +34,12 @@ angular.module('mock.wsApi', []).
 	        	}
 	        	default: return {'content':{}};
         	}
+        	            
+            return defer.promise;
+        }
+        
+        WsApi.listen = function(apiReq) {        	
+        	var defer = $q.defer();       	
         	            
             return defer.promise;
         }
