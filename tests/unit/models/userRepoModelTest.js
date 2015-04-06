@@ -1,4 +1,3 @@
-
 describe('model: UserRepo', function() {
 	
 	var UserRepo, WsApi;

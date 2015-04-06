@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($scope, DocumentRepo, User, UserRepo) {
+metadataTool.controller('DocumentController', function ($scope, $location, DocumentRepo, User, UserRepo) {
 
 	var userRepo;
 	
@@ -7,6 +7,10 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 	var annotators = [];
 	
 	$scope.documents = DocumentRepo.get();
+	
+	$scope.go = function(route) {
+		 $location.path(route);
+	}
 	
 	$scope.isAdmin = function() {
 		if(sessionStorage.role == "ROLE_ADMIN") {
@@ -43,19 +47,19 @@ metadataTool.controller('DocumentController', function ($scope, DocumentRepo, Us
 	};
 	
 	$scope.updateAnnotator = function(filename, status, annotator) {
-		console.log(status);
+		
 		if(!annotator) {
 			annotator = User.get();
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		DocumentRepo.updateAnnotator(filename, annotator.uin, status);
+		
+		DocumentRepo.update(filename, annotator.uin, status);
 		
 		for(var key in $scope.documents.list) {
 			var doc = $scope.documents.list[key];
 			if(doc.filename == filename) {
-				console.log($scope.documents.list[key]);
 				$scope.documents.list[key].status = status;
 			}
 		}

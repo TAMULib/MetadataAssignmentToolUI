@@ -23,7 +23,7 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		}
 		else {
 			$scope.admin = false;
-		}		
+		}
 	});
 	
 	$scope.allowableRoles = function(userRole) {

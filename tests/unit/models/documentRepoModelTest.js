@@ -35,7 +35,7 @@ describe('model: DocumentRepo', function() {
 	describe('update method should udpate a document in the DocumentRepo', function() {
 		it('the document was updated in the DocumentRepo', function() {
 			var docRepo = DocumentRepo.get();			
-			DocumentRepo.updateAnnotator("disseration001.txt", "222222222");
+			DocumentRepo.update("disseration001.txt", "222222222");
 			docRepo.content['HashMap'].annotator = "222222222";
 			expect(docRepo.content).toEqual(mockDocumentRepo1);
 		});

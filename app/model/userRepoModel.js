@@ -1,6 +1,8 @@
-metadataTool.service("UserRepo", function(WsApi, AbstractModel) {
+metadataTool.service("UserRepo", function(WsApi, AbstractModel, User) {
 
 	var self;
+	
+	var user = User.get();
 
 	var Users = function(futureData) {
 		self = this;
@@ -15,7 +17,7 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel) {
 	Users.data = null;
 	
 	Users.set = function(data) {
-		self.unwrap(self, data);
+		self.unwrap(self, data, "HashMap");
 	};
 
 	Users.get = function(action) {
@@ -36,6 +38,20 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel) {
 		else {
 			Users.data = new Users(newAllUsersPromise);	
 		}
+		
+		var userUpdatePromise = WsApi.listen({
+			endpoint: 'channel', 
+			controller: 'users', 
+			method: '',
+		});
+		
+		userUpdatePromise.then(null, null, function(data) {
+			if(JSON.parse(data.body).content.HashMap.changedUserUin = user.uin) {
+				User.get(true);
+			}
+		});
+		
+		Users.set(userUpdatePromise);
 
 		return Users.data;
 	
@@ -56,7 +72,7 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel) {
 		
 		if(updateUserRolePromise.$$state) {
 			updateUserRolePromise.then(function(data) {
-				console.log(data);
+				logger.log(data);
 			});
 		}		
 	}

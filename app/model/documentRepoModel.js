@@ -15,7 +15,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	Documents.data = null;
 	
 	Documents.set = function(data) {
-		self.unwrap(self, data);
+		self.unwrap(self, data, "HashMap");
 	};
 
 	Documents.get = function(action) {
@@ -36,33 +36,34 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		else {
 			Documents.data = new Documents(newDocumentPromise);	
 		}
-
+		
+		Documents.set(WsApi.listen({
+			endpoint: 'channel', 
+			controller: 'documents', 
+			method: '',
+		}));
+		
 		return Documents.data;
 	
 	};
 	
-	Documents.updateAnnotator = function(filename, uin, status) {
+	Documents.update = function(filename, uin, status) {
 		var change = {
 			'filename': filename,
 			'uin': uin,
 			'status': status
 		};
-		
+				
 		var updateUserRolePromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
-			method: 'update_annotator',
+			method: 'update',
 			data: JSON.stringify(change)
 		});
-		
+				
 		if(updateUserRolePromise.$$state) {
-			updateUserRolePromise.then(function(data) {			
-				for(var key in Documents.data.list) {
-					var doc = Documents.data.list[key];				
-					if(doc.filename == filename) {
-						Documents.data.list[key].annotator = uin;
-					}
-				}
+			updateUserRolePromise.then(function(data) {	
+				logger.log(data);
 			});
 		}
 		

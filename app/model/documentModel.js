@@ -32,7 +32,7 @@ metadataTool.service("Document", function(WsApi, AbstractModel) {
 		return Document.data;
 	
 	};
-		
+	
 	return Document;
 	
 });
