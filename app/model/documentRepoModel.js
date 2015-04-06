@@ -62,13 +62,8 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		});
 				
 		if(updateUserRolePromise.$$state) {
-			updateUserRolePromise.then(function(data) {			
-				for(var key in Documents.data.list) {
-					var doc = Documents.data.list[key];				
-					if(doc.filename == filename) {
-						Documents.data.list[key].annotator = uin;
-					}
-				}
+			updateUserRolePromise.then(function(data) {	
+				logger.log(data);
 			});
 		}
 		
