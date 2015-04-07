@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($scope, $location, $filter, $timeout, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($scope, $filter, $timeout, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	var userRepo;
 	
@@ -29,10 +29,6 @@ metadataTool.controller('DocumentController', function ($scope, $location, $filt
         }
     });
 
-	$scope.go = function(route) {
-		 $location.path(route);
-	}
-	
 	$scope.isAdmin = function() {
 		if(sessionStorage.role == "ROLE_ADMIN") {
 			return true;

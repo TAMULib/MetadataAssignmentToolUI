@@ -24,12 +24,12 @@
 							<td>{{user.lastName}}</td>
 							<td>{{user.role}}</td>
 							<td>
-								<select ng-if="(isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" >
+								<select ng-if="(isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" class="form-control">
 									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
 								</select>
 							</td>
 							<td ng-if="(isAdmin() || isManager())">
-								<button ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'" ng-click="showAssignmentsModal(user)">
+								<button ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'" ng-click="showAssignmentsModal(user)" class="btn btn-default">
 									View Assignments
 								</button>
 							</td>
@@ -50,17 +50,17 @@
 									<thead>
 										<tr>
 											<th>FileName</th>
-											<th>Status</th>
-											<th>Unassign</th>
+											<th class="text-center">Status</th>
+											<th class="text-center">Unassign</th>
 										</tr>
 									</thead>
 									<tbody>
 									
 										<tr ng-if="isAdmin() || isManager()" ng-repeat="doc in filteredDocuments = (documents.list | filter:{annotator:selectedUser.uin, status:'!Complete'})">
 											<td>{{doc.filename}}</td>
-											<td>{{doc.status}}</td>	
-											<td>
-												<button ng-click="updateAnnotator(doc.filename, 'Unassigned', selectedUser.uin)">
+											<td class="text-center">{{doc.status}}</td>	
+											<td class="text-center">
+												<button ng-click="updateAnnotator(doc.filename, 'Unassigned', selectedUser.uin)" class="btn btn-default">
 													Unassign
 												</button>
 											</td>

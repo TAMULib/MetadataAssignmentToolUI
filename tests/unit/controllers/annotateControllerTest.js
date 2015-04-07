@@ -47,7 +47,6 @@ describe('controller: AnnotateController', function() {
 	
 	describe('Does the Document have expected credentials', function() {
 		it('Document should have expected credentials', function() {
-			console.log(scope.document.HashMap);
 			expect(scope.document.HashMap).toEqual(mockDocument1.HashMap);
 		});
 	});

@@ -50,7 +50,7 @@
 		<span ng-if="(isAdmin() || isManager()) == true">
 			| <a href="users" >Users</a> |
 		
-			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv">Export Metadata</button>
+			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv" class="btn btn-default">Export Metadata</button>
 			
 		</span>
 		

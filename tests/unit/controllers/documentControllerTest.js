@@ -9,9 +9,11 @@ describe('controller: DocumentController', function() {
 	beforeEach(module('mock.user'));
 	beforeEach(module('mock.userRepo'));
 	
-	beforeEach(inject(function($controller, $rootScope, _DocumentRepo_, _User_, _UserRepo_) {
-        scope = $rootScope.$new(); 
-        controller = $controller('DocumentController', {
+	beforeEach(module('ngTable'));
+		
+	beforeEach(inject(function($controller, $rootScope, _DocumentRepo_, _User_, _UserRepo_) {        
+		scope = $rootScope.$new();       
+		controller = $controller('DocumentController', {
             $scope: scope,
             DocumentRepo: _DocumentRepo_,
             User: _User_,
@@ -20,6 +22,7 @@ describe('controller: DocumentController', function() {
         DocumentRepo = _DocumentRepo_; 
         User = _User_;
         UserRepo = _UserRepo_;
+        scope.tableParams.settings().$scope = scope;
     }));
 
 	describe('Is the controller defined', function() {

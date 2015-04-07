@@ -33,8 +33,8 @@
 			</div>
 			
 			<div class="panel-body" ng-if="isAdmin() || isManager()">			
-				<button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
-		        <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
+				<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>&nbsp;&nbsp;
+		        <button ng-click="tableParams.filter({})" class="btn btn-default">Clear filter</button><br/><br/>
 		        
 		        <!-- 
 		        <p><strong>Sorting:</strong> {{tableParams.sorting()|json}}
@@ -44,17 +44,17 @@
 				<table ng-table="tableParams" show-filter="true" class="table table-hover table-condensed">					
 					<tbody>					
 						<tr ng-repeat="doc in $data">							
-							<td data-title="'Filename'" sortable="'filename'" filter="{ 'filename': 'text' }" class="text-center">
+							<td data-title="'Filename'" sortable="'filename'" filter="{ 'filename': 'text' }">
 								{{doc.filename}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
 								{{doc.status}}
 							</td>							
-							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }">
-								<span ng-if="!doc.annotator && availableAnnotators().length > 0">
-									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" >
-										<option ng-repeat="annotator in availableAnnotators()">{{annotator}}</option>
-									</select>
+							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
+								<span ng-if="!doc.annotator && availableAnnotators().length > 0">								
+									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" class="form-control">
+										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator}}">{{annotator.firstName}} {{annotator.lastName}}</option>
+									</select>								
 								</span>
 								<span ng-if="!doc.annotator && availableAnnotators().length == 0">
 									No Annotators
