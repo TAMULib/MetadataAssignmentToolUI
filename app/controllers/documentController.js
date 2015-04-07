@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($scope, $filter, $timeout, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($scope, $filter, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	var userRepo;
 	
