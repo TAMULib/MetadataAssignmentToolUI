@@ -1,13 +1,34 @@
-metadataTool.controller('DocumentController', function ($scope, $location, DocumentRepo, User, UserRepo) {
+metadataTool.controller('DocumentController', function ($scope, $location, $filter, $timeout, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	var userRepo;
-	
-	var user = User.get();
 	
 	var annotators = [];
 	
 	$scope.documents = DocumentRepo.get();
+
+	$scope.user = User.get();
 	
+	$scope.tableParams = new ngTableParams({
+        page: 1,
+        count: 10,
+        sorting: {
+            filename: 'asc'
+        },
+        filter: {
+            status: 'Open'
+        }
+    }, {
+        total: 0,
+        getData: function($defer, params) {
+        	var data = $scope.documents.list;
+			var filteredData = params.filter() ? $filter('filter')(data, params.filter()) : data;
+			var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : data;
+			params.total(orderedData.length);
+            $scope.docs = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+            $defer.resolve($scope.docs);
+        }
+    });
+
 	$scope.go = function(route) {
 		 $location.path(route);
 	}
@@ -47,28 +68,20 @@ metadataTool.controller('DocumentController', function ($scope, $location, Docum
 	};
 	
 	$scope.updateAnnotator = function(filename, status, annotator) {
-		
 		if(!annotator) {
 			annotator = User.get();
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		
 		DocumentRepo.update(filename, annotator.uin, status);
-		
-		for(var key in $scope.documents.list) {
-			var doc = $scope.documents.list[key];
-			if(doc.filename == filename) {
-				$scope.documents.list[key].status = status;
-			}
-		}
-		
 	};
-		
-	$scope.isAssignedToMe = function(annotator) {
-		return (annotator == user.uin);
-	}
+
+	$scope.$watch('documents.list', function() {
+		if($scope.tableParams.data.length > 0) {
+			$scope.tableParams.reload();
+			$scope.tableParams.reloadPages();
+		}
+	});
 	
 });
-
