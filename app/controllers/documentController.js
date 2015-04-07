@@ -87,7 +87,6 @@ metadataTool.controller('DocumentController', function ($scope, $filter, Documen
 			}
 		}
 		$scope.tableParams.reload();
-		//$scope.tableParams.reloadPages();
 	});
 	
 });
