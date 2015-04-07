@@ -1,5 +1,5 @@
 # Scanned Document Metadata Assignment Tool UI
-An Angular UI that connects to Metadata Spring backends and Auth server.  Includes ability to assume users' netids.
+An Angular UI that connects to Metadata Assignment Service Spring backend and Auth server.  Includes ability to assume users' netids. Initial focus of scanned dissertations with output of DSpace ingestable SAF.
 
 # Manage Users
 Change role of users. Limited to role of self.
