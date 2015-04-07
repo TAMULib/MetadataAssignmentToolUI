@@ -45,10 +45,15 @@
 
 		<a href="documents">Documents</a> |
 		
-		<a href="assignments">My Assigned Documents</a> | 
+		<a href="assignments">My Assigned Documents</a>
 
-		<a href="users" ng-if="(isAdmin() || isManager()) == true">Users</a>
-
+		<span ng-if="(isAdmin() || isManager()) == true">
+			| <a href="users" >Users</a> |
+		
+			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv">Export Metadata</button>
+			
+		</span>
+		
 	</div>
 	
 	<div ng-view></div>

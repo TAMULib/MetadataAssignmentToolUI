@@ -55,6 +55,16 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		}
 		
 	};
+	
+	Metadata.getAll = function() {
+
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'all',
+		})
+	
+	};
 			
 	return Metadata;
 	
