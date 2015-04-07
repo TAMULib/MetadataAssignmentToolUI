@@ -1,17 +1,19 @@
 <br/>
 <div ng-controller="AdminController">								
-	<div ng-if="isMocking() == false">
+	<div ng-if="isMocking() == false && isAdmin() == true">
 	 	<div class="form-group">
 			<div  class="row">
 				<div class="col-md-3">
-					<div>
-						<label>Assume User</label>
-						<input type="netid" class="form-control input-lg" id="netid" placeholder="Enter netid" ng-model="assume.netid" ng-pattern="word" ng-trim="false" />		
-					</div>
-					<div>
-						<button type="submit" class="btn btn-default" ng-click="assumeUser(assume)">{{assumeBtn}}</button>
-						{{assumeStatus}}
-					</div>
+					<form>
+						<div>
+							<label>Assume User</label>
+							<input type="netid" class="form-control input-lg" id="netid" placeholder="Enter netid" ng-model="assume.netid" ng-pattern="word" ng-trim="false" />		
+						</div>
+						<div>
+							<button type="submit" class="btn btn-default" ng-click="assumeUser(assume)">{{assumeBtn}}</button>
+							{{assumeStatus}}
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
