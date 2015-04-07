@@ -22,7 +22,7 @@ metadataTool.controller('DocumentController', function ($scope, $location, $filt
         getData: function($defer, params) {
         	var data = $scope.documents.list;
 			var filteredData = params.filter() ? $filter('filter')(data, params.filter()) : data;
-			var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : data;
+			var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
 			params.total(orderedData.length);
             $scope.docs = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
             $defer.resolve($scope.docs);
@@ -77,11 +77,21 @@ metadataTool.controller('DocumentController', function ($scope, $location, $filt
 		DocumentRepo.update(filename, annotator.uin, status);
 	};
 
-	$scope.$watch('documents.list', function() {
-		if($scope.tableParams.data.length > 0) {
-			$scope.tableParams.reload();
-			$scope.tableParams.reloadPages();
+	DocumentRepo.listen().then(null, null, function(data) {
+		var res = JSON.parse(data.body).content.HashMap;
+		if(res.isNew == "true") {
+			var key = $scope.documents.list.push(res.document);
 		}
+		else {
+			for(var key in $scope.documents.list) {
+				var doc = $scope.documents.list[key];
+				if(doc.filename == res.document.filename) {
+					$scope.documents.list[key] = res.document;
+				}
+			}
+		}
+		$scope.tableParams.reload();
+		//$scope.tableParams.reloadPages();
 	});
 	
 });
