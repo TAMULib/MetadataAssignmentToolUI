@@ -2,24 +2,24 @@ metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvi
 	$locationProvider.html5Mode(true);
 	$routeProvider.
 		when('/users', {
-			templateUrl: 'view/users.html'
+			templateUrl: 'views/users.html'
 		}).
 		when('/assignments', {
-			templateUrl: 'view/assignments.html'
+			templateUrl: 'views/assignments.html'
 		}).
 		when('/documents', {
-			templateUrl: 'view/documents.html'
+			templateUrl: 'views/documents.html'
 		}).
 		when('/myview', {
-			templateUrl: 'view/myview.html'
+			templateUrl: 'views/myview.html'
 		}).
 		when('/annotate/:documentKey', {
-			templateUrl: 'view/annotate.html'
+			templateUrl: 'views/annotate.html'
 		}).
 		when('/admin', {
-			templateUrl: 'view/admin.html'
+			templateUrl: 'views/admin.html'
 		}).
 		otherwise({redirectTo: '/',
-			templateUrl: 'view/home.html'
+			templateUrl: 'views/home.html'
 		});
 }]);

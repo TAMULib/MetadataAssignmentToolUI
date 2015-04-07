@@ -1,5 +1,4 @@
-<p>MY ASSIGNED DOCUMENTS</p>
-
+<br/>
 <div class="row">
 	<div class="col-9 col-lg-9">
 		<div class="panel panel-default " ng-controller="DocumentController">			
@@ -10,17 +9,16 @@
 				<table class="table table-hover table-condensed">
 					<thead>
 						<tr>
-							<th>FileName</th>
-							<th>Status</th>
+							<th><a href="#" ng-click="sort('filename')">FileName</a></th>
+							<th><a href="#" ng-click="sort('status')">Status</a></th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="doc in documents.list track by doc.filename">
-							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">{{doc.filename}}</td>
-							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">{{doc.status}}</td>
-							<td ng-if="isAssignedToMe(doc.annotator) && doc.status != 'Complete'">
-								<!-- <a href="annotate/{{doc.filename}}">Annotate</a> -->
+						<tr ng-repeat="doc in filteredDocuments = (documents.list | filter:{annotator:user.uin, status:'!Complete'} | orderBy:row)">
+							<td>{{doc.filename}}</td>
+							<td>{{doc.status}}</td>
+							<td>
 								<button ng-click="go('/annotate/'+doc.filename)">
 									Annotate
 								</button>
@@ -28,6 +26,7 @@
 						</tr>
 					</tbody>
 				</table>
+				{{filteredDocuments.length}}
 			</div>
 		</div>
 	</div>

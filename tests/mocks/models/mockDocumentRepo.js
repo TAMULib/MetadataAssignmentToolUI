@@ -3,19 +3,19 @@ var mockDocumentRepo1 = {
 		'0':{
 			file: null,
 			filename: "disseration001.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "111111111"
 		},
 		'1':{
 			file: null,
 			filename: "disseration002.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "222222222"
 		},
 		'2':{
 			file: null,
 			filename: "disseration003.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "333333333"
 		}
 	}
@@ -26,19 +26,19 @@ var mockDocumentRepo2 = {
 		'0':{
 			file: null,
 			filename: "disseration002.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "222222222"
 		},
 		'1':{
 			file: null,
 			filename: "disseration003.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "333333333"
 		},
 		'2':{
 			file: null,
 			filename: "disseration004.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "444444444"
 		}
 	}
@@ -49,7 +49,7 @@ var mockDocumentRepo3 = {
 		'0':{
 			file: null,
 			filename: "disseration003.txt",
-			status: "Unassigned",
+			status: "Open",
 			annotator: "333333333"
 		}
 	}

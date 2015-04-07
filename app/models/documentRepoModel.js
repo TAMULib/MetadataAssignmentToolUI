@@ -14,6 +14,8 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 
 	Documents.data = null;
 	
+	Documents.listener = null;
+
 	Documents.set = function(data) {
 		self.unwrap(self, data, "HashMap");
 	};
@@ -37,11 +39,11 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			Documents.data = new Documents(newDocumentPromise);	
 		}
 		
-		Documents.set(WsApi.listen({
+		Documents.listener = WsApi.listen({
 			endpoint: 'channel', 
 			controller: 'documents', 
 			method: '',
-		}));
+		});
 		
 		return Documents.data;
 	
@@ -68,6 +70,10 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		}
 		
 	}
+
+	Documents.listen = function() {
+		return Documents.listener;
+	};
 		
 	return Documents;
 	

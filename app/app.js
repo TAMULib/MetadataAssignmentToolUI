@@ -1,6 +1,7 @@
 var metadataTool = angular.module('metadataTool', 
 		[
 		 'ngRoute',
+		 'ngTable',
 		 'metadataTool.version'
 		 ]).constant('globalConfig',globalConfig);
 
