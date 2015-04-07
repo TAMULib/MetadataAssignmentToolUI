@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($scope, $http, User, UserRepo, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $http, User, UserRepo, Metadata, AuthServiceApi) {
 
 	$scope.user = User.get();
 	
@@ -123,5 +123,12 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 	$scope.toggleModal = function(){
 		$scope.showModal = !$scope.showModal;
 	};
+	
+	$scope.exportMetadata = function() {
+		console.log("Export metadata");
+		return Metadata.getAll().then(function(metadata) {
+			return JSON.parse(metadata.body).content.HashMap.list;
+		});
+	}
 	
 });
