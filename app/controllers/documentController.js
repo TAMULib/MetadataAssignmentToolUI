@@ -7,7 +7,7 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, Docume
 	var annotators = [];
 	
 	$scope.user = User.get();
-	
+
 	$scope.tableParams = new ngTableParams({
         page: 1,
         count: 10,
@@ -17,7 +17,7 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, Docume
         filter: {
         	filename: '',
             status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : 'Open',
-            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? $scope.user.uin : ''
+            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
         }
     }, {
         total: 0,
@@ -28,21 +28,19 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, Docume
         	if(view == '/metadatatool/assignments' || view == '/metadatatool/users') {
         		if(!params.filter().annotator) {
             		$timeout(function() {
-            			params.filter().annotator = $scope.user.uin;
-                	}, 50);
+            			params.filter().annotator = ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin;
+                	}, 100);
             	}
         	}
-        	        	
+
         	var page = DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter());
         	
         	$timeout(function() {
         		params.total(page.totalElements);
         		$scope.docs = page.content;
         		$defer.resolve($scope.docs);
-        	}, 50);
+        	}, 200);
         	
-        	
-        	console.log(page);
         }
     });
 
