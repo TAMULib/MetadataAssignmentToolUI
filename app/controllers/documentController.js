@@ -1,11 +1,11 @@
-metadataTool.controller('DocumentController', function ($scope, $filter, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($scope, $timeout, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
+	var view = window.location.pathname;
+	
 	var userRepo;
 	
 	var annotators = [];
 	
-	$scope.documents = DocumentRepo.get();
-
 	$scope.user = User.get();
 	
 	$scope.tableParams = new ngTableParams({
@@ -15,17 +15,34 @@ metadataTool.controller('DocumentController', function ($scope, $filter, Documen
             filename: 'asc'
         },
         filter: {
-            status: 'Open'
+        	filename: '',
+            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : 'Open',
+            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? $scope.user.uin : ''
         }
     }, {
         total: 0,
         getData: function($defer, params) {
-        	var data = $scope.documents.list;
-			var filteredData = params.filter() ? $filter('filter')(data, params.filter()) : data;
-			var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-			params.total(orderedData.length);
-            $scope.docs = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-            $defer.resolve($scope.docs);
+        	
+        	var key; for(key in params.sorting()) {}
+        	
+        	if(view == '/metadatatool/assignments' || view == '/metadatatool/users') {
+        		if(!params.filter().annotator) {
+            		$timeout(function() {
+            			params.filter().annotator = $scope.user.uin;
+                	}, 50);
+            	}
+        	}
+        	        	
+        	var page = DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter());
+        	
+        	$timeout(function() {
+        		params.total(page.totalElements);
+        		$scope.docs = page.content;
+        		$defer.resolve($scope.docs);
+        	}, 50);
+        	
+        	
+        	console.log(page);
         }
     });
 
@@ -65,27 +82,16 @@ metadataTool.controller('DocumentController', function ($scope, $filter, Documen
 	
 	$scope.updateAnnotator = function(filename, status, annotator) {
 		if(!annotator) {
-			annotator = User.get();
+			annotator = $scope.user.uin;
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		DocumentRepo.update(filename, annotator.uin, status);
+		DocumentRepo.update(filename, annotator, status);		
 	};
 
-	DocumentRepo.listen().then(null, null, function(data) {
-		var res = JSON.parse(data.body).content.HashMap;
-		if(res.isNew == "true") {
-			var key = $scope.documents.list.push(res.document);
-		}
-		else {
-			for(var key in $scope.documents.list) {
-				var doc = $scope.documents.list[key];
-				if(doc.filename == res.document.filename) {
-					$scope.documents.list[key] = res.document;
-				}
-			}
-		}
+	
+	DocumentPage.listen().then(null, null, function(data) {
 		$scope.tableParams.reload();
 	});
 	

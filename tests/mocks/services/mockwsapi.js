@@ -9,6 +9,7 @@ angular.module('mock.wsApi', []).
         	
         	switch(apiReq.method) {
 	        	case 'credentials': return {'content':mockUser1};
+	        	case 'page': return {'content':mockDocumentPage1};
 	        	case 'all': {	        		
 	        		switch(apiReq.controller) {
 	        			case 'user': return {'content':mockUserRepo1};
