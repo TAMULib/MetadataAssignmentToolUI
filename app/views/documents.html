@@ -53,7 +53,7 @@
 							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
 								<span ng-if="!doc.annotator && availableAnnotators().length > 0">								
 									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" class="form-control">
-										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator}}">{{annotator.firstName}} {{annotator.lastName}}</option>
+										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator.uin}}">{{annotator.firstName}} {{annotator.lastName}}</option>
 									</select>								
 								</span>
 								<span ng-if="!doc.annotator && availableAnnotators().length == 0">

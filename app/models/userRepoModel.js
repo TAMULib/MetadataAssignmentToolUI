@@ -1,4 +1,4 @@
-metadataTool.service("UserRepo", function(WsApi, AbstractModel, User) {
+metadataTool.service("UserRepo", function($route, WsApi, AbstractModel, User) {
 
 	var self;
 	
@@ -48,6 +48,7 @@ metadataTool.service("UserRepo", function(WsApi, AbstractModel, User) {
 		userUpdatePromise.then(null, null, function(data) {
 			if(JSON.parse(data.body).content.HashMap.changedUserUin = user.uin) {
 				User.get(true);
+				$route.reload();
 			}
 		});
 		
