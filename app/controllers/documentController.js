@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($scope, $route, $timeout, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($scope, $timeout, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	var view = window.location.pathname;
 	
