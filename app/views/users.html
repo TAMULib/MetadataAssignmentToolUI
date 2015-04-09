@@ -1,0 +1,75 @@
+<br/>
+<div class="row">
+	<div class="col-9 col-lg-9">
+		<div class="panel panel-default " ng-controller="AdminController">			
+			<div class="panel-heading">
+				<h3 class="panel-title">Users</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>UIN</th>
+							<th>FirstName</th>
+							<th>LastName</th>
+							<th>Role</th>
+							<th>Change Role To</th>
+							<th ng-if="(isAdmin() || isManager())">Assignments</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="user in userRepo.list track by user.uin">
+							<td>{{user.uin}}</td>
+							<td>{{user.firstName}}</td>
+							<td>{{user.lastName}}</td>
+							<td>{{user.role}}</td>
+							<td>
+								<select ng-if="(isAdmin() || isManager())" ng-model="user.role" ng-change="updateRole(user.uin, user.role)" class="form-control">
+									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
+								</select>
+							</td>
+							<td ng-if="(isAdmin() || isManager())">
+								<button ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'" ng-click="showAssignmentsModal(user)" class="btn btn-default">
+									View Assignments
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<modal id="assignmentsModal" title="Assigned Documents" visible="showModal" style="display:none;">
+				<div class="row" ng-if="selectedUser">
+					<div class="col-9 col-lg-9">
+						<div class="panel panel-default" ng-controller="DocumentController">
+							<div class="panel-heading">
+								<h3 class="panel-title">Documents Assigned to {{selectedUser.firstName}} {{selectedUser.lastName}}</h3>
+							</div>
+							<div class="panel-body">
+								<table ng-table="tableParams" class="table table-hover table-condensed">					
+									<tbody>					
+										<tr ng-repeat="doc in $data">							
+											<td data-title="'Filename'" sortable="'filename'">
+												{{doc.filename}}
+											</td>							
+											<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
+												{{doc.status}}
+											</td>							
+											<td data-title="'Unassign'" class="text-center">
+												<button ng-click="updateAnnotator(doc.filename, 'Open', selectedUser.uin)" class="btn btn-default">
+													Unassign
+												</button>
+											</td>												
+										</tr>						
+									</tbody>					
+								</table>				
+							</div>
+						</div>
+					</div>
+				</div>
+			</modal>
+			
+		</div>
+	</div>
+</div>
+	

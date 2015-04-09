@@ -1,4 +1,4 @@
-myLibrary.service("AbstractModel", function () {
+metadataTool.service("AbstractModel", function () {
 
 	var AbstractModel = function(data) {
 		angular.extend(this, data);
@@ -26,7 +26,7 @@ myLibrary.service("AbstractModel", function () {
 			},
 			function(data) {
 				angular.extend(self, JSON.parse(data.body).content[modelString]);		
-		});		
+		});
 	};
 	
 	return AbstractModel;

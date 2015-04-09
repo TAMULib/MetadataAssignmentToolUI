@@ -1,4 +1,4 @@
-myLibrary.service("wsservice",function($q) { 
+metadataTool.service("wsservice",function($q) { 
 	
 	var wsservice = this;
 	

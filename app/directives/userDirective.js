@@ -1,4 +1,4 @@
-myLibrary.directive('username', function () {
+metadataTool.directive('username', function () {
 	return {
 		template: '<span>{{user.firstName || "Obtaining User..."}} {{user.lastName}}</span>',
 		restrict: 'E',
@@ -7,7 +7,7 @@ myLibrary.directive('username', function () {
 	};
 });
 
-myLibrary.directive('useremail', function () {
+metadataTool.directive('useremail', function () {
 	return {
 		template: '<span>{{user.email}}</span>',
 		restrict: 'E',
@@ -16,7 +16,7 @@ myLibrary.directive('useremail', function () {
 	};
 });
 
-myLibrary.directive('useruin', function () {
+metadataTool.directive('useruin', function () {
 	return {
 		template: '<span>{{user.uin}}</span>',
 		restrict: 'E',
@@ -25,7 +25,7 @@ myLibrary.directive('useruin', function () {
 	};
 });
 
-myLibrary.directive('userrole', function () {
+metadataTool.directive('userrole', function () {
 	return {
 		template: '<span>{{user.role}}</span>',
 		restrict: 'E',

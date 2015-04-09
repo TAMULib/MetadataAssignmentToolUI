@@ -1,4 +1,4 @@
-myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
+metadataTool.service("User", function(WsApi, AbstractModel) {
 
 	var self;
 
@@ -11,7 +11,7 @@ myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
 		self.unwrap(self, futureData, "Credentials");
 		
 	};
-
+	
 	User.data = null;
 	
 	User.set = function(data) {
@@ -22,7 +22,7 @@ myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
 
 		if(User.data && !action) return User.data;
 
-		var newUserPromise = MyLibraryWsApi.fetch({
+		var newUserPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'user', 
 				method: 'credentials',
@@ -30,7 +30,6 @@ myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
 
 		if(action) {
 			newUserPromise.then(function(data) {
-				console.log("Inside Promise");
 				User.set(JSON.parse(data.body).content.Credentials);
 			});
 		}
@@ -41,7 +40,7 @@ myLibrary.service("User", function(MyLibraryWsApi, AbstractModel) {
 		return User.data;
 	
 	};
-		
+
 	return User;
 	
 });

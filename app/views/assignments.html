@@ -1,0 +1,27 @@
+<br/>
+<div class="row">
+	<div class="col-9 col-lg-9">
+		<div class="panel panel-default " ng-controller="DocumentController">			
+			<div class="panel-heading">
+				<h3 class="panel-title">My Assigned Documents</h3>
+			</div>			
+			<div class="panel-body">			
+				<table ng-table="tableParams" class="table table-hover table-condensed">					
+					<tbody>					
+						<tr ng-repeat="doc in $data">							
+							<td data-title="'Filename'" sortable="'filename'">
+								{{doc.filename}}
+							</td>							
+							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
+								{{doc.status}}
+							</td>							
+							<td data-title="'Action'" class="text-center">
+								<a href="annotate/{{doc.filename}}" class="btn btn-default">Annotate</a>
+							</td>												
+						</tr>						
+					</tbody>					
+				</table>				
+			</div>
+		</div>
+	</div>
+</div>

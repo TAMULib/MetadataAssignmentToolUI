@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myLibrary" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myLibrary" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myLibrary" class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
 	<base href="/metadatatool/">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>My Library :: Texas A&amp;M Libraries</title>
+	<title>Metadata Tool :: Texas A&amp;M Libraries</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
@@ -15,6 +15,9 @@
 	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
 	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
 	
+	<link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
 	<link rel="stylesheet" href="resources/styles/app.css">
 	<link rel="stylesheet" href="resources/styles/main.css">
 
@@ -30,17 +33,35 @@
 
 	<!-- Content placed here will appear on every page -->
 	
-	<a href="/metadatatool">Home</a>
+	<div ng-controller="AdminController">
 	
-	<div ng-controller="AdminController"><a ng-show="admin" ng-if="isMocking()==false" href="admin">Admin</a></div>
+		<a ng-show="isAdmin()" ng-if="isMocking()==false" href="admin">Admin</a>
+		
+		<button ng-if="assumeBtn == 'Unassume'" type="submit" class="btn btn-default" ng-click="assumeUser(assume)">{{assumeBtn}}</button>
 
-	<h1> Welcome: <username></username> </h1>
+		<h1> Welcome: <username></username> </h1>
+		
+		<a href="home">Home</a> |
 
+		<a href="myview">My View</a> |
+
+		<a href="documents">Documents</a> |
+		
+		<a href="assignments">My Assigned Documents</a>
+
+		<span ng-if="(isAdmin() || isManager()) == true">
+			| <a href="users" >Users</a> |
+		
+			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv" class="btn btn-default">Export Metadata</button>
+			
+		</span>
+		
+	</div>
+	
 	<div ng-view></div>
 
-
-	<footer style="margin-left:20px;">
-		MySeedApp Version: <span app-version></span>
+	<footer>
+		MetadataTool Version: <span app-version></span>
 	</footer>
 
 
@@ -56,7 +77,12 @@
 	<script src="bower_components/angular-loader/angular-loader.js"></script>
 	<script src="bower_components/angular-mocks/angular-mocks.js"></script>
 	
+	<script src="bower_components/ng-table/dist/ng-table.min.js"></script>
 	
+	<script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+	
+	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
 	<!-- Modules -->
 	<script src="components/version/version.js"></script>
 	<script src="components/version/version-directive.js"></script>
@@ -85,21 +111,30 @@
 
     <!-- Directives -->
     <script src="directives/userDirective.js"></script>
+    <script src="directives/modalDirective.js"></script>
 
     <!-- Services -->
     <script src="services/wsservice.js"></script>
-    <script src="services/mylibrarywsapi.js"></script>
+    <script src="services/wsapi.js"></script>
   	<script src="services/authserviceapi.js"></script>
 
     <!-- Factories -->
 
     <!-- Models -->
-    <script src="model/abstractModel.js"></script>
-    <script src="model/userModel.js"></script>
+    <script src="models/abstractModel.js"></script>
+    <script src="models/userModel.js"></script>
+    <script src="models/userRepoModel.js"></script>
+    <script src="models/documentRepoModel.js"></script>
+    <script src="models/documentPageModel.js"></script>
+    <script src="models/documentModel.js"></script>
+    <script src="models/metadataModel.js"></script>
 
+    
     <!-- Controllers -->
     <script src="controllers/userController.js"></script>
     <script src="controllers/adminController.js"></script>
+    <script src="controllers/documentController.js"></script>
+    <script src="controllers/annotateController.js"></script>
     
     <!-- endbuild -->
 

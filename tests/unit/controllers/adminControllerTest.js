@@ -1,19 +1,22 @@
 
-describe('controller: UserController', function() {
+describe('controller: AdminController', function() {
 	
 	var controller, scope, User;
 
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.user'));
+	beforeEach(module('mock.userRepo'));
 	
-	beforeEach(inject(function($controller, $rootScope, _User_) {
+	beforeEach(inject(function($controller, $rootScope, _User_, _UserRepo_) {
         scope = $rootScope.$new(); 
-        controller = $controller('UserController', {
+        controller = $controller('AdminController', {
             $scope: scope,
-            User: _User_
+            User: _User_,
+            UserRepo: _UserRepo_
         });
         User = _User_; 
+        UserRepo = _UserRepo_;
     }));
 
 	describe('Is the controller defined', function() {
@@ -56,4 +59,32 @@ describe('controller: UserController', function() {
 		});		
 	});	
 
+	describe('Does the scope have a UserRepo', function() {
+		it('UserRepo should be on the scope', function() {
+			expect(scope.userRepo).toBeDefined();
+		});
+	});
+	
+	describe('Does the UserRepo have expected users credentials', function() {
+		it('UserRepo should have expected users credentials', function() {
+			expect(scope.userRepo).toEqual(mockUserRepo1);
+		});
+	});
+	
+	describe('Should be able to set a UserRepo', function() {
+		it('should have set the UserRepo', function() {			
+			UserRepo.set(mockUserRepo2)			
+			expect(scope.userRepo).toEqual(mockUserRepo2);
+		});
+	});
+	
+	describe('Should be able to fetch a UserRepo', function() {		
+		it('should have set the fetched UserRep', function() {			
+			UserRepo.fetch().then(function(data) {
+				UserRepo.set(data);
+				expect(scope.userRepo).toEqual(mockUserRepo3);
+			});
+		});		
+	});	
+		
 });

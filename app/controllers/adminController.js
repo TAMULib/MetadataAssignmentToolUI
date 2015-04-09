@@ -1,9 +1,13 @@
-myLibrary.controller('AdminController', function ($scope, $http, User, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi) {
 
 	$scope.user = User.get();
 	
+	$scope.userRepo = UserRepo.get();
+	
 	$scope.showModal = false;
-
+	
+	$scope.selectedUser = null;
+	
 	if(sessionStorage.assumedUser) {
 		$scope.assume = JSON.parse(sessionStorage.assumedUser);
 		$scope.assumeBtn = 'Unassume';
@@ -11,15 +15,55 @@ myLibrary.controller('AdminController', function ($scope, $http, User, AuthServi
 		$scope.assumeBtn = 'Assume';
 	}
 	
-	$scope.$watch('user.role', function() {
+	$scope.$watch('user.role', function() {		
 		sessionStorage.role = $scope.user.role;
-		if ($scope.user.role == 'ROLE_ADMIN') {						
+		if ($scope.user.role == 'ROLE_ADMIN') {
 			$scope.admin = true;
-		} else {
+		} 
+		else if ($scope.user.role == 'ROLE_MANAGER') {
+			$scope.admin = false;
+		}
+		else {
 			$scope.admin = false;
 		}
 	});
+	
+	$scope.allowableRoles = function(userRole) {
+		if(sessionStorage.role == 'ROLE_ADMIN') {
+			return ['ROLE_ADMIN','ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
+		}
+		else if(sessionStorage.role == 'ROLE_MANAGER') {
+			if(userRole == 'ROLE_ADMIN') {
+				return ['ROLE_ADMIN'];
+			}
+			return ['ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
+		}
+		else {
+			return [userRole];
+		}
+	};
 
+	$scope.updateRole = function(uin, role) {
+		UserRepo.updateRole(uin, role);
+	}
+	
+	$scope.isAdmin = function() {
+		return (sessionStorage.role == "ROLE_ADMIN");
+	};
+	
+	$scope.isManager = function() {
+		return (sessionStorage.role == "ROLE_MANAGER");
+	};
+	
+	$scope.isAnnotator = function() {
+		return (sessionStorage.role == "ROLE_ANNOTATOR");
+	};
+	
+	$scope.showAssignmentsModal = function(user) {
+		$scope.selectedUser = user;
+		$scope.showModal = !$scope.showModal;
+	}
+	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
 			return true;
@@ -27,9 +71,9 @@ myLibrary.controller('AdminController', function ($scope, $http, User, AuthServi
 		else {
 			return false;
 		}
-	}
+	};
 
-	$scope.assumeUser = function(assume) {		
+	$scope.assumeUser = function(assume) {
 		
 		if(!sessionStorage.assumedUser) {
 			if ((typeof assume !== 'undefined') && assume.netid) {				
@@ -48,6 +92,9 @@ myLibrary.controller('AdminController', function ($scope, $http, User, AuthServi
 						
 						$scope.showModal = false;
 						
+						$window.location.reload();
+						$location.path('/assignments');
+						
 					}
 					else {
 						$scope.assumeStatus = 'invalid netid';
@@ -65,12 +112,24 @@ myLibrary.controller('AdminController', function ($scope, $http, User, AuthServi
 			User.get("unassume");
 
 			$scope.assumeBtn = 'Assume';
+			
+			$location.path('/admin');
 		}		
 		
 	};
-
-	$scope.toggleModal = function(){
-		$scope.showModal = !$scope.showModal;
+	
+	$scope.exportMetadata = function() {
+		console.log("Export metadata");
+		return Metadata.getAll().then(function(metadata) {
+			return JSON.parse(metadata.body).content.HashMap.list;
+		});
 	};
+	
+	UserRepo.listen().then(null, null, function(data) {
+		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
+			User.get(true);
+			$route.reload();
+		}			
+	});
 	
 });

@@ -1,13 +1,25 @@
-myLibrary.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 	$routeProvider.
+		when('/users', {
+			templateUrl: 'views/users.html'
+		}).
+		when('/assignments', {
+			templateUrl: 'views/assignments.html'
+		}).
+		when('/documents', {
+			templateUrl: 'views/documents.html'
+		}).
 		when('/myview', {
-			templateUrl: 'view/myview.html'
+			templateUrl: 'views/myview.html'
+		}).
+		when('/annotate/:documentKey', {
+			templateUrl: 'views/annotate.html'
 		}).
 		when('/admin', {
-			templateUrl: 'view/admin.html'
+			templateUrl: 'views/admin.html'
 		}).
 		otherwise({redirectTo: '/',
-			templateUrl: 'view/index.html'
+			templateUrl: 'views/home.html'
 		});
 }]);

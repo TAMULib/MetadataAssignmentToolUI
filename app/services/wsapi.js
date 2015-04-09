@@ -1,8 +1,8 @@
-myLibrary.service("MyLibraryWsApi",function($q, $http, wsservice, AuthServiceApi) {
+metadataTool.service("WsApi",function($q, $http, wsservice, AuthServiceApi) {
 
-	var MyLibraryWsApi = this;
+	var WsApi = this;
 
-	MyLibraryWsApi.listen = function(apiReq) {
+	WsApi.listen = function(apiReq) {
 		var request = '/ws/'+apiReq.controller+'/' + apiReq.method;
 		var channel = '/' + apiReq.endpoint + "/" + apiReq.controller;
 		
@@ -12,7 +12,7 @@ myLibrary.service("MyLibraryWsApi",function($q, $http, wsservice, AuthServiceApi
 		return wsservice.subscribe(channel);
 	};
 
-	MyLibraryWsApi.fetch = function(apiReq) {
+	WsApi.fetch = function(apiReq) {
 		var request = '/ws/'+apiReq.controller+'/' + apiReq.method;	  
 		var channel = apiReq.endpoint + "/" + apiReq.controller + "/" + apiReq.method;
 
