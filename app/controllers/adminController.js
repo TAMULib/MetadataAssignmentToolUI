@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($scope, $http, User, UserRepo, Metadata, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $route, $http, User, UserRepo, Metadata, AuthServiceApi) {
 
 	$scope.user = User.get();
 	
@@ -129,9 +129,11 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		});
 	};
 	
-	UserRepo.listen().then(null, null, function(data) {		
+	UserRepo.listen().then(null, null, function(data) {
+		console.log(data);
 		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
 			User.get(true);
+			$route.reload();
 		}			
 	});
 	

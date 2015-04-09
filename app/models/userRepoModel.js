@@ -14,11 +14,7 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 	
 	Users.data = null;
 	
-	Users.listener = WsApi.listen({
-		endpoint: 'channel', 
-		controller: 'users', 
-		method: '',
-	});
+	Users.listener = null;
 	
 	Users.set = function(data) {
 		self.unwrap(self, data, "HashMap");
@@ -42,6 +38,15 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 		else {
 			Users.data = new Users(newAllUsersPromise);	
 		}
+		
+		Users.listener = WsApi.listen({
+			endpoint: 'channel', 
+			controller: 'users', 
+			method: '',
+		});
+				
+		Users.set(Users.listener);
+		
 
 		return Users.data;
 	
