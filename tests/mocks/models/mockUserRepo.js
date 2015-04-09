@@ -101,5 +101,11 @@ angular.module('mock.userRepo', []).
             });
         }; 
         
+        UserRepo.listen = function() {
+        	return $q(function(resolve) {            	
+            	resolve(mockUserRepo3);
+            });
+        }; 
+        
         return UserRepo;
 });

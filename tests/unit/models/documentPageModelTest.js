@@ -23,13 +23,5 @@ describe('model: DocumentPage', function() {
 			expect(DocumentPage.get(1,10,'filename','asc',{'filename':'','status':'','annotator':''}).content).toEqual(mockDocumentPage1);
 		});
 	});
-
-	describe('set method should set a Document', function() {
-		it('the Document was set', function() {
-			var documents = DocumentPage.get(1,10,'filename','asc',{'filename':'','status':'','annotator':''});
-			DocumentPage.set({"unwrap":function(){}, "content":mockDocumentPage2});
-			expect(documents.content).toEqual(mockDocumentPage2);
-		});
-	});
 	
 });

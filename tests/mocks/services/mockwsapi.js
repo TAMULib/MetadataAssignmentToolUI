@@ -40,8 +40,7 @@ angular.module('mock.wsApi', []).
         }
         
         WsApi.listen = function(apiReq) {        	
-        	var defer = $q.defer();       	
-        	            
+        	var defer = $q.defer();
             return defer.promise;
         }
             
