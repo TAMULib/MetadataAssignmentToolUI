@@ -1,6 +1,6 @@
 metadataTool.controller('DocumentController', function ($scope, $route, $timeout, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
-	var view = $route.current.$$route.originalPath;
+	var view = window.location.pathname;
 	
 	var userRepo;
 	
@@ -18,8 +18,8 @@ metadataTool.controller('DocumentController', function ($scope, $route, $timeout
 	        },
 	        filter: {
 	        	filename: '',
-	            status: (view == '/assignments' || view == '/users') ? 'Assigned' : 'Open',
-	            annotator: (view == '/assignments' || view == '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : 'Open',
+	            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 	        }
 	    }, {
 	        total: 0,
@@ -27,7 +27,7 @@ metadataTool.controller('DocumentController', function ($scope, $route, $timeout
 	        	
 	        	var key; for(key in params.sorting()) {}
 	        	
-	        	if(view == '/assignments' || view == '/users') {
+	        	if(view == '/metadatatool/assignments' || view == '/metadatatool/users') {
 	        		if(!params.filter().annotator) {
 	            		$timeout(function() {
 	            			params.filter().annotator = ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin;
