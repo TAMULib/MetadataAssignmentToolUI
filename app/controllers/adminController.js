@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($scope, $route, $http, User, UserRepo, Metadata, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi) {
 
 	$scope.user = User.get();
 	
@@ -101,6 +101,9 @@ metadataTool.controller('AdminController', function ($scope, $route, $http, User
 						
 						$scope.showModal = false;
 						
+						$window.location.reload();
+						$location.path('/assignments');
+						
 					}
 					else {
 						$scope.assumeStatus = 'invalid netid';
@@ -118,6 +121,8 @@ metadataTool.controller('AdminController', function ($scope, $route, $http, User
 			User.get("unassume");
 
 			$scope.assumeBtn = 'Assume';
+			
+			$location.path('/admin');
 		}		
 		
 	};

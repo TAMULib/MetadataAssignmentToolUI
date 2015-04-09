@@ -36,6 +36,8 @@
 	<div ng-controller="AdminController">
 	
 		<a ng-show="isAdmin()" ng-if="isMocking()==false" href="admin">Admin</a>
+		
+		<button ng-if="assumeBtn == 'Unassume'" type="submit" class="btn btn-default" ng-click="assumeUser(assume)">{{assumeBtn}}</button>
 
 		<h1> Welcome: <username></username> </h1>
 		
