@@ -6,6 +6,8 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 	
 	$scope.showModal = false;
 	
+	$scope.selectedUser = null;
+	
 	if(sessionStorage.assumedUser) {
 		$scope.assume = JSON.parse(sessionStorage.assumedUser);
 		$scope.assumeBtn = 'Unassume';
@@ -119,16 +121,18 @@ metadataTool.controller('AdminController', function ($scope, $http, User, UserRe
 		}		
 		
 	};
-
-	$scope.toggleModal = function(){
-		$scope.showModal = !$scope.showModal;
-	};
 	
 	$scope.exportMetadata = function() {
 		console.log("Export metadata");
 		return Metadata.getAll().then(function(metadata) {
 			return JSON.parse(metadata.body).content.HashMap.list;
 		});
-	}
+	};
+	
+	UserRepo.listen().then(null, null, function(data) {		
+		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
+			User.get(true);
+		}			
+	});
 	
 });

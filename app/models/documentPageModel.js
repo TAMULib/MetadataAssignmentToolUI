@@ -29,8 +29,8 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 		if(!filter.filename) filter.filename = '';
 		if(!filter.status) filter.status = '';
 		if(!filter.annotator) filter.annotator = '';
-		
-		var newDocumentPromise = WsApi.fetch({
+			
+		return WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'page',
@@ -45,8 +45,6 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 			})
 		});
 		
-		return new Documents(newDocumentPromise);
-	
 	};
 	
 	Documents.listen = function() {
