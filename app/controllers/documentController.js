@@ -57,24 +57,15 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, Docume
 	});
 		
 	$scope.isAdmin = function() {
-		if(sessionStorage.role == "ROLE_ADMIN") {
-			return true;
-		}
-		return false;
+		return (sessionStorage.role == "ROLE_ADMIN");
 	};
 	
 	$scope.isManager = function() {
-		if(sessionStorage.role == "ROLE_MANAGER") {
-			return true;
-		}
-		return false;
+		return (sessionStorage.role == "ROLE_MANAGER");
 	};
 	
 	$scope.isAnnotator = function() {
-		if(sessionStorage.role == "ROLE_ANNOTATOR") {
-			return true;
-		}
-		return false;
+		return (sessionStorage.role == "ROLE_ANNOTATOR");
 	};
 	
 	$scope.availableAnnotators = function() {
