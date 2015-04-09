@@ -130,7 +130,6 @@ metadataTool.controller('AdminController', function ($scope, $route, $http, User
 	};
 	
 	UserRepo.listen().then(null, null, function(data) {
-		console.log(data);
 		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
 			User.get(true);
 			$route.reload();
