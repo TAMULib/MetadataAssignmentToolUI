@@ -21,6 +21,10 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 			Metadata.add($scope.document, 'committee', true, index);
 		}
 		
+		for(var index in $scope.document.metadata.chair) {
+			Metadata.add($scope.document, 'chair', true, index);
+		}
+		
 	}
 	
 	$scope.complete = function(filename) {
