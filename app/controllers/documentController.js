@@ -10,10 +10,6 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	
 	$scope.user = User.get();
 	
-	var statusFilter = function() {
-		return status === 'Assigned' || status === 'Rejected';
-	}
-	
 	$scope.setTable = function() {
 	
 		$scope.tableParams = new ngTableParams({
@@ -24,7 +20,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	        },
 	        filter: {
 	        	filename: '',
-	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? statusFilter() : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
 	            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 	        }
 	    }, {
@@ -37,16 +33,13 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	        		if(!params.filter().annotator) {
 	            		$timeout(function() {
 	            			params.filter().annotator = ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin;
-	                	}, 50);
+	            		}, 250);
 	            	}
 	        	}
-	
+
 	        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-	        		        		
 	        		var page = JSON.parse(data.body).content.PageImpl;
-	        		
 	        		params.total(page.totalElements);
-	        		
 	        		$scope.docs = page.content;
 	        		$defer.resolve($scope.docs);
 	        	});
