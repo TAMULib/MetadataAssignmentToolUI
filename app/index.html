@@ -52,7 +52,7 @@
 		<span ng-if="(isAdmin() || isManager()) == true">
 			| <a href="users" >Users</a> |
 		
-			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv" class="btn btn-default">Export Metadata</button>
+			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable', 'Status']" filename="metadata.csv" class="btn btn-default">Export Metadata</button>
 			
 		</span>
 		
@@ -135,6 +135,7 @@
     <script src="controllers/adminController.js"></script>
     <script src="controllers/documentController.js"></script>
     <script src="controllers/annotateController.js"></script>
+    <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->
 

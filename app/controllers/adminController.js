@@ -1,6 +1,8 @@
-metadataTool.controller('AdminController', function ($scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi) {
-
-	$scope.user = User.get();
+metadataTool.controller('AdminController', function ($controller, $scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi) {
+	
+    angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+    
+    $scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
 	
@@ -46,18 +48,6 @@ metadataTool.controller('AdminController', function ($scope, $location, $route, 
 	$scope.updateRole = function(uin, role) {
 		UserRepo.updateRole(uin, role);
 	}
-	
-	$scope.isAdmin = function() {
-		return (sessionStorage.role == "ROLE_ADMIN");
-	};
-	
-	$scope.isManager = function() {
-		return (sessionStorage.role == "ROLE_MANAGER");
-	};
-	
-	$scope.isAnnotator = function() {
-		return (sessionStorage.role == "ROLE_ANNOTATOR");
-	};
 	
 	$scope.showAssignmentsModal = function(user) {
 		$scope.selectedUser = user;
@@ -120,7 +110,7 @@ metadataTool.controller('AdminController', function ($scope, $location, $route, 
 	
 	$scope.exportMetadata = function() {
 		console.log("Export metadata");
-		return Metadata.getAll().then(function(metadata) {
+		return Metadata.getAllPublished().then(function(metadata) {
 			return JSON.parse(metadata.body).content.HashMap.list;
 		});
 	};

@@ -19,22 +19,17 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 	};
 
 	Metadata.get = function(filename) {
-
 		var newMetadataPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
 				data: JSON.stringify({'filename': filename})
 		});
-
-		Metadata.data = new Metadata(newMetadataPromise);	
-		
-		return Metadata.data;
-	
+		Metadata.data = new Metadata(newMetadataPromise);		
+		return Metadata.data;	
 	};
 	
-	Metadata.add = function(document, label, isRepeatable, index) {
-
+	Metadata.add = function(document, label, isRepeatable, index, status) {
 		var addMetadataSubmitPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
@@ -44,24 +39,47 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 					'label': label,
 					'value': (isRepeatable) ? document.metadata[label][index] : document.metadata[label],					
 					'isRepeatable': isRepeatable,
-					'index': index
+					'index': index,
+					'status': status
 				})
 		});
-
 		if(addMetadataSubmitPromise.$$state) {
 			addMetadataSubmitPromise.then(function(data) {
 				logger.log(data);
 			});
-		}
-		
+		}		
+	};
+	
+	Metadata.publish = function(document) {
+		var addMetadataSubmitPromise = WsApi.fetch({
+				endpoint: '/private/queue', 
+				controller: 'metadata', 
+				method: 'publish',
+				data: JSON.stringify({
+					'filename': document.filename
+				})
+		});
+		if(addMetadataSubmitPromise.$$state) {
+			addMetadataSubmitPromise.then(function(data) {
+				logger.log(data);
+			});
+		}		
 	};
 	
 	Metadata.getAll = function() {
-
 		return WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'metadata', 
 			method: 'all',
+		})
+	
+	};
+	
+	Metadata.getAllPublished = function() {
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'published',
 		})
 	
 	};

@@ -1,5 +1,7 @@
-metadataTool.controller('DocumentController', function ($scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
+	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+	
 	var view = $window.location.pathname;
 	
 	var userRepo;
@@ -7,6 +9,10 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, $windo
 	var annotators = [];
 	
 	$scope.user = User.get();
+	
+	var statusFilter = function() {
+		return status === 'Assigned' || status === 'Rejected';
+	}
 	
 	$scope.setTable = function() {
 	
@@ -18,7 +24,7 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, $windo
 	        },
 	        filter: {
 	        	filename: '',
-	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : 'Open',
+	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? statusFilter() : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
 	            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 	        }
 	    }, {
@@ -55,18 +61,6 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, $windo
 	$scope.$watch('selectedUser.uin', function() {		
 		$scope.setTable();
 	});
-		
-	$scope.isAdmin = function() {
-		return (sessionStorage.role == "ROLE_ADMIN");
-	};
-	
-	$scope.isManager = function() {
-		return (sessionStorage.role == "ROLE_MANAGER");
-	};
-	
-	$scope.isAnnotator = function() {
-		return (sessionStorage.role == "ROLE_ANNOTATOR");
-	};
 	
 	$scope.availableAnnotators = function() {
 		if(!userRepo) {
@@ -90,6 +84,10 @@ metadataTool.controller('DocumentController', function ($scope, $timeout, $windo
 		}
 		DocumentRepo.update(filename, annotator, status);		
 	};
+	
+	$scope.reviewDocument = function(filename) {
+		console.log("Review " + filename);
+	}
 
 	DocumentPage.listen().then(null, null, function(data) {
 		$scope.tableParams.reload();
