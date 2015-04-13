@@ -1,10 +1,14 @@
-metadataTool.controller('AnnotateController', function($scope, $location, $routeParams, Document, DocumentRepo, Metadata, User) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, Document, DocumentRepo, Metadata, User) {
 	
-	var annotator = User.get();
+	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+	
+	var user = User.get();
 	
 	$scope.document = Document.get($routeParams.documentKey);
 	
 	$scope.document.filename = $routeParams.documentKey;
+	
+	$scope.showModal = false;
 	
 	angular.extend($scope.document, {'metadata':Metadata.get($routeParams.documentKey)});
 	
@@ -22,27 +26,30 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 	
 	$scope.updateMetadata = function(filename) {
 		Metadata.clear(filename).then(function(data) {
-			if($scope.document.metadata.abstract.length > 0) {
-				Metadata.add($scope.document, 'abstract', false, 0);
+			if(status == 'Pending') {
+				if($scope.document.metadata.abstract.length > 0) {
+					Metadata.add($scope.document, 'abstract', false, 0, status);
+				}
+				else {
+					alert("Must have an abstract!");
+				}		
+				for(var index in $scope.document.metadata.committee) {
+					Metadata.add($scope.document, 'committee', true, index, status);
+				}
+				for(var index in $scope.document.metadata.chair) {
+					Metadata.add($scope.document, 'chair', true, index, status);
+				}
 			}
 			else {
-				alert("Must have an abstract!");
-			}
-			
-			for(var index in $scope.document.metadata.committee) {
-				Metadata.add($scope.document, 'committee', true, index);
-			}
-			
-			for(var index in $scope.document.metadata.chair) {
-				Metadata.add($scope.document, 'chair', true, index);
+				Metadata.publish($scope.document);
 			}
 		});
 	};
 	
-	$scope.complete = function(filename) {
+	$scope.submit = function(filename) {
 		Metadata.clear(filename).then(function(data) {
-			$scope.updateMetadata(filename);
-			DocumentRepo.update(filename, annotator.uin, 'Complete');
+			$scope.updateMetadata(filename, 'Pending');
+			DocumentRepo.update(filename, user.uin, 'Annotated', '');
 			$location.path('/assignments');
 		});
 	}
@@ -62,7 +69,36 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 			ready = false;
 		}
 		return ready;
-	}
+	};
+	
+	$scope.accept = function(document) {
+		$scope.updateMetadata(document.filename, 'Publish');
+		DocumentRepo.update(document.filename, document.annotator, 'Published', '');
+		$location.path('/documents');
+	};
+	
+	$scope.reject = function(document) {
+		$scope.showModal = true;
+	};
+	
+	$scope.managerAnnotating = function() {
+		return ($routeParams.action == 'annotate');
+	};
+	
+	$scope.managerReviewing = function() {
+		return ($routeParams.action == 'review');
+	};
+	
+	$scope.submitRejection = function(document, rejectionNotes) {
+		if(rejectionNotes) {
+			DocumentRepo.update(document.filename, document.annotator, 'Rejected', rejectionNotes);
+			$scope.showModal = false;
+			$location.path('/documents');
+		}
+		else {
+			$scope.validation = "Please enter text."
+		}
+	};
 	
 	$scope.requiresCuration = function(filename) {
 		DocumentRepo.update(filename, annotator.uin, 'Requires Curation');
