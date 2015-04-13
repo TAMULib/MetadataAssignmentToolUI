@@ -1,7 +1,6 @@
 <br/>
 <div class="container-fluid" ng-controller="AnnotateController">
-<<<<<<< HEAD
-	
+
 	<div class="row" ng-if="document.notes">
 	Rejection notes: {{document.notes}}
 	</div>
@@ -30,13 +29,18 @@
 			<h3>Abstract</h3>
 			<textarea ng-model="document.metadata.abstract" rows="5" cols="25" style="width:100%;"></textarea>			
 		</div>
-		<div class="row">
-			<h3>Committee chair</h3>
-			<div class="row"><label>1:</label><input type="text" ng-model="document.metadata.chair['1']"/></div>
-			<div class="row"><label>2:</label><input type="text" ng-model="document.metadata.chair['2']"/></div>
-			
-			<!-- Add and Remove Dynamically -->
-			<!-- <div class="row"><label>index:</label><input type="text" ng-model="document.chair['index']"/></div> -->
+		<div class="row">			
+			<span class="h3 pull left">
+				Committee members
+			</span>
+			<span class="top" title="Remove committee chair field"><a ng-if="chairCount() > 1" ng-click="removeCommitteeChair()" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a></span>
+			<span class="top" title="Add committee chair field"><a ng-click="addCommitteeChair()" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a></span>					
+			<ul class="list-unstyled">
+				<li ng-repeat="member in document.metadata.chair track by $index">
+					<label>{{$index+1}}:</label>
+					<input type="text" ng-model="document.metadata.chair[$index]"/>
+				</li>
+			</ul>
 		</div>
 		<div class="row">
 			<span class="h3 pull left">
@@ -53,7 +57,7 @@
 		</div>
 		<div class="row">			
 			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-				<button ng-click="requiresCuration(document.filename)">
+				<button class="btn btn-default" ng-click="requiresCuration(document.filename)">
 					Requires Curation
 				</button>
 				<button class="btn btn-default" ng-click="updateMetadata(document.filename)">
@@ -64,7 +68,7 @@
 				</button>
 			</div>
 			<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-				<button ng-click="requiresCuration(document.filename)">
+				<button class="btn btn-default" ng-click="requiresCuration(document.filename)">
 					Requires Curation
 				</button>
 				<button class="btn btn-default" ng-click="accept(document)">

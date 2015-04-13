@@ -7,7 +7,6 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
-		console.log(futureData);
 		self.unwrap(self, futureData, "HashMap");
 		
 	};

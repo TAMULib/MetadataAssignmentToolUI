@@ -28,6 +28,18 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 		$scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length] = '';
 	};
 	
+	$scope.chairCount = function() {
+		return Object.keys($scope.document.metadata.chair).length;
+	};
+
+	$scope.removeCommitteeChair = function() {
+		delete $scope.document.metadata.chair[Object.keys($scope.document.metadata.chair).length-1];
+	};
+	
+	$scope.addCommitteeChair = function() {
+		$scope.document.metadata.chair[Object.keys($scope.document.metadata.chair).length] = '';
+	};
+	
 	$scope.updateMetadata = function(filename) {
 		Metadata.clear(filename).then(function(data) {
 			if(status == 'Pending') {

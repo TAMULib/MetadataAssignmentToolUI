@@ -7,7 +7,6 @@ metadataTool.service("PDF", function(WsApi, AbstractModel) {
 
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
-		console.log(futureData);
 		self.unwrap(self, futureData, "HashMap");
 		
 	};
