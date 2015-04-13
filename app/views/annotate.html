@@ -1,55 +1,55 @@
 <br/>
 <div class="container-fluid" ng-controller="AnnotateController">
 	<div class="col-6 col-lg-6">		
-			<div class="span6">
-				<h3>Document</h3>
-				<textarea rows="25" cols="100" style="width:100%;">{{document.text}}</textarea>
-			</div>
+		<div class="span6">
+			<h3>Document</h3>
+			<textarea rows="25" cols="100" style="width:100%;">{{document.text}}</textarea>
+		</div>
 		
 	</div>
 	<div class="col-4 col-lg-4">
 		<div class="row">		
-				<div class="span4">
-					<h3>Abstract</h3>
-					<textarea ng-model="document.metadata.abstract" rows="5" cols="25" style="width:100%;"></textarea>
-				</div>
+			<div class="span4">
+				<h3>Abstract</h3>
+				<textarea ng-model="document.metadata.abstract" rows="5" cols="25" style="width:100%;"></textarea>
+			</div>
 		</div>
 		<div class="row">
-				<div class="container">
-					<h3>Committee chair</h3>
-					<div class="row"><label>1:</label><input type="text" ng-model="document.metadata.chair['1']"/></div>
-					<div class="row"><label>2:</label><input type="text" ng-model="document.metadata.chair['2']"/></div>
-					
-					<!-- Add and Remove Dynamically -->
-					<!-- <div class="row"><label>index:</label><input type="text" ng-model="document.chair['index']"/></div> -->
-					
-				</div>
+			<div class="container">
+				<h3>Committee chair</h3>
+				<div class="row"><label>1:</label><input type="text" ng-model="document.metadata.chair['1']"/></div>
+				<div class="row"><label>2:</label><input type="text" ng-model="document.metadata.chair['2']"/></div>
+				
+				<!-- Add and Remove Dynamically -->
+				<!-- <div class="row"><label>index:</label><input type="text" ng-model="document.chair['index']"/></div> -->
+				
+			</div>
 		</div>
 		<div class="row">
-				<div class="container">
-					<h3>Committee members</h3>
-					<div class="row"><label>1:</label><input type="text" ng-model="document.metadata.committee['1']"/></div>
-					<div class="row"><label>2:</label><input type="text" ng-model="document.metadata.committee['2']"/></div>
-					<div class="row"><label>3:</label><input type="text" ng-model="document.metadata.committee['3']"/></div>
-					
-					<!-- Add and Remove Dynamically -->
-					<!-- <div class="row"><label>index:</label><input type="text" ng-model="document.committee['index']"/></div> -->
-					
-				</div>
+			<span class="h3 pull left">
+				Committee members
+			</span>
+			<span class="top" title="Remove committee member field"><a ng-if="memberCount() > 1" ng-click="removeCommitteeMember()" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a></span>
+			<span class="top" title="Add committee member field"><a ng-click="addCommitteeMember()" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a></span>					
+			<ul class="list-unstyled">
+				<li ng-repeat="member in document.metadata.committee track by $index">
+					<label>{{$index+1}}:</label>
+					<input type="text" ng-model="document.metadata.committee[$index]"/>
+				</li>
+			</ul>				
 		</div>
 		<div class="row">
-				<div style="float: right;">
-					<button ng-click="requiresCuration(document.filename)">
-						Requires Curation
-					</button>
-					<button ng-click="updateMetadata(document.filename)">
-						Update
-					</button>
-					<button ng-if="readyToSubmit()" ng-click="complete(document.filename)">
-						Complete
-					</button>
-				</div>
-		</div>
-		
+			<div style="float: right;">
+				<button ng-click="requiresCuration(document.filename)">
+					Requires Curation
+				</button>
+				<button ng-click="updateMetadata(document.filename)">
+					Update
+				</button>
+				<button ng-if="readyToSubmit()" ng-click="complete(document.filename)">
+					Complete
+				</button>
+			</div>
+		</div>		
 	</div>
 </div>
