@@ -27,8 +27,10 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 				data: JSON.stringify({'filename': filename})
 		});
 
-		Metadata.data = new Metadata(newMetadataPromise);	
+		Metadata.data = new Metadata(newMetadataPromise);
 		
+		Metadata.set({'committee': ['']});
+
 		return Metadata.data;
 	
 	};
@@ -62,6 +64,17 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			endpoint: '/private/queue', 
 			controller: 'metadata', 
 			method: 'all',
+		})
+	
+	};
+	
+	Metadata.clear = function(filename) {
+
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'clear',
+			data: JSON.stringify({'filename': filename})
 		})
 	
 	};

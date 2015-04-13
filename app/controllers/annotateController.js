@@ -7,26 +7,40 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 	$scope.document.filename = $routeParams.documentKey;
 	
 	angular.extend($scope.document, {'metadata':Metadata.get($routeParams.documentKey)});
+	
+	$scope.memberCount = function() {
+		return Object.keys($scope.document.metadata.committee).length;
+	};
 		
+	$scope.removeCommitteeMember = function() {
+		delete $scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length-1];
+	};
+	
+	$scope.addCommitteeMember = function() {
+		$scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length] = '';
+	};
+	
 	$scope.updateMetadata = function(filename) {
-		
-		if($scope.document.metadata.abstract.length > 0) {
-			Metadata.add($scope.document, 'abstract', false, 0);
-		}
-		else {
-			alert("Must have an abstract!");
-		}
-		
-		for(var index in $scope.document.metadata.committee) {
-			Metadata.add($scope.document, 'committee', true, index);
-		}
-		
-	}
+		Metadata.clear(filename).then(function(data) {
+			if($scope.document.metadata.abstract.length > 0) {
+				Metadata.add($scope.document, 'abstract', false, 0);
+			}
+			else {
+				alert("Must have an abstract!");
+			}
+			
+			for(var index in $scope.document.metadata.committee) {
+				Metadata.add($scope.document, 'committee', true, index);
+			}
+		});
+	};
 	
 	$scope.complete = function(filename) {
-		$scope.updateMetadata(filename);
-		DocumentRepo.update(filename, annotator.uin, 'Complete');
-		$location.path('/assignments');
+		Metadata.clear(filename).then(function(data) {
+			$scope.updateMetadata(filename);
+			DocumentRepo.update(filename, annotator.uin, 'Complete');
+			$location.path('/assignments');
+		});
 	}
 	
 	$scope.readyToSubmit = function() {		
