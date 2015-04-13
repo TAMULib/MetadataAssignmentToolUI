@@ -70,7 +70,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			DocumentRepo.update(name, user.uin, 'Annotated', '');
 			$location.path('/assignments');
 		});
-	}
+	};
 	
 	$scope.readyToSubmit = function() {		
 		var ready = false;
@@ -96,9 +96,11 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	};
 	
 	$scope.accept = function(document) {
-		$scope.updateMetadata(document.name, 'Publish');
-		DocumentRepo.update(document.name, document.annotator, 'Published', '');
-		$location.path('/documents');
+		Metadata.clear(document.name).then(function(data) {
+			$scope.updateMetadata(document.name, 'Publish');
+			DocumentRepo.update(document.name, document.annotator, 'Published', '');
+			$location.path('/documents');
+		});
 	};
 	
 	$scope.reject = function(document) {
