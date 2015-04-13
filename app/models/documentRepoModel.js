@@ -24,24 +24,16 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		self.unwrap(self, data, "HashMap");
 	};
 
-	Documents.get = function(action) {
-
-		if(Documents.data && !action) return Documents.data;
+	Documents.get = function(name) {
 
 		var newDocumentPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'document', 
-				method: 'all',
+				method: 'get',
+				data: JSON.stringify({'name': name})
 		});
 
-		if(action) {
-			newDocumentPromise.then(function(data) {
-				Documents.set(JSON.parse(data.body).content.Document);
-			});
-		}
-		else {
-			Documents.data = new Documents(newDocumentPromise);	
-		}
+		Documents.data = new Documents(newDocumentPromise);
 		
 		return Documents.data;
 	
