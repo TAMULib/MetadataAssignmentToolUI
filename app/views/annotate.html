@@ -31,7 +31,7 @@
 		</div>
 		<div class="row">			
 			<span class="h3 pull left">
-				Committee members
+				Committee chair members
 			</span>
 			<span class="top" title="Remove committee chair field"><a ng-if="chairCount() > 1" ng-click="removeCommitteeChair()" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a></span>
 			<span class="top" title="Add committee chair field"><a ng-click="addCommitteeChair()" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a></span>					
@@ -57,18 +57,18 @@
 		</div>
 		<div class="row">			
 			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-				<button class="btn btn-default" ng-click="requiresCuration(document.filename)">
+				<button class="btn btn-default" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
-				<button class="btn btn-default" ng-click="updateMetadata(document.filename)">
+				<button class="btn btn-default" ng-click="updateMetadata(document.name, 'Pending')">
 					Save
 				</button>
-				<button class="btn btn-default" ng-if="readyToSubmit()" ng-click="submit(document.filename)">
+				<button class="btn btn-default" ng-if="readyToSubmit()" ng-click="submit(document.name)">
 					Submit
 				</button>
 			</div>
 			<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-				<button class="btn btn-default" ng-click="requiresCuration(document.filename)">
+				<button class="btn btn-default" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
 				<button class="btn btn-default" ng-click="accept(document)">

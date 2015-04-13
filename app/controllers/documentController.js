@@ -78,8 +78,8 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		DocumentRepo.update(name, annotator, status);		
 	};
 	
-	$scope.reviewDocument = function(filename) {
-		console.log("Review " + filename);
+	$scope.reviewDocument = function(name) {
+		console.log("Review " + name);
 	}
 
 	DocumentPage.listen().then(null, null, function(data) {

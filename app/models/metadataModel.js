@@ -61,7 +61,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 				controller: 'metadata', 
 				method: 'publish',
 				data: JSON.stringify({
-					'filename': document.filename
+					'name': document.name
 				})
 		});
 		if(addMetadataSubmitPromise.$$state) {
@@ -80,12 +80,12 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 	
 	};
 	
-	Metadata.clear = function(filename) {
+	Metadata.clear = function(name) {
 		return WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'metadata', 
 			method: 'clear',
-			data: JSON.stringify({'filename': filename})
+			data: JSON.stringify({'name': name})
 		});		
 	};
 	
