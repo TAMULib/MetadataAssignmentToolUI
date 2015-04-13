@@ -46,4 +46,9 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 		return ready;
 	}
 	
+	$scope.requiresCuration = function(filename) {
+		DocumentRepo.update(filename, annotator.uin, 'Requires Curation');
+		$location.path('/assignments');
+	}
+	
 });
