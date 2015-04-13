@@ -47,9 +47,10 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	
 	};
 		
-	Documents.update = function(filename, uin, status, notes) {
+	Documents.update = function(name, uin, status, notes) {
+		
 		var change = {
-			'filename': filename,
+			'name': name,
 			'uin': uin,
 			'status': status,
 			'notes': notes

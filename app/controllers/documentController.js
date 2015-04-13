@@ -16,11 +16,11 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	        page: 1,
 	        count: 10,
 	        sorting: {
-	            filename: 'asc'
+	            name: 'asc'
 	        },
 	        filter: {
-	        	filename: '',
-	            status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+	        	name: '',
+	        	status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
 	            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 	        }
 	    }, {
@@ -68,14 +68,14 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		return annotators;
 	};
 	
-	$scope.updateAnnotator = function(filename, status, annotator) {
+	$scope.updateAnnotator = function(name, status, annotator) {
 		if(!annotator) {
 			annotator = $scope.user.uin;
 		}
 		else {
 			annotator = JSON.parse(annotator);
 		}
-		DocumentRepo.update(filename, annotator, status);		
+		DocumentRepo.update(name, annotator, status);		
 	};
 	
 	$scope.reviewDocument = function(filename) {

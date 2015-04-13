@@ -1,13 +1,17 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, Document, DocumentRepo, Metadata, User) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, DocumentRepo, Metadata, User, TXT, PDF) {
 	
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
 	var user = User.get();
 	
-	$scope.document = Document.get($routeParams.documentKey);
-	
-	$scope.document.filename = $routeParams.documentKey;
-	
+	$scope.document = {};
+
+	$scope.document.name = $routeParams.documentKey;
+
+	$scope.txt = TXT.get($scope.document.name);
+
+	$scope.pdf = PDF.get($scope.document.name);
+
 	$scope.showModal = false;
 	
 	angular.extend($scope.document, {'metadata':Metadata.get($routeParams.documentKey)});
@@ -15,7 +19,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.memberCount = function() {
 		return Object.keys($scope.document.metadata.committee).length;
 	};
-		
+
 	$scope.removeCommitteeMember = function() {
 		delete $scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length-1];
 	};

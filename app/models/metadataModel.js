@@ -18,12 +18,12 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		self.unwrap(self, data);
 	};
 
-	Metadata.get = function(filename) {
+	Metadata.get = function(name) {
 		var newMetadataPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
-				data: JSON.stringify({'filename': filename})
+				data: JSON.stringify({'name': name})
 		});
 
 		Metadata.data = new Metadata(newMetadataPromise);
@@ -39,7 +39,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 				controller: 'metadata', 
 				method: 'add',
 				data: JSON.stringify({
-					'filename': document.filename,
+					'name': document.name,
 					'label': label,
 					'value': (isRepeatable) ? document.metadata[label][index] : document.metadata[label],					
 					'isRepeatable': isRepeatable,

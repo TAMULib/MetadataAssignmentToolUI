@@ -24,9 +24,9 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 
 	Documents.get = function(page, size, field, direction, filter) {
 		
-		if(!field) field = 'filename';
+		if(!field) field = 'name';
 		if(!direction) direction = 'asc';
-		if(!filter.filename) filter.filename = '';
+		if(!filter.name) filter.name = '';
 		if(!filter.status) filter.status = '';
 		if(!filter.annotator) filter.annotator = '';
 			
@@ -39,7 +39,7 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 				'size': size,
 				'field': field,
 				'direction': direction,
-				'filename': filter.filename,
+				'name': filter.name,
 				'status': filter.status,
 				'annotator': filter.annotator
 			})
