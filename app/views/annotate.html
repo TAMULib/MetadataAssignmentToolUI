@@ -9,7 +9,7 @@
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="txtTab">	
-						<textarea rows="25" cols="100" style="width:100%;">{{document.text}}</textarea>
+						<div class="well">{{txt.verbage}}</div>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="pdfTab">
 						<object data="{{pdf.uri}}" type="application/pdf" width="100%" height="600"></object>
@@ -35,10 +35,10 @@
 		</div>
 		<div class="row">
 				<div style="float: right;">
-					<button ng-click="updateMetadata(document.filename)">
+					<button ng-click="updateMetadata(document.name)">
 						Update
 					</button>
-					<button ng-if="readyToSubmit()" ng-click="complete(document.filename)">
+					<button ng-if="readyToSubmit()" ng-click="complete(document.name)">
 						Complete
 					</button>
 				</div>

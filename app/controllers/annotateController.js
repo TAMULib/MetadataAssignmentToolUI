@@ -1,18 +1,22 @@
-metadataTool.controller('AnnotateController', function($scope, $location, $routeParams, Document, DocumentRepo, Metadata, User, PDF) {
+metadataTool.controller('AnnotateController', function($scope, $location, $routeParams, DocumentRepo, Metadata, User, TXT, PDF) {
 	
 	var annotator = User.get();
-	
-	$scope.document = Document.get($routeParams.documentKey);
-	
-	$scope.document.filename = $routeParams.documentKey;
+	$scope.document = {};
 
-	$scope.pdf = PDF.get();
+
+	$scope.document.name = $routeParams.documentKey;
+
+	$scope.txt = TXT.get($scope.document.name);
+
+	console.log($scope.txt);
+		
+	$scope.pdf = PDF.get($scope.document.name);
 
 	logger.info($scope.pdf)
 	
 	angular.extend($scope.document, {'metadata':Metadata.get($routeParams.documentKey)});
 		
-	$scope.updateMetadata = function(filename) {
+	$scope.updateMetadata = function(name) {
 		
 		if($scope.document.metadata.abstract.length > 0) {
 			Metadata.add($scope.document, 'abstract', false, 0);
@@ -27,9 +31,9 @@ metadataTool.controller('AnnotateController', function($scope, $location, $route
 		
 	}
 	
-	$scope.complete = function(filename) {
-		$scope.updateMetadata(filename);
-		DocumentRepo.update(filename, annotator.uin, 'Complete');
+	$scope.complete = function(name) {
+		$scope.updateMetadata(name);
+		DocumentRepo.update(name, annotator.uin, 'Complete');
 		$location.path('/assignments');
 	}
 	

@@ -11,15 +11,15 @@
 				<table ng-table="tableParams" class="table table-hover table-condensed">					
 					<tbody>					
 						<tr ng-repeat="doc in $data">							
-							<td data-title="'Filename'" sortable="'filename'">
-								{{doc.filename}}
+							<td data-title="'Filename'" sortable="'name'">
+								{{doc.name}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
 								{{doc.status}}
 							</td>
 							<td data-title="'Annotator'" sortable="'annotator'" class="text-center">								
 								<span ng-if="!doc.annotator">
-									<button ng-click="updateAnnotator(doc.filename, 'Assigned')">
+									<button ng-click="updateAnnotator(doc.name, 'Assigned')">
 										Claim
 									</button>
 								</span>								
@@ -45,15 +45,15 @@
 				<table ng-table="tableParams" show-filter="true" class="table table-hover table-condensed">					
 					<tbody>					
 						<tr ng-repeat="doc in $data">							
-							<td data-title="'Filename'" sortable="'filename'" filter="{ 'filename': 'text' }">
-								{{doc.filename}}
+							<td data-title="'Filename'" sortable="'name'" filter="{ 'name': 'text' }">
+								{{doc.name}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
 								{{doc.status}}
 							</td>							
 							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
 								<span ng-if="!doc.annotator && availableAnnotators().length > 0">								
-									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.filename, 'Assigned', doc.annotator)" class="form-control">
+									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.name, 'Assigned', doc.annotator)" class="form-control">
 										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator.uin}}">{{annotator.firstName}} {{annotator.lastName}}</option>
 									</select>								
 								</span>

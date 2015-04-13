@@ -18,13 +18,13 @@ metadataTool.service("PDF", function(WsApi, AbstractModel) {
 		self.unwrap(self, data);
 	};
 
-	PDF.get = function(filename) {
+	PDF.get = function(name) {
 
 		var newPDFPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'document', 
 				method: 'pdf',
-				data: JSON.stringify({'filename': filename})
+				data: JSON.stringify({'name': name})
 		});
 
 		PDF.data = new PDF(newPDFPromise);	
