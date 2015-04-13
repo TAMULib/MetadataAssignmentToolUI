@@ -54,23 +54,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			});
 		}		
 	};
-	
-	Metadata.publish = function(document) {
-		var addMetadataSubmitPromise = WsApi.fetch({
-				endpoint: '/private/queue', 
-				controller: 'metadata', 
-				method: 'publish',
-				data: JSON.stringify({
-					'name': document.name
-				})
-		});
-		if(addMetadataSubmitPromise.$$state) {
-			addMetadataSubmitPromise.then(function(data) {
-				logger.log(data);
-			});
-		}		
-	};
-	
+		
 	Metadata.getAll = function() {
 		return WsApi.fetch({
 			endpoint: '/private/queue', 

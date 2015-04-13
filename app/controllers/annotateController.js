@@ -43,23 +43,18 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	};
 	
 	$scope.updateMetadata = function(name, status) {
-		Metadata.clear(name).then(function(data) {
-			if(status == 'Pending') {
-				if($scope.document.metadata.abstract.length > 0) {
-					Metadata.add($scope.document, 'abstract', false, 0, status);
-				}
-				else {
-					alert("Must have an abstract!");
-				}		
-				for(var index in $scope.document.metadata.committee) {
-					Metadata.add($scope.document, 'committee', true, index, status);
-				}
-				for(var index in $scope.document.metadata.chair) {
-					Metadata.add($scope.document, 'chair', true, index, status);
-				}
+		Metadata.clear(name).then(function(data) {			
+			if($scope.document.metadata.abstract.length > 0) {
+				Metadata.add($scope.document, 'abstract', false, 0, status);
 			}
 			else {
-				Metadata.publish($scope.document);
+				alert("Must have an abstract!");
+			}		
+			for(var index in $scope.document.metadata.committee) {
+				Metadata.add($scope.document, 'committee', true, index, status);
+			}
+			for(var index in $scope.document.metadata.chair) {
+				Metadata.add($scope.document, 'chair', true, index, status);
 			}
 		});
 	};
@@ -97,7 +92,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	
 	$scope.accept = function(document) {
 		Metadata.clear(document.name).then(function(data) {
-			$scope.updateMetadata(document.name, 'Publish');
+			$scope.updateMetadata(document.name, 'Published');
 			DocumentRepo.update(document.name, document.annotator, 'Published', '');
 			$location.path('/documents');
 		});
