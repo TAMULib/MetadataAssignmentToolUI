@@ -48,8 +48,8 @@
 							<div class="panel-body">
 								<table ng-table="tableParams" class="table table-hover table-condensed">					
 									<tbody>					
-										<tr ng-repeat="doc in $data">							
-											<td data-title="'Name'" sortable="'name'">
+										<tr ng-repeat="doc in $data">
+											<td data-title="'FileName'" sortable="'name'">
 												{{doc.name}}
 											</td>							
 											<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">

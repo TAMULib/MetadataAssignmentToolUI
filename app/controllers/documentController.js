@@ -33,7 +33,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	        		if(!params.filter().annotator) {
 	            		$timeout(function() {
 	            			params.filter().annotator = ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin;
-	            		}, 250);
+	            		}, 500);
 	            	}
 	        	}
 
