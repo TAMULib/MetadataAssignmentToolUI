@@ -19,7 +19,6 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	console.log($scope.document);
 	
 	$scope.removeMetadataField = function(label) {
-		console.log($scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length-1]);
 		delete $scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length-1];
 	};
 	
@@ -27,58 +26,49 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 		$scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length] = '';
 	};
 	
+	$scope.getMetadataFieldCount = function(label) {
+		return Object.keys($scope.document.metadata[label]).length;
+	}
 	
-	$scope.updateMetadata = function(name, status) {
-		Metadata.clear(name).then(function(data) {			
+	$scope.updateMetadata = function(document, status) {
+		Metadata.clear(document.name).then(function(data) {			
 			
-			Metadata.add($scope.document, 'dc.abstract', false, 0, status);
+			console.log(document);
+			
+			for(var key in document.metadataLabels) {
+				var metaDataLabel = document.metadataLabels[key];
 				
-			for(var index in $scope.document.metadata.committee) {
-				Metadata.add($scope.document, 'dc.committee.member', true, index, status);
+				if(metaDataLabel.repeatable) {
+					for(var index in document.metadata[metaDataLabel.label]) {
+						Metadata.add(document, metaDataLabel.label, true, index, status);
+					}
+				}
+				else {
+					Metadata.add(document, metaDataLabel.label, false, 0, status);
+				}
 			}
-			for(var index in $scope.document.metadata.chair) {
-				Metadata.add($scope.document, 'dc.committee.chair', true, index, status);
-			}
-
+			
 		});
 	};
 	
-	$scope.submit = function(name) {
-		Metadata.clear(name).then(function(data) {
-			$scope.updateMetadata(name, 'Pending');
-			DocumentRepo.update(name, user.uin, 'Annotated', '');
+	$scope.submit = function(document) {
+		Metadata.clear(document.name).then(function(data) {
+			
+			$scope.updateMetadata(document, 'Pending');
+			DocumentRepo.update(document.name, user.uin, 'Annotated', '');
 			$location.path('/assignments');
+			
 		});
-	};
-	
-	$scope.readyToSubmit = function() {		
-		var ready = false;
-		if($scope.document.metadata.abstract) {
-			ready = true;
-		}
-		var memberCount = 0;
-		for(var index in $scope.document.metadata.committee) {
-			if($scope.document.metadata.committee[index].length > 0) {
-				memberCount++;
-			}
-		}
-		var chairCount = 0;
-		for(var index in $scope.document.metadata.chair) {
-			if($scope.document.metadata.chair[index].length > 0) {
-				chairCount++;
-			}
-		}
-		if(memberCount == 0 || chairCount == 0) {
-			ready = false;
-		}
-		return ready;
 	};
 	
 	$scope.accept = function(document) {
+		
 		Metadata.clear(document.name).then(function(data) {
-			$scope.updateMetadata(document.name, 'Published');
+			
+			$scope.updateMetadata(document, 'Published');
 			DocumentRepo.update(document.name, document.annotator, 'Published', '');
 			$location.path('/documents');
+			
 		});
 	};
 	
