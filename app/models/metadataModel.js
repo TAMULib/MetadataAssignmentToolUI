@@ -14,24 +14,24 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 
 	Metadata.data = null;
 	
+	Metadata.promise = null;
+	
 	Metadata.set = function(data) {
 		self.unwrap(self, data);
 	};
-
-	Metadata.get = function(name) {
+	
+	Metadata.get = function(document) {
 		var newMetadataPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
-				data: JSON.stringify({'name': name})
+				data: JSON.stringify({'name': document.name})
 		});
-
+		
 		Metadata.data = new Metadata(newMetadataPromise);
 		
-		Metadata.set({'dc.abstract': ['']});
-		Metadata.set({'dc.committee.chair': ['']});
-		Metadata.set({'dc.committee.member': ['']});
-
+		Metadata.promise = newMetadataPromise;
+		
 		return Metadata.data;
 	};
 	
@@ -80,6 +80,10 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			controller: 'metadata', 
 			method: 'published'
 		});
+	};
+	
+	Metadata.ready = function() {
+		return Metadata.promise;
 	};
 			
 	return Metadata;

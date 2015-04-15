@@ -35,6 +35,7 @@
 			<ul class="list-unstyled">
 
 				<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
+				
 					<label ng-if="metadataLabel.inputType == 'TEXT'">{{$index+1}}:</label>
 					<input ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][$index]"/>
 
