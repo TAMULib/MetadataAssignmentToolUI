@@ -18,44 +18,28 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	
 	console.log($scope.document);
 	
-	$scope.memberCount = function() {
-		return Object.keys($scope.document.metadata.committee).length;
-	};
-
-	$scope.removeCommitteeMember = function() {
-		delete $scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length-1];
+	$scope.removeMetadataField = function(label) {
+		console.log($scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length-1]);
+		delete $scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length-1];
 	};
 	
-	$scope.addCommitteeMember = function() {
-		$scope.document.metadata.committee[Object.keys($scope.document.metadata.committee).length] = '';
+	$scope.addMetadataField = function(label) {
+		$scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length] = '';
 	};
 	
-	$scope.chairCount = function() {
-		return Object.keys($scope.document.metadata.chair).length;
-	};
-
-	$scope.removeCommitteeChair = function() {
-		delete $scope.document.metadata.chair[Object.keys($scope.document.metadata.chair).length-1];
-	};
-	
-	$scope.addCommitteeChair = function() {
-		$scope.document.metadata.chair[Object.keys($scope.document.metadata.chair).length] = '';
-	};
 	
 	$scope.updateMetadata = function(name, status) {
 		Metadata.clear(name).then(function(data) {			
-			if($scope.document.metadata.abstract.length > 0) {
-				Metadata.add($scope.document, 'abstract', false, 0, status);
-			}
-			else {
-				alert("Must have an abstract!");
-			}		
+			
+			Metadata.add($scope.document, 'dc.abstract', false, 0, status);
+				
 			for(var index in $scope.document.metadata.committee) {
-				Metadata.add($scope.document, 'committee', true, index, status);
+				Metadata.add($scope.document, 'dc.committee.member', true, index, status);
 			}
 			for(var index in $scope.document.metadata.chair) {
-				Metadata.add($scope.document, 'chair', true, index, status);
+				Metadata.add($scope.document, 'dc.committee.chair', true, index, status);
 			}
+
 		});
 	};
 	
@@ -124,6 +108,6 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.requiresCuration = function(name) {
 		DocumentRepo.update(name, user.uin, 'Requires Curation');
 		$location.path('/assignments');
-	}
+	};
 	
 });

@@ -28,8 +28,9 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 
 		Metadata.data = new Metadata(newMetadataPromise);
 		
-		Metadata.set({'committee': ['']});
-		Metadata.set({'chair': ['']});
+		Metadata.set({'dc.abstract': ['']});
+		Metadata.set({'dc.committee.chair': ['']});
+		Metadata.set({'dc.committee.member': ['']});
 
 		return Metadata.data;
 	};
