@@ -28,18 +28,12 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			for(var key in $scope.document.metadataLabels) {
 				var metadataLabel = $scope.document.metadataLabels[key];
 				if(!$scope.document.metadata[metadataLabel.label]) {
-					if(metadataLabel.repeatable) {
-						$scope.document.metadata[metadataLabel.label] = {0:''};
-					}
-					else {
-						$scope.document.metadata[metadataLabel.label] = '';
-					}
-					
+					$scope.document.metadata[metadataLabel.label] = [''];
 				}
 			}
 			
 			$scope.removeMetadataField = function(label) {
-				delete $scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length-1];
+				$scope.document.metadata[label].splice(Object.keys($scope.document.metadata[label]).length-1, 1);
 			};
 			
 			$scope.addMetadataField = function(label) {
@@ -50,45 +44,27 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				return Object.keys($scope.document.metadata[label]).length;
 			};
 			
-			$scope.updateMetadata = function(document, status) {
-				Metadata.clear(document.name).then(function(data) {			
-					
-					console.log(document);
-					
-					for(var key in document.metadataLabels) {
-						var metaDataLabel = document.metadataLabels[key];
-						
-						if(metaDataLabel.repeatable) {
-							for(var index in document.metadata[metaDataLabel.label]) {
-								Metadata.add(document, metaDataLabel.label, true, index, status);
-							}
-						}
-						else {
-							Metadata.add(document, metaDataLabel.label, false, 0, status);
-						}
-					}
-					
+			$scope.updateMetadata = function(document) {
+				Metadata.clear(document.name).then(function(data) {								
+					Metadata.add(document.name, document.metadata);
 				});
 			};
 			
 			$scope.submit = function(document) {
-				Metadata.clear(document.name).then(function(data) {
-					
-					$scope.updateMetadata(document, 'Pending');
+				console.log(document);
+				Metadata.clear(document.name).then(function(data) {					
+					Metadata.add(document.name, document.metadata);
 					DocumentRepo.update(document.name, user.uin, 'Annotated', '');
-					$location.path('/assignments');
-					
+					$location.path('/assignments');					
 				});
 			};
 			
 			$scope.accept = function(document) {
-				
-				Metadata.clear(document.name).then(function(data) {
-					
-					$scope.updateMetadata(document, 'Published');
+				console.log(document);
+				Metadata.clear(document.name).then(function(data) {					
+					Metadata.add(document.name, document.metadata);
 					DocumentRepo.update(document.name, document.annotator, 'Published', '');
-					$location.path('/documents');
-					
+					$location.path('/documents');					
 				});
 			};
 			

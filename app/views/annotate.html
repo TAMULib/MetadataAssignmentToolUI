@@ -43,9 +43,9 @@
 				</li>
 				
 				<li ng-if="!metadataLabel.repeatable">
-					<input ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label]"/>
+					<input ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][0]"/>
 
-					<textarea ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label]" rows="5" cols="25" style="width:100%;"></textarea>
+					<textarea ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label][0]" rows="5" cols="25" style="width:100%;"></textarea>
 				</li>
 				
 			</ul>	

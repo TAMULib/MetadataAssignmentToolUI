@@ -35,18 +35,14 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		return Metadata.data;
 	};
 	
-	Metadata.add = function(document, label, isRepeatable, index, status) {
+	Metadata.add = function(name, metadata) {
 		var addMetadataSubmitPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'add',
 				data: JSON.stringify({
-					'name': document.name,
-					'label': label,
-					'value': (isRepeatable) ? document.metadata[label][index] : document.metadata[label],					
-					'isRepeatable': isRepeatable,
-					'index': index,
-					'status': status
+					'name': name,
+					'metadata': metadata
 				})
 		});
 		if(addMetadataSubmitPromise.$$state) {
