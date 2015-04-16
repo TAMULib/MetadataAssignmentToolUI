@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($controller, $scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi) {
+metadataTool.controller('AdminController', function ($controller, $scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi, WsApi) {
 	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
@@ -114,6 +114,19 @@ metadataTool.controller('AdminController', function ($controller, $scope, $locat
 			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
 		});
 	};
+
+	$scope.sync = function() {
+		console.log("Trying to sync");
+		var syncPromise = WsApi.fetch({
+				endpoint: '/private/queue', 
+				controller: 'document', 
+				method: 'sync'
+		});
+
+		syncPromise.then(function(data) {
+			console.log(data);
+		});
+	}
 	
 	UserRepo.listen().then(null, null, function(data) {
 		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
