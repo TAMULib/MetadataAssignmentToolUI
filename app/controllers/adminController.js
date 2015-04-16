@@ -5,7 +5,7 @@ metadataTool.controller('AdminController', function ($controller, $scope, $locat
     $scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
-	
+
 	$scope.showModal = false;
 	
 	$scope.selectedUser = null;
@@ -111,7 +111,7 @@ metadataTool.controller('AdminController', function ($controller, $scope, $locat
 	$scope.exportMetadata = function() {
 		console.log("Export metadata");
 		return Metadata.getAllPublished().then(function(metadata) {
-			return JSON.parse(metadata.body).content.HashMap.list;
+			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
 		});
 	};
 	
@@ -123,3 +123,5 @@ metadataTool.controller('AdminController', function ($controller, $scope, $locat
 	});
 	
 });
+
+

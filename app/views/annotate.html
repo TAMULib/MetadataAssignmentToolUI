@@ -25,45 +25,42 @@
 	
 	<div class="col-5 col-lg-5 metadata-pane">
 		<h2>Metadata</h2>
-		<div class="row">			
-			<h3>Abstract</h3>
-			<textarea ng-model="document.metadata.abstract" rows="5" cols="25" style="width:100%;"></textarea>			
-		</div>
-		<div class="row">			
-			<span class="h3 pull left">
-				Committee chair members
-			</span>
-			<span class="top" title="Remove committee chair field"><a ng-if="chairCount() > 1" ng-click="removeCommitteeChair()" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a></span>
-			<span class="top" title="Add committee chair field"><a ng-click="addCommitteeChair()" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a></span>					
+		
+		<div ng-repeat="metadataLabel in document.metadataLabels" class="row">			
+			<h3 style="display:inline-block;">{{metadataLabel.gloss}}</h3>
+
+			<a title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a>
+			<a title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label)" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a>
+
 			<ul class="list-unstyled">
-				<li ng-repeat="member in document.metadata.chair track by $index">
-					<label>{{$index+1}}:</label>
-					<input type="text" ng-model="document.metadata.chair[$index]"/>
+
+				<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
+				
+					<label ng-if="metadataLabel.inputType == 'TEXT'">{{$index+1}}:</label>
+					<input ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][$index]"/>
+
+					<textarea ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label][$index]" rows="5" cols="25" style="width:100%;"></textarea>
 				</li>
-			</ul>
-		</div>
-		<div class="row">
-			<span class="h3 pull left">
-				Committee members
-			</span>
-			<span class="top" title="Remove committee member field"><a ng-if="memberCount() > 1" ng-click="removeCommitteeMember()" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a></span>
-			<span class="top" title="Add committee member field"><a ng-click="addCommitteeMember()" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a></span>					
-			<ul class="list-unstyled">
-				<li ng-repeat="member in document.metadata.committee track by $index">
-					<label>{{$index+1}}:</label>
-					<input type="text" ng-model="document.metadata.committee[$index]"/>
+				
+				<li ng-if="!metadataLabel.repeatable">
+					<input ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][0]"/>
+
+					<textarea ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label][0]" rows="5" cols="25" style="width:100%;"></textarea>
 				</li>
-			</ul>
+				
+			</ul>	
+			
 		</div>
+
 		<div class="row">			
 			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
 				<button class="btn btn-default" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
-				<button class="btn btn-default" ng-click="updateMetadata(document.name, 'Pending')">
+				<button class="btn btn-default" ng-click="updateMetadata(document, 'Pending')">
 					Save
 				</button>
-				<button class="btn btn-default" ng-if="readyToSubmit()" ng-click="submit(document.name)">
+				<button class="btn btn-default" ng-click="submit(document)">
 					Submit
 				</button>
 			</div>

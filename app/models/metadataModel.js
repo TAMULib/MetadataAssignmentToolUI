@@ -14,38 +14,35 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 
 	Metadata.data = null;
 	
+	Metadata.promise = null;
+	
 	Metadata.set = function(data) {
 		self.unwrap(self, data);
 	};
-
-	Metadata.get = function(name) {
+	
+	Metadata.get = function(document) {
 		var newMetadataPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
-				data: JSON.stringify({'name': name})
+				data: JSON.stringify({'name': document.name})
 		});
-
+		
 		Metadata.data = new Metadata(newMetadataPromise);
 		
-		Metadata.set({'committee': ['']});
-		Metadata.set({'chair': ['']});
-
+		Metadata.promise = newMetadataPromise;
+		
 		return Metadata.data;
 	};
 	
-	Metadata.add = function(document, label, isRepeatable, index, status) {
+	Metadata.add = function(name, metadata) {
 		var addMetadataSubmitPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'add',
 				data: JSON.stringify({
-					'name': document.name,
-					'label': label,
-					'value': (isRepeatable) ? document.metadata[label][index] : document.metadata[label],					
-					'isRepeatable': isRepeatable,
-					'index': index,
-					'status': status
+					'name': name,
+					'metadata': metadata
 				})
 		});
 		if(addMetadataSubmitPromise.$$state) {
@@ -79,6 +76,10 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			controller: 'metadata', 
 			method: 'published'
 		});
+	};
+	
+	Metadata.ready = function() {
+		return Metadata.promise;
 	};
 			
 	return Metadata;

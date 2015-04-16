@@ -39,10 +39,10 @@ metadataTool.service("wsservice",function($q) {
 
 				if(wsservice.pendingReq[requestId]) {
 
-					logger.info("");
+					/*logger.info("");
 					logger.debug(channel);
 					logger.info("Resolving Request " + requestId + ": " + wsservice.pendingReq[requestId].request);
-					logger.log(JSON.parse(data.body));
+					logger.log(JSON.parse(data.body));*/
 					
 					if(response != "refresh") {
 						
