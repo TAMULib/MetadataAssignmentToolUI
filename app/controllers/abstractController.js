@@ -5,6 +5,7 @@ metadataTool.controller('AbstractController', function ($scope) {
 	};
 	
 	$scope.isManager = function() {
+		console.log(sessionStorage.role);
 		return (sessionStorage.role == "ROLE_MANAGER");
 	};
 	

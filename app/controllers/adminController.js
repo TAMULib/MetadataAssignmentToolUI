@@ -1,7 +1,9 @@
-metadataTool.controller('AdminController', function ($controller, $scope, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $scope, $routeParams, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi, WsApi) {
 	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
+	$scope.assume = {};
+
     $scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
