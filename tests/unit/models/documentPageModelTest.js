@@ -1,4 +1,3 @@
-
 describe('model: DocumentPage', function() {
 	
 	var DocumentPage, WsApi;

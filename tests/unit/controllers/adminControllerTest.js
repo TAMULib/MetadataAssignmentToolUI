@@ -1,4 +1,3 @@
-
 describe('controller: AdminController', function() {
 	
 	var controller, scope, User;
