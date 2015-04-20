@@ -63,16 +63,16 @@
 			<div class="container">
 				<div class="col-md-12">
 
-				<span class="pull-right">Signed in as: <a href="myview"><username></username></a></span>
+				<p class="pull-right"><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a></p>
 
 				<div ng-controller="AdminController" class="row">
 					<div class="col-12 col-lg-12">
-						<div class="btn-group app-menu" role="group">
+						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group">
 							<a class="btn btn-default" href="documents">Documents</a>
 							<a class="btn btn-default" href="assignments">My Assigned Documents</a>
 							<a ng-if="(isAdmin() || isManager()) == true" class="btn btn-default" href="users">Users</a>
 
-							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group" role="group">
+							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<span ng-show="isAdmin() == true">Admin </span>
 									<span ng-show="isManager() == true">Manager </span>
