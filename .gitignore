@@ -13,3 +13,5 @@ npm-debug.log
 app/config/appConfig.js
 app/resources/styles/*
 !app/resources/styles/sass/
+app/resources/scripts/*
+!app/resources/scripts/vendor/
