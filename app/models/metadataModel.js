@@ -57,8 +57,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			endpoint: '/private/queue', 
 			controller: 'metadata', 
 			method: 'all',
-		})
-	
+		});	
 	};
 	
 	Metadata.clear = function(name) {

@@ -65,7 +65,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			});
 		}
 		
-	}
+	};
 
 	Document.listen = function() {
 		return Document.listener;

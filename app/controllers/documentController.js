@@ -80,7 +80,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	
 	$scope.reviewDocument = function(name) {
 		console.log("Review " + name);
-	}
+	};
 
 	DocumentPage.listen().then(null, null, function(data) {
 		$scope.tableParams.reload();
