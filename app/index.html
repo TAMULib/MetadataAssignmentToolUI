@@ -70,20 +70,20 @@
 					</ul>
 				</nav>
 
-				<div ng-controller="AdminController" class="row">
+				<div ng-controller="NavigationController" class="row">
 					<div class="col-12 col-lg-12">
 						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group">
-							<a class="btn btn-default" href="documents">Documents</a>
-							<a class="btn btn-default" href="assignments">My Assigned Documents</a>
+							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
+							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
 							<a ng-if="assumeBtn == 'Unassume' && isAnnotator()" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
 
 							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<button ng-class="{'active' : view == '/users'}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<span ng-show="isAdmin() == true">Admin </span>
 									<span ng-show="isManager() == true">Manager </span>
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu" role="menu">
+								<ul ng-controller="AdminController" class="dropdown-menu" role="menu">
 									<li ng-if="isAdmin() || assumeBtn == 'Unassume'" role="presentation" class="dropdown-header">Manager Actions</li>
 									<li><a href="users">Manage Users</a></li>
 									<li><a ng-csv="exportMetadata()" csv-header="['Document', 'Label', 'Value']" filename="metadata.csv" href="#">Export Metadata</a></li>
@@ -224,6 +224,7 @@
     <script src="controllers/adminController.js"></script>
     <script src="controllers/documentController.js"></script>
     <script src="controllers/annotateController.js"></script>
+    <script src="controllers/navigationController.js"></script>
     <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->

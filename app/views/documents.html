@@ -61,7 +61,7 @@
 									No Annotators
 								</span>
 								<span ng-if="doc.annotator">
-									{{doc.annotator}}
+									<span ng-repeat="anotator in availableAnnotators()" ng-if="anotator.uin == doc.annotator">{{anotator.firstName}} {{anotator.lastName}}</span>
 								</span>
 							</td>
 							<td data-title="'Action'" class="text-center">

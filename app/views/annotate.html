@@ -63,10 +63,10 @@
 				</button>
 			</div>
 			<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-				<button class="btn btn-default" ng-click="requiresCuration(document.name)">
+				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
-				<button class="btn btn-default" ng-click="accept(document)">
+				<button class="btn btn-success" ng-click="accept(document)">
 					Accept
 				</button>
 				<modal modal-id="rejectModal" 
