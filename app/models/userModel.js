@@ -13,6 +13,8 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 	};
 	
 	User.data = null;
+
+	User.promise = null;
 	
 	User.set = function(data) {
 		self.unwrap(self, data);
@@ -37,8 +39,14 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 			User.data = new User(newUserPromise);	
 		}
 
+		User.promise = newUserPromise;
+
 		return User.data;
 	
+	};
+
+	User.ready = function() {
+		return User.promise;
 	};
 
 	return User;

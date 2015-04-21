@@ -1,24 +1,13 @@
-metadataTool.controller('AdminController', function ($controller, $scope, $routeParams, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $scope, $routeParams, $location, $route, $window, $http, User, UserRepo, AssumedUser, Metadata, AuthServiceApi, WsApi) {
 	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
-	$scope.assume = {};
-
     $scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
 
-	$scope.showModal = false;
-	
-	$scope.selectedUser = null;
-	
-	if(sessionStorage.assumedUser) {
-		$scope.assume = JSON.parse(sessionStorage.assumedUser);
-		$scope.assumeBtn = 'Unassume';
-	} else {
-		$scope.assumeBtn = 'Assume';
-	}
-	
+	$scope.assumedUser = AssumedUser.get();
+
 	$scope.$watch('user.role', function() {		
 		sessionStorage.role = $scope.user.role;
 		if ($scope.user.role == 'ROLE_ADMIN') {
@@ -65,48 +54,87 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 		}
 	};
 
+	$scope.isAssuming = function() {
+		if(sessionStorage.assuming) {
+			return sessionStorage.assuming;
+		}
+		else {
+			return 'false';
+		}
+	};
+
+	if($scope.isAssuming() == 'true') {
+		AssumedUser.set({
+			'netid': '',
+			'button': 'Unassume',
+			'status': ''
+		});
+	}
+	else {
+		AssumedUser.set({
+			'netid': '',
+			'button': 'Assume',
+			'status': ''
+		});
+	}
+
+
 	$scope.assumeUser = function(assume) {
 		
-		if(!sessionStorage.assumedUser) {
-			if ((typeof assume !== 'undefined') && assume.netid) {				
+		if($scope.isAssuming() == 'false') {
+
+			if ((typeof assume !== 'undefined') && assume.netid) {	
+
 				console.log("Assuming user");
-				console.log(assume);
+
+				sessionStorage.assuming = 'true';
+
 				sessionStorage.adminToken = sessionStorage.token;
-								
-				sessionStorage.assumedUser = JSON.stringify(assume);
 
 				AuthServiceApi.getAssumedUser(assume).then(function(data) {
+					
 					if(data) {
 						User.get("assume");
-						
-						$scope.assumeBtn = 'Unassume';
-						$scope.assumeStatus = '';
-						
-						$scope.showModal = false;
+
+						AssumedUser.set({
+							'netid': $scope.user.netid,
+							'button': 'Unassume',
+							'status': ''
+						});
 						
 						$window.location.reload();
 						$location.path('/assignments');
-						
+
 					}
 					else {
-						$scope.assumeStatus = 'invalid netid';
 						delete sessionStorage.assumedUser;
-						$scope.assumeBtn = 'Assume';
+
+						assume = {
+							'netid': assume.netid,
+							'button': 'Assume',
+							'status': 'invalid netid'
+						};
 					}
 				});
 			}
 		} else {
 			console.log("Unassuming user");
 
+			sessionStorage.assuming = 'false';
+
 			sessionStorage.token = sessionStorage.adminToken;
-			delete sessionStorage.assumedUser;
+			
+			AssumedUser.set({
+				'netid': '',
+				'button': 'Assume',
+				'status': ''
+			});
 
 			User.get("unassume");
 
-			$scope.assumeBtn = 'Assume';
-			
-			$location.path('/admin');
-		}		
+			$window.location.reload();
+
+		}
 		
 	};
 	

@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, DocumentRepo, Metadata, User, TXT, PDF) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, DocumentRepo, Metadata, User, TXT, PDF) {
 	
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
@@ -68,9 +68,6 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				});
 			};
 			
-			$scope.reject = function(document) {
-				$scope.showModal = true;
-			};
 			
 			$scope.managerAnnotating = function() {
 				return ($routeParams.action == 'annotate');
@@ -82,9 +79,11 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			
 			$scope.submitRejection = function(document, rejectionNotes) {
 				if(rejectionNotes) {
-					DocumentRepo.update(document.name, document.annotator, 'Rejected', rejectionNotes);
-					$scope.showModal = false;
-					$location.path('/documents');
+					DocumentRepo.update(document.name, document.annotator, 'Rejected', rejectionNotes).then(function() {
+						$timeout(function() {
+							$location.path('/documents');
+						}, 500)
+					});
 				}
 				else {
 					$scope.validation = "Please enter text.";

@@ -1,20 +1,20 @@
 metadataTool.directive('modal', function () {
 	return {
-		templateUrl: 'views/modal.html',
+		templateUrl: 'views/modalWrapper.html',
 		restrict: 'E',
+		replace:false,
 		transclude: true,
-		scope: true,
-		controller: "",
+		scope: {},
+		controller: "@",
+		name: "modalController",
 		link: function ($scope, element, attr) {
-	    	$scope.modal = {
-	    		id: attr["modalId"],
-	    		title: attr["titleText"],
-	    		btnView: attr["btnView"]
-	    	}
+	    	
+			$scope.attr = attr;
 
-	    	$scope.clicked = function(param) {
-	    		console.log(param);
-	    		$scope[attr.clickCall](param);
+	    	$scope.click = function() {
+	    		if($scope.attr.modalNgClickFunction && $scope.attr.modalNgClickParam) {
+	    			$scope[$scope.attr.modalNgClickFunction](JSON.parse($scope.attr.modalNgClickParam));
+	    		}
 	    	}
 	    }
 	};

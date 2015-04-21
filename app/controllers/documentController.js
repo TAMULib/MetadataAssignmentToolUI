@@ -9,51 +9,55 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	var annotators = [];
 	
 	$scope.user = User.get();
-	
-	$scope.setTable = function() {
-	
-		$scope.tableParams = new ngTableParams({
-	        page: 1,
-	        count: 10,
-	        sorting: {
-	            name: 'asc'
-	        },
-	        filter: {
-	        	name: '',
-	        	status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-	            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
-	        }
-	    }, {
-	        total: 0,
-	        getData: function($defer, params) {
-	        	
-	        	var key; for(key in params.sorting()) {}
-	        	
-	        	if(view == '/metadatatool/assignments' || view == '/metadatatool/users') {
-	        		if(!params.filter().annotator) {
-	            		$timeout(function() {
-	            			params.filter().annotator = ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin;
-	            		}, 500);
-	            	}
-	        	}
 
-	        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-	        		var page = JSON.parse(data.body).content.PageImpl;
-	        		params.total(page.totalElements);
-	        		$scope.docs = page.content;
-	        		$defer.resolve($scope.docs);
-	        	});
-	        	
-	        }
-	    });
-	
-	};
+	$scope.selectedUser = null;
+
+	User.ready().then(function() {
 		
-	$scope.setTable();
-	
-	$scope.$watch('selectedUser.uin', function() {		
+		$scope.setTable = function() {
+
+			$scope.tableParams = new ngTableParams({
+		        page: 1,
+		        count: 10,
+		        sorting: {
+		            name: 'asc'
+		        },
+		        filter: {
+		        	name: '',
+		        	status: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view == '/metadatatool/assignments' || view == '/metadatatool/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        }
+		    }, {
+		        total: 0,
+		        getData: function($defer, params) {
+		        	
+		        	var key; for(key in params.sorting()) {}
+
+		        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
+		        		var page = JSON.parse(data.body).content.PageImpl;
+		        		params.total(page.totalElements);
+		        		$scope.docs = page.content;
+		        		$defer.resolve($scope.docs);
+		        	});
+		        	
+		        }
+		    });
+		
+		};
+		
 		$scope.setTable();
+
+		$scope.setSelectedUser = function(user) {
+			$scope.selectedUser = user;
+			$scope.setTable();
+		}
+		
+		DocumentPage.listen().then(null, null, function(data) {
+			$scope.tableParams.reload();
+		});
+
 	});
+
 	
 	$scope.availableAnnotators = function() {
 		if(!userRepo) {
@@ -77,13 +81,5 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		}
 		DocumentRepo.update(name, annotator, status);		
 	};
-	
-	$scope.reviewDocument = function(name) {
-		console.log("Review " + name);
-	};
-
-	DocumentPage.listen().then(null, null, function(data) {
-		$scope.tableParams.reload();
-	});
 	
 });
