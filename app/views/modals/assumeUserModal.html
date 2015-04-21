@@ -10,10 +10,8 @@
 		<p>{{assumedUser.status}}</p>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" ng-click="assumeUser(assumedUser)">
-			<img ng-hide="isAssuming() == 'false'" src="resources/img/ajax-loader.gif"/>
-			<span ng-hide="isAssuming() == 'true'">{{assumedUser.button}}<span>
-		</button>
+		<button  ng-hide="isAssuming() == 'true'" type="submit" class="btn btn-primary" ng-click="assumeUser(assumedUser)">{{assumedUser.button}}</button>
+		<img class="modalLoadingWheel" ng-hide="isAssuming() == 'false'" src="resources/img/ajax-loader.gif"/>
 		<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
 	</div>
 <form>

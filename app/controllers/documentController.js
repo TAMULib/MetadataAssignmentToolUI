@@ -51,10 +51,6 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 			$scope.selectedUser = user;
 			$scope.setTable();
 		}
-		
-		DocumentPage.listen().then(null, null, function(data) {
-			$scope.tableParams.reload();
-		});
 
 	});
 
@@ -81,5 +77,9 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		}
 		DocumentRepo.update(name, annotator, status);		
 	};
+
+	DocumentPage.listen().then(null, null, function(data) {
+		$scope.tableParams.reload();
+	});
 	
 });
