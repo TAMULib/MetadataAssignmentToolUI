@@ -60,6 +60,12 @@ angular.module('mock.user', []).
             	resolve(mockUser3);
             });
         }; 
+
+        User.ready = function() {
+            return $q(function(resolve) {               
+                resolve(mockUser3);
+            });
+        };
         
         return User;
 });
