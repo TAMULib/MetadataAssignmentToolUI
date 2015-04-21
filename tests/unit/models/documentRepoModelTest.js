@@ -1,4 +1,3 @@
-
 describe('model: DocumentRepo', function() {
 	
 	var DocumentRepo, WsApi;

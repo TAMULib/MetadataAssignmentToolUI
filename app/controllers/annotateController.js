@@ -87,7 +87,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					$location.path('/documents');
 				}
 				else {
-					$scope.validation = "Please enter text."
+					$scope.validation = "Please enter text.";
 				}
 			};
 			

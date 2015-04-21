@@ -26,13 +26,15 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 				data: JSON.stringify({'name': name})
 		});
 
-		TXT.data = new TXT(newTxtPromise);	
-
-		newTxtPromise.then(function(data) {
-			$http.get(JSON.parse(data.body).content.HashMap.uri).then(function(res) {
-				TXT.set({'verbage': res.data});
-			});			
-		});
+		TXT.data = new TXT(newTxtPromise);
+		
+		if(newTxtPromise.$$state) {
+			newTxtPromise.then(function(data) {
+				$http.get(JSON.parse(data.body).content.HashMap.uri).then(function(res) {
+					TXT.set({'verbage': res.data});
+				});			
+			});
+		}
 		
 		return TXT.data;
 	

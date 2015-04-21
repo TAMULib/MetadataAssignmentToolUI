@@ -2,7 +2,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 
 	var self;
 
-	var Documents = function(futureData) {
+	var Document = function(futureData) {
 		self = this;
 
 		//This causes our model to extend AbstractModel
@@ -12,21 +12,21 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		
 	};
 
-	Documents.data = null;
+	Document.data = null;
 	
-	Documents.promise = null;
+	Document.promise = null;
 	
-	Documents.listener = WsApi.listen({
+	Document.listener = WsApi.listen({
 		endpoint: 'channel', 
 		controller: 'documents', 
 		method: '',
 	});
 
-	Documents.set = function(data) {
+	Document.set = function(data) {
 		self.unwrap(self, data, "HashMap");
 	};
 
-	Documents.get = function(name) {
+	Document.get = function(name) {
 
 		var newDocumentPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
@@ -35,15 +35,15 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 				data: JSON.stringify({'name': name})
 		});
 		
-		Documents.data = new Documents(newDocumentPromise);
+		Document.data = new Document(newDocumentPromise);
 		
-		Documents.promise = newDocumentPromise;
+		Document.promise = newDocumentPromise;
 		
-		return Documents.data;
+		return Document.data;
 	
 	};
 		
-	Documents.update = function(name, uin, status, notes) {
+	Document.update = function(name, uin, status, notes) {
 		
 		var change = {
 			'name': name,
@@ -65,16 +65,16 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			});
 		}
 		
-	}
+	};
 
-	Documents.listen = function() {
-		return Documents.listener;
+	Document.listen = function() {
+		return Document.listener;
 	};
 	
-	Documents.ready = function() {
-		return Documents.promise;
+	Document.ready = function() {
+		return Document.promise;
 	};
 	
-	return Documents;
+	return Document;
 	
 });

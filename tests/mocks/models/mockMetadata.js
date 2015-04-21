@@ -28,7 +28,6 @@ var mockMetadata3 = {
 	}
 };
 
-
 angular.module('mock.metadata', []).
     service('Metadata', function($q) {
     	

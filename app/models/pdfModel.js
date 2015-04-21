@@ -26,8 +26,8 @@ metadataTool.service("PDF", function(WsApi, AbstractModel) {
 				data: JSON.stringify({'name': name})
 		});
 
-		PDF.data = new PDF(newPDFPromise);	
-		
+		PDF.data = new PDF(newPDFPromise);
+
 		return PDF.data;
 	
 	};

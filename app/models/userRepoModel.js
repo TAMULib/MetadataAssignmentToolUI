@@ -70,7 +70,7 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 				logger.log(data);
 			});
 		}		
-	}
+	};
 	
 	Users.listen = function() {
 		return Users.listener;

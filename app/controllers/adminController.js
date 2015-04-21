@@ -49,12 +49,12 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 
 	$scope.updateRole = function(uin, role) {
 		UserRepo.updateRole(uin, role);
-	}
+	};
 	
 	$scope.showAssignmentsModal = function(user) {
 		$scope.selectedUser = user;
 		$scope.showModal = !$scope.showModal;
-	}
+	};
 	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
@@ -131,7 +131,7 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 	}
 	
 	UserRepo.listen().then(null, null, function(data) {
-		if(JSON.parse(data.body).content.HashMap.changedUserUin = $scope.user.uin) {
+		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
 			User.get(true);
 			$route.reload();
 		}			

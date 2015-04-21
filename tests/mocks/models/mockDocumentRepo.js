@@ -94,5 +94,11 @@ angular.module('mock.documentRepo', []).
             });
         }; 
         
+        DocumentRepo.ready = function() {
+        	return $q(function(resolve) {            	
+            	resolve(mockDocumentRepo3);
+            });
+    	};
+        
         return DocumentRepo;
 });
