@@ -3,15 +3,14 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
 	$scope.assume = {};
+	$scope.selectedUser = {};
 
     $scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
 
 	$scope.showModal = false;
-	
-	$scope.selectedUser = null;
-	
+		
 	if(sessionStorage.assumedUser) {
 		$scope.assume = JSON.parse(sessionStorage.assumedUser);
 		$scope.assumeBtn = 'Unassume';
@@ -51,9 +50,9 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 		UserRepo.updateRole(uin, role);
 	}
 	
-	$scope.showAssignmentsModal = function(user) {
+	$scope.setSelectedUser = function(user) {
+		console.log(user)
 		$scope.selectedUser = user;
-		$scope.showModal = !$scope.showModal;
 	}
 	
 	$scope.isMocking = function() {
@@ -105,7 +104,7 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 
 			$scope.assumeBtn = 'Assume';
 			
-			$location.path('/admin');
+			$route.reload();
 		}		
 		
 	};

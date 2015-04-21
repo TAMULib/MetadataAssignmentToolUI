@@ -1,21 +1,14 @@
 metadataTool.directive('modal', function () {
 	return {
-		templateUrl: 'views/modal.html',
+		templateUrl: 'views/modalWrapper.html',
 		restrict: 'E',
+		replace:false,
 		transclude: true,
-		scope: true,
-		controller: "",
+		scope: false,
+		controller: "@",
+		name: "modalController",
 		link: function ($scope, element, attr) {
-	    	$scope.modal = {
-	    		id: attr["modalId"],
-	    		title: attr["titleText"],
-	    		btnView: attr["btnView"]
-	    	}
-
-	    	$scope.clicked = function(param) {
-	    		console.log(param);
-	    		$scope[attr.clickCall](param);
-	    	}
+	    	$scope.attr = attr;
 	    }
 	};
 });

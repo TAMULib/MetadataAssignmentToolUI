@@ -59,18 +59,23 @@
 				</div>
 			</div>
 		</header>
+		
 		<div class="container-fluid">
 			<div class="container">
-				<div class="col-md-12">
+				<div class="col-md-12 appContent">
 
-				<p class="pull-right"><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a></p>
+				<nav class="pull-right userMenu">
+					<ul class="list-inline">
+						<li><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a></li>
+					</ul>
+				</nav>
 
 				<div ng-controller="AdminController" class="row">
 					<div class="col-12 col-lg-12">
 						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group">
 							<a class="btn btn-default" href="documents">Documents</a>
 							<a class="btn btn-default" href="assignments">My Assigned Documents</a>
-							<a ng-if="(isAdmin() || isManager()) == true" class="btn btn-default" href="users">Users</a>
+							<a ng-if="assumeBtn == 'Unassume' && isAnnotator()" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
 
 							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -79,13 +84,14 @@
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li ng-if="isAdmin()" role="presentation" class="dropdown-header">Manager Actions</li>
+									<li ng-if="isAdmin() || assumeBtn == 'Unassume'" role="presentation" class="dropdown-header">Manager Actions</li>
+									<li><a href="users">Manage Users</a></li>
 									<li><a ng-csv="exportMetadata()" csv-header="['Document', 'Label', 'Value']" filename="metadata.csv" href="#">Export Metadata</a></li>
-									<li ng-if="isAdmin()" role="presentation" class="divider"></li>
-									<li ng-if="isAdmin()" role="presentation" class="dropdown-header">Admin Actions header</li>
-									<li ng-if="isAdmin()">
-										<a href="#">
-											<span ng-if="assumeBtn != 'Unassume'" data-toggle="modal" data-target="#assumeUserModal">Assume</span> 
+									<li ng-if="isAdmin() || assumeBtn == 'Unassume'" role="presentation" class="divider"></li>
+									<li ng-if="isAdmin() || assumeBtn == 'Unassume'" role="presentation" class="dropdown-header">Admin Actions header</li>
+									<li ng-if="isAdmin() || assumeBtn == 'Unassume'">
+										<a data-toggle="modal" data-target="#assumeUserModal" href>
+											<span ng-if="assumeBtn != 'Unassume'">Assume</span>
 											<span ng-if="assumeBtn == 'Unassume'" ng-click="assumeUser(assume)">Unassume</span>
 											User
 										</a>
@@ -95,19 +101,6 @@
 							</div>
 						</div>
 					</div>
-
-					<modal 
-						modal-id="assumeUserModal"
-						title-text="Assume a User"
-						click-call="assumeUser"
-						btn-view="views/assumeUserModalBtn.html">
-
-						<input type="netid" class="form-control" id="netid" placeholder="Enter netid" ng-model="assume.netid" ng-pattern="word" ng-trim="false" />
-
-						<p>{{assumeStatus}}</p>
-							
-					</modal>	
-				
 				</div>	
 				
 				
@@ -120,6 +113,11 @@
 			</div>
 		</div>
 	</main>
+
+	<modal 	modal-id="assumeUserModal"
+			modal-view="views/modals/assumeUserModal.html"
+			modal-controller="AdminController">							
+	</modal>
 
 	<footer class="container-fluid footer">
 		<div class="container">
