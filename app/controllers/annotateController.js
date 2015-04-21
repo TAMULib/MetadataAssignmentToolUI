@@ -80,7 +80,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			$scope.submitRejection = function(document, rejectionNotes) {
 				if(rejectionNotes) {
 					DocumentRepo.update(document.name, document.annotator, 'Rejected', rejectionNotes);
-					//$location.path('/documents');
+					$location.path('/documents');
 				}
 				else {
 					$scope.validation = "Please enter text."

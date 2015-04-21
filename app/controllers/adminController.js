@@ -99,12 +99,13 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 
 			sessionStorage.token = sessionStorage.adminToken;
 			delete sessionStorage.assumedUser;
+			assume.netid = null;
 
 			User.get("unassume");
 
 			$scope.assumeBtn = 'Assume';
-			
-			$route.reload();
+			$location.path('/documents');
+
 		}		
 		
 	};
