@@ -27,17 +27,24 @@
 		<div ng-repeat="metadataLabel in document.metadataLabels" class="row">			
 			<h3 style="display:inline-block;">{{metadataLabel.gloss}}</h3>
 
-			<a title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign" style="text-decoration: none;"></a>
-			<a title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label)" class="glyphicon glyphicon-plus-sign" style="text-decoration: none;"></a>
+			<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
+			<span title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign label-remove" style="text-decoration: none;"></span>
 
 			<ul class="list-unstyled">
 
 				<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
 				
-					<label ng-if="metadataLabel.inputType == 'TEXT'">{{$index+1}}:</label>
-					<input  class="form-control" ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][$index]"/>
+					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXT'">
+					  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+					  	<input  class="form-control" type="text" ng-model="document.metadata[metadataLabel.label][$index]"/>
+					</div>
 
-					<textarea  class="form-control" ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label][$index]" rows="5" cols="25" style="width:100%;"></textarea>
+					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
+						<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+					  	<textarea  class="form-control" ng-model="document.metadata[metadataLabel.label][$index]" rows="5" cols="25" style="width:100%;"></textarea>
+					</div>
+
+					
 				</li>
 				
 				<li ng-if="!metadataLabel.repeatable">
@@ -52,13 +59,13 @@
 
 		<div class="row">			
 			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-				<button class="btn btn-default" ng-click="requiresCuration(document.name)">
+				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
-				<button class="btn btn-default" ng-click="updateMetadata(document, 'Pending')">
+				<button class="btn btn-primary" ng-click="updateMetadata(document, 'Pending')">
 					Save
 				</button>
-				<button class="btn btn-default" ng-click="submit(document)">
+				<button class="btn btn-success" ng-click="submit(document)">
 					Submit
 				</button>
 			</div>

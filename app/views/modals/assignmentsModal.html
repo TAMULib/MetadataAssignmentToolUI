@@ -3,7 +3,7 @@
 	<h4 class="modal-title">Assigned Documments for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
 </div>
 <div class="modal-body">
-	<table ng-controller="DocumentController" ng-table="tableParams" class="table table-hover table-condensed">					
+	<table ng-table="tableParams" class="table table-hover table-condensed">					
 		<tbody>					
 			<tr ng-repeat="doc in $data">
 				<td data-title="'FileName'" sortable="'name'">

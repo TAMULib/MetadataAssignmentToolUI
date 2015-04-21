@@ -3,7 +3,6 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
 	$scope.assume = {};
-	$scope.selectedUser = {};
 
     $scope.user = User.get();
 	
@@ -48,12 +47,7 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 
 	$scope.updateRole = function(uin, role) {
 		UserRepo.updateRole(uin, role);
-	}
-	
-	$scope.setSelectedUser = function(user) {
-		console.log(user)
-		$scope.selectedUser = user;
-	}
+	};
 	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
