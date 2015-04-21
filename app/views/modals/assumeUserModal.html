@@ -5,14 +5,14 @@
 
 <form>
 	<div class="modal-body">
-		<input type="netid" class="form-control" id="netid" placeholder="Enter netid" ng-model="assume.netid" ng-pattern="word" ng-trim="false" />
+		<input type="netid" class="form-control" id="netid" placeholder="Enter netid" ng-model="assumedUser.netid" ng-pattern="word" ng-trim="false" />
 
-		<p>{{assumeStatus}}</p>
+		<p>{{assumedUser.status}}</p>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" ng-click="assumeUser(assume)">
-			<img ng-hide="!assuming" src="resources/img/ajax-loader.gif"/>
-			<span ng-hide="assuming">{{assumeBtn}}<span>
+		<button type="submit" class="btn btn-primary" ng-click="assumeUser(assumedUser)">
+			<img ng-hide="isAssuming() == 'false'" src="resources/img/ajax-loader.gif"/>
+			<span ng-hide="isAssuming() == 'true'">{{assumedUser.button}}<span>
 		</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
 	</div>

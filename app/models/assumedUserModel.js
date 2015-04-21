@@ -18,11 +18,11 @@ metadataTool.service("AssumedUser", function(AbstractModel, $q) {
 	
 	AssumedUser.set = function(data) {
 		self.unwrap(self, data);
+
+		AssumedUser.promise.resolve();
 	};
 
 	AssumedUser.get = function() {
-
-		if(AssumedUser.data) return AssumedUser.data;
 
 		var newAssumedUserPromise = $q.defer();
 
