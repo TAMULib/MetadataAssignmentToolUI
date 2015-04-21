@@ -64,6 +64,8 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 				logger.log(data);
 			});
 		}
+
+		return updateUserRolePromise;
 		
 	}
 

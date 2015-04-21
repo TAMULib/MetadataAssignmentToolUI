@@ -32,7 +32,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		        getData: function($defer, params) {
 		        	
 		        	var key; for(key in params.sorting()) {}
-		        	
+
 		        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
 		        		var page = JSON.parse(data.body).content.PageImpl;
 		        		params.total(page.totalElements);

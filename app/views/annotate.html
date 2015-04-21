@@ -73,14 +73,13 @@
 				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
-				<button class="btn btn-success" ng-click="accept(document)">
-					Accept
-				</button>
 				<modal modal-id="rejectModal" 
 						  modal-view="views/modals/rejectModal.html" 
 						  modal-btn-classes="btn btn-danger"
 						  modal-controller="AnnotateController">Reject</modal>
-
+				<button class="btn btn-success" ng-click="accept(document)">
+					Accept
+				</button>
 			</div>
 		</div>		
 	</div>

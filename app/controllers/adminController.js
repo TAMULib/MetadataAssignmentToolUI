@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($controller, $scope, $routeParams, $location, $route, $window, $http, User, UserRepo, Metadata, AuthServiceApi, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $scope, $routeParams, $location, $route, $window, $http, User, UserRepo, AssumedUser, Metadata, AuthServiceApi, WsApi) {
 	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
@@ -9,6 +9,8 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 	$scope.userRepo = UserRepo.get();
 
 	$scope.showModal = false;
+
+	$scope.assumedUser = {};
 		
 	if(sessionStorage.assumedUser) {
 		$scope.assume = JSON.parse(sessionStorage.assumedUser);
@@ -63,14 +65,18 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 		if(!sessionStorage.assumedUser) {
 			if ((typeof assume !== 'undefined') && assume.netid) {				
 				console.log("Assuming user");
-				console.log(assume);
 				sessionStorage.adminToken = sessionStorage.token;
 								
 				sessionStorage.assumedUser = JSON.stringify(assume);
 
+				$scope.assuming = true;
+
 				AuthServiceApi.getAssumedUser(assume).then(function(data) {
+					$scope.assuming = false;
 					if(data) {
 						User.get("assume");
+						
+						$scope.assumedUser = $scope.user;
 						
 						$scope.assumeBtn = 'Unassume';
 						$scope.assumeStatus = '';
@@ -97,8 +103,11 @@ metadataTool.controller('AdminController', function ($controller, $scope, $route
 
 			User.get("unassume");
 
+			$scope.assumedUser = {};
+
 			$scope.assumeBtn = 'Assume';
-			$location.path('/documents');
+
+			$route.reload();
 
 		}		
 		

@@ -28,18 +28,24 @@
 									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
 								</select>
 							</td>
-							<td ng-click="setSelectedUser(user)" ng-if="(isAdmin() || isManager())">
-								<button data-toggle="modal" data-target="#assignmentsModal" class="btn btn-primary" ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'" >View Assignments</button>	
+							<td ng-if="(isAdmin() || isManager())">
+
+								<modal modal-id="{{user.uin}}AssignmentsModal" 
+									   modal-view="views/modals/assignmentsModal.html" 
+									   modal-controller="DocumentController"
+									   modal-btn-classes="btn btn-primary"
+									   modal-ng-click-function="setSelectedUser"
+									   modal-ng-click-param="{{user}}"
+									   ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'">
+									   View Assignments
+								</modal>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<modal modal-id="assignmentsModal" 
-				   modal-view="views/modals/assignmentsModal.html" 
-				   modal-controller="DocumentController">
-			</modal>
 		</div>
 	</div>
 </div>
+
 	
