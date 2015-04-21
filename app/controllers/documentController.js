@@ -70,7 +70,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	
 	$scope.updateAnnotator = function(name, status, annotator) {
 		if(!annotator) {
-			annotator = $scope.user.uin;
+			annotator = $scope.user;
 		}
 		else {
 			annotator = JSON.parse(annotator);

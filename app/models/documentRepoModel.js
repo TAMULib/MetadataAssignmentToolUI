@@ -43,29 +43,29 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	
 	};
 		
-	Document.update = function(name, uin, status, notes) {
+	Document.update = function(name, user, status, notes) {
 		
 		var change = {
 			'name': name,
-			'uin': uin,
+			'user': user.firstName + " " + user.lastName + " " + user.uin,
 			'status': status,
 			'notes': notes
 		};
 				
-		var updateUserRolePromise = WsApi.fetch({
+		var updateDocumentPromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'update',
 			data: JSON.stringify(change)
 		});
 				
-		if(updateUserRolePromise.$$state) {
-			updateUserRolePromise.then(function(data) {	
+		if(updateDocumentPromise.$$state) {
+			updateDocumentPromise.then(function(data) {	
 				logger.log(data);
 			});
 		}
 
-		return updateUserRolePromise;
+		return updateDocumentPromise;
 		
 	};
 
