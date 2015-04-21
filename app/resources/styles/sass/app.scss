@@ -40,10 +40,6 @@ main footer {
   font-weight: bold;
 }
 
-.ng-table th.sortable.sort-desc, .ng-table th.sortable.sort-asc {
-  background-color: #D2D6E0;
-}
-
 .btn-default.active, .btn-default.focus, .btn-default:active, .btn-default:focus, .btn-default:hover, .open>.dropdown-toggle.btn-default {
   color: #332c2c;
   background-color: #F2EDE5;
@@ -88,12 +84,50 @@ main footer {
 
 .btn-warning {
   color: #fff;
-  background-color: #FBDF99;
+  background-color: #F8CF66;
   border-color: #eea236;
 }
 
 .btn-warning.active, .btn-warning.focus, .btn-warning:active, .btn-warning:focus, .btn-warning:hover, .open>.dropdown-toggle.btn-warning {
   color: #fff;
-  background-color: #FBDF99;
+  background-color: #F6BF33;
   border-color: #d58512;
+}
+
+.metadata-label {
+  margin-bottom: 15px;
+}
+
+.label-add {
+  color: #4A5C81;
+}
+
+.label-add:hover {
+  cursor: pointer;
+}
+
+.label-remove {
+  color: #CD7674;
+}
+
+.label-remove:hover {
+  cursor: pointer;
+}
+
+.ng-table th.sortable.sort-desc, .ng-table th.sortable.sort-asc {
+  background-color: #4A5C81;
+}
+
+.ng-table th.sortable.sort-desc, .ng-table th.sortable.sort-asc {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  background-color: #4A5C81;
+  border-color: #1D3362;
 }
