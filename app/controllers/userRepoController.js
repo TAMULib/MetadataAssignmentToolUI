@@ -8,10 +8,6 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
     	
 		$scope.updateRole = function(uin, role) {
 			UserRepo.updateRole(uin, role);
-			
-			console.log($scope.user.uin);
-			console.log(uin);
-			
 			if($scope.user.uin == uin) {
 				if(role == 'ROLE_ANNOTATOR') {
 					$location.path('/assignments');
@@ -21,7 +17,6 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 				}
 				else {}
 			}
-			
 		};
 		
 		$scope.allowableRoles = function(userRole) {
