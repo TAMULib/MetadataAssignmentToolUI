@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, DocumentRepo, Metadata, TXT, PDF) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, User, DocumentRepo, Metadata, TXT, PDF) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
