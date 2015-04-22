@@ -32,8 +32,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 		
 		$scope.assumeUser = function(assume) {
 		
-			console.log(assume);
-
 			if($scope.isAssuming() == 'false') {
 
 				if ((typeof assume !== 'undefined') && assume.netid) {	
@@ -100,7 +98,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	});
 	
 	$scope.exportMetadata = function() {
-		console.log("Export metadata");
+		console.log("Exporting metadata");
 		return Metadata.getAllPublished().then(function(metadata) {
 			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
 		});
@@ -131,5 +129,3 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	};
 	
 });
-
-
