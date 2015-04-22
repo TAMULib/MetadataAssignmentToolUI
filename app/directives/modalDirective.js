@@ -5,8 +5,6 @@ metadataTool.directive('modal', function ($controller) {
 		replace:false,
 		transclude: true,
 		scope: {},
-		//controller: "@",
-		//name: "modalController",
 		link: function ($scope, element, attr) {
 	    	
 			$scope.attr = attr;

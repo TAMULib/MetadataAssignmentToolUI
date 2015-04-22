@@ -43,11 +43,12 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		    });		
 		};		
 		$scope.setTable();
-		$scope.setSelectedUser = function(user) {
-			$scope.selectedUser = user;
-			$scope.setTable();
-		}
 	});
+
+	$scope.setSelectedUser = function(user) {
+		$scope.selectedUser = user;
+		$scope.setTable();
+	}
 	
 	$scope.availableAnnotators = function() {
 		if(!userRepo) {
