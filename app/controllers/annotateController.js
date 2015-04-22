@@ -4,13 +4,14 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 
 	$scope.user = User.get();
 
-	$scope.txt = TXT.get($routeParams.documentKey);
-
-	$scope.pdf = PDF.get($routeParams.documentKey);
-		
 	$scope.document = DocumentRepo.get($routeParams.documentKey);
 	
 	$scope.document.name = $routeParams.documentKey;
+
+	$scope.txt = TXT.get($scope.document.name);
+	$scope.pdf = PDF.get($scope.document.name);
+
+	console.log($scope.txt);
 	
 	$scope.document.metadata = {};
 	
