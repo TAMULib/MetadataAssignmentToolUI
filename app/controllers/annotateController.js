@@ -1,9 +1,7 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, DocumentRepo, Metadata, User, TXT, PDF) {
-	
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, DocumentRepo, Metadata, TXT, PDF) {
+
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-	
-	var user = User.get();
-	
+		
 	$scope.document = DocumentRepo.get($routeParams.documentKey);
 	
 	$scope.document.name = $routeParams.documentKey;
@@ -21,10 +19,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 		angular.extend($scope.document, {'metadata':Metadata.get($scope.document)});
 		
 		Metadata.ready().then(function() {
-				
-			console.log($scope.document);
-			
-			
+
 			for(var key in $scope.document.metadataLabels) {
 				var metadataLabel = $scope.document.metadataLabels[key];
 				if(!$scope.document.metadata[metadataLabel.label]) {
@@ -50,20 +45,18 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				});
 			};
 			
-			$scope.submit = function(document) {
-				console.log(document);
+			$scope.submit = function(document) {				
 				Metadata.clear(document.name).then(function(data) {					
 					Metadata.add(document.name, document.metadata);
-					DocumentRepo.update(document.name, user.uin, 'Annotated', '');
+					DocumentRepo.update(document.name, $scope.user, 'Annotated', '');
 					$location.path('/assignments');					
 				});
 			};
 			
 			$scope.accept = function(document) {
-				console.log(document);
 				Metadata.clear(document.name).then(function(data) {					
 					Metadata.add(document.name, document.metadata);
-					DocumentRepo.update(document.name, document.annotator, 'Published', '');
+					DocumentRepo.update(document.name, $scope.document.annotator, 'Published', '');
 					$location.path('/documents');					
 				});
 			};
@@ -77,12 +70,12 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				return ($routeParams.action == 'review');
 			};
 			
-			$scope.submitRejection = function(document, rejectionNotes) {
+			$scope.submitRejection = function(rejectionNotes) {
 				if(rejectionNotes) {
-					DocumentRepo.update(document.name, document.annotator, 'Rejected', rejectionNotes).then(function() {
+					DocumentRepo.update($scope.document.name, $scope.document.annotator, 'Rejected', rejectionNotes).then(function() {
 						$timeout(function() {
 							$location.path('/documents');
-						}, 500)
+						}, 500);
 					});
 				}
 				else {
@@ -91,7 +84,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			};
 			
 			$scope.requiresCuration = function(name) {
-				DocumentRepo.update(name, user.uin, 'Requires Curation');
+				DocumentRepo.update(name, $scope.user, 'Requires Curation');
 				$location.path('/assignments');
 			};
 			

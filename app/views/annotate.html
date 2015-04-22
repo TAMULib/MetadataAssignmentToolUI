@@ -1,4 +1,3 @@
-
 <div class="row" ng-controller="AnnotateController"> 
 	
 	<div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
@@ -43,13 +42,11 @@
 						<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
 					  	<textarea  class="form-control" ng-model="document.metadata[metadataLabel.label][$index]" rows="5" cols="25" style="width:100%;"></textarea>
 					</div>
-
 					
 				</li>
 				
 				<li ng-if="!metadataLabel.repeatable">
 					<input  class="form-control" ng-if="metadataLabel.inputType == 'TEXT'" type="text" ng-model="document.metadata[metadataLabel.label][0]"/>
-
 					<textarea class="form-control" ng-if="metadataLabel.inputType == 'TEXTAREA'" ng-model="document.metadata[metadataLabel.label][0]" rows="5" cols="25" style="width:100%;"></textarea>
 				</li>
 				
@@ -74,15 +71,15 @@
 					Requires Curation
 				</button>
 				<modal modal-id="rejectModal" 
-						  modal-view="views/modals/rejectModal.html" 
-						  modal-btn-classes="btn btn-danger"
-						  modal-controller="AnnotateController">Reject</modal>
+					   modal-view="views/modals/rejectModal.html" 
+					   modal-btn-classes="btn btn-danger"
+					   modal-controller="AnnotateController">Reject</modal>
+					   
 				<button class="btn btn-success" ng-click="accept(document)">
 					Accept
 				</button>
 			</div>
 		</div>		
 	</div>
-
 
 </div>

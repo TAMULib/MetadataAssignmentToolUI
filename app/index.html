@@ -36,8 +36,8 @@
 		<header class="container-fluid global-nav">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
-						<nav class="global-nav pull-right hidden-xs" ng-controller="AdminController">
+					<div class="col-lg-12">					
+						<nav class="global-nav pull-right hidden-xs">
 							<ul class="nav global-nav pull-right hidden-xs">
 					        	<li><a href="#">Hours</a></li>
 					          	<li><a href="#">Libraries</a></li>
@@ -70,13 +70,18 @@
 					</ul>
 				</nav>
 
-				<div ng-controller="NavigationController" class="row">
-					<div class="col-12 col-lg-12">
-						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group" ng-controller="AdminController">
+				<div class="row" ng-controller="NavigationController">
+					
+					<div class="col-12 col-lg-12" ng-controller="AdminController">
+						
+						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group">
+							
 							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
+							
 							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
 							
 							<a ng-if="isAssuming() == 'true' && isAnnotator()" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
+							
 							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
 								<button ng-class="{'active' : view == '/users'}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<span ng-show="isAdmin() == true">Admin </span>
@@ -90,18 +95,22 @@
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'">
-										<a data-toggle="modal" data-target="#assumeUserModal" href>
-											<span ng-if="isAssuming() == 'false'" ng-click="assumeUser(assume)">{{assumedUser.button}}</span>
-											<span ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedUser.button}}</span>
-											User
-										</a>
+										<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#assumeUserModal">{{assumedUser.button}} User</a>
+										<a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedUser.button}} User</a>
 									</li>
 									<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
 								</ul>
 							</div>
+							
 						</div>
+						
+						<modal 	modal-id="assumeUserModal"
+								modal-view="views/modals/assumeUserModal.html"
+								modal-controller="AdminController"> 							
+						</modal>
 					</div>
-				</div>	
+				</div>
+				
 				
 				
 				<div ng-view class="view"></div>
@@ -113,11 +122,6 @@
 			</div>
 		</div>
 	</main>
-
-	<modal 	modal-id="assumeUserModal"
-			modal-view="views/modals/assumeUserModal.html"
-			modal-controller="AdminController">							
-	</modal>
 
 	<footer class="container-fluid footer">
 		<div class="container">
@@ -213,7 +217,7 @@
     <!-- Models -->
     <script src="models/abstractModel.js"></script>
     <script src="models/userModel.js"></script>
-    <script src="models/assumedUserModel.js"></script>
+    <script src="models/assumedControlModel.js"></script>
     <script src="models/userRepoModel.js"></script>
     <script src="models/documentRepoModel.js"></script>
     <script src="models/documentPageModel.js"></script>
@@ -223,6 +227,7 @@
 
     <!-- Controllers -->
     <script src="controllers/userController.js"></script>
+    <script src="controllers/userRepoController.js"></script>
     <script src="controllers/adminController.js"></script>
     <script src="controllers/documentController.js"></script>
     <script src="controllers/annotateController.js"></script>

@@ -1,4 +1,10 @@
-metadataTool.controller('AbstractController', function ($scope) {
+metadataTool.controller('AbstractController', function ($scope, User) {
+
+	$scope.user = User.get();
+	
+	$scope.getNewUser = function() {
+		$scope.user = User.get(true);
+	};
 
 	$scope.isAdmin = function() {
 		return (sessionStorage.role == "ROLE_ADMIN");

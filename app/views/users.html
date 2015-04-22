@@ -1,7 +1,7 @@
 <br/>
-<div class="row">
+<div class="row" ng-controller="UserRepoController">
 	<div class="col-12">
-		<div class="panel panel-default " ng-controller="AdminController">			
+		<div class="panel panel-default ">			
 			<div class="panel-heading">
 				<h3 class="panel-title">Users</h3>
 			</div>
@@ -28,17 +28,15 @@
 									<option ng-repeat="role in allowableRoles(user.role)">{{role}}</option>
 								</select>
 							</td>
-							<td ng-if="(isAdmin() || isManager())">
-
+							<td ng-if="(isAdmin() || isManager()) && (user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER')">
 								<modal modal-id="{{user.uin}}AssignmentsModal" 
-									   modal-view="views/modals/assignmentsModal.html" 
-									   modal-controller="DocumentController"
+									   modal-view="views/modals/assignmentsModal.html"
 									   modal-btn-classes="btn btn-primary"
+									   modal-controller="DocumentController"
 									   modal-ng-click-function="setSelectedUser"
-									   modal-ng-click-param="{{user}}"
-									   ng-if="user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER'">
+									   modal-ng-click-param="{{user}}"> 
 									   View Assignments
-								</modal>
+								</modal>																
 							</td>
 						</tr>
 					</tbody>

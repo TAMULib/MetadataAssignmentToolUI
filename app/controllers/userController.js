@@ -1,6 +1,6 @@
-metadataTool.controller('UserController', function ($scope, User) {
+metadataTool.controller('UserController', function ($controller, $scope, User) {
 
-	$scope.user = User.get();
-	
+	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+		
 });
 

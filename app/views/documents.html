@@ -1,7 +1,8 @@
 <br/>
-<div class="row">
+<div class="row" ng-controller="DocumentController">
+
 	<div class="col-12">
-		<div class="panel panel-default" ng-controller="DocumentController">			
+		<div class="panel panel-default">			
 			
 			<div class="panel-heading">
 				<h3 class="panel-title">Documents</h3>
@@ -10,7 +11,7 @@
 			<div class="panel-body" ng-if="isAnnotator()">
 				<table ng-table="tableParams" class="table table-hover table-condensed">					
 					<tbody>					
-						<tr ng-repeat="doc in $data">							
+						<tr ng-repeat="doc in $data">
 							<td data-title="'Filename'" sortable="'name'">
 								{{doc.name}}
 							</td>							
