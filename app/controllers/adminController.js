@@ -1,7 +1,7 @@
 metadataTool.controller('AdminController', function ($controller, $location, $scope, $window, User, AssumedControl, Metadata, AuthServiceApi, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-    
+
     if(typeof sessionStorage.assuming === 'undefined') {
 		sessionStorage.assuming = 'false';
 	}
@@ -37,6 +37,8 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 				if ((typeof assume !== 'undefined') && assume.netid) {	
 
 					console.log("Assuming user");
+
+					sessionStorage.assumedUser = JSON.stringify(assume);
 
 					sessionStorage.assuming = 'true';
 
@@ -74,6 +76,8 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 				}
 			} else {
 				console.log("Unassuming user");
+
+				delete sessionStorage.assumedUser;
 
 				sessionStorage.assuming = 'false';
 

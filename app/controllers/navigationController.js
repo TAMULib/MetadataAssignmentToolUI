@@ -7,5 +7,3 @@ metadataTool.controller('NavigationController', function ($controller, $scope, $
 	});
 	
 });
-
-

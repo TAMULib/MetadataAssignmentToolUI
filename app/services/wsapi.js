@@ -20,6 +20,7 @@ metadataTool.service("WsApi",function($q, $http, wsservice, AuthServiceApi) {
 
 		fetchPromise.then(null, null, function(data) {
 			if(JSON.parse(data.body).content.String == "EXPIRED_JWT") {
+
 				if(sessionStorage.assumedUser) {
 					
 					AuthServiceApi.getAssumedUser(JSON.parse(sessionStorage.assumedUser)).then(function() {

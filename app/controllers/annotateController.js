@@ -60,8 +60,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					$location.path('/documents');					
 				});
 			};
-			
-			
+
 			$scope.managerAnnotating = function() {
 				return ($routeParams.action == 'annotate');
 			};

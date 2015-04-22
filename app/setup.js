@@ -38,7 +38,7 @@ function setUpApp(bootstrapApp) {
 
 		var queriesString = location.search;
 
-		if(typeof(queriesString) == "undefined") {
+		if(typeof(queriesString) === "undefined") {
 			return null;
 		}
 
