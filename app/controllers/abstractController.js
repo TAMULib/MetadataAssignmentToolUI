@@ -6,6 +6,10 @@ metadataTool.controller('AbstractController', function ($scope, User) {
 		$scope.user = User.get(true);
 	};
 
+	$scope.isUser = function() {
+		return (sessionStorage.role == "ROLE_USER");
+	};
+
 	$scope.isAdmin = function() {
 		return (sessionStorage.role == "ROLE_ADMIN");
 	};

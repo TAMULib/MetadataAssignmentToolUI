@@ -80,7 +80,7 @@
 							
 							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
 							
-							<a ng-if="isAssuming() == 'true' && isAnnotator()" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
+							<a ng-if="isAssuming() == 'true' && (isAnnotator() || isUser())" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
 							
 							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
 								<button ng-class="{'active' : view == '/users'}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
