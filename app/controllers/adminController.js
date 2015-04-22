@@ -6,6 +6,8 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 		sessionStorage.assuming = 'false';
 	}
 
+	$scope.user = User.get();
+
     $scope.assumedUser = AssumedControl.get();
     
     AssumedControl.set({
@@ -27,6 +29,14 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 			$scope.admin = false;
 		}
 	});
+
+	$scope.isAssuming = function() {
+		return sessionStorage.assuming;
+	};
+
+	$scope.getNewUser = function() {
+		$scope.user = User.get(true);
+	};
 	    
 	User.ready().then(function() {
 		
@@ -126,10 +136,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 		else {
 			return false;
 		}
-	};
-	
-	$scope.isAssuming = function() {
-		return sessionStorage.assuming;
 	};
 	
 });

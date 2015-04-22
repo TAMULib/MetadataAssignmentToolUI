@@ -7,6 +7,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	var userRepo;
 	
 	var annotators = [];
+
+	$scope.user = User.get();
 	
 	$scope.userRepo = UserRepo.get();
 

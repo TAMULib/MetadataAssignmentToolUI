@@ -1,10 +1,4 @@
-metadataTool.controller('AbstractController', function ($scope, User) {
-
-	$scope.user = User.get();
-	
-	$scope.getNewUser = function() {
-		$scope.user = User.get(true);
-	};
+metadataTool.controller('AbstractController', function ($scope) {
 
 	$scope.isUser = function() {
 		return (sessionStorage.role == "ROLE_USER");
