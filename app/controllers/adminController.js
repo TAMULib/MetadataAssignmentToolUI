@@ -1,5 +1,7 @@
 metadataTool.controller('AdminController', function ($controller, $location, $scope, $window, User, AssumedControl, Metadata, AuthServiceApi, WsApi) {
 
+	console.log('AdminController started');
+
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     if(typeof sessionStorage.assuming === 'undefined') {

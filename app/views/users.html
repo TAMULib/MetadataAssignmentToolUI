@@ -29,6 +29,7 @@
 								</select>
 							</td>
 							<td ng-if="(isAdmin() || isManager()) && (user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER')">
+								
 								<modal modal-id="{{user.uin}}AssignmentsModal" 
 									   modal-view="views/modals/assignmentsModal.html"
 									   modal-btn-classes="btn btn-primary"
@@ -36,7 +37,8 @@
 									   modal-ng-click-function="setSelectedUser"
 									   modal-ng-click-param="{{user}}"> 
 									   View Assignments
-								</modal>																
+								</modal>
+								
 							</td>
 						</tr>
 					</tbody>

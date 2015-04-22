@@ -70,10 +70,22 @@
 				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
 					Requires Curation
 				</button>
+
+
+				<button class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">
+					Reject
+				</button>
+
+
+<!--
 				<modal modal-id="rejectModal" 
 					   modal-view="views/modals/rejectModal.html" 
 					   modal-btn-classes="btn btn-danger"
 					   modal-controller="AnnotateController">Reject</modal>
+-->
+
+				<modal2 modal-id="rejectModal" modal-view="views/modals/rejectModal.html"></modal2>
+
 					   
 				<button class="btn btn-success" ng-click="accept(document)">
 					Accept

@@ -1,5 +1,7 @@
 metadataTool.controller('DocumentController', function ($controller, $route, $scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
+	console.log('DocumentController started');
+	
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
 	var view = $window.location.pathname;

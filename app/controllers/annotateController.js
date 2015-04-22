@@ -1,5 +1,7 @@
 metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, User, DocumentRepo, Metadata, TXT, PDF) {
 
+	console.log('AnnotateController started');
+
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
 	$scope.user = User.get();
@@ -9,12 +11,11 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.document.name = $routeParams.documentKey;
 
 	$scope.txt = TXT.get($scope.document.name);
+
 	$scope.pdf = PDF.get($scope.document.name);
 
-	console.log($scope.txt);
-	
 	$scope.document.metadata = {};
-	
+
 	DocumentRepo.ready().then(function() {
 		
 		angular.extend($scope.document, {'metadata':Metadata.get($scope.document)});
