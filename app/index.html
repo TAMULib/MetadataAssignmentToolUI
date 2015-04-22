@@ -71,10 +71,10 @@
 				</nav>
 
 				<div class="row" ng-controller="NavigationController">
-					
+
 					<div class="col-12 col-lg-12" ng-controller="AdminController">
 						
-						<div class="btn-group btn-group-lg btn-group-justified app-menu" role="group">
+						<div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
 							
 							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
 							
