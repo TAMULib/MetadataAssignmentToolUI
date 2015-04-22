@@ -33,10 +33,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	$scope.isAssuming = function() {
 		return sessionStorage.assuming;
 	};
-
-	$scope.getNewUser = function() {
-		$scope.user = User.get(true);
-	};
 	    
 	User.ready().then(function() {
 		
@@ -58,7 +54,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 						
 						if(data) {
 						
-							$scope.getNewUser();
+							$scope.user = User.get(true)
 
 							AssumedControl.set({
 								'user': $scope.user,
@@ -100,7 +96,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 					'status': ''
 				});
 
-				$scope.getNewUser();
+				$scope.user = User.get(true)
 
 				$location.path('/documents');
 				$window.location.reload();

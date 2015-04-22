@@ -76,7 +76,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	
 	UserRepo.listen().then(null, null, function(data) {
 		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
-			$scope.getNewUser();
+			$scope.user = User.get(true)
 			$route.reload();
 		}			
 	});
