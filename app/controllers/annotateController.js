@@ -79,9 +79,6 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 						}, 500);
 					});
 				}
-				else {
-					$scope.validation = "Please enter text.";
-				}
 			};
 			
 			$scope.requiresCuration = function(name) {
