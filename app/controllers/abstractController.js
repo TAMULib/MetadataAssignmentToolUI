@@ -1,4 +1,6 @@
-metadataTool.controller('AbstractController', function ($scope) {
+metadataTool.controller('AbstractController', function ($scope, StorageService) {
+
+	$scope.storage = StorageService;
 
 	$scope.isUser = function() {
 		return (sessionStorage.role == "ROLE_USER");

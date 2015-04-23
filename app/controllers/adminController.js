@@ -18,15 +18,17 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	});
 	
 	$scope.$watch('user.role', function() {		
-		sessionStorage.role = $scope.user.role;
-		if ($scope.user.role == 'ROLE_ADMIN') {
-			$scope.admin = true;
-		} 
-		else if ($scope.user.role == 'ROLE_MANAGER') {
-			$scope.admin = false;
-		}
-		else {
-			$scope.admin = false;
+		if($scope.user.role) {
+			sessionStorage.role = $scope.user.role;
+			if ($scope.user.role == 'ROLE_ADMIN') {
+				$scope.admin = true;
+			} 
+			else if ($scope.user.role == 'ROLE_MANAGER') {
+				$scope.admin = false;
+			}
+			else {
+				$scope.admin = false;
+			}
 		}
 	});
 
@@ -54,7 +56,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 						
 						if(data) {
 						
-							$scope.user = User.get(true)
+							$scope.user = User.get(true);
 
 							AssumedControl.set({
 								'user': $scope.user,
@@ -96,7 +98,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 					'status': ''
 				});
 
-				$scope.user = User.get(true)
+				$scope.user = User.get(true);
 
 				$location.path('/documents');
 				$window.location.reload();

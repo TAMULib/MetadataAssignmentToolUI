@@ -1,4 +1,4 @@
-metadataTool.run(function($rootScope, wsservice) {
+metadataTool.run(function($rootScope) {
 	
 	angular.element("body").fadeIn(300);
 	

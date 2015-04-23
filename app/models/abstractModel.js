@@ -25,7 +25,13 @@ metadataTool.service("AbstractModel", function () {
 				console.error(data);
 			},
 			function(data) {
-				angular.extend(self, JSON.parse(data.body).content[modelString]);		
+				if(data.body) {
+					angular.extend(self, JSON.parse(data.body).content[modelString]);
+				}
+				else {
+					angular.extend(self, {'value':data});
+				}
+					
 		});
 	};
 	
