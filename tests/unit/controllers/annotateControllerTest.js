@@ -1,30 +1,40 @@
-
 describe('controller: AnnotateController', function() {
 	
-	var controller, scope, routeParams, Document, DocumentRepo, Metadata, User;
+	var controller, scope, location, routeParams, DocumentRepo, Metadata, User, TXT, PDF;
 
 	beforeEach(module('metadataTool'));
 	
-	beforeEach(module('mock.document'));
 	beforeEach(module('mock.documentRepo'));
 	beforeEach(module('mock.metadata'));
 	beforeEach(module('mock.user'));
+	beforeEach(module('mock.txt'));
+	beforeEach(module('mock.pdf'));
 	
-	beforeEach(inject(function($controller, $rootScope, $routeParams, _Document_, _DocumentRepo_, _Metadata_, _User_) {
-        scope = $rootScope.$new(); 
+	beforeEach(module(function($provide) {
+        $provide.factory('AnnotateController', function($location){
+            location = $location;
+        });
+    }));
+	
+	beforeEach(inject(function($controller, $rootScope, $location, $routeParams, _DocumentRepo_, _Metadata_, _User_, _TXT_, _PDF_) {
+		scope = $rootScope.$new(); 
+        location = $location; 
         routeParams = $routeParams;
-        controller = $controller('AnnotateController', {
-            $scope: scope,
+		controller = $controller('AnnotateController', {
+        	$scope: scope,
+            $location: location,
             $routeParams: routeParams,
-            Document: _Document_,
             DocumentRepo: _DocumentRepo_,
             Metadata: _Metadata_,
-            User: _User_
+            User: _User_,
+            TXT: _TXT_,
+            PDF: _PDF_
         });
-        Document = _Document_;
         DocumentRepo = _DocumentRepo_;
         Metadata = _Metadata_;
         User = _User_;
+        TXT = _TXT_;
+        PDF = _PDF_;
     }));
 
 	describe('Is the controller defined', function() {
@@ -45,26 +55,17 @@ describe('controller: AnnotateController', function() {
 		});
 	});
 	
-	describe('Does the Document have expected credentials', function() {
-		it('Document should have expected credentials', function() {
-			expect(scope.document.HashMap).toEqual(mockDocument1.HashMap);
+	describe('Does the Document have expected data', function() {
+		it('Document should have expected data', function() {
+			expect(scope.document.HashMap).toEqual(mockDocumentRepo1.HashMap);
 		});
 	});
 	
 	describe('Should be able to set a Document', function() {
 		it('should have set the Document', function() {			
-			Document.set(mockDocument2)			
-			expect(scope.document.HashMap).toEqual(mockDocument2.HashMap);
+			DocumentRepo.set(mockDocumentRepo2)			
+			expect(scope.document.HashMap).toEqual(mockDocumentRepo2.HashMap);
 		});
 	});
 	
-	describe('Should be able to fetch a Document', function() {		
-		it('should have set the fetched Document', function() {			
-			Document.fetch().then(function(data) {
-				Document.set(data);
-				expect(scope.document).toEqual(mockDocument3);
-			});
-		});		
-	});	
-
 });

@@ -17,13 +17,19 @@ angular.module('mock.wsApi', []).
 	        			default: return {'content':{}};
 	        		}	        		
 	        	}
-	        	case 'get': {	        		
+	        	case 'get': {
 	        		switch(apiReq.controller) {
-	        		case 'user': return {'content':mockUser1};
-	        		case 'document': return {'content':mockDocument1};
-	        		case 'metadata': return {'content':mockMetadata1};
-	        		default: return {'content':{}};
+		        		case 'user': return {'content':mockUser1};
+		        		case 'metadata': return {'content':mockMetadata1};
+		        		case 'document': return {'content':mockDocumentRepo1};
+		        		default: return {'content':{}};
 	        		}	        		
+	        	}
+	        	case 'pdf': {
+	        		return {'content':mockPDF1};
+	        	}
+	        	case 'txt': {
+	        		return {'content':mockTXT1};
 	        	}
 	        	case 'update_role': {	        		
 	        		mockUserRepo1['HashMap'][2].role = JSON.parse(apiReq['data']).role;

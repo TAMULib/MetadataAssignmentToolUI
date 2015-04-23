@@ -1,40 +1,24 @@
-metadataTool.directive('modal', function () {
+metadataTool.directive('modal', function ($controller) {
 	return {
-		template: '<div class="modal fade">' + 
-		'<div class="modal-dialog" style="z-index:9999;">' + 
-		'<div class="modal-content">' + 
-		'<div class="modal-header">' + 
-		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
-		'<h4 class="modal-title">{{ title }}</h4>' + 
-		'</div>' + 
-		'<div class="modal-body" ng-transclude></div>' + 
-		'</div>' + 
-		'</div>' + 
-		'</div>',
+		templateUrl: 'views/modalWrapper.html',
 		restrict: 'E',
+		replace:false,
 		transclude: true,
-		replace:true,
-		scope:true,
-		link: function postLink(scope, element, attrs) {
-			scope.title = attrs.title;
-			scope.$watch(attrs.visible, function(value){
-				if(value === true)
-					angular.element(element).modal('show');
-				else
-					angular.element(element).modal('hide');
-			});
+		scope: false,
+		link: function ($scope, element, attr) {
+	    	
+			$scope.attr = attr;
 
-			angular.element(element).on('shown.bs.modal', function(){
-				scope.$apply(function(){
-					scope.$parent[attrs.visible] = true;
-				});
-			});
-
-			angular.element(element).on('hidden.bs.modal', function(){
-				scope.$apply(function(){
-					scope.$parent[attrs.visible] = false;
-				});
-			});
-		}
+			if($scope.attr.modalController) {
+				angular.extend(this, $controller($scope.attr.modalController, {$scope: $scope}));
+			}
+			
+	    	$scope.click = function() {
+	    		if($scope.attr.modalNgClickFunction && $scope.attr.modalNgClickParam) {
+	    			$scope[$scope.attr.modalNgClickFunction](JSON.parse($scope.attr.modalNgClickParam));
+	    		}
+	    	}
+	    	
+	    }
 	};
 });

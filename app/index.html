@@ -32,36 +32,125 @@
 	<![endif]-->
 
 	<!-- Content placed here will appear on every page -->
-	
-	<div ng-controller="AdminController">
-	
-		<a ng-show="isAdmin()" ng-if="isMocking()==false" href="admin">Admin</a>
-		
-		<button ng-if="assumeBtn == 'Unassume'" type="submit" class="btn btn-default" ng-click="assumeUser(assume)">{{assumeBtn}}</button>
+	<main>
+		<header class="container-fluid global-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">					
+						<nav class="global-nav pull-right hidden-xs">
+							<ul class="nav global-nav pull-right hidden-xs">
+					        	<li><a href="#">Hours</a></li>
+					          	<li><a href="#">Libraries</a></li>
+					          	<li><a href="#">Ask Us</a></li>
+					        </ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
 
-		<h1> Welcome: <username></username> </h1>
+		<header class="container-fluid site-title">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="tamu-lib"><a href="home">Texas A&amp;M University Libraries</a></h1>
+						<div class="site"><h3>Metadata Assignment Tool</h3></div>
+					</div>
+				</div>
+			</div>
+		</header>
 		
-		<a href="home">Home</a> |
+		<div class="container-fluid">
+			<div class="container">
+				<div class="col-md-12 appContent">
 
-		<a href="myview">My View</a> |
+				<nav class="pull-right userMenu">
+					<ul class="list-inline">
+						<li><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a></li>
+					</ul>
+				</nav>
 
-		<a href="documents">Documents</a> |
-		
-		<a href="assignments">My Assigned Documents</a>
+				<div class="row" ng-controller="NavigationController">
 
-		<span ng-if="(isAdmin() || isManager()) == true">
-			| <a href="users" >Users</a> |
-		
-			<button type="button" ng-csv="exportMetadata()" csv-header="['Id', 'Filename', 'Type', 'Value', 'Index', 'Repeatable']" filename="metadata.csv" class="btn btn-default">Export Metadata</button>
-			
-		</span>
-		
-	</div>
-	
-	<div ng-view></div>
+					<div class="col-12 col-lg-12" ng-controller="AdminController">
+						
+						<div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
+							
+							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
+							
+							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
+							
+							<a ng-if="isAssuming() == 'true' && (isAnnotator() || isUser())" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
+							
+							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
+								<button ng-class="{'active' : view == '/users'}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<span ng-show="isAdmin() == true">Admin </span>
+									<span ng-show="isManager() == true">Manager </span>
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
+									<li><a href="users">Manage Users</a></li>
+									<li><a ng-csv="exportMetadata()" csv-header="['Document', 'Label', 'Value']" filename="metadata.csv" href="#">Export Metadata</a></li>
+									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
+									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
+									<li ng-if="isAdmin() || isAssuming() == 'true'">
+										<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#assumeUserModal">{{assumedUser.button}} User</a>
+										<a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedUser.button}} User</a>
+									</li>
+									<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+								</ul>
+							</div>
+							
+						</div>
 
-	<footer>
-		MetadataTool Version: <span app-version></span>
+						<modal modal-id="assumeUserModal" 
+							   modal-view="views/modals/assumeUserModal.html"></modal>
+
+					</div>
+				</div>
+				
+				<div ng-view class="view"></div>
+
+				<footer>
+					MetadataTool Version: <span app-version></span>
+				</footer>
+
+			</div>
+		</div>
+	</main>
+
+	<footer class="container-fluid footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="inline-list">
+						<li>© Texas A&amp;M University Libraries</li>
+						<li>
+							<a href="http://www.tamu.edu">Texas A&amp;M University</a>
+						</li>
+						<li>
+							<a href="http://library.tamu.edu/about/employment/index.html">Employment</a>
+						</li>
+						<li>
+							<a href="http://library.tamu.edu/services/forms/contact-info.html">Webmaster</a>
+						</li>
+						<li>
+							<a href="http://library.tamu.edu/about/general-information/legal-notices.html">Legal</a>
+						</li>
+						<li>
+							<a href="http://vrlplus.cb.docutek.com/tamu/vrleb_question_patron.asp?virtual_desk_id=1">Comments</a>
+						</li>
+						<li>
+							<a href="tel:+1-979-845-5741">979-845-5741</a></li><a href="tel:+1-979-845-5741">
+						</a>
+						<li>
+							<a href="tel:+1-979-845-5741"></a><a href="http://library.tamu.edu/accessibility/index.html">Accessibility</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</footer>
 
 
@@ -71,9 +160,13 @@
 	<!-- Bower component -->
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	
+	<script src="bower_components/sockjs/sockjs.min.js"></script>
+	<script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
 		
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<script src="bower_components/angular-loader/angular-loader.js"></script>
 	<script src="bower_components/angular-mocks/angular-mocks.js"></script>
 	
@@ -91,8 +184,6 @@
 	
 	<!-- build:js resources/scripts/vendor_concat.js -->
 	<!--  Vendor libraries -->
-	<script src="resources/scripts/vendor/stomp.js"></script>
-	<script src="resources/scripts/vendor/sockjs-0.3.4.js"></script>
 
 	<!-- endbuild -->
 	
@@ -123,18 +214,22 @@
     <!-- Models -->
     <script src="models/abstractModel.js"></script>
     <script src="models/userModel.js"></script>
+    <script src="models/assumedControlModel.js"></script>
     <script src="models/userRepoModel.js"></script>
     <script src="models/documentRepoModel.js"></script>
     <script src="models/documentPageModel.js"></script>
-    <script src="models/documentModel.js"></script>
     <script src="models/metadataModel.js"></script>
+    <script src="models/txtModel.js"></script>
+    <script src="models/pdfModel.js"></script>
 
-    
     <!-- Controllers -->
     <script src="controllers/userController.js"></script>
+    <script src="controllers/userRepoController.js"></script>
     <script src="controllers/adminController.js"></script>
     <script src="controllers/documentController.js"></script>
     <script src="controllers/annotateController.js"></script>
+    <script src="controllers/navigationController.js"></script>
+    <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->
 

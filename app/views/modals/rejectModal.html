@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title">Reject Metadata</h4>
+</div>
+<div class="modal-body">
+	<form role="form"  >
+		<div class="form-group">
+			<label>Please indicate which metadata fields need modification: </label>			
+			<textarea ng-model="rejectionNotes" rows="4" cols="75" placeholder="Enter notes"></textarea>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="submit" ng-if="rejectionNotes" class="btn btn-danger" data-dismiss="modal" ng-click="submitRejection(rejectionNotes)">Reject</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+</div>

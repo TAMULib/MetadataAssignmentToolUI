@@ -4,12 +4,14 @@ function setUpApp(bootstrapApp) {
 	
 	var jwt = getJWT();
 
-	if(!globalConfig.stompDebug)
+	if(!globalConfig.stompDebug) {
 		window.stompClient.debug = null; 
+	}
 
 	if(jwt) {
-		if(!sessionStorage.token)
+		if(!sessionStorage.token) {
 			sessionStorage.token = jwt;
+		}
 
 		angular.element(document).ready(function() {
 			window.stompClient.connect({"jwt": sessionStorage.token}, function() {	
@@ -30,22 +32,24 @@ function setUpApp(bootstrapApp) {
 
 	function getJWT() {
 
-		if(sessionStorage.token) return sessionStorage.token;
+		if(sessionStorage.token) {
+			return sessionStorage.token;
+		}
 
 		var queriesString = location.search;
 
-		if(typeof(queriesString) == "undefined") return null;
+		if(typeof(queriesString) === "undefined") {
+			return null;
+		}
 
 		var queries = queriesString.substring(1).split("&");
 
 		var jwt = null;
 		
 		for(var key in queries) {
-			
 			var queryString = queries[key];
 			var query = queryString.split("=");
 			if(query[0] == "jwt") jwt = query[1];
-
 		}
 
 		if(jwt) {

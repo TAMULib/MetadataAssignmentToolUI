@@ -2,7 +2,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 
 	var self;
 
-	var Documents = function(futureData) {
+	var Document = function(futureData) {
 		self = this;
 
 		//This causes our model to extend AbstractModel
@@ -12,67 +12,71 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		
 	};
 
-	Documents.data = null;
+	Document.data = null;
 	
-	Documents.listener = WsApi.listen({
+	Document.promise = null;
+	
+	Document.listener = WsApi.listen({
 		endpoint: 'channel', 
 		controller: 'documents', 
 		method: '',
 	});
 
-	Documents.set = function(data) {
+	Document.set = function(data) {
 		self.unwrap(self, data, "HashMap");
 	};
 
-	Documents.get = function(action) {
-
-		if(Documents.data && !action) return Documents.data;
+	Document.get = function(name) {
 
 		var newDocumentPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'document', 
-				method: 'all',
+				method: 'get',
+				data: JSON.stringify({'name': name})
 		});
-
-		if(action) {
-			newDocumentPromise.then(function(data) {
-				Documents.set(JSON.parse(data.body).content.Document);
-			});
-		}
-		else {
-			Documents.data = new Documents(newDocumentPromise);	
-		}
 		
-		return Documents.data;
+		Document.data = new Document(newDocumentPromise);
+		
+		Document.promise = newDocumentPromise;
+		
+		return Document.data;
 	
 	};
 		
-	Documents.update = function(filename, uin, status) {
+	Document.update = function(name, user, status, notes) {
+		
 		var change = {
-			'filename': filename,
-			'uin': uin,
-			'status': status
+			'name': name,
+			'user': (user.firstName && user.lastName && user.uin) ? user.firstName + " " + user.lastName + " " + user.uin : user,
+			'status': status,
+			'notes': notes
 		};
 				
-		var updateUserRolePromise = WsApi.fetch({
+		var updateDocumentPromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'update',
 			data: JSON.stringify(change)
 		});
 				
-		if(updateUserRolePromise.$$state) {
-			updateUserRolePromise.then(function(data) {	
+		if(updateDocumentPromise.$$state) {
+			updateDocumentPromise.then(function(data) {	
 				logger.log(data);
 			});
 		}
-		
-	}
 
-	Documents.listen = function() {
-		return Documents.listener;
-	};
+		return updateDocumentPromise;
 		
-	return Documents;
+	};
+
+	Document.listen = function() {
+		return Document.listener;
+	};
+	
+	Document.ready = function() {
+		return Document.promise;
+	};
+	
+	return Document;
 	
 });

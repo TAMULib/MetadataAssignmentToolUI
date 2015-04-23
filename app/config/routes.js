@@ -13,7 +13,7 @@ metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvi
 		when('/myview', {
 			templateUrl: 'views/myview.html'
 		}).
-		when('/annotate/:documentKey', {
+		when('/annotate/:documentKey/:action', {
 			templateUrl: 'views/annotate.html'
 		}).
 		when('/admin', {

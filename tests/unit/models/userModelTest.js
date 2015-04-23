@@ -1,4 +1,3 @@
-
 describe('model: User', function() {
 	
 	var User, WsApi;
