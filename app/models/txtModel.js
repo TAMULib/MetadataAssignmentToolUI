@@ -12,6 +12,10 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 	};
 
 	TXT.data = null;
+
+	TXT.set = function(data) {
+		self.unwrap(self, data);
+	};
 	
 	TXT.get = function(name) {
 

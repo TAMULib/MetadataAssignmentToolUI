@@ -1,7 +1,5 @@
 metadataTool.controller('UserRepoController', function ($controller, $location, $scope, $route, User, UserRepo) {
-
-	console.log('UserRepoController started');
-		
+	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
     $scope.user = User.get()

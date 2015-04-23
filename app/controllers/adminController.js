@@ -1,7 +1,5 @@
 metadataTool.controller('AdminController', function ($controller, $location, $scope, $window, User, AssumedControl, Metadata, AuthServiceApi, WsApi) {
 
-	console.log('AdminController started');
-
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     if(typeof sessionStorage.assuming === 'undefined') {
@@ -44,7 +42,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 
 				if ((typeof assume !== 'undefined') && assume.netid) {	
 
-					console.log("Assuming user");
+					logger.log("Assuming user");
 
 					sessionStorage.assumedUser = JSON.stringify(assume);
 
@@ -110,7 +108,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	});
 	
 	$scope.exportMetadata = function() {
-		console.log("Exporting metadata");
+		logger.log("Exporting metadata");
 		return Metadata.getAllPublished().then(function(metadata) {
 			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
 		});
@@ -123,7 +121,7 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 				method: 'sync'
 		});
 		syncPromise.then(function(data) {
-			console.log(data);
+			logger.log(data);
 		});
 	};
 	
