@@ -13,10 +13,6 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 
 	TXT.data = null;
 	
-	TXT.set = function(data) {
-		self.unwrap(self, data);
-	};
-
 	TXT.get = function(name) {
 
 		var newTxtPromise = WsApi.fetch({
@@ -31,7 +27,7 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 		if(newTxtPromise.$$state) {
 			newTxtPromise.then(function(data) {
 				var newVerbagePromise = $http.get(JSON.parse(data.body).content.HashMap.uri).then(function(response) {
-					self.add(TXT.data, {'verbage':response.data});
+					angular.extend(TXT.data, {'verbage':response.data});
 				});
 
 			});
