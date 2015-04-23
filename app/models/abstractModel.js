@@ -28,6 +28,10 @@ metadataTool.service("AbstractModel", function () {
 				angular.extend(self, JSON.parse(data.body).content[modelString]);		
 		});
 	};
+
+	AbstractModel.add = function(self, object) {
+		angular.extend(self, object);
+	};
 	
 	return AbstractModel;
 
