@@ -48,7 +48,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	$scope.setSelectedUser = function(user) {
 		$scope.selectedUser = user;
 		$scope.setTable();
-	}
+	};
 	
 	$scope.availableAnnotators = function() {
 		if(!userRepo) {
@@ -79,7 +79,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	
 	UserRepo.listen().then(null, null, function(data) {
 		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
-			$scope.user = User.get(true)
+			$scope.user = User.get(true);
 			$route.reload();
 		}			
 	});

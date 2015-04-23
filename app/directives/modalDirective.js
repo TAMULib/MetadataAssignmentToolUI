@@ -4,13 +4,14 @@ metadataTool.directive('modal', function ($controller) {
 		restrict: 'E',
 		replace:false,
 		transclude: true,
-		scope: {},
+		scope: false,
 		link: function ($scope, element, attr) {
 	    	
 			$scope.attr = attr;
 
-			angular.extend(this, $controller($scope.attr.modalController, {$scope: $scope}));
-
+			if($scope.attr.modalController) {
+				angular.extend(this, $controller($scope.attr.modalController, {$scope: $scope}));
+			}
 			
 	    	$scope.click = function() {
 	    		if($scope.attr.modalNgClickFunction && $scope.attr.modalNgClickParam) {

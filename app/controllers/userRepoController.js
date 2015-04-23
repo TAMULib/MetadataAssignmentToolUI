@@ -39,7 +39,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 		};
 		
     });
-	
+    	
 });
 
 
