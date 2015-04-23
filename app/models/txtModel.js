@@ -2,21 +2,17 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 
 	var self;
 
-	var TXT = function(futureData) {
+	var TXT = function(futureData, modelString) {
 		self = this;
 
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
-		self.unwrap(self, futureData, "HashMap");
+		self.unwrap(self, futureData, modelString);
 		
 	};
 
 	TXT.data = null;
 	
-	TXT.set = function(data) {
-		self.unwrap(self, data);
-	};
-
 	TXT.get = function(name) {
 
 		var newTxtPromise = WsApi.fetch({
@@ -30,9 +26,10 @@ metadataTool.service("TXT", function(WsApi, AbstractModel, $http) {
 		
 		if(newTxtPromise.$$state) {
 			newTxtPromise.then(function(data) {
-				$http.get(JSON.parse(data.body).content.HashMap.uri).then(function(res) {
-					TXT.set({'verbage': res.data});
-				});			
+				var newVerbagePromise = $http.get(JSON.parse(data.body).content.HashMap.uri).then(function(response) {
+					angular.extend(TXT.data, {'verbage':response.data});
+				});
+
 			});
 		}
 		

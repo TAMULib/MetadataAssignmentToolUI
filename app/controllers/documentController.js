@@ -1,5 +1,7 @@
-metadataTool.controller('DocumentController', function ($controller, $scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
+	console.log('DocumentController started');
+	
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
 	var view = $window.location.pathname;
@@ -7,15 +9,15 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 	var userRepo;
 	
 	var annotators = [];
-	
+
 	$scope.user = User.get();
+	
+	$scope.userRepo = UserRepo.get();
 
 	$scope.selectedUser = null;
 
-	User.ready().then(function() {
-		
+	User.ready().then(function() {		
 		$scope.setTable = function() {
-
 			$scope.tableParams = new ngTableParams({
 		        page: 1,
 		        count: 10,
@@ -29,31 +31,24 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		        }
 		    }, {
 		        total: 0,
-		        getData: function($defer, params) {
-		        	
+		        getData: function($defer, params) {		        	
 		        	var key; for(key in params.sorting()) {}
-
 		        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
 		        		var page = JSON.parse(data.body).content.PageImpl;
 		        		params.total(page.totalElements);
 		        		$scope.docs = page.content;
 		        		$defer.resolve($scope.docs);
-		        	});
-		        	
+		        	});		        	
 		        }
-		    });
-		
-		};
-		
+		    });		
+		};		
 		$scope.setTable();
-
-		$scope.setSelectedUser = function(user) {
-			$scope.selectedUser = user;
-			$scope.setTable();
-		}
-
 	});
 
+	$scope.setSelectedUser = function(user) {
+		$scope.selectedUser = user;
+		$scope.setTable();
+	};
 	
 	$scope.availableAnnotators = function() {
 		if(!userRepo) {
@@ -68,7 +63,7 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 		return annotators;
 	};
 	
-	$scope.updateAnnotator = function(name, status, annotator) {
+	$scope.updateAnnotator = function(name, status, annotator) {		
 		if(!annotator) {
 			annotator = $scope.user;
 		}
@@ -80,6 +75,13 @@ metadataTool.controller('DocumentController', function ($controller, $scope, $ti
 
 	DocumentPage.listen().then(null, null, function(data) {
 		$scope.tableParams.reload();
+	});
+	
+	UserRepo.listen().then(null, null, function(data) {
+		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
+			$scope.user = User.get(true);
+			$route.reload();
+		}			
 	});
 	
 });
