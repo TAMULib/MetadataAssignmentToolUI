@@ -19,14 +19,20 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 	}
 
 	StorageService.set = function(key, value, type) {
+		if(!type) {
+			type = globalConfig.storageType;
+		}
 		if(!StorageService.keys[type][key]) {
-			StorageService.keys[type][key] = $q.defer();
+			StorageService.keys[type][key] = $q.defer();			
 		}
 		StorageService.storage[type][key] = value;
 		StorageService.keys[type][key].notify(StorageService.storage[type][key]);
 	}
 
 	StorageService.get = function(key, type) {
+		if(!type) {
+			type = globalConfig.storageType;
+		}
 		if(!StorageService.keys[type][key]) {
 			StorageService.keys[type][key] = $q.defer();
 		}
@@ -35,6 +41,9 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 	}
 
 	StorageService.delete = function(key, type) {
+		if(!type) {
+			type = globalConfig.storageType;
+		}
 		StorageService.keys[type][key].notify(null);
 		delete StorageService.keys[type][key];
 		delete StorageService.storage[type][key];
