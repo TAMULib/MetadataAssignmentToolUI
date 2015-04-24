@@ -38,12 +38,12 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 	}
 
 	StorageService.delete = function(key, type) {
-		StorageService.keys[key][type].notify(null);
-		delete StorageService.keys[key][type];
-		delete StorageService.storage[key][type];
+		StorageService.keys[type][key].notify(null);
+		delete StorageService.keys[type][key];
+		delete StorageService.storage[type][key];
 	}
 
-	for(var type in {'session':'', 'local':''}) {
+	for(var type in {'session':'0', 'local':'1'}) {
 		for(var key in StorageService.storage[type]) {
 			StorageService.keys[type][key] = $q.defer();
 			StorageService.keys[type][key].notify(StorageService.storage[type][key]);
