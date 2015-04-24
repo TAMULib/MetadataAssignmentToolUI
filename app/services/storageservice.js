@@ -19,10 +19,10 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 	}
 
 	StorageService.set = function(key, value, type) {
-		StorageService.storage[type][key] = value;
 		if(!StorageService.keys[type][key]) {
 			StorageService.keys[type][key] = $q.defer();
 		}
+		StorageService.storage[type][key] = value;
 		StorageService.keys[type][key].notify(StorageService.storage[type][key]);
 	}
 
@@ -31,9 +31,6 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 			StorageService.keys[type][key] = $q.defer();
 		}
 		var data = new Data(StorageService.keys[type][key].promise);
-		if(StorageService.storage[type][key]) {
-			StorageService.set(key, StorageService.storage[type][key], type);
-		}
 		return data;
 	}
 
