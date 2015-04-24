@@ -5,12 +5,12 @@
 
 <form>
 	<div class="modal-body">
-		<input type="netid" class="form-control" id="netid" placeholder="Enter netid" ng-model="assumedUser.netid" ng-pattern="word" ng-trim="false" />
+		<input type="netid" class="form-control" id="netid" placeholder="Enter netid" ng-model="assumedControl.netid" ng-pattern="word" ng-trim="false" />
 
-		<p>{{assumedUser.status}}</p>
+		<p>{{assumedControl.status}}</p>
 	</div>
 	<div class="modal-footer">
-		<button  ng-hide="isAssuming() == 'true'" type="submit" class="btn btn-primary" ng-click="assumeUser(assumedUser)">{{assumedUser.button}}</button>
+		<button  ng-hide="isAssuming() == 'true'" type="submit" class="btn btn-primary" ng-click="assumeUser(assumedControl)">{{assumedControl.button}}</button>
 		<img class="modalLoadingWheel" ng-hide="isAssuming() == 'false'" src="resources/img/ajax-loader.gif"/>
 		<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
 	</div>

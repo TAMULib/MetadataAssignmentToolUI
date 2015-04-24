@@ -8,10 +8,9 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 
 	$scope.user = User.get();
 
-    $scope.assumedUser = AssumedControl.get();
+    $scope.assumedControl = AssumedControl.get();
     
     AssumedControl.set({
-		'user': $scope.user,
 		'netid': '',
 		'button': (sessionStorage.assuming == 'true') ? 'Unassume' : 'Assume',
 		'status': ''
@@ -59,7 +58,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 							$scope.user = User.get(true);
 
 							AssumedControl.set({
-								'user': $scope.user,
 								'netid': '',
 								'button': 'Unassume',
 								'status': ''
@@ -74,7 +72,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 							sessionStorage.assuming = 'false';
 
 							AssumedControl.set({
-								'user': $scope.user,
 								'netid': assume.netid,
 								'button': 'Assume',
 								'status': 'invalid netid'
@@ -92,7 +89,6 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 				sessionStorage.token = sessionStorage.adminToken;
 				
 				AssumedControl.set({
-					'user': $scope.user,
 					'netid': '',
 					'button': 'Assume',
 					'status': ''
