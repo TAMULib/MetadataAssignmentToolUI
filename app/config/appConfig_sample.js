@@ -1,10 +1,14 @@
 var globalConfig = { 
 		
+		'base': '/metadatatool/',
+
 		// Set this to the webService if mocking AuthService
 		
-		'authService':'https://labs.library.tamu.edu/authservice-dev',
-		'webService':'http://osd144.library.tamu.edu/mylibrary-dev', 
+		'authService': 'https://labs.library.tamu.edu/authservice-dev',
+		'webService': 'http://osd144.library.tamu.edu/mylibrary-dev', 
 		
+		'storageType': 'session',
+
 		'logging': {
 			'log': true,
 			'info': true,
