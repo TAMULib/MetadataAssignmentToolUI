@@ -1,12 +1,14 @@
-metadataTool.controller('UserRepoController', function ($controller, $location, $scope, $route, User, UserRepo) {
+metadataTool.controller('UserRepoController', function ($controller, $location, $scope, $route, StorageService, User, UserRepo) {
 	
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
     
-    $scope.user = User.get()
+    $scope.user = User.get();
 
     $scope.userRepo = UserRepo.get();
      
-    User.ready().then(function(){
+ 	$scope.ready = User.ready();
+
+    $scope.ready.then(function(){
     	
 		$scope.updateRole = function(uin, role) {
 			UserRepo.updateRole(uin, role);
@@ -22,10 +24,10 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 		};
 		
 		$scope.allowableRoles = function(userRole) {
-			if(sessionStorage.role == 'ROLE_ADMIN') {
+			if(StorageService.get('role') == 'ROLE_ADMIN') {
 				return ['ROLE_ADMIN','ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
 			}
-			else if(sessionStorage.role == 'ROLE_MANAGER') {
+			else if(StorageService.get('role') == 'ROLE_MANAGER') {
 				if(userRole == 'ROLE_ADMIN') {
 					return ['ROLE_ADMIN'];
 				}
@@ -37,6 +39,13 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 		};
 		
     });
+
+    UserRepo.listen().then(null, null, function(data) {
+		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
+			User.refresh();
+			$route.reload();
+		}			
+	});
     	
 });
 
