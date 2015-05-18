@@ -17,7 +17,7 @@ metadataTool.directive('modal', function ($controller) {
 	    		if($scope.attr.modalNgClickFunction && $scope.attr.modalNgClickParam) {
 	    			$scope[$scope.attr.modalNgClickFunction](JSON.parse($scope.attr.modalNgClickParam));
 	    		}
-	    	}
+	    	};
 	    	
 	    }
 	};
