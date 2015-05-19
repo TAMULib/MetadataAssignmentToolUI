@@ -35,19 +35,19 @@
 				
 					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXT'">
 					  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-						<forminput class="form-control" type="text" ng-model="document.metadata[metadataLabel.label][$index]"></forminput>
+						<forminput class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></forminput>
 					</div>
 
 					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
 						<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-						<formtextarea class="form-control" ng-model="document.metadata[metadataLabel.label][$index]"></formtextarea>
+						<formtextarea class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></formtextarea>
 					</div>
 					
 				</li>
 				
 				<li ng-if="!metadataLabel.repeatable">
-					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" type="text" ng-model="document.metadata[metadataLabel.label][0]"></forminput>
-					<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
+					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-readonly="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]"></forminput>
+					<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
 				</li>
 				
 			</ul>	
