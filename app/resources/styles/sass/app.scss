@@ -95,6 +95,14 @@ main footer {
   border-color: #d58512;
 }
 
+@media (min-width: 1200px) {
+  .metadata-pane {
+    height: 800px;
+    overflow-y: auto;
+    position: relative;
+  }
+}
+
 .metadata-label {
   margin-bottom: 15px;
 }
