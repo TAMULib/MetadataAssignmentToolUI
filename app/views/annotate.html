@@ -46,8 +46,8 @@
 				</li>
 				
 				<li ng-if="!metadataLabel.repeatable">
-					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-disabled="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]"></forminput>
-					<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-disabled="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
+					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-readonly="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]"></forminput>
+					<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
 				</li>
 				
 			</ul>	
