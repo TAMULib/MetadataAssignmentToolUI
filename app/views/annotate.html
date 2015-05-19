@@ -26,7 +26,7 @@
 		<div ng-repeat="metadataLabel in document.metadataLabels" class="row">			
 			<formlabel text="{{metadataLabel.gloss}}"></formlabel>
 
-			<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
+			<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label,metadataLabel.defaultValue)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
 			<span title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign label-remove" style="text-decoration: none;"></span>
 
 			<ul class="list-unstyled">
