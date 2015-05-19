@@ -23,37 +23,28 @@
 	<div class="col-4 col-lg-4 metadata-pane">
 		<h2>Metadata</h2>
 		
-		<div ng-repeat="metadataLabel in document.metadataLabels" class="row">			
+		<div ng-repeat="metadataLabel in document.metadataLabels" class="row">
 			<formlabel text="{{metadataLabel.gloss}}"></formlabel>
-
 			<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label,metadataLabel.defaultValue)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
 			<span title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign label-remove" style="text-decoration: none;"></span>
 
 			<ul class="list-unstyled">
-
 				<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
-				
 					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXT'">
 					  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-						<forminput class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></forminput>
+						<forminput class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
 					</div>
-
 					<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
 						<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
 						<formtextarea class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></formtextarea>
 					</div>
-					
 				</li>
-				
 				<li ng-if="!metadataLabel.repeatable">
-					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-readonly="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]"></forminput>
+					<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
 					<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
 				</li>
-				
 			</ul>	
-			
 		</div>
-
 		<div class="row">			
 			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
 				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">

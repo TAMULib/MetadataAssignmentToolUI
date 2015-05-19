@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, User, DocumentRepo, Metadata, TXT, PDF) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, ControlledVocabulary, DocumentRepo, Metadata, User, TXT, PDF) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -14,11 +14,22 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 
 	$scope.document.metadata = {};
 
+	$scope.cv = ControlledVocabulary.get();
+
+	$scope.getControlledVocabulary = function(label) {
+		if(typeof $scope.cv[label] === 'undefined') {
+			return [];
+		}
+		return $scope.cv[label];
+	}
+
 	DocumentRepo.ready().then(function() {
 		
 		angular.extend($scope.document, {'metadata':Metadata.get($scope.document)});
 		
 		Metadata.ready().then(function() {
+
+			console.log($scope.document);
 
 			for(var key in $scope.document.metadataLabels) {
 				var metadataLabel = $scope.document.metadataLabels[key];
