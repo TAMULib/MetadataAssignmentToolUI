@@ -19,20 +19,22 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 		angular.extend($scope.document, {'metadata':Metadata.get($scope.document)});
 		
 		Metadata.ready().then(function() {
-
 			for(var key in $scope.document.metadataLabels) {
 				var metadataLabel = $scope.document.metadataLabels[key];
 				if(!$scope.document.metadata[metadataLabel.label]) {
-					$scope.document.metadata[metadataLabel.label] = [''];
+					if (metadataLabel.defaultValue) {
+						$scope.document.metadata[metadataLabel.label] = [metadataLabel.defaultValue];
+					} else {
+						$scope.document.metadata[metadataLabel.label] = [''];
+					}
 				}
-			}
-			
+			}		
 			$scope.removeMetadataField = function(label) {
 				$scope.document.metadata[label].splice(Object.keys($scope.document.metadata[label]).length-1, 1);
 			};
 			
-			$scope.addMetadataField = function(label) {
-				$scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length] = '';
+			$scope.addMetadataField = function(label,defaultValue) {
+				$scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length] = (defaultValue) ? defaultValue:'';
 			};
 			
 			$scope.getMetadataFieldCount = function(label) {
