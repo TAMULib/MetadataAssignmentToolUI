@@ -9,6 +9,6 @@ var metadataTool = angular.module('metadataTool',
 
 setUpApp(function() {
 
-	angular.bootstrap(document, ['metadataTool']);
+	angular.bootstrap(document, ['metadataTool', 'ui.bootstrap']);
 
 });

@@ -1,9 +1,10 @@
 describe('controller: AnnotateController', function() {
 	
-	var controller, scope, location, routeParams, DocumentRepo, Metadata, User, TXT, PDF;
+	var controller, scope, location, routeParams, ControlledVocabulry, DocumentRepo, Metadata, User, TXT, PDF;
 
 	beforeEach(module('metadataTool'));
 	
+	beforeEach(module('mock.controlledVocabulary'));
 	beforeEach(module('mock.documentRepo'));
 	beforeEach(module('mock.metadata'));
 	beforeEach(module('mock.user'));
@@ -16,7 +17,7 @@ describe('controller: AnnotateController', function() {
         });
     }));
 	
-	beforeEach(inject(function($controller, $rootScope, $location, $routeParams, _DocumentRepo_, _Metadata_, _User_, _TXT_, _PDF_) {
+	beforeEach(inject(function($controller, $rootScope, $location, $routeParams, _ControlledVocabulary_, _DocumentRepo_, _Metadata_, _User_, _TXT_, _PDF_) {
 		scope = $rootScope.$new(); 
         location = $location; 
         routeParams = $routeParams;
@@ -24,12 +25,14 @@ describe('controller: AnnotateController', function() {
         	$scope: scope,
             $location: location,
             $routeParams: routeParams,
+            ControlledVocabulary: _ControlledVocabulary_,
             DocumentRepo: _DocumentRepo_,
             Metadata: _Metadata_,
             User: _User_,
             TXT: _TXT_,
             PDF: _PDF_
         });
+        ControlledVocabulary = _ControlledVocabulary_;
         DocumentRepo = _DocumentRepo_;
         Metadata = _Metadata_;
         User = _User_;
