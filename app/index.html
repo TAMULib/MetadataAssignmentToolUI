@@ -177,6 +177,10 @@
 	
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
+
+	<!-- Configuration -->
+    <script src="config/appConfig.js"></script>
+
 	<!-- Modules -->
 	<script src="components/version/version.js"></script>
 	<script src="components/version/version-directive.js"></script>
@@ -191,48 +195,45 @@
 
 	<!-- build:js resources/scripts/app_concat.js -->
 	
-    <!-- Configuration -->
-    <script src="config/appConfig.js"></script>
+	    <!-- Application Start -->
+	    <script src="setup.js"></script>
+	    <script src="app.js"></script>
+	    <script src="config/logging.js"></script>
+	    <script src="config/runTime.js"></script>
+	    <script src="config/routes.js"></script>
 
-    <!-- Application Start -->
-    <script src="setup.js"></script>
-    <script src="app.js"></script>
-    <script src="config/logging.js"></script>
-    <script src="config/runTime.js"></script>
-    <script src="config/routes.js"></script>
+	    <!-- Directives -->
+	    <script src="directives/userDirective.js"></script>
+	    <script src="directives/modalDirective.js"></script>
 
-    <!-- Directives -->
-    <script src="directives/userDirective.js"></script>
-    <script src="directives/modalDirective.js"></script>
+	    <!-- Services -->
+	    <script src="services/wsservice.js"></script>
+	    <script src="services/wsapi.js"></script>
+	    <script src="services/restapi.js"></script>
+	  	<script src="services/authserviceapi.js"></script>
+	  	<script src="services/storageservice.js"></script>
 
-    <!-- Services -->
-    <script src="services/wsservice.js"></script>
-    <script src="services/wsapi.js"></script>
-    <script src="services/restapi.js"></script>
-  	<script src="services/authserviceapi.js"></script>
-  	<script src="services/storageservice.js"></script>
+	    <!-- Factories -->
 
-    <!-- Factories -->
+	    <!-- Models -->
+	    <script src="models/abstractModel.js"></script>
+	    <script src="models/userModel.js"></script>
+	    <script src="models/assumedControlModel.js"></script>
+	    <script src="models/userRepoModel.js"></script>
+	    <script src="models/documentRepoModel.js"></script>
+	    <script src="models/documentPageModel.js"></script>
+	    <script src="models/metadataModel.js"></script>
+	    <script src="models/txtModel.js"></script>
+	    <script src="models/pdfModel.js"></script>
 
-    <!-- Models -->
-    <script src="models/abstractModel.js"></script>
-    <script src="models/userModel.js"></script>
-    <script src="models/assumedControlModel.js"></script>
-    <script src="models/userRepoModel.js"></script>
-    <script src="models/documentRepoModel.js"></script>
-    <script src="models/documentPageModel.js"></script>
-    <script src="models/metadataModel.js"></script>
-    <script src="models/txtModel.js"></script>
-    <script src="models/pdfModel.js"></script>
-
-    <!-- Controllers -->
-    <script src="controllers/userController.js"></script>
-    <script src="controllers/userRepoController.js"></script>
-    <script src="controllers/adminController.js"></script>
-    <script src="controllers/documentController.js"></script>
-    <script src="controllers/annotateController.js"></script>
-    <script src="controllers/navigationController.js"></script>
-    <script src="controllers/abstractController.js"></script>
+	    <!-- Controllers -->
+	    <script src="controllers/userController.js"></script>
+	    <script src="controllers/userRepoController.js"></script>
+	    <script src="controllers/adminController.js"></script>
+	    <script src="controllers/documentController.js"></script>
+	    <script src="controllers/annotateController.js"></script>
+	    <script src="controllers/navigationController.js"></script>
+	    <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->
 

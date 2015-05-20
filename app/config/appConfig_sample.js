@@ -2,6 +2,8 @@ var globalConfig = {
 		
 		'base': '/metadatatool/',
 
+		'version': 'metadataTool',
+
 		// Set this to the webService if mocking AuthService
 		
 		'authService': 'https://labs.library.tamu.edu/authservice-dev',
