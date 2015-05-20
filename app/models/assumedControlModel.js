@@ -38,6 +38,11 @@ metadataTool.service("AssumedControl", function(AbstractModel, $q) {
 		return AssumedUser.promise;
 	};
 
+	AssumedControl.refresh = function() {
+		AssumedControl.promise = null;
+		AssumedControl.get();
+	};
+
 	return AssumedControl;
 	
 });

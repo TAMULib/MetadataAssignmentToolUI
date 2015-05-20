@@ -95,15 +95,6 @@ main footer {
   border-color: #d58512;
 }
 
-.metadata-pane label {
-  font-size: 24px;
-  margin: 20px 0;
-  color: inherit;
-  font-family: inherit;
-  font-weight: 500;
-  line-height: 1.1;
-}
-
 @media (min-width: 1200px) {
   .metadata-pane {
     height: 800px;
@@ -111,6 +102,15 @@ main footer {
     position: relative;
     margin-bottom: 25px;
   }
+}
+
+.metadata-pane label {
+  font-size: 24px;
+  margin: 20px 0;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .metadata-label {

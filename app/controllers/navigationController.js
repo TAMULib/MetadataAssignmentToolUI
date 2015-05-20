@@ -11,16 +11,17 @@ metadataTool.controller('NavigationController', function ($controller, $scope, $
 
 	$scope.updateWidth = function() {
         $scope.windowWidth = $window.innerWidth;
-    }
+    };
+    
     $scope.updateHeight = function() {
        $scope.windowHeight = $window.innerHeight;
-    }
+    };
 
 	$window.onresize = function () {
 		$scope.updateWidth();
         $scope.updateHeight();
         $scope.$apply();
-	}
+	};
 
 	$scope.updateWidth();
     $scope.updateHeight();

@@ -28,9 +28,6 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 		angular.extend($scope.document, {'metadata':Metadata.get($scope.document)});
 		
 		Metadata.ready().then(function() {
-
-			console.log($scope.document);
-
 			for(var key in $scope.document.metadataLabels) {
 				var metadataLabel = $scope.document.metadataLabels[key];
 				if(!$scope.document.metadata[metadataLabel.label]) {

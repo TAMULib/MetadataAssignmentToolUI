@@ -9,14 +9,14 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 	};
 	
 	StorageService.storage = {
-		'session': window['sessionStorage'],
-		'local': window['localStorage']
-	} 
+		'session': window.sessionStorage,
+		'local': window.localStorage
+	};
 
 	StorageService.keys = {
 		'session': {},
 		'local': {}
-	}
+	};
 
 	StorageService.set = function(key, value, type) {
 		if(!type) {
@@ -27,9 +27,16 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 		}
 		StorageService.storage[type][key] = value;
 		StorageService.keys[type][key].notify(StorageService.storage[type][key]);
-	}
+	};
 
 	StorageService.get = function(key, type) {
+		if(!type) {
+			type = globalConfig.storageType;
+		}
+		return StorageService.storage[type][key];
+	};
+
+	StorageService.listen = function(key, type) {
 		if(!type) {
 			type = globalConfig.storageType;
 		}
@@ -38,7 +45,7 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 		}
 		var data = new Data(StorageService.keys[type][key].promise);
 		return data;
-	}
+	};
 
 	StorageService.delete = function(key, type) {
 		if(!type) {
@@ -47,7 +54,7 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 		StorageService.keys[type][key].notify(null);
 		delete StorageService.keys[type][key];
 		delete StorageService.storage[type][key];
-	}
+	};
 
 	for(var type in {'session':'0', 'local':'1'}) {
 		for(var key in StorageService.storage[type]) {
@@ -56,5 +63,7 @@ metadataTool.service("StorageService",function($q, AbstractModel) {
 			StorageService.set(key, StorageService.storage[type][key], type);
 		}
 	}
+
+	return StorageService;
 
 });

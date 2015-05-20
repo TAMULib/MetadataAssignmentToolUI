@@ -17,12 +17,12 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 	User.promise = null;
 	
 	User.set = function(data) {
-		self.unwrap(self, data);
+		self.unwrap(self, data, "Credentials");
 	};
 
-	User.get = function(action) {
+	User.get = function() {
 
-		if(User.data && !action) return User.data;
+		if(User.promise) return User.data;
 
 		var newUserPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
@@ -30,7 +30,9 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 				method: 'credentials',
 		});
 
-		if(action) {
+		User.promise = newUserPromise;
+
+		if(User.data) {
 			newUserPromise.then(function(data) {
 				User.set(JSON.parse(data.body).content.Credentials);
 			});
@@ -39,14 +41,16 @@ metadataTool.service("User", function(WsApi, AbstractModel) {
 			User.data = new User(newUserPromise);	
 		}
 
-		User.promise = newUserPromise;
-
-		return User.data;
-	
+		return User.data;	
 	};
 
 	User.ready = function() {
 		return User.promise;
+	};
+
+	User.refresh = function() {
+		User.promise = null;
+		User.get();
 	};
 
 	return User;
