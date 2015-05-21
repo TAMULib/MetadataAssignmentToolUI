@@ -1,0 +1,16 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+	<button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title">Export Metadata</h4>
+</div>
+
+<form>
+	<div class="modal-body">
+		<select id="selectProject" ng-model="project" class="form-control">
+			<option ng-repeat="proj in getProjects()">{{proj}}</option>
+		</select>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">export</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+	</div>
+<form>
