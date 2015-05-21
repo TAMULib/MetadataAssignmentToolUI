@@ -5,9 +5,7 @@
 
 <form>
 	<div class="modal-body">
-		<select id="selectProject" ng-model="project" class="form-control">
-			<option ng-repeat="proj in getProjects()">{{proj}}</option>
-		</select>
+		<select ng-options="project for project in getProjects()" ng-model="project" class="form-control"/>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">export</button>
