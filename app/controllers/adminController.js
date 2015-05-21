@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($controller, $location, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -112,13 +112,36 @@ metadataTool.controller('AdminController', function ($controller, $location, $ro
 		}
 		
 	};
-	
-	$scope.exportMetadata = function() {
-		logger.log("Exporting metadata");
-		return Metadata.getAllPublished().then(function(metadata) {
-			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
+
+	$scope.exportMetadata = function(project) {
+		
+		logger.log("Exporting metadata for " + project);
+
+		$scope.headers = [];
+		
+		return Metadata.getHeaders(project).then(function(data) {
+			
+			var headers = JSON.parse(data.body).content["ArrayList<String>"];
+			
+			for(var key in headers) {
+				$scope.headers.push(headers[key]);
+			}
+			
+			return Metadata.getPublishedByProject(project).then(function(data) {
+				return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
+			});
+
 		});
+		
 	};
+
+	Metadata.getProjects().then(function(data) {
+		$scope.projects = JSON.parse(data.body).content["ArrayList<String>"];
+		$scope.project = $scope.projects[0];
+		$scope.getProjects = function() {		
+			return $scope.projects;
+		};
+	});
 
 	$scope.sync = function() {
 		WsApi.fetch({

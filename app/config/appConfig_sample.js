@@ -1,7 +1,5 @@
 var globalConfig = { 
 		
-		'base': '/metadatatool/',
-
 		'version': 'metadataTool',
 
 		// Set this to the webService if mocking AuthService
