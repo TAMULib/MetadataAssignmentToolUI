@@ -21,7 +21,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 			return [];
 		}
 		return $scope.cv[label];
-	}
+	};
 
 	DocumentRepo.ready().then(function() {
 		

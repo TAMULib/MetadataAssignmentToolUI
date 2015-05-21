@@ -4,8 +4,6 @@ function setUpApp(bootstrapApp) {
 	
 	var jwt = getJWT();
 
-	//document.getElementsByTagName("base")[0].href = globalConfig.base;
-
 	if(!globalConfig.stompDebug) {
 		window.stompClient.debug = null; 
 	}

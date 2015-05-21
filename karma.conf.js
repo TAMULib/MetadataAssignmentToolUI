@@ -15,7 +15,7 @@ module.exports = function(config){
             'app/bower_components/ng-table/dist/ng-table.min.js',
             'app/bower_components/ng-csv/build/ng-csv.min.js',
             'app/bower_components/angular-sanitize/angular-sanitize.min.js',
-            'app/resources/scripts/vendor/*.js',
+            
             'app/components/**/*.js',
 
             'tests/testSetup.js',

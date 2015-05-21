@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-	<base href='/metadatatool/'>
+	<base href='/metadatatool/'>	
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +25,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-	
+
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -92,7 +92,9 @@
 								<ul class="dropdown-menu" role="menu">
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
 									<li><a href="users">Manage Users</a></li>
-									<li><a ng-csv="exportMetadata()" csv-header="['Document', 'Label', 'Value']" filename="metadata.csv" href="#">Export Metadata</a></li>
+									<li>
+										<a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a>
+									</li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'">
@@ -107,6 +109,10 @@
 
 						<modal modal-id="assumeUserModal" 
 							   modal-view="views/modals/assumeUserModal.html"
+							   modal-header-class="modal-header-primary"></modal>
+
+						<modal modal-id="exportMetadataModal" 
+							   modal-view="views/modals/exportMetadataModal.html"
 							   modal-header-class="modal-header-primary"></modal>
 
 					</div>
