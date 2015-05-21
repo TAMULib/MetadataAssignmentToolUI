@@ -119,8 +119,6 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 		$scope.headers = [];
 		
-		$scope.headers.push("BUNDLE:ORIGINAL");
-		
 		return Metadata.getHeaders(project).then(function(data) {
 			
 			var headers = JSON.parse(data.body).content["ArrayList<String>"];
@@ -128,7 +126,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			for(var key in headers) {
 				$scope.headers.push(headers[key]);
 			}
-
+			
 			return Metadata.getPublishedByProject(project).then(function(data) {
 				return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
 			});
