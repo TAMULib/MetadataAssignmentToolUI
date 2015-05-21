@@ -111,35 +111,10 @@
 							   modal-view="views/modals/assumeUserModal.html"
 							   modal-header-class="modal-header-primary"></modal>
 
-						<!--
 						<modal modal-id="exportMetadataModal" 
 							   modal-view="views/modals/exportMetadataModal.html"
 							   modal-header-class="modal-header-primary"></modal>
-						-->
-
 						
-						<div id="exportMetadataModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  	<div class="modal-dialog">
-						  		<div class="modal-content">
-						  			<div class="modal-header modal-header-primary">
-										<button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Export Metadata</h4>
-									</div>
-						  			<div class="modal-body">
-										<select ng-options="project for project in getProjects()" ng-model="project" class="form-control"></select>
-									</div>
-									<div class="modal-footer">
-										
-										<button type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">Export</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-										
-									</div>
-						  		</div>						  		
-						  	</div>
-						</div>
-
-						
-
 					</div>
 				</div>
 				
