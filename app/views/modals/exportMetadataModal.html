@@ -5,10 +5,10 @@
 
 <form>
 	<div class="modal-body">
-		<select ng-options="project for project in getProjects()" ng-model="project" class="form-control"/>
+		<select ng-options="project for project in getProjects()" ng-model="project" class="form-control"></select>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">export</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">Export</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 	</div>
-<form>
+</form>
