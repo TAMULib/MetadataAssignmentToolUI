@@ -4,7 +4,7 @@ var globalConfig = {
 
 		// Set this to the webService if mocking AuthService
 		
-		'authService': 'https://labs.library.tamu.edu/authservice-dev',
+		'authService': 'https://labs.library.tamu.edu/authservice',
 		'webService': 'http://osd144.library.tamu.edu/mylibrary-dev', 
 		
 		'storageType': 'session',

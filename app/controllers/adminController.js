@@ -137,7 +137,9 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 	Metadata.getProjects().then(function(data) {
 		$scope.projects = JSON.parse(data.body).content["ArrayList<String>"];
-		$scope.project = $scope.projects[0];
+		if(typeof $scope.projects !== 'undefined') {
+			$scope.project = $scope.projects[0];
+		}		
 		$scope.getProjects = function() {		
 			return $scope.projects;
 		};
