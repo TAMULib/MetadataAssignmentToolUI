@@ -1,4 +1,6 @@
 var globalConfig = { 
+
+		'base': 'metadatatool',
 		
 		'version': 'metadataTool',
 
