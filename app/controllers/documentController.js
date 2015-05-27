@@ -32,8 +32,6 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        getData: function($defer, params) {		        	
 		        	var key; for(key in params.sorting()) {}
 
-		        	console.log(params.filter());
-
 		        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
 		        		var page = JSON.parse(data.body).content.PageImpl;
 		        		params.total(page.totalElements);
