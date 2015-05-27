@@ -92,11 +92,9 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				};
 
 				$scope.getControlledVocabulary = function(label) {
-					console.log(label);
 					if(typeof $scope.cv[label] === 'undefined') {
 						return [];
 					}
-					console.log($scope.cv[label]);
 					return $scope.cv[label];
 				};
 				
