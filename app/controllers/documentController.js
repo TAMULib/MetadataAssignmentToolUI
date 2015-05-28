@@ -39,7 +39,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			        		$scope.docs = page.content;
 			        		$defer.resolve($scope.docs);
 			        	});
-		        	});
+		        	},100);
  	
 		        }
 		    });		
