@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $timeout, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
@@ -22,40 +22,41 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			var _status = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '';
 			var _annotator = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : '';
 		
-			$timeout(function() {
+			
+			console.log(view);
+			console.log(globalConfig.base);
+			console.log(essionStorage.role);
+			console.log(($scope.selectedUser) ? $scope.selectedUser : $scope.user);
+			console.log(_status);
+			console.log(_annotator);
 
-				console.log(view);
-				console.log(($scope.selectedUser) ? $scope.selectedUser : $scope.user);
-				console.log(_status);
-				console.log(_annotator);
+			$scope.tableParams = new ngTableParams({
+		        page: 1,
+		        count: 10,
+		        sorting: {
+		            name: 'asc'
+		        },
+		        filter: {
+		        	name: _name,
+		        	status: _status,
+		            annotator: _annotator
+		        }
+		    }, {
+		        total: 0,
+		        getData: function($defer, params) {		        	
+		        	var key; for(key in params.sorting()) {}
 
-				$scope.tableParams = new ngTableParams({
-			        page: 1,
-			        count: 10,
-			        sorting: {
-			            name: 'asc'
-			        },
-			        filter: {
-			        	name: _name,
-			        	status: _status,
-			            annotator: _annotator
-			        }
-			    }, {
-			        total: 0,
-			        getData: function($defer, params) {		        	
-			        	var key; for(key in params.sorting()) {}
+		        	console.log(params.filter());
 
-		        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-			        		var page = JSON.parse(data.body).content.PageImpl;
-			        		params.total(page.totalElements);
-			        		$scope.docs = page.content;
-			        		$defer.resolve($scope.docs);
-			        	});
-						
-			        }
-			    });	
-
-			}, 250);
+	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
+		        		var page = JSON.parse(data.body).content.PageImpl;
+		        		params.total(page.totalElements);
+		        		$scope.docs = page.content;
+		        		$defer.resolve($scope.docs);
+		        	});
+					
+		        }
+		    });	
 
 		};
 		
