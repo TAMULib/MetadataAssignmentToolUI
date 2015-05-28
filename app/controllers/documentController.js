@@ -25,7 +25,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			
 			console.log(view);
 			console.log(globalConfig.base);
-			console.log(essionStorage.role);
+			console.log(sessionStorage.role);
 			console.log(($scope.selectedUser) ? $scope.selectedUser : $scope.user);
 			console.log(_status);
 			console.log(_annotator);
