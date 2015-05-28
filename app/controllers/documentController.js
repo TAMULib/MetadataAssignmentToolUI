@@ -14,14 +14,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
 	$scope.selectedUser = null;
 
-	
-	User.ready().then(function() {
+	User.ready().then(function() {		
 		$scope.setTable = function() {
-
-			var _name = '';
-			var _status = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '';
-			var _annotator = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : '';
-
 			$scope.tableParams = new ngTableParams({
 		        page: 1,
 		        count: 10,
@@ -29,23 +23,24 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		            name: 'asc'
 		        },
 		        filter: {
-		        	name: _name,
-		        	status: _status,
-		            annotator: _annotator
+		        	name: '',
+		        	status: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 		        }
 		    }, {
 		        total: 0,
 		        getData: function($defer, params) {		        	
 		        	var key; for(key in params.sorting()) {}
 
-		        	logger.log(params.filter());
-
-		        	DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-		        		var page = JSON.parse(data.body).content.PageImpl;
-		        		params.total(page.totalElements);
-		        		$scope.docs = page.content;
-		        		$defer.resolve($scope.docs);
-		        	});		        	
+		        	$timeout(function() {
+						DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
+			        		var page = JSON.parse(data.body).content.PageImpl;
+			        		params.total(page.totalElements);
+			        		$scope.docs = page.content;
+			        		$defer.resolve($scope.docs);
+			        	});
+		        	});
+ 	
 		        }
 		    });		
 		};		
