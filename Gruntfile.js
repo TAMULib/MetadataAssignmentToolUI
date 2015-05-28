@@ -39,7 +39,6 @@ module.exports = function(grunt) {
 			},			
 			angular: {
 				src: [
-				      '<%= build.app %>/config/appConfig.js',
 				      '<%= build.app %>/**/*.js',
 				      '!<%= build.app %>/bower_components/**/*',
 				      '!<%= build.app %>/components/**/*',
