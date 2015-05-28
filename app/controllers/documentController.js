@@ -35,15 +35,15 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
 		        	var filter = params.filter();
 
-		        	console.log(filter);
-
-					DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], filter).then(function(data) {
-		        		var page = JSON.parse(data.body).content.PageImpl;
-		        		params.total(page.totalElements);
-		        		$scope.docs = page.content;
-		        		$defer.resolve($scope.docs);
-		        	});
- 	
+		        	$timeout(function() {
+		        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], filter).then(function(data) {
+			        		var page = JSON.parse(data.body).content.PageImpl;
+			        		params.total(page.totalElements);
+			        		$scope.docs = page.content;
+			        		$defer.resolve($scope.docs);
+			        	});
+		        	}, 250);
+					
 		        }
 		    });		
 		};		
