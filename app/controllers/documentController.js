@@ -15,6 +15,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	$scope.selectedUser = null;
 
 	User.ready().then(function() {		
+		
 		$scope.setTable = function() {
 			$scope.tableParams = new ngTableParams({
 		        page: 1,
@@ -32,14 +33,16 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        getData: function($defer, params) {		        	
 		        	var key; for(key in params.sorting()) {}
 
-		        	$timeout(function() {
-						DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-			        		var page = JSON.parse(data.body).content.PageImpl;
-			        		params.total(page.totalElements);
-			        		$scope.docs = page.content;
-			        		$defer.resolve($scope.docs);
-			        	});
-		        	},100);
+		        	var filter = params.filter();
+
+		        	console.log(filter);
+
+					DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], filter).then(function(data) {
+		        		var page = JSON.parse(data.body).content.PageImpl;
+		        		params.total(page.totalElements);
+		        		$scope.docs = page.content;
+		        		$defer.resolve($scope.docs);
+		        	});
  	
 		        }
 		    });		
