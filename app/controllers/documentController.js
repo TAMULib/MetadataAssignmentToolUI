@@ -14,8 +14,14 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
 	$scope.selectedUser = null;
 
-	User.ready().then(function() {		
+	
+	User.ready().then(function() {
 		$scope.setTable = function() {
+
+			var _name = '';
+			var _status = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '';
+			var _annotator = (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : '';
+
 			$scope.tableParams = new ngTableParams({
 		        page: 1,
 		        count: 10,
@@ -23,9 +29,9 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		            name: 'asc'
 		        },
 		        filter: {
-		        	name: '',
-		        	status: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        	name: _name,
+		        	status: _status,
+		            annotator: _annotator
 		        }
 		    }, {
 		        total: 0,

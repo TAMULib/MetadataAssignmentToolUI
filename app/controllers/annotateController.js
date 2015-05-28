@@ -104,5 +104,4 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 
 	});
 	
-	
 });
