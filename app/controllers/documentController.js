@@ -24,6 +24,11 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		
 			$timeout(function() {
 
+				console.log(view);
+				console.log($scope.selectedUser);
+				console.log(_status);
+				console.log(_annotator);
+
 				$scope.tableParams = new ngTableParams({
 			        page: 1,
 			        count: 10,
@@ -50,7 +55,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			        }
 			    });	
 
-			});
+			}, 250);
 
 		};
 		
