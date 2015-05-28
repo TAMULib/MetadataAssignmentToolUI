@@ -25,7 +25,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			$timeout(function() {
 
 				console.log(view);
-				console.log($scope.selectedUser);
+				console.log(($scope.selectedUser) ? $scope.selectedUser : $scope.user);
 				console.log(_status);
 				console.log(_annotator);
 
