@@ -4,7 +4,7 @@ metadataTool.directive('modal', function ($controller) {
 		restrict: 'E',
 		replace:false,
 		transclude: true,
-		scope: false,
+		scope: true,
 		link: function ($scope, element, attr) {
 	    	
 			$scope.attr = attr;
@@ -17,7 +17,7 @@ metadataTool.directive('modal', function ($controller) {
 	    		if($scope.attr.modalNgClickFunction && $scope.attr.modalNgClickParam) {
 	    			$scope[$scope.attr.modalNgClickFunction](JSON.parse($scope.attr.modalNgClickParam));
 	    		}
-	    	}
+	    	};
 	    	
 	    }
 	};

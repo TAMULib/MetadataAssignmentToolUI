@@ -50,6 +50,12 @@ angular.module('mock.metadata', []).
     	Metadata.get = function() {
             return new Metadata(mockMetadata1);
         };
+
+        Metadata.getProjects = function() {
+            return $q(function(resolve) {               
+                resolve(["project"]);
+            });
+        };
         
         Metadata.set = function(data) {
         	angular.extend(self, data);

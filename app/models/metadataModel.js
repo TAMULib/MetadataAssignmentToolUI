@@ -68,6 +68,30 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			data: JSON.stringify({'name': name})
 		});		
 	};
+
+	Metadata.getHeaders = function(project) {
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'headers/' + project
+		});
+	};
+
+	Metadata.getProjects = function() {
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'projects'
+		});
+	};
+
+	Metadata.getPublishedByProject = function(project) {
+		return WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'metadata', 
+			method: 'csv/' + project
+		});
+	};
 	
 	Metadata.getAllPublished = function() {
 		return WsApi.fetch({

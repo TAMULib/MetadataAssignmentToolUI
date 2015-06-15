@@ -1,9 +1,9 @@
-metadataTool.controller('AdminController', function ($controller, $location, $scope, $window, User, AssumedControl, Metadata, AuthServiceApi, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
-    if(typeof sessionStorage.assuming === 'undefined') {
-		sessionStorage.assuming = 'false';
+    if(typeof StorageService.get("assuming") === 'undefined') {
+		StorageService.set('assuming', 'false');
 	}
 
 	$scope.user = User.get();
@@ -12,18 +12,15 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
     
     AssumedControl.set({
 		'netid': '',
-		'button': (sessionStorage.assuming == 'true') ? 'Unassume' : 'Assume',
+		'button': (StorageService.get("assuming") == 'true') ? 'Unassume' : 'Assume',
 		'status': ''
 	});
 	
-	$scope.$watch('user.role', function() {		
+	$scope.$watch('user.role', function() {
 		if($scope.user.role) {
-			sessionStorage.role = $scope.user.role;
+			StorageService.set('role', $scope.user.role);
 			if ($scope.user.role == 'ROLE_ADMIN') {
 				$scope.admin = true;
-			} 
-			else if ($scope.user.role == 'ROLE_MANAGER') {
-				$scope.admin = false;
 			}
 			else {
 				$scope.admin = false;
@@ -32,97 +29,9 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 	});
 
 	$scope.isAssuming = function() {
-		return sessionStorage.assuming;
-	};
-	    
-	User.ready().then(function() {
-		
-		$scope.assumeUser = function(assume) {
-		
-			if($scope.isAssuming() == 'false') {
-
-				if ((typeof assume !== 'undefined') && assume.netid) {	
-
-					logger.log("Assuming user");
-
-					sessionStorage.assumedUser = JSON.stringify(assume);
-
-					sessionStorage.assuming = 'true';
-
-					sessionStorage.adminToken = sessionStorage.token;
-
-					AuthServiceApi.getAssumedUser(assume).then(function(data) {
-						
-						if(data) {
-						
-							$scope.user = User.get(true);
-
-							AssumedControl.set({
-								'netid': '',
-								'button': 'Unassume',
-								'status': ''
-							});
-							
-							$location.path('/assignments');
-							$window.location.reload();
-
-						}
-						else {
-
-							sessionStorage.assuming = 'false';
-
-							AssumedControl.set({
-								'netid': assume.netid,
-								'button': 'Assume',
-								'status': 'invalid netid'
-							});
-						}
-					});
-				}
-			} else {
-				console.log("Unassuming user");
-
-				delete sessionStorage.assumedUser;
-
-				sessionStorage.assuming = 'false';
-
-				sessionStorage.token = sessionStorage.adminToken;
-				
-				AssumedControl.set({
-					'netid': '',
-					'button': 'Assume',
-					'status': ''
-				});
-
-				$scope.user = User.get(true);
-
-				$location.path('/documents');
-				$window.location.reload();
-				
-			}
-			
-		};
-
-	});
-	
-	$scope.exportMetadata = function() {
-		logger.log("Exporting metadata");
-		return Metadata.getAllPublished().then(function(metadata) {
-			return  JSON.parse(metadata.body).content["ArrayList<ArrayList>"];
-		});
+		return StorageService.get("assuming");
 	};
 
-	$scope.sync = function() {
-		var syncPromise = WsApi.fetch({
-				endpoint: '/private/queue', 
-				controller: 'document', 
-				method: 'sync'
-		});
-		syncPromise.then(function(data) {
-			logger.log(data);
-		});
-	};
-	
 	$scope.isMocking = function() {
 		if(globalConfig.mockRole) {
 			return true;
@@ -130,6 +39,120 @@ metadataTool.controller('AdminController', function ($controller, $location, $sc
 		else {
 			return false;
 		}
+	};
+	
+	$scope.assumeUser = function(assume) {
+	
+		if($scope.isAssuming() == 'false') {
+
+			if ((typeof assume !== 'undefined') && assume.netid) {	
+
+				logger.log("Assuming user");
+
+				StorageService.set('assumedUser', JSON.stringify(assume));
+				StorageService.set('assuming', 'true');
+				StorageService.set('adminToken', StorageService.get("token"));
+
+				AuthServiceApi.getAssumedUser(assume).then(function(data) {
+					
+					WsApi.fetch({
+						endpoint: '/private/queue', 
+						controller: 'admin', 
+						method: 'confirmuser',
+					}).then(function(data) {
+
+						if(data) {
+						
+							User.refresh();
+
+							AssumedControl.set({
+								'netid': '',
+								'button': 'Unassume',
+								'status': ''
+							});
+
+							angular.element("#assumeUserModal").modal("hide");
+							
+							$route.reload();
+
+						}
+						else {
+
+							StorageService.set('assuming', 'false');
+
+							AssumedControl.set({
+								'netid': assume.netid,
+								'button': 'Assume',
+								'status': 'invalid netid'
+							});
+						}
+
+					});
+				});
+			}
+		} else {
+			console.log("Unassuming user");
+
+			StorageService.delete('assumedUser');
+			StorageService.set('assuming', 'false', 'session');
+			StorageService.set('token', StorageService.get("adminToken"));
+			
+			AssumedControl.set({
+				'netid': '',
+				'button': 'Assume',
+				'status': ''
+			});
+
+			User.refresh();
+
+			StorageService.set("role", $scope.user.role);
+
+			$route.reload();
+			
+		}
+		
+	};
+
+	$scope.exportMetadata = function(project) {
+		
+		logger.log("Exporting metadata for " + project);
+
+		$scope.headers = [];
+		
+		return Metadata.getHeaders(project).then(function(data) {
+			
+			var headers = JSON.parse(data.body).content["ArrayList<String>"];
+			
+			for(var key in headers) {
+				$scope.headers.push(headers[key]);
+			}
+			
+			return Metadata.getPublishedByProject(project).then(function(data) {
+				return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
+			});
+
+		});
+		
+	};
+
+	Metadata.getProjects().then(function(data) {
+		$scope.projects = JSON.parse(data.body).content["ArrayList<String>"];
+		if(typeof $scope.projects !== 'undefined') {
+			$scope.project = $scope.projects[0];
+		}		
+		$scope.getProjects = function() {		
+			return $scope.projects;
+		};
+	});
+
+	$scope.sync = function() {
+		WsApi.fetch({
+				endpoint: '/private/queue', 
+				controller: 'admin', 
+				method: 'sync'
+		}).then(function(data) {
+			logger.log(data);
+		});
 	};
 	
 });

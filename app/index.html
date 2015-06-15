@@ -4,13 +4,14 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-	<base href="/metadatatool/">
+	<base>	
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Metadata Tool :: Texas A&amp;M Libraries</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="resources/img/favicon.ico" type="image/x-icon" />
 
 	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
 	<link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
@@ -24,7 +25,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-	
+
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -91,7 +92,9 @@
 								<ul class="dropdown-menu" role="menu">
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
 									<li><a href="users">Manage Users</a></li>
-									<li><a ng-csv="exportMetadata()" csv-header="['Document', 'Label', 'Value']" filename="metadata.csv" href="#">Export Metadata</a></li>
+									<li>
+										<a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a>
+									</li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
 									<li ng-if="isAdmin() || isAssuming() == 'true'">
@@ -108,6 +111,10 @@
 							   modal-view="views/modals/assumeUserModal.html"
 							   modal-header-class="modal-header-primary"></modal>
 
+						<modal modal-id="exportMetadataModal" 
+							   modal-view="views/modals/exportMetadataModal.html"
+							   modal-header-class="modal-header-primary"></modal>
+						
 					</div>
 				</div>
 				
@@ -167,7 +174,7 @@
 		
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-route/angular-route.js"></script>
-	<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="bower_components/angular-loader/angular-loader.js"></script>
 	<script src="bower_components/angular-mocks/angular-mocks.js"></script>
 	
@@ -176,6 +183,10 @@
 	<script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
 	
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+
+	<!-- Configuration -->
+    <script src="config/appConfig.js"></script>
 
 	<!-- Modules -->
 	<script src="components/version/version.js"></script>
@@ -191,47 +202,47 @@
 
 	<!-- build:js resources/scripts/app_concat.js -->
 	
-    <!-- Configuration -->
-    <script src="config/appConfig.js"></script>
+	    <!-- Application Start -->
+	    <script src="setup.js"></script>
+	    <script src="app.js"></script>
+	    <script src="config/logging.js"></script>
+	    <script src="config/runTime.js"></script>
+	    <script src="config/routes.js"></script>
 
-    <!-- Application Start -->
-    <script src="setup.js"></script>
-    <script src="app.js"></script>
-    <script src="config/logging.js"></script>
-    <script src="config/runTime.js"></script>
-    <script src="config/routes.js"></script>
+	    <!-- Directives -->
+	    <script src="directives/userDirective.js"></script>
+	    <script src="directives/modalDirective.js"></script>
+	    <script src="directives/formDirective.js"></script>
 
-    <!-- Directives -->
-    <script src="directives/userDirective.js"></script>
-    <script src="directives/modalDirective.js"></script>
+	    <!-- Services -->
+	    <script src="services/wsservice.js"></script>
+	    <script src="services/wsapi.js"></script>
+	    <script src="services/restapi.js"></script>
+	  	<script src="services/authserviceapi.js"></script>
+	  	<script src="services/storageservice.js"></script>
 
-    <!-- Services -->
-    <script src="services/wsservice.js"></script>
-    <script src="services/wsapi.js"></script>
-  	<script src="services/authserviceapi.js"></script>
-  	<script src="services/storageservice.js"></script>
+	    <!-- Factories -->
 
-    <!-- Factories -->
+	    <!-- Models -->
+	    <script src="models/abstractModel.js"></script>
+	    <script src="models/userModel.js"></script>
+	    <script src="models/assumedControlModel.js"></script>
+	    <script src="models/userRepoModel.js"></script>
+	    <script src="models/documentRepoModel.js"></script>
+	    <script src="models/documentPageModel.js"></script>
+	    <script src="models/metadataModel.js"></script>
+	    <script src="models/txtModel.js"></script>
+	    <script src="models/pdfModel.js"></script>
+	    <script src="models/controlledVocabularyModel.js"></script>
 
-    <!-- Models -->
-    <script src="models/abstractModel.js"></script>
-    <script src="models/userModel.js"></script>
-    <script src="models/assumedControlModel.js"></script>
-    <script src="models/userRepoModel.js"></script>
-    <script src="models/documentRepoModel.js"></script>
-    <script src="models/documentPageModel.js"></script>
-    <script src="models/metadataModel.js"></script>
-    <script src="models/txtModel.js"></script>
-    <script src="models/pdfModel.js"></script>
-
-    <!-- Controllers -->
-    <script src="controllers/userController.js"></script>
-    <script src="controllers/userRepoController.js"></script>
-    <script src="controllers/adminController.js"></script>
-    <script src="controllers/documentController.js"></script>
-    <script src="controllers/annotateController.js"></script>
-    <script src="controllers/navigationController.js"></script>
-    <script src="controllers/abstractController.js"></script>
+	    <!-- Controllers -->
+	    <script src="controllers/userController.js"></script>
+	    <script src="controllers/userRepoController.js"></script>
+	    <script src="controllers/adminController.js"></script>
+	    <script src="controllers/documentController.js"></script>
+	    <script src="controllers/annotateController.js"></script>
+	    <script src="controllers/navigationController.js"></script>
+	    <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->
 

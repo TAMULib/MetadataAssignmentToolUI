@@ -5,4 +5,4 @@ angular.module('metadataTool.version', [
   'metadataTool.version.version-directive'
 ])
 
-.value('version', '0.1');
+.value('version', globalConfig.version);

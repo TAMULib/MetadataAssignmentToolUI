@@ -15,14 +15,16 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 	Users.data = null;
 	
 	Users.listener = null;
+
+	Users.promise = null;
 	
 	Users.set = function(data) {
 		self.unwrap(self, data, "HashMap");
 	};
 
-	Users.get = function(action) {
+	Users.get = function() {
 
-		if(Users.data && !action) return Users.data;
+		if(Users.promise) return Users.data;
 
 		var newAllUsersPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
@@ -30,8 +32,10 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 				method: 'all',
 		});
 
-		if(action) {
-			newAllUsersPromise.then(function(data) {
+		Users.promise = newAllUsersPromise;
+
+		if(Users.data) {
+			newAllUsersPromise.then(function(data) {				
 				Users.set(JSON.parse(data.body).content.HashMap);
 			});
 		}
@@ -70,6 +74,15 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 				logger.log(data);
 			});
 		}		
+	};
+
+	Users.ready = function() {
+		return Users.promise;
+	};
+
+	Users.refresh = function() {
+		Users.promise = null;
+		Users.get();
 	};
 	
 	Users.listen = function() {

@@ -1,18 +1,22 @@
 describe('controller: AdminController', function() {
 	
-	var controller, scope, User;
+	//$controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi
+	var controller, scope, User, Metadata;
 
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.user'));
+	beforeEach(module('mock.metadata'));
 	
-	beforeEach(inject(function($controller, $rootScope, _User_) {
+	beforeEach(inject(function($controller, $rootScope, _User_, _Metadata_) {
         scope = $rootScope.$new(); 
         controller = $controller('AdminController', {
             $scope: scope,
             User: _User_,
+            Metadata: _Metadata_
         });
-        User = _User_; 
+        User = _User_;
+        Metadata = _Metadata_;
     }));
 
 	describe('Is the controller defined', function() {

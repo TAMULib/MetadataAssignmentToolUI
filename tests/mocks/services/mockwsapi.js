@@ -7,13 +7,14 @@ angular.module('mock.wsApi', []).
         	
         	var defer = $q.defer();
         	
-        	switch(apiReq.method) {
+        	switch(apiReq.method) {        		
 	        	case 'credentials': return {'content':mockUser1};
 	        	case 'page': return {'content':mockDocumentPage1};
 	        	case 'all': {	        		
 	        		switch(apiReq.controller) {
 	        			case 'user': return {'content':mockUserRepo1};
 	        			case 'document': return {'content':mockDocumentRepo1};
+	        			case 'cv': return {'content':mockControlledVocabulary1};
 	        			default: return {'content':{}};
 	        		}	        		
 	        	}
