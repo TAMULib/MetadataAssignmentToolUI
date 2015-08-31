@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-	<base>	
+	<base href="/metadatatool/">	
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -112,6 +112,7 @@
 							   modal-header-class="modal-header-primary"></modal>
 
 						<modal modal-id="exportMetadataModal" 
+							   modal-controller="ExportController"
 							   modal-view="views/modals/exportMetadataModal.html"
 							   modal-header-class="modal-header-primary"></modal>
 						
@@ -231,6 +232,7 @@
 	    <script src="models/documentRepoModel.js"></script>
 	    <script src="models/documentPageModel.js"></script>
 	    <script src="models/metadataModel.js"></script>
+	    <script src="models/exportModel.js"></script>
 	    <script src="models/txtModel.js"></script>
 	    <script src="models/pdfModel.js"></script>
 	    <script src="models/controlledVocabularyModel.js"></script>
@@ -240,6 +242,7 @@
 	    <script src="controllers/userRepoController.js"></script>
 	    <script src="controllers/adminController.js"></script>
 	    <script src="controllers/documentController.js"></script>
+	    <script src="controllers/exportController.js"></script>
 	    <script src="controllers/annotateController.js"></script>
 	    <script src="controllers/navigationController.js"></script>
 	    <script src="controllers/abstractController.js"></script>
