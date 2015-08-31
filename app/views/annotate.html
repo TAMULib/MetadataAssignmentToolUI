@@ -2,9 +2,12 @@
 	
 	<div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
 	
+
+
 	<div class="col-8 col-lg-8 document-pane">	
 		<div role="tabpanel" class="span6">
 			<h2>Document</h2>
+
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
 				<li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
@@ -22,57 +25,66 @@
 	
 	<div>
 		<h2>Metadata</h2>
-		<div class="col-4 col-lg-4 metadata-pane">
-			<div ng-repeat="metadataLabel in document.metadataLabels" class="row">			
-				<formlabel text="{{metadataLabel.gloss}}"></formlabel>
-				<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label,metadataLabel.defaultValue)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
-				<span title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign label-remove" style="text-decoration: none;"></span>
-				<ul class="list-unstyled">
-					<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
-					
-						<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXT'">
-						  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-							<forminput class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
-						</div>
-						<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
-							<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-							<formtextarea class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></formtextarea>
-						</div>
-					</li>
-					<li ng-if="!metadataLabel.repeatable">
-						<forminput ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-readonly="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
-						<formtextarea ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
-					</li>
-				</ul>	
-			</div>
-		</div>
-		<div class="row">			
-			<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
-					Requires Curation
-				</button>
-				<button class="btn btn-primary" ng-click="updateMetadata(document, 'Pending')">
-					Save
-				</button>
-				<button class="btn btn-success" ng-click="submit(document)">
-					Submit
-				</button>
-			</div>
-			<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-				<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
-					Requires Curation
-				</button>
+		<form name="metadataForm">
+			<span ng-show="requiredFieldsPresent()" class="requiredField">* required flield</span>
 
-				<modal modal-id="rejectModal" 
-					   modal-view="views/modals/rejectModal.html" 
-					   modal-btn-classes="btn btn-danger"
-					   modal-header-class="modal-header-danger">Reject</modal>
-					   
-				<button class="btn btn-success" ng-click="accept(document)">
-					Accept
-				</button>
+			<div class="col-4 col-lg-4 metadata-pane">
+				<div ng-repeat="metadataLabel in document.metadataLabels" class="row">	
+
+					<formlabel required="{{metadataLabel.required}}" text="{{metadataLabel.gloss}}"></formlabel>
+					<span title="Add metadata field" ng-if="metadataLabel.repeatable" ng-click="addMetadataField(metadataLabel.label,metadataLabel.defaultValue)" class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;"></span>
+					<span title="Remove metadata field" ng-if="getMetadataFieldCount(metadataLabel.label) > 1 && metadataLabel.repeatable" ng-click="removeMetadataField(metadataLabel.label)" class="glyphicon glyphicon-minus-sign label-remove" style="text-decoration: none;"></span>
+					<ul class="list-unstyled">
+						<li ng-if="metadataLabel.repeatable" ng-repeat="metadataField in document.metadata[metadataLabel.label] track by $index">
+						
+							<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXT'">
+							  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+								<forminput name="{{metadataLabel.gloss}}" class="form-control" type="text" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
+							</div>
+							<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
+								<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+								<formtextarea name="{{metadataLabel.gloss}}" ng-required="metadataLabel.required" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][$index]"></formtextarea>
+							</div>
+						</li>
+						<li ng-if="!metadataLabel.repeatable">
+							
+
+							<forminput 	name="{{metadataLabel.gloss}}" 
+										ng-required="metadataLabel.required"
+							ng-if="metadataLabel.inputType == 'TEXT'" class="form-control" ng-readonly="metadataLabel.readOnly" type="text" ng-model="document.metadata[metadataLabel.label][0]" typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue"></forminput>
+							<formtextarea name="{{metadataLabel.gloss}}" ng-required="metadataLabel.required" ng-if="metadataLabel.inputType == 'TEXTAREA'" class="form-control" ng-readonly="metadataLabel.readOnly" ng-model="document.metadata[metadataLabel.label][0]"></formtextarea>
+						</li>
+					</ul>	
+				</div>
 			</div>
-		</div>
+			<div class="row">			
+				<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
+					<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
+						Requires Curation
+					</button>
+					<button class="btn btn-primary" ng-click="updateMetadata(document, 'Pending')">
+						Save
+					</button>
+					<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit(document)">
+						Submit
+					</button>
+				</div>
+				<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
+					<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
+						Requires Curation
+					</button>
+
+					<modal modal-id="rejectModal" 
+						   modal-view="views/modals/rejectModal.html" 
+						   modal-btn-classes="btn btn-danger"
+						   modal-header-class="modal-header-danger">Reject</modal>
+						   
+					<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >
+						Accept
+					</button>
+				</div>
+			</div>
+		</form>
 
 	</div>
 

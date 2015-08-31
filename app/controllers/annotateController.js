@@ -97,6 +97,19 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					}
 					return $scope.cv[label];
 				};
+
+				$scope.requiredFieldsPresent = function() {
+					
+					var requiredFieldsPresent = false
+
+					for(var key in $scope.document.metadataLabels) {
+						if($scope.document.metadataLabels[key]["required"]) {
+							requiredFieldsPresent = true
+							break;
+						}
+					}
+					return requiredFieldsPresent;
+				}
 				
 			});	
 			
