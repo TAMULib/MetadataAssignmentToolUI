@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $location, $route, $scope, $window, DocumentPage, DocumentRepo, StorageService, User, UserRepo, ngTableParams) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
@@ -15,6 +15,10 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	$scope.selectedUser = null;
 
 	User.ready().then(function() {
+
+		if(StorageService.get('role') == 'ROLE_USER') {
+    		$location.path('/restricted_access');
+    	}
 
 		$scope.setTable = function() {
 
@@ -46,8 +50,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
 		};
 		
-		$scope.setTable();
-		
+		$scope.setTable();		
 	});
 
 	$scope.setSelectedUser = function(user) {

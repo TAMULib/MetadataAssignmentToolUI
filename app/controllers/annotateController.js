@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, ControlledVocabulary, DocumentRepo, Metadata, User, TXT, PDF) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, ControlledVocabulary, DocumentRepo, Metadata, StorageService, User, TXT, PDF) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -15,6 +15,12 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.document.metadata = {};
 
 	$scope.cv = ControlledVocabulary.get();
+
+	User.ready().then(function() {
+		if(StorageService.get('role') == 'ROLE_USER') {
+    		$location.path('/restricted_access');
+    	}
+    });
 
 	ControlledVocabulary.ready().then(function() {
 

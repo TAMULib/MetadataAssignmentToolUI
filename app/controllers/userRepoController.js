@@ -8,7 +8,13 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
      
  	$scope.ready = User.ready();
 
-    $scope.ready.then(function(){
+    $scope.ready.then(function() {
+
+    	console.log(StorageService.get('role'));
+
+    	if(StorageService.get('role') != 'ROLE_ADMIN' && StorageService.get('role') != 'ROLE_MANAGER') {
+    		$location.path('/restricted_access');
+    	}
     	
 		$scope.updateRole = function(uin, role) {
 			UserRepo.updateRole(uin, role);

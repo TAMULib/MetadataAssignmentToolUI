@@ -19,6 +19,9 @@ metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvi
 		when('/admin', {
 			templateUrl: 'views/admin.html'
 		}).
+		when('/restricted_access', {
+			templateUrl: 'views/restricted_access.html'
+		}).
 		otherwise({redirectTo: '/',
 			templateUrl: 'views/home.html'
 		});
