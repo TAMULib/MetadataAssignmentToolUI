@@ -8,6 +8,8 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 	$scope.user = User.get();
 
+	$scope.exportFormat = "saf"
+
     $scope.assumedControl = AssumedControl.get();
     
     AssumedControl.set({
@@ -144,6 +146,16 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			return $scope.projects;
 		};
 	});
+	
+	$scope.getFormats = function() {		
+		return ["csv","saf"];
+	};
+
+	$scope.export = function() {
+	
+		
+	
+	}
 
 	$scope.sync = function() {
 		WsApi.fetch({
