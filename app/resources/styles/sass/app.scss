@@ -1,4 +1,4 @@
-main {
+requiredFieldmain {
   display: block;
   height: auto;
   min-height: 100%;
@@ -199,7 +199,7 @@ main footer {
 }
 
 .requiredField:after {
-  content:" *";
+  content: "*";
   color: #500000;
-  margin: -26px 0px 0px 0px;
+  margin: 0px 0px 0px 5px;
 }
