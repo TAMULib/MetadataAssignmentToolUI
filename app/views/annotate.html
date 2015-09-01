@@ -29,9 +29,8 @@
 			<span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
 
 			<div class="col-4 col-lg-4 metadata-pane">
-				<div ng-repeat="metadataLabel in document.metadataLabels" class="row">	
-
-					<formlabel required="{{metadataLabel.required}}" text="{{metadataLabel.gloss}}"></formlabel>
+				<div ng-repeat="metadataLabel in document.metadataLabels" class="row">
+					<formlabel text="{{metadataLabel.gloss}}"></formlabel>
 					<span title="Add metadata field" 
 						  ng-if="metadataLabel.repeatable" 
 						  ng-click="addMetadataField(metadataLabel.label,metadataLabel.defaultValue)" 
@@ -60,30 +59,26 @@
 							<div class="input-group metadata-label" ng-if="metadataLabel.inputType == 'TEXTAREA'">
 								<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
 								<formtextarea name="{{metadataLabel.gloss}}"
-								              ng-required="metadataLabel.required" 
-								              class="form-control" 
+								              class="form-control"
 								              ng-readonly="metadataLabel.readOnly" 
 								              ng-model="document.metadata[metadataLabel.label][$index]">
 								</formtextarea>
 							</div>
 						</li>
 						<li ng-if="!metadataLabel.repeatable">
-							
-
 							<forminput 	name="{{metadataLabel.gloss}}" 
-										ng-required="metadataLabel.required"
 										ng-if="metadataLabel.inputType == 'TEXT'" 
-										class="form-control" ng-readonly="metadataLabel.readOnly" 
+										class="form-control" 
+										ng-readonly="metadataLabel.readOnly" 
 										type="text" 
 										ng-model="document.metadata[metadataLabel.label][0]" 
 										typeahead="vocab for vocab in getControlledVocabulary(metadataLabel.label) | filter:$viewValue">
 							</forminput>
-							<formtextarea name="{{metadataLabel.gloss}}" 
-										ng-required="metadataLabel.required" 
-										ng-if="metadataLabel.inputType == 'TEXTAREA'" 
-										class="form-control" 
-										ng-readonly="metadataLabel.readOnly" 
-										ng-model="document.metadata[metadataLabel.label][0]">
+							<formtextarea name="{{metadataLabel.gloss}}"
+										  ng-if="metadataLabel.inputType == 'TEXTAREA'" 
+										  class="form-control" 
+										  ng-readonly="metadataLabel.readOnly" 
+										  ng-model="document.metadata[metadataLabel.label][0]">
 							</formtextarea>
 						</li>
 					</ul>	
