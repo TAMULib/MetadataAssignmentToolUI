@@ -30,7 +30,7 @@
 			<span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
 
 			<div class="col-4 col-lg-4 metadata-pane">
-				<div ng-repeat="metadataLabel in document.metadataLabels" class="row">
+				<div ng-repeat="metadataLabel in document.metadataLabels" class="row" ng-hide="metadataLabel.hidden">
 					<formlabel text="{{metadataLabel.gloss}}" required="{{metadataLabel.required}}"></formlabel>
 					<span title="Add metadata field" 
 						  ng-if="metadataLabel.repeatable" 
