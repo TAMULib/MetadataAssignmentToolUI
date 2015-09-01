@@ -194,6 +194,10 @@ main footer {
   opacity: 1;
 }
 
+.requiredField {
+  color : #500000;
+}
+
 .requiredField:after {
   content:" *";
   color: #500000;
