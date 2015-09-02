@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, StorageService, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
