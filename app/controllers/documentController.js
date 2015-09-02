@@ -16,10 +16,6 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
 	User.ready().then(function() {
 
-		if(StorageService.get('role') == 'ROLE_USER') {
-    		$location.path('/restricted_access');
-    	}
-
 		$scope.setTable = function() {
 
 			$scope.tableParams = new ngTableParams({

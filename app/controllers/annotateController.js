@@ -17,9 +17,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.cv = ControlledVocabulary.get();
 
 	User.ready().then(function() {
-		if(StorageService.get('role') == 'ROLE_USER') {
-    		$location.path('/restricted_access');
-    	}
+		
     });
 
 	ControlledVocabulary.ready().then(function() {

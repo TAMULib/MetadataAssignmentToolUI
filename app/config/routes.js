@@ -16,11 +16,8 @@ metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvi
 		when('/annotate/:documentKey/:action', {
 			templateUrl: 'views/annotate.html'
 		}).
-		when('/admin', {
-			templateUrl: 'views/admin.html'
-		}).
-		when('/restricted_access', {
-			templateUrl: 'views/restricted_access.html'
+		when('/restrictedAccess', {
+			templateUrl: 'views/restrictedAccess.html'
 		}).
 		otherwise({redirectTo: '/',
 			templateUrl: 'views/home.html'
