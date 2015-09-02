@@ -1,7 +1,11 @@
 <br/>
 <div class="row" ng-controller="DocumentController">
 
-	<div class="col-12">
+	<!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
+	<div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
+
+	<div ng-if="!isUser()" class="col-12">
+
 		<div class="panel panel-default documents-container">			
 			
 			<div class="panel-heading">
@@ -74,5 +78,6 @@
 			</div>
 			
 		</div>
+
 	</div>
 </div>

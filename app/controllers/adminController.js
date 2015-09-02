@@ -1,4 +1,4 @@
-metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, UserRepo, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -7,6 +7,8 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 	}
 
 	$scope.user = User.get();
+
+	$scope.exportFormat = "saf"
 
     $scope.assumedControl = AssumedControl.get();
     
@@ -64,6 +66,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 						if(data) {
 						
 							User.refresh();
+							UserRepo.refresh();
 
 							AssumedControl.set({
 								'netid': '',
@@ -104,6 +107,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			});
 
 			User.refresh();
+			UserRepo.refresh();
 
 			StorageService.set("role", $scope.user.role);
 
@@ -144,6 +148,16 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			return $scope.projects;
 		};
 	});
+	
+	$scope.getFormats = function() {		
+		return ["csv","saf"];
+	};
+
+	$scope.export = function() {
+	
+		
+	
+	}
 
 	$scope.sync = function() {
 		WsApi.fetch({

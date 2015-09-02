@@ -8,7 +8,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
      
  	$scope.ready = User.ready();
 
-    $scope.ready.then(function(){
+    $scope.ready.then(function() {
     	
 		$scope.updateRole = function(uin, role) {
 			UserRepo.updateRole(uin, role);

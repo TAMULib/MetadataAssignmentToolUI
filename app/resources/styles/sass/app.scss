@@ -1,4 +1,4 @@
-main {
+requiredFieldmain {
   display: block;
   height: auto;
   min-height: 100%;
@@ -192,4 +192,14 @@ main footer {
 .modal-close {
   color: #fff;
   opacity: 1;
+}
+
+.requiredField {
+  color : #500000;
+}
+
+.requiredField:after {
+  content: "*";
+  color: #500000;
+  margin: 0px 0px 0px 5px;
 }

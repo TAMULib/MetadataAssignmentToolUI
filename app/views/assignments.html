@@ -1,7 +1,11 @@
 <br/>
-<div class="row">
-	<div class="col-2">
-		<div class="panel panel-default documents-container" ng-controller="DocumentController">			
+<div class="row" ng-controller="DocumentController">
+
+	<!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
+	<div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
+
+	<div ng-if="!isUser()" class="col-2">
+		<div class="panel panel-default documents-container" >			
 			<div class="panel-heading">
 				<h3 class="panel-title">My Assigned Documents</h3>
 			</div>			
@@ -24,4 +28,5 @@
 			</div>
 		</div>
 	</div>
+
 </div>

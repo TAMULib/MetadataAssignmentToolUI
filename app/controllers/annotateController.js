@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, ControlledVocabulary, DocumentRepo, Metadata, User, TXT, PDF) {
+metadataTool.controller('AnnotateController', function($controller, $scope, $location, $routeParams, $timeout, ControlledVocabulary, DocumentRepo, Metadata, StorageService, User, TXT, PDF) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -15,6 +15,10 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 	$scope.document.metadata = {};
 
 	$scope.cv = ControlledVocabulary.get();
+
+	User.ready().then(function() {
+		
+    });
 
 	ControlledVocabulary.ready().then(function() {
 
@@ -38,7 +42,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					$scope.document.metadata[label].splice(Object.keys($scope.document.metadata[label]).length-1, 1);
 				};
 				
-				$scope.addMetadataField = function(label,defaultValue) {
+				$scope.addMetadataField = function(label,defaultValue) { 
 					$scope.document.metadata[label][Object.keys($scope.document.metadata[label]).length] = (defaultValue) ? defaultValue:'';
 				};
 				
@@ -47,13 +51,13 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				};
 				
 				$scope.updateMetadata = function(document) {
-					Metadata.clear(document.name).then(function(data) {								
+					Metadata.clear(document.name).then(function(data) {
 						Metadata.add(document.name, document.metadata);
 					});
 				};
 				
-				$scope.submit = function(document) {				
-					Metadata.clear(document.name).then(function(data) {					
+				$scope.submit = function(document) {
+						Metadata.clear(document.name).then(function(data) {	
 						Metadata.add(document.name, document.metadata);
 						DocumentRepo.update(document.name, $scope.user, 'Annotated', '');
 						$location.path('/assignments');					
@@ -61,7 +65,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 				};
 				
 				$scope.accept = function(document) {
-					Metadata.clear(document.name).then(function(data) {					
+						Metadata.clear(document.name).then(function(data) {	
 						Metadata.add(document.name, document.metadata);
 						DocumentRepo.update(document.name, $scope.document.annotator, 'Published', '');
 						$location.path('/documents');					
@@ -86,7 +90,7 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					}
 				};
 				
-				$scope.requiresCuration = function(name) {
+				$scope.requiresCuration = function(name) { 
 					DocumentRepo.update(name, $scope.user, 'Requires Curation');
 					$location.path('/assignments');
 				};
@@ -97,6 +101,19 @@ metadataTool.controller('AnnotateController', function($controller, $scope, $loc
 					}
 					return $scope.cv[label];
 				};
+
+				$scope.requiredFieldsPresent = function() {
+					
+					var requiredFieldsPresent = false
+
+					for(var key in $scope.document.metadataLabels) {
+						if($scope.document.metadataLabels[key]["required"]) {
+							requiredFieldsPresent = true
+							break;
+						}
+					}
+					return requiredFieldsPresent;
+				}
 				
 			});	
 			

@@ -17,7 +17,8 @@ metadataTool.directive('formtextarea', function () {
 metadataTool.directive('formlabel', function () {
 	return {
 		scope: {
-			text: '@text'
+			text: '@text',
+			required: '@required'
 		},
 		templateUrl: 'views/forms/label.html',
 		restrict: 'E',

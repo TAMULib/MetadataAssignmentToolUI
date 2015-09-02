@@ -46,8 +46,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
 		};
 		
-		$scope.setTable();
-		
+		$scope.setTable();		
 	});
 
 	$scope.setSelectedUser = function(user) {
