@@ -66,7 +66,23 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		}
 
 		return updateDocumentPromise;
-		
+	};
+
+	Document.save = function(document) {
+		var saveDocumentPromise = WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'document', 
+			method: 'save',
+			data: angular.toJson(document)
+		});
+				
+		if(saveDocumentPromise.$$state) {
+			saveDocumentPromise.then(function(data) {	
+				logger.log(data);
+			});
+		}
+
+		return saveDocumentPromise;
 	};
 
 	Document.listen = function() {

@@ -1,6 +1,6 @@
 describe('controller: AnnotateController', function() {
 	
-	var controller, scope, location, routeParams, ControlledVocabulry, DocumentRepo, Metadata, User;
+	var controller, scope, location, routeParams, ControlledVocabulry, DocumentRepo, User;
 
 	beforeEach(module('metadataTool'));
 	
@@ -15,7 +15,7 @@ describe('controller: AnnotateController', function() {
         });
     }));
 	
-	beforeEach(inject(function($controller, $rootScope, $location, $routeParams, _ControlledVocabulary_, _DocumentRepo_, _Metadata_, _User_) {
+	beforeEach(inject(function($controller, $rootScope, $location, $routeParams, _ControlledVocabulary_, _DocumentRepo_, _User_) {
 		scope = $rootScope.$new(); 
         location = $location; 
         routeParams = $routeParams;
@@ -25,12 +25,10 @@ describe('controller: AnnotateController', function() {
             $routeParams: routeParams,
             ControlledVocabulary: _ControlledVocabulary_,
             DocumentRepo: _DocumentRepo_,
-            Metadata: _Metadata_,
             User: _User_
         });
         ControlledVocabulary = _ControlledVocabulary_;
         DocumentRepo = _DocumentRepo_;
-        Metadata = _Metadata_;
         User = _User_;
     }));
 

@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $scope, $timeout, ControlledVocabulary, DocumentRepo, Metadata, StorageService, User) {
+metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $scope, $timeout, ControlledVocabulary, DocumentRepo, StorageService, User) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -22,6 +22,13 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 		
 			console.log($scope.document);
 
+			for(var k in $scope.document.fields) {
+				var field = $scope.document.fields[k];
+				if(field.values.length == 0) {
+					field.values[0] = {'value' : (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
+				}
+			}
+
 			$scope.removeMetadataField = function(field, value) {
 				field.values.splice(field.values.length-1, 1);
 			};
@@ -30,25 +37,26 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 				field.values[field.values.length] = {'value': (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
 			};
 						
-			$scope.updateMetadata = function(document) {
-				Metadata.clear(document.name).then(function(data) {
-					Metadata.add(document.name, document.metadata);
+			$scope.save = function(document) {
+				console.log(document);
+				DocumentRepo.save(document).then(function(data) {
+					console.log(data);
 				});
 			};
 			
 			$scope.submit = function(document) {
-				Metadata.clear(document.name).then(function(data) {	
-					Metadata.add(document.name, document.metadata);
+				DocumentRepo.save(document).then(function(data) {
+					console.log(data);
 					DocumentRepo.update(document.name, $scope.user, 'Annotated', '');
-					$location.path('/assignments');					
+					$location.path('/assignments');	
 				});
 			};
 			
 			$scope.accept = function(document) {
-				Metadata.clear(document.name).then(function(data) {	
-					Metadata.add(document.name, document.metadata);
+				DocumentRepo.save(document).then(function(data) {
+					console.log(data);
 					DocumentRepo.update(document.name, $scope.document.annotator, 'Published', '');
-					$location.path('/documents');					
+					$location.path('/documents');
 				});
 			};
 
