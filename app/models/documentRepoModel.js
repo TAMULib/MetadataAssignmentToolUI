@@ -8,7 +8,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "HashMap");
+		self.unwrap(self, futureData, "Document");
 		
 	};
 
@@ -23,7 +23,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	});
 
 	Document.set = function(data) {
-		self.unwrap(self, data, "HashMap");
+		self.unwrap(self, data, "Document");
 	};
 
 	Document.get = function(name) {
