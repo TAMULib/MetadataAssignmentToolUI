@@ -35,7 +35,7 @@
 				<span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
 				<div class="col-4 col-lg-4 metadata-pane">
 					<div ng-repeat="field in document.fields" class="row" ng-hide="field.label.profile.hidden">
-						<formlabel text="{{field.label.profile.gloss}}" required="{{field.label.profile.required}}"></formlabel>
+						<label ng-required="field.label.profile.required">{{field.label.profile.gloss}}<span ng-show="{{field.label.profile.required}}" class="requiredField"></span></label>
 						<span title="Add metadata field" 
 							  ng-if="field.label.profile.repeatable" 
 							  ng-click="addMetadataField(field)" 
@@ -52,38 +52,42 @@
 							
 								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXT'">
 								  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<forminput name="{{field.label.profile.gloss}}" 
-											   class="form-control" 
-											   type="text" 
-											   ng-readonly="field.label.profile.readOnly" 
-											   ng-model="field.values[$index].value" 
-											   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
-									</forminput>
+									<input name="{{field.label.profile.gloss}}" 
+										   ng-required="field.label.profile.required"
+										   class="form-control" 
+										   type="text" 
+										   ng-readonly="field.label.profile.readOnly" 
+									       ng-model="field.values[$index].value" 
+										   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+									</input>
 								</div>
 								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXTAREA'">
 									<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<formtextarea name="{{field.label.profile.gloss}}"
-									              class="form-control"
-									              ng-readonly="metadataLabel.readOnly" 
-									              ng-model="field.values[$index].value">
-									</formtextarea>
+									<textarea name="{{field.label.profile.gloss}}"
+											  ng-required="field.label.profile.required"
+									          class="form-control"
+									          ng-readonly="field.label.profile.readOnly" 
+									          ng-model="field.values[$index].value">
+									</textarea>
 								</div>
 							</li>
 							<li ng-if="!field.label.profile.repeatable">
-								<forminput 	name="{{field.label.profile.gloss}}" 
-											ng-if="field.label.profile.inputType == 'TEXT'" 
-											class="form-control" 
-											ng-readonly="field.label.profile.readOnly" 
-											type="text" 
-											ng-model="field.values[0].value" 
-											typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
-								</forminput>
-								<formtextarea name="{{field.label.profile.gloss}}"
-											  ng-if="field.label.profile.inputType == 'TEXTAREA'" 
-											  class="form-control" 
-											  ng-readonly="field.label.profile.readOnly" 
-											  ng-model="field.values[0].value">
-								</formtextarea>
+								<input name="{{field.label.profile.gloss}}" 
+									   ng-required="field.label.profile.required"
+									   ng-if="field.label.profile.inputType == 'TEXT'" 
+									   class="form-control" 
+									   ng-readonly="field.label.profile.readOnly" 
+									   type="text" 
+									   ng-model="field.values[0].value" 
+									   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+								</input>
+								<textarea name="{{field.label.profile.gloss}}"
+										  ng-required="field.label.profile.required"
+										  ng-if="field.label.profile.inputType == 'TEXTAREA'" 
+										  class="form-control" 
+										  ng-readonly="field.label.profile.readOnly" 
+										  ng-model="field.values[0].value">
+								</textarea>
 							</li>
 						</ul>	
 					</div>

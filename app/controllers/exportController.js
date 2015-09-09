@@ -40,10 +40,8 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		return ["csv","saf"];
 	};
 
-	$scope.export = function() {
-	
-		Export.execute($scope.project, $scope.exportFormat);
-	
+	$scope.export = function() {	
+		Export.execute($scope.project, $scope.exportFormat);	
 	}
 	
 });

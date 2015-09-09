@@ -91,16 +91,12 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			};
 
 			$scope.requiredFieldsPresent = function() {
-				
-				var requiredFieldsPresent = false
-
-				for(var key in $scope.document.metadataLabels) {
-					if($scope.document.metadataLabels[key]["required"]) {
-						requiredFieldsPresent = true
-						break;
+				for(var k in $scope.document.fields) {
+					if($scope.document.fields[k].label.profile.required) {
+						return true;
 					}
 				}
-				return requiredFieldsPresent;
+				return false;
 			};
 			
 		});
