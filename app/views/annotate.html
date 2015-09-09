@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		
-		<div>
+		<div ng-if="action == 'annotate' || action == 'review'">
 			<h2>Metadata</h2>
 
 			<form name="metadataForm" novalidate>
@@ -126,6 +126,33 @@
 			</form>
 
 		</div>
+
+		<div ng-if="action == 'view'">
+			<h2>Metadata</h2>
+
+			<div class="col-4 col-lg-4 metadata-pane">
+				<div ng-repeat="field in document.fields" class="row">
+					<label>{{field.label.profile.gloss}}</label>
+					
+					<ul class="list-unstyled">
+						<li ng-if="field.label.profile.repeatable" >
+							<ol>
+								<li ng-repeat="fieldValue in field.values">
+									<span>{{field.values[$index].value}}</span>
+								</li>
+							</ol>
+						</li>
+						<li ng-if="!field.label.profile.repeatable">
+							<div class="tabbed">{{field.values[0].value}}</div>
+						</li>
+					</ul>	
+				</div>
+
+			</div>
+			
+
+		</div>
+
 
 	</div>
 
