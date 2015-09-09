@@ -34,23 +34,6 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		
 		return Metadata.data;
 	};
-	
-	Metadata.add = function(name, metadata) {
-		var addMetadataSubmitPromise = WsApi.fetch({
-				endpoint: '/private/queue', 
-				controller: 'metadata', 
-				method: 'add',
-				data: JSON.stringify({
-					'name': name,
-					'metadata': metadata
-				})
-		});
-		if(addMetadataSubmitPromise.$$state) {
-			addMetadataSubmitPromise.then(function(data) {
-				logger.log(data);
-			});
-		}		
-	};
 		
 	Metadata.getAll = function() {
 		return WsApi.fetch({
@@ -58,15 +41,6 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			controller: 'metadata', 
 			method: 'all',
 		});	
-	};
-	
-	Metadata.clear = function(name) {
-		return WsApi.fetch({
-			endpoint: '/private/queue', 
-			controller: 'metadata', 
-			method: 'clear',
-			data: JSON.stringify({'name': name})
-		});		
 	};
 
 	Metadata.getHeaders = function(project) {
