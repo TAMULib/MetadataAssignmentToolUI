@@ -21,9 +21,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			$http.get($scope.document.txtUri).then(function(response) {
 				$scope.txt = response.data;
 			});
-		
-			console.log($scope.document);
-
+			
 			for(var k in $scope.document.fields) {
 				var field = $scope.document.fields[k];
 				if(field.values.length == 0) {
@@ -40,7 +38,6 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			};
 						
 			$scope.save = function(document) {
-				console.log(document);
 				$scope.loadingText = "Saving...";
 				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
@@ -65,7 +62,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
 					angular.element("#pleaseWaitDialog").modal('hide');
-					DocumentRepo.update(document.name, $scope.document.annotator, 'Published', '');
+					DocumentRepo.update(document.name, $scope.document.annotator, 'Accepted', '');
 					$timeout(function() {
 						$location.path('/documents');
 					}, 500);
