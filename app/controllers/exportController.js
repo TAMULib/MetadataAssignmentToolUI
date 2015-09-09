@@ -18,7 +18,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 				$scope.headers.push(headers[key]);
 			}
 			
-			return Metadata.getPublishedByProject(project).then(function(data) {
+			return Metadata.getAcceptedByProject(project).then(function(data) {
 				return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
 			});
 

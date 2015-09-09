@@ -57,12 +57,12 @@
 								{{doc.status}}
 							</td>							
 							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
-								<span ng-if="doc.status != 'Published' && !doc.annotator && availableAnnotators().length > 0">								
+								<span ng-if="doc.status != 'Accepted' && !doc.annotator && availableAnnotators().length > 0">
 									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.name, 'Assigned', doc.annotator)" class="form-control">
 										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator}}">{{annotator.firstName}} {{annotator.lastName}}</option>
 									</select>								
 								</span>
-								<span ng-if="doc.status != 'Published' && !doc.annotator && availableAnnotators().length == 0">
+								<span ng-if="doc.status != 'Accepted' && !doc.annotator && availableAnnotators().length == 0">
 									No Annotators
 								</span>
 								<span ng-if="doc.annotator">
