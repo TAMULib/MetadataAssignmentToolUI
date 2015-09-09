@@ -4,8 +4,11 @@
 	<!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
 	<div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-	<div ng-if="!isUser()" class="row">
+   <div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
+	  	<img src="resources/img/loading.gif" height="200" width"200"/>
+	</div>
 
+	<div ng-if="!isUser()" class="row">
 	
 		<div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
 		
@@ -31,7 +34,7 @@
 		<div>
 			<h2>Metadata</h2>
 
-			<form name="metadataForm">
+			<form name="metadataForm" novalidate>
 				<span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
 				<div class="col-4 col-lg-4 metadata-pane">
 					<div ng-repeat="field in document.fields" class="row" ng-hide="field.label.profile.hidden">

@@ -12,6 +12,8 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 		
     });
 
+    $scope.loadingText = "Loading...";
+
 	ControlledVocabulary.ready().then(function() {
 
 		DocumentRepo.ready().then(function() {
@@ -39,24 +41,34 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 						
 			$scope.save = function(document) {
 				console.log(document);
+				$scope.loadingText = "Saving...";
+				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
-					console.log(data);
+					angular.element("#pleaseWaitDialog").modal('hide');
 				});
 			};
 			
 			$scope.submit = function(document) {
+				$scope.loadingText = "Submitting...";
+				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
-					console.log(data);
+					angular.element("#pleaseWaitDialog").modal('hide');
 					DocumentRepo.update(document.name, $scope.user, 'Annotated', '');
-					$location.path('/assignments');	
+					$timeout(function() {
+						$location.path('/assignments');
+					}, 500);	
 				});
 			};
 			
 			$scope.accept = function(document) {
+				$scope.loadingText = "Accepting...";
+				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
-					console.log(data);
+					angular.element("#pleaseWaitDialog").modal('hide');
 					DocumentRepo.update(document.name, $scope.document.annotator, 'Published', '');
-					$location.path('/documents');
+					$timeout(function() {
+						$location.path('/documents');
+					}, 500);
 				});
 			};
 
