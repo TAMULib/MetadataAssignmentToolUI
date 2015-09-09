@@ -12,6 +12,8 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 		
     });
 
+	$scope.action = $routeParams.action;
+
     $scope.loadingText = "Loading...";
 
 	ControlledVocabulary.ready().then(function() {
