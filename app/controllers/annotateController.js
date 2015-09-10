@@ -20,10 +20,6 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
 		DocumentRepo.ready().then(function() {
 
-			$http.get($scope.document.txtUri).then(function(response) {
-				$scope.txt = response.data;
-			});
-			
 			for(var k in $scope.document.fields) {
 				var field = $scope.document.fields[k];
 				if(field.values.length == 0) {

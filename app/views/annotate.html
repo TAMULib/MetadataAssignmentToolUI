@@ -21,8 +21,8 @@
 					<li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
 				</ul>
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="txtTab">	
-						<div class="well">{{txt}}</div>
+					<div role="tabpanel" class="tab-pane active" id="txtTab">
+						<object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="pdfTab">
 						<object data="{{document.pdfUri}}" type="application/pdf" width="100%" height="600"></object>
@@ -98,35 +98,25 @@
 				</div>
 				<div class="row">			
 					<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
-							Requires Curation
-						</button>
-						<button class="btn btn-primary" ng-click="save(document)">
-							Save
-						</button>
-						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit(document)">
-							Submit
-						</button>
+						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
+						<button class="btn btn-primary" ng-click="save(document)">Save</button>
+						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit(document)">Submit</button>
 					</div>
 					<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">
-							Requires Curation
-						</button>
+						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
 
 						<modal modal-id="rejectModal" 
 							   modal-view="views/modals/rejectModal.html" 
 							   modal-btn-classes="btn btn-danger"
 							   modal-header-class="modal-header-danger">Reject</modal>
 							   
-						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >
-							Accept
-						</button>
+						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
 					</div>
 				</div>
 			</form>
 
 		</div>
-
+SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'metadatatool_dev' AND pid <> pg_backend_pid();
 		<div ng-if="action == 'view'">
 			<h2>Metadata</h2>
 
