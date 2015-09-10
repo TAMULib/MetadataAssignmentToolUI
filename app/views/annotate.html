@@ -21,10 +21,10 @@
 					<li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
 				</ul>
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="txtTab">
+					<div role="tabpanel" class="tab-pane active" id="txtTab" ng-if="document.txtUri">
 						<object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="pdfTab">
+					<div role="tabpanel" class="tab-pane" id="pdfTab" ng-if="document.pdfUri">
 						<object data="{{document.pdfUri}}" type="application/pdf" width="100%" height="600"></object>
 					</div>
 				</div>
@@ -116,7 +116,7 @@
 			</form>
 
 		</div>
-		
+
 		<div ng-if="action == 'view'">
 			<h2>Metadata</h2>
 
