@@ -59,14 +59,6 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		});
 	};
 
-	Metadata.getAcceptedByProject = function(project) {
-		return WsApi.fetch({
-			endpoint: '/private/queue', 
-			controller: 'metadata', 
-			method: 'csv/' + project
-		});
-	};
-
 	Metadata.getByStatus = function(status) {
 		return WsApi.fetch({
 			endpoint: '/private/queue', 

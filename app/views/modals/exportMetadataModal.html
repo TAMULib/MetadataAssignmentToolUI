@@ -12,12 +12,12 @@
 
 		<div class="form-group">
 			<label>Format</label>
-			<select ng-options="format for format in getFormats()" ng-model="exportFormat" class="form-control"></select>
+			<select ng-options="format for format in getFormats()" ng-model="format" class="form-control"></select>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button ng-hide="exportFormat=='csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-click="export()">Export</button>
-		<button ng-show="exportFormat=='csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-csv="exportMetadata(project)" csv-header='headers' filename="metadata.csv">Export</button>
+		<button ng-hide="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-click="export(project, format)">Export</button>
+		<button ng-show="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-csv="export(project, format)" csv-header='headers' filename="metadata.csv">Export</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 	</div>
 </form>

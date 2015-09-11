@@ -20,16 +20,12 @@ metadataTool.service("Export", function(WsApi, AbstractModel) {
 		self.unwrap(self, data);
 	};
 	
-	Export.execute = function(project, type) {
-
-		console.log(type);
-		
-		console.log(project);
+	Export.execute = function(project, format) {
 
 		var newExportPromise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
-				method: type + '/' + project
+				method: format + '/' + project
 		});
 		
 		Export.data = new Export(newExportPromise);
