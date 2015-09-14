@@ -46,9 +46,11 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			$scope.submit = function(document) {
 				$scope.loadingText = "Submitting...";
 				angular.element("#pleaseWaitDialog").modal();
+				
+				document.status = 'Annotated';
+
 				DocumentRepo.save(document).then(function(data) {
 					angular.element("#pleaseWaitDialog").modal('hide');
-					DocumentRepo.update(document.name, $scope.user, 'Annotated', '');
 					$timeout(function() {
 						$location.path('/assignments');
 					}, 500);	
@@ -58,9 +60,11 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			$scope.accept = function(document) {
 				$scope.loadingText = "Accepting...";
 				angular.element("#pleaseWaitDialog").modal();
+				
+				document.status = 'Accepted';
+
 				DocumentRepo.save(document).then(function(data) {
 					angular.element("#pleaseWaitDialog").modal('hide');
-					DocumentRepo.update(document.name, $scope.document.annotator, 'Accepted', '');
 					$timeout(function() {
 						$location.path('/documents');
 					}, 500);
