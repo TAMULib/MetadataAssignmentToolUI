@@ -35,34 +35,7 @@
 	<!-- Content placed here will appear on every page -->
 	<main>
 
-		<header class="container-fluid global-nav">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">					
-						<nav class="global-nav pull-right hidden-xs">
-							<ul class="nav global-nav pull-right hidden-xs">
-					        	<li><a href="#">Hours</a></li>
-					          	<li><a href="#">Libraries</a></li>
-					          	<li><a href="#">Ask Us</a></li>
-					        </ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</header>
-
-		<header class="container-fluid site-title">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-						<h1 class="tamu-lib"><a href="http://library.tamu.edu">Texas A&amp;M University Libraries</a></h1>
-					</div>
-					<div class="col-lg-9">
-						<div class="site"><h3><a href="home">Metadata Assignment Tool</a></h3></div>
-					</div>
-				</div>
-			</div>
-		</header>
+		<tamuheader title="Seed App"></tamuheader>
 				
 		<div class="container-fluid">
 			<div class="container">
@@ -132,38 +105,7 @@
 		</div>
 	</main>
 
-	<footer class="container-fluid footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<ul class="inline-list">
-						<li>© Texas A&amp;M University Libraries</li>
-						<li>
-							<a href="http://www.tamu.edu">Texas A&amp;M University</a>
-						</li>
-						<li>
-							<a href="http://library.tamu.edu/about/employment/index.html">Employment</a>
-						</li>
-						<li>
-							<a href="http://library.tamu.edu/services/forms/contact-info.html">Webmaster</a>
-						</li>
-						<li>
-							<a href="http://library.tamu.edu/about/general-information/legal-notices.html">Legal</a>
-						</li>
-						<li>
-							<a href="http://vrlplus.cb.docutek.com/tamu/vrleb_question_patron.asp?virtual_desk_id=1">Comments</a>
-						</li>
-						<li>
-							<a href="tel:+1-979-845-5741">979-845-5741</a></li><a href="tel:+1-979-845-5741">
-						</a>
-						<li>
-							<a href="tel:+1-979-845-5741"></a><a href="http://library.tamu.edu/accessibility/index.html">Accessibility</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<tamufooter></tamufooter>
 
 
 	<!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
@@ -189,47 +131,60 @@
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
 
-	<!-- Configuration -->
-    <script src="config/appConfig.js"></script>
-
-	<!-- Modules -->
-	<script src="components/version/version.js"></script>
-	<script src="components/version/version-directive.js"></script>
-	<script src="components/version/interpolate-filter.js"></script>
-	
-	
 	<!-- build:js resources/scripts/vendor_concat.js -->
 	<!--  Vendor libraries -->
 
 	<!-- endbuild -->
+
+
+		<!-- Configuration -->
+	    <script src="bower_components/core/app/config/coreConfig.js"></script>
+
+		<!-- Modules -->
+		<script src="bower_components/core/app/components/version/version.js"></script>
+		<script src="bower_components/core/app/components/version/version-directive.js"></script>
+		<script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
+
+		<!-- Configuration -->
+	    <script src="config/appConfig.js"></script>
+
+		<!-- Modules -->
+		<script src="components/version/version.js"></script>
+		<script src="components/version/version-directive.js"></script>
+		<script src="components/version/interpolate-filter.js"></script>
+	
+	
 	
 
 	<!-- build:js resources/scripts/app_concat.js -->
 	
 	    <!-- Application Start -->
+	    <script src="bower_components/core/app/core.js"></script>
 	    <script src="setup.js"></script>
 	    <script src="app.js"></script>
-	    <script src="config/logging.js"></script>
 	    <script src="config/runTime.js"></script>
 	    <script src="config/routes.js"></script>
+	    <script src="bower_components/core/app/config/logging.js"></script>
 
-	    <!-- Directives -->
-	    <script src="directives/userDirective.js"></script>
-	    <script src="directives/modalDirective.js"></script>
+	     <!-- Directives -->
+	    <script src="bower_components/core/app/directives/headerDirective.js"></script>
+	    <script src="bower_components/core/app/directives/footerDirective.js"></script>
+	    <script src="bower_components/core/app/directives/userDirective.js"></script>
+	    <script src="bower_components/core/app/directives/modalDirective.js"></script>
 
 	    <!-- Services -->
-	    <script src="services/wsservice.js"></script>
-	    <script src="services/wsapi.js"></script>
-	    <script src="services/restapi.js"></script>
-	  	<script src="services/authserviceapi.js"></script>
-	  	<script src="services/storageservice.js"></script>
+	    <script src="bower_components/core/app/services/wsservice.js"></script>
+	    <script src="bower_components/core/app/services/wsapi.js"></script>
+	  	<script src="bower_components/core/app/services/authserviceapi.js"></script>
+	  	<script src="bower_components/core/app/services/storageservice.js"></script>
+	  	<script src="bower_components/core/app/services/utilityservice.js"></script>
 
 	    <!-- Factories -->
 
 	    <!-- Models -->
-	    <script src="models/abstractModel.js"></script>
-	    <script src="models/userModel.js"></script>
-	    <script src="models/assumedControlModel.js"></script>
+	    <script src="bower_components/core/app/model/abstractModel.js"></script>
+	    <script src="bower_components/core/app/model/assumedControlModel.js"></script>
+	    <script src="bower_components/core/app/model/userModel.js"></script>
 	    <script src="models/userRepoModel.js"></script>
 	    <script src="models/documentRepoModel.js"></script>
 	    <script src="models/documentPageModel.js"></script>
@@ -238,14 +193,14 @@
 	    <script src="models/controlledVocabularyModel.js"></script>
 
 	    <!-- Controllers -->
-	    <script src="controllers/userController.js"></script>
+	    <script src="bower_components/core/app/controllers/abstractController.js"></script>
+	    <script src="bower_components/core/app/controllers/userController.js"></script>
 	    <script src="controllers/userRepoController.js"></script>
 	    <script src="controllers/adminController.js"></script>
 	    <script src="controllers/documentController.js"></script>
 	    <script src="controllers/exportController.js"></script>
 	    <script src="controllers/annotateController.js"></script>
 	    <script src="controllers/navigationController.js"></script>
-	    <script src="controllers/abstractController.js"></script>
     
     <!-- endbuild -->
 

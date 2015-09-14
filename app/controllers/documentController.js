@@ -26,13 +26,24 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        },
 		        filter: {
 		        	name: '',
-		        	status: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        	status: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 		        }
 		    }, {
 		        total: 0,
-		        getData: function($defer, params) {		        	
+		        getData: function($defer, params) {
+		        	
+
 		        	var key; for(key in params.sorting()) {}
+
+		        	console.log(params.page());
+		        	console.log(params.count());
+
+		        	console.log(key);
+
+		        	console.log(params.sorting()[key]);
+
+		        	console.log(params.filter());
 
 	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
 		        		var page = JSON.parse(data.body).content.PageImpl;

@@ -15,6 +15,15 @@ module.exports = function(config){
             'app/bower_components/ng-table/dist/ng-table.min.js',
             'app/bower_components/ng-csv/build/ng-csv.min.js',
             'app/bower_components/angular-sanitize/angular-sanitize.min.js',
+
+            'app/bower_components/core/app/config/coreConfig.js',
+
+            'app/bower_components/core/app/components/**/*.js',
+
+            'app/bower_components/core/app/core.js',
+
+            'app/bower_components/core/app/**/*.js',
+
             
             'app/components/**/*.js',
 
@@ -22,9 +31,10 @@ module.exports = function(config){
             
             'app/app.js',
             
-            'app/config/runTime.js',            
+            'app/config/runTime.js',
             
             'app/controllers/**/*.js',
+
             'app/directives/**/*.js',
             
             'app/services/**/*.js',            
@@ -33,6 +43,7 @@ module.exports = function(config){
             
             
             'tests/mocks/**/*.js',
+
             'tests/unit/**/*.js'
             
         ],
