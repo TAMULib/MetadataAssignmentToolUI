@@ -20,7 +20,7 @@
     "bootstrap-sass-official": "3.3.3",
     "sockjs": "0.3.4",
     "stomp-websocket": "2.3.4",
-    "core": "git@github.com:TAMULib/Angular-Framework.git#p1.1.0"
+    "core": "git@github.com:TAMULib/Angular-Framework.git#p1.1.1"
   },
   "resolutions": {
     "angular": "1.4.x"
