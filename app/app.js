@@ -5,8 +5,8 @@ var metadataTool = angular.module('metadataTool',
 		 'ngSanitize',
 		 'ngCsv',
 		 'metadataTool.version'
-		 ]).constant('globalConfig',globalConfig);
+		 ]).constant('appConfig', appConfig);
 
 setUpApp(function() {
-	angular.bootstrap(document, ['metadataTool', 'ui.bootstrap']);
+	angular.bootstrap(document, ['core', 'metadataTool', 'ui.bootstrap']);
 });

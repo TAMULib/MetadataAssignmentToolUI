@@ -1,6 +1,8 @@
 describe('model: DocumentPage', function() {
 	
 	var DocumentPage, WsApi;
+
+	beforeEach(module('core'));
 	
 	beforeEach(module('metadataTool'));
 	

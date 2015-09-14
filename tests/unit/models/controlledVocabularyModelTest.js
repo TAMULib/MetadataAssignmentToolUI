@@ -1,6 +1,8 @@
 describe('model: ControlledVocabulary', function() {
 	
 	var ControlledVocabulary, WsApi;
+
+	beforeEach(module('core'));
 	
 	beforeEach(module('metadataTool'));
 	

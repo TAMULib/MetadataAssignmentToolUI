@@ -2,6 +2,8 @@ describe('controller: AnnotateController', function() {
 	
 	var controller, scope, location, routeParams, ControlledVocabulry, DocumentRepo, User;
 
+	beforeEach(module('core'));
+
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.controlledVocabulary'));

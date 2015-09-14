@@ -2,6 +2,8 @@ describe('controller: DocumentController', function() {
 	
 	var controller, scope, DocumentPage, DocumentRepo, User, UserRepo;
 
+	beforeEach(module('core'));
+
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.documentPage'));

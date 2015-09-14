@@ -56,41 +56,17 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 				StorageService.set('adminToken', StorageService.get("token"));
 
 				AuthServiceApi.getAssumedUser(assume).then(function(data) {
-					
-					WsApi.fetch({
-						endpoint: '/private/queue', 
-						controller: 'admin', 
-						method: 'confirmuser',
-					}).then(function(data) {
+				
+					User.refresh();
+					UserRepo.refresh();
 
-						if(data) {
-						
-							User.refresh();
-							UserRepo.refresh();
-
-							AssumedControl.set({
-								'netid': '',
-								'button': 'Unassume',
-								'status': ''
-							});
-
-							angular.element("#assumeUserModal").modal("hide");
-							
-							$route.reload();
-
-						}
-						else {
-
-							StorageService.set('assuming', 'false');
-
-							AssumedControl.set({
-								'netid': assume.netid,
-								'button': 'Assume',
-								'status': 'invalid netid'
-							});
-						}
-
+					AssumedControl.set({
+						'netid': '',
+						'button': 'Unassume',
+						'status': ''
 					});
+
+					angular.element("#assumeUserModal").modal("hide");
 				});
 			}
 		} else {
@@ -110,9 +86,6 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			UserRepo.refresh();
 
 			StorageService.set("role", $scope.user.role);
-
-			$route.reload();
-			
 		}
 		
 	};
