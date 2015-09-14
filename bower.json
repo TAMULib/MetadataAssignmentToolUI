@@ -1,8 +1,8 @@
 {
-  "name": "mylibrary",
-  "description": "MyLibrary Web App",
+  "name": "metadatatool",
+  "description": "Metadata Tool Web App",
   "version": "0.0.1",
-  "homepage": "https://github.com/TAMULib/MyLibraryUI",
+  "homepage": "https://github.com/TAMULib/MetadataAssignmentToolUI",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "bootstrap-sass-official": "3.3.3",
     "sockjs": "0.3.4",
     "stomp-websocket": "2.3.4",
-    "core": "git@github.com:TAMULib/Angular-Framework.git"
+    "core": "https://github.com/TAMULib/MetadataAssignmentToolUI.git"
   },
   "resolutions": {
     "angular": "1.4.x"
