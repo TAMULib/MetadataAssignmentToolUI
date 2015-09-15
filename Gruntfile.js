@@ -27,6 +27,9 @@ module.exports = function(grunt) {
 			all: [
 			      'Gruntfile.js',
 			      '<%= build.app %>/**/*.js',
+			      '<%= build.app %>/bower_components/core/**/*',
+			      '<%= build.app %>/bower_components/core/components/**/*',
+			      '<%= build.app %>/bower_components/core/resources/**/*',
 			      '!<%= build.app %>/bower_components/**/*',
 			      '!<%= build.app %>/components/**/*',
 			      '!<%= build.app %>/resources/**/*'
@@ -40,6 +43,7 @@ module.exports = function(grunt) {
 			core: {
 				src: [
 						'<%= build.app %>/bower_components/core/**/*.js',
+						'!<%= build.app %>/bower_components/core/app/core.js',
 						'!<%= build.app %>/bower_components/core/config/coreConfig.js',
 				      	'!<%= build.app %>/bower_components/core/components/**/*',
 				      	'!<%= build.app %>/bower_components/core/resources/**/*'
