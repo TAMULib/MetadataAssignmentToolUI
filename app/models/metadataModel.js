@@ -34,6 +34,14 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		
 		return Metadata.data;
 	};
+
+	Metadata.export = function(project, format) {
+		return WsApi.fetch({
+				endpoint: '/private/queue', 
+				controller: 'metadata', 
+				method: format + '/' + project
+		});
+	};
 		
 	Metadata.getAll = function() {
 		return WsApi.fetch({

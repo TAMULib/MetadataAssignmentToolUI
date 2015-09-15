@@ -20,10 +20,10 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 
 	$scope.export = function(project, format) {
 
-		console.log("Exporting " + format + " for project " + project);
+		console.log("Exporting " + format + " for " + project + " project ");
 
 		if(format == "saf") {			
-			Export.execute(project, format);
+			Metadata.export(project, format);
 		}
 		else if(format == "csv") {
 			$scope.headers = [];
@@ -36,9 +36,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 					$scope.headers.push(headers[key]);
 				}
 
-				Export.execute(project, format);
-
-				return Export.ready().then(function(data) {
+				return Metadata.export(project, format).then(function(data) {
 					return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
 				});
 
