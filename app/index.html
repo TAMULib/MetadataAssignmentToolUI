@@ -131,47 +131,37 @@
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
 
-	<!-- build:js resources/scripts/vendor_concat.js -->
-	<!--  Vendor libraries -->
+	<!-- Core Configuration -->
+	<script src="bower_components/core/app/config/coreConfig.js"></script>
 
-	<!-- endbuild -->
+	<!-- Core Modules -->
+	<script src="bower_components/core/app/components/version/version.js"></script>
+	<script src="bower_components/core/app/components/version/version-directive.js"></script>
+	<script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
+
+	<!-- App Configuration -->
+    <script src="config/appConfig.js"></script>
+
+	<!-- App Modules -->
+	<script src="components/version/version.js"></script>
+	<script src="components/version/version-directive.js"></script>
+	<script src="components/version/interpolate-filter.js"></script>
 
 
-		<!-- Configuration -->
-	    <script src="bower_components/core/app/config/coreConfig.js"></script>
 
-		<!-- Modules -->
-		<script src="bower_components/core/app/components/version/version.js"></script>
-		<script src="bower_components/core/app/components/version/version-directive.js"></script>
-		<script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
+	<!--  Core libraries -->
 
-		<!-- Configuration -->
-	    <script src="config/appConfig.js"></script>
+	<!-- build:js resources/scripts/core_concat.js -->
 
-		<!-- Modules -->
-		<script src="components/version/version.js"></script>
-		<script src="components/version/version-directive.js"></script>
-		<script src="components/version/interpolate-filter.js"></script>
-	
-	
-	
-
-	<!-- build:js resources/scripts/app_concat.js -->
-	
-	    <!-- Application Start -->
+	    <!-- Application Start -->	
 	    <script src="bower_components/core/app/core.js"></script>
-	    <script src="setup.js"></script>
-	    <script src="app.js"></script>
-	    <script src="config/runTime.js"></script>
-	    <script src="config/routes.js"></script>
 	    <script src="bower_components/core/app/config/logging.js"></script>
 
-	     <!-- Directives -->
+	    <!-- Directives -->
 	    <script src="bower_components/core/app/directives/headerDirective.js"></script>
 	    <script src="bower_components/core/app/directives/footerDirective.js"></script>
 	    <script src="bower_components/core/app/directives/userDirective.js"></script>
 	    <script src="bower_components/core/app/directives/modalDirective.js"></script>
-	    <script src="directives/formatDirective.js"></script>
 
 	    <!-- Services -->
 	    <script src="bower_components/core/app/services/wsservice.js"></script>
@@ -186,6 +176,32 @@
 	    <script src="bower_components/core/app/model/abstractModel.js"></script>
 	    <script src="bower_components/core/app/model/assumedControlModel.js"></script>
 	    <script src="bower_components/core/app/model/userModel.js"></script>
+
+	    <!-- Controllers -->
+	    <script src="bower_components/core/app/controllers/abstractController.js"></script>
+	    <script src="bower_components/core/app/controllers/userController.js"></script>
+
+	<!-- endbuild -->
+
+
+	<!--  App libraries -->
+
+	<!-- build:js resources/scripts/app_concat.js -->
+	
+	    <!-- Application Start -->	    
+	    <script src="setup.js"></script>
+	    <script src="app.js"></script>
+	    <script src="config/runTime.js"></script>
+	    <script src="config/routes.js"></script>
+
+	     <!-- Directives -->
+	    <script src="directives/formatDirective.js"></script>
+
+	    <!-- Services -->
+
+	    <!-- Factories -->
+
+	    <!-- Models -->
 	    <script src="models/userRepoModel.js"></script>
 	    <script src="models/documentRepoModel.js"></script>
 	    <script src="models/documentPageModel.js"></script>
@@ -194,8 +210,6 @@
 	    <script src="models/controlledVocabularyModel.js"></script>
 
 	    <!-- Controllers -->
-	    <script src="bower_components/core/app/controllers/abstractController.js"></script>
-	    <script src="bower_components/core/app/controllers/userController.js"></script>
 	    <script src="controllers/userRepoController.js"></script>
 	    <script src="controllers/adminController.js"></script>
 	    <script src="controllers/documentController.js"></script>
