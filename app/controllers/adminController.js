@@ -67,6 +67,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 					});
 
 					angular.element("#assumeUserModal").modal("hide");
+					$route.reload();
 				});
 			}
 		} else {
@@ -86,6 +87,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 			UserRepo.refresh();
 
 			StorageService.set("role", $scope.user.role);
+			$route.reload();
 		}
 		
 	};
