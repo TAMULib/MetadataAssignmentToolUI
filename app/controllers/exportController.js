@@ -1,4 +1,4 @@
-metadataTool.controller('ExportController', function ($controller, $scope, Metadata, Export) {
+metadataTool.controller('ExportController', function ($controller, $scope, Metadata) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
