@@ -89,3 +89,9 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	});
 	
 });
+
+metadataTool.filter('split', function() {
+    return function(input, splitChar, splitIndex) {
+        return input.split(splitChar)[splitIndex];
+    }
+});
