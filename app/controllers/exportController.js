@@ -20,7 +20,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 
 	$scope.export = function(project, format) {
 
-		console.log("Exporting " + format + " for " + project + " project ");
+		console.log("Exporting " + format + " for " + project + " project");
 
 		if(format == "saf") {			
 			Metadata.export(project, format);
