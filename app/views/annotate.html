@@ -55,7 +55,7 @@
 							
 								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXT'">
 								  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<input name="{{field.label.profile.gloss}}" 
+									<input format name="{{field.label.profile.gloss}}" 
 										   ng-required="field.label.profile.required"
 										   class="form-control" 
 										   type="text" 
@@ -66,7 +66,7 @@
 								</div>
 								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXTAREA'">
 									<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<textarea name="{{field.label.profile.gloss}}"
+									<textarea format name="{{field.label.profile.gloss}}"
 											  ng-required="field.label.profile.required"
 									          class="form-control"
 									          ng-readonly="field.label.profile.readOnly" 
@@ -75,7 +75,7 @@
 								</div>
 							</li>
 							<li ng-if="!field.label.profile.repeatable">
-								<input name="{{field.label.profile.gloss}}" 
+								<input format name="{{field.label.profile.gloss}}" 
 									   ng-required="field.label.profile.required"
 									   ng-if="field.label.profile.inputType == 'TEXT'" 
 									   class="form-control" 
@@ -84,7 +84,7 @@
 									   ng-model="field.values[0].value" 
 									   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
 								</input>
-								<textarea name="{{field.label.profile.gloss}}"
+								<textarea format name="{{field.label.profile.gloss}}"
 										  ng-required="field.label.profile.required"
 										  ng-if="field.label.profile.inputType == 'TEXTAREA'" 
 										  class="form-control" 

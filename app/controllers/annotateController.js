@@ -36,6 +36,9 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			};
 						
 			$scope.save = function(document) {
+
+				console.log(document);
+
 				$scope.loadingText = "Saving...";
 				angular.element("#pleaseWaitDialog").modal();
 				DocumentRepo.save(document).then(function(data) {
@@ -62,6 +65,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 				angular.element("#pleaseWaitDialog").modal();
 				
 				document.status = 'Accepted';
+				document.notes = '';
 
 				DocumentRepo.save(document).then(function(data) {
 					angular.element("#pleaseWaitDialog").modal('hide');
