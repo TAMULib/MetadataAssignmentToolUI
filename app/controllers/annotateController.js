@@ -91,7 +91,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			};
 			
 			$scope.requiresCuration = function(name) { 
-				DocumentRepo.update(name, 'Requires Curation', $scope.user.firstName + " " $scope.user.lastName + " (" + $scope.user.uin + ")");
+				DocumentRepo.update(name, 'Requires Curation', $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")");
 				$location.path('/assignments');
 			};
 
