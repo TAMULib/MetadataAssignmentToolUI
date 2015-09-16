@@ -1,4 +1,4 @@
-var globalConfig = { 
+var appConfig = { 
 
 		'base': 'metadatatool',
 		
