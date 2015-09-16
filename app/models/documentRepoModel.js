@@ -43,12 +43,12 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	
 	};
 		
-	Document.update = function(name, user, status, notes) {
+	Document.update = function(name, status, user, notes) {
 		
 		var change = {
 			'name': name,
-			'user': user,
 			'status': status,
+			'user': user,			
 			'notes': notes
 		};
 				

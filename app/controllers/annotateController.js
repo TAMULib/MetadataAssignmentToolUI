@@ -82,7 +82,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			
 			$scope.submitRejection = function(rejectionNotes) {
 				if(rejectionNotes) {
-					DocumentRepo.update($scope.document.name, $scope.document.annotator, 'Rejected', rejectionNotes).then(function() {
+					DocumentRepo.update($scope.document.name, 'Rejected', $scope.document.annotator, rejectionNotes).then(function() {
 						$timeout(function() {
 							$location.path('/documents');
 						}, 500);
@@ -91,7 +91,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 			};
 			
 			$scope.requiresCuration = function(name) { 
-				DocumentRepo.update(name, $scope.user, 'Requires Curation');
+				DocumentRepo.update(name, 'Requires Curation', $scope.user);
 				$location.path('/assignments');
 			};
 

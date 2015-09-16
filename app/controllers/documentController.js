@@ -68,7 +68,10 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	};
 	
 	$scope.updateAnnotator = function(name, status, annotator) {
-		DocumentRepo.update(name, annotator, status);
+		if(!annotator) {
+			annotator = $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")";
+		}
+		DocumentRepo.update(name, status, annotator);
 	};
 
 	DocumentPage.listen().then(null, null, function(data) {
