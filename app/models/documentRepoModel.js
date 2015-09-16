@@ -47,7 +47,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		
 		var change = {
 			'name': name,
-			'user': (user.firstName && user.lastName && user.uin) ? user.firstName + " " + user.lastName + " " + user.uin : user,
+			'user': user,
 			'status': status,
 			'notes': notes
 		};

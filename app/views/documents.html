@@ -59,14 +59,14 @@
 							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
 								<span ng-if="doc[1] != 'Accepted' && !doc[2] && availableAnnotators().length > 0">
 									<select ng-model="doc[2]" ng-change="updateAnnotator(doc[0], 'Assigned', doc[2])" class="form-control">
-										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator}}">{{annotator.firstName}} {{annotator.lastName}}</option>
-									</select>								
+										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}} ({{annotator.uin}})">{{annotator.firstName}} {{annotator.lastName}}</option>
+									</select>
 								</span>
 								<span ng-if="doc[1] != 'Accepted' && !doc[2] && availableAnnotators().length == 0">
 									No Annotators
 								</span>
 								<span ng-if="doc[2]">
-									{{doc[2] | split:' ':0}} {{doc[2] | split:' ':1}} ({{doc[2] | split:' ':2}})
+									{{doc[2]}}
 								</span>
 							</td>
 							<td data-title="'Action'" class="text-center">
