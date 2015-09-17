@@ -17,19 +17,19 @@
 					<tbody>					
 						<tr ng-repeat="doc in $data">
 							<td data-title="'Filename'" sortable="'name'">
-								{{doc.name}}
+								{{doc[0]}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
-								{{doc.status}}
+								{{doc[1]}}
 							</td>
 							<td data-title="'Annotator'" sortable="'annotator'" class="text-center">								
-								<span ng-if="!doc.annotator">
-									<button class="btn btn-default" ng-click="updateAnnotator(doc.name, 'Assigned')">
+								<span ng-if="!doc[2]">
+									<button class="btn btn-default" ng-click="updateAnnotator(doc[0], 'Assigned')">
 										Claim
 									</button>
 								</span>								
-								<span ng-if="doc.annotator">
-									{{doc.annotator}}
+								<span ng-if="doc[2]">
+									{{doc[2]}}
 								</span>								
 							</td>											
 						</tr>						
@@ -51,26 +51,27 @@
 					<tbody>					
 						<tr ng-repeat="doc in $data">							
 							<td data-title="'Filename'" sortable="'name'" filter="{ 'name': 'text' }">
-								{{doc.name}}
+								{{doc[0]}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
-								{{doc.status}}
+								{{doc[1]}}
 							</td>							
 							<td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
-								<span ng-if="doc.status != 'Published' && !doc.annotator && availableAnnotators().length > 0">								
-									<select ng-model="doc.annotator" ng-change="updateAnnotator(doc.name, 'Assigned', doc.annotator)" class="form-control">
-										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator}}">{{annotator.firstName}} {{annotator.lastName}}</option>
-									</select>								
+								<span ng-if="doc[1] != 'Accepted' && !doc[2] && availableAnnotators().length > 0">
+									<select ng-model="doc[2]" ng-change="updateAnnotator(doc[0], 'Assigned', doc[2])" class="form-control">
+										<option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}} ({{annotator.uin}})">{{annotator.firstName}} {{annotator.lastName}}</option>
+									</select>
 								</span>
-								<span ng-if="doc.status != 'Published' && !doc.annotator && availableAnnotators().length == 0">
+								<span ng-if="doc[1] != 'Accepted' && !doc[2] && availableAnnotators().length == 0">
 									No Annotators
 								</span>
-								<span ng-if="doc.annotator">
-									<span ng-repeat="anotator in availableAnnotators()" ng-if="doc.annotator.indexOf(anotator.uin) > 0">{{anotator.firstName}} {{anotator.lastName}} ({{anotator.uin}})</span>
+								<span ng-if="doc[2]">
+									{{doc[2]}}
 								</span>
 							</td>
 							<td data-title="'Action'" class="text-center">
-								<a ng-if="doc.status == 'Annotated'" href="annotate/{{doc.name}}/review" class="btn btn-default">Review</a>								
+								<a ng-if="doc[1] == 'Annotated'" href="annotate/{{doc[0]}}/review" class="btn btn-default">Review</a>
+								<a ng-if="doc[1] == 'Accepted'" href="annotate/{{doc[0]}}/view" class="btn btn-default">View</a>
 							</td>
 						</tr>
 					</tbody>

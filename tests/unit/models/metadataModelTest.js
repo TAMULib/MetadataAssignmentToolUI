@@ -1,6 +1,8 @@
 describe('model: Metadata', function() {
 	
 	var Metadata, WsApi;
+
+	beforeEach(module('core'));
 	
 	beforeEach(module('metadataTool'));
 	

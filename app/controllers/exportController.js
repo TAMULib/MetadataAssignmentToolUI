@@ -1,30 +1,8 @@
-metadataTool.controller('ExportController', function ($controller, $scope, Metadata, Export) {
+metadataTool.controller('ExportController', function ($controller, $scope, Metadata) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
-	$scope.exportFormat = "saf"
-
-	$scope.exportMetadata = function(project) {
-		
-		logger.log("Exporting metadata for " + project);
-
-		$scope.headers = [];
-		
-		return Metadata.getHeaders(project).then(function(data) {
-			
-			var headers = JSON.parse(data.body).content["ArrayList<String>"];
-			
-			for(var key in headers) {
-				$scope.headers.push(headers[key]);
-			}
-			
-			return Metadata.getPublishedByProject(project).then(function(data) {
-				return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
-			});
-
-		});
-		
-	};
+	$scope.format = "saf";
 
 	Metadata.getProjects().then(function(data) {
 		$scope.projects = JSON.parse(data.body).content["ArrayList<String>"];
@@ -40,10 +18,31 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		return ["csv","saf"];
 	};
 
-	$scope.export = function() {
-	
-		Export.execute($scope.project, $scope.exportFormat);
-	
-	}
+	$scope.export = function(project, format) {
+
+		console.log("Exporting " + format + " for " + project + " project");
+
+		if(format == "saf") {			
+			Metadata.export(project, format);
+		}
+		else if(format == "csv") {
+			$scope.headers = [];
+
+			return Metadata.getHeaders(project).then(function(data) {
+				
+				var headers = JSON.parse(data.body).content["ArrayList<String>"];
+				
+				for(var key in headers) {
+					$scope.headers.push(headers[key]);
+				}
+
+				return Metadata.export(project, format).then(function(data) {
+					return  JSON.parse(data.body).content["ArrayList<ArrayList>"];
+				});
+
+			});
+		}
+			
+	};
 	
 });

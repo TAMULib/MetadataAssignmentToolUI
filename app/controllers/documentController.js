@@ -26,12 +26,12 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        },
 		        filter: {
 		        	name: '',
-		        	status: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view == '/' + globalConfig.base + '/assignments' || view == '/' + globalConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        	status: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 		        }
 		    }, {
 		        total: 0,
-		        getData: function($defer, params) {		        	
+		        getData: function($defer, params) {
 		        	var key; for(key in params.sorting()) {}
 
 	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
@@ -68,14 +68,10 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	};
 	
 	$scope.updateAnnotator = function(name, status, annotator) {
-
 		if(!annotator) {
-			annotator = $scope.user;
+			annotator = $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")";
 		}
-		else {
-			annotator = JSON.parse(annotator);
-		}
-		DocumentRepo.update(name, annotator, status);		
+		DocumentRepo.update(name, status, annotator);
 	};
 
 	DocumentPage.listen().then(null, null, function(data) {

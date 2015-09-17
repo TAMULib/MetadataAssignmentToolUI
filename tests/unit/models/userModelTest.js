@@ -2,6 +2,8 @@ describe('model: User', function() {
 	
 	var User, WsApi;
 	
+	beforeEach(module('core'));
+	
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.wsApi'));

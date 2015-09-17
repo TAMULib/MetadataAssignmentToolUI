@@ -1,5 +1,9 @@
-metadataTool.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $sceDelegateProvider) {
 	$locationProvider.html5Mode(true);
+	$sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        appConfig.webService + "/**"
+    ]);
 	$routeProvider.
 		when('/users', {
 			templateUrl: 'views/users.html'

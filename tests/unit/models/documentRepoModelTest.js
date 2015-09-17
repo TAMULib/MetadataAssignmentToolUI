@@ -1,6 +1,8 @@
 describe('model: DocumentRepo', function() {
 	
 	var DocumentRepo, WsApi;
+
+	beforeEach(module('core'));
 	
 	beforeEach(module('metadataTool'));
 	

@@ -1,16 +1,16 @@
 {
-  "name": "mylibrary",
-  "description": "MyLibrary Web App",
+  "name": "metadatatool",
+  "description": "Metadata Tool Web App",
   "version": "0.0.1",
-  "homepage": "https://github.com/TAMULib/MyLibraryUI",
+  "homepage": "https://github.com/TAMULib/MetadataAssignmentToolUI",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.4.0",
-    "angular-route": "1.4.0",
+    "angular": "1.4.x",
+    "angular-route": "1.4.x",
     "angular-bootstrap": "*",
-    "angular-loader": "1.4.0",
-    "angular-mocks": "1.4.0",
+    "angular-loader": "1.4.x",
+    "angular-mocks": "1.4.x",
     "ng-table": "0.5.4",
     "ng-csv": "0.3.2",
     "html5-boilerplate": "4.3.0",
@@ -19,9 +19,7 @@
     "components-font-awesome": "4.3.0",
     "bootstrap-sass-official": "3.3.3",
     "sockjs": "0.3.4",
-    "stomp-websocket": "2.3.4"
-  },
-  "resolutions": {
-    "angular": "1.4.x"
+    "stomp-websocket": "2.3.4",
+    "core": "git@b.github.com:TAMULib/Angular-Framework.git#p1.1.3"
   }
 }

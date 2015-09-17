@@ -34,22 +34,13 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		
 		return Metadata.data;
 	};
-	
-	Metadata.add = function(name, metadata) {
-		var addMetadataSubmitPromise = WsApi.fetch({
+
+	Metadata.export = function(project, format) {
+		return WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
-				method: 'add',
-				data: JSON.stringify({
-					'name': name,
-					'metadata': metadata
-				})
+				method: format + '/' + project
 		});
-		if(addMetadataSubmitPromise.$$state) {
-			addMetadataSubmitPromise.then(function(data) {
-				logger.log(data);
-			});
-		}		
 	};
 		
 	Metadata.getAll = function() {
@@ -58,15 +49,6 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 			controller: 'metadata', 
 			method: 'all',
 		});	
-	};
-	
-	Metadata.clear = function(name) {
-		return WsApi.fetch({
-			endpoint: '/private/queue', 
-			controller: 'metadata', 
-			method: 'clear',
-			data: JSON.stringify({'name': name})
-		});		
 	};
 
 	Metadata.getHeaders = function(project) {
@@ -85,19 +67,11 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		});
 	};
 
-	Metadata.getPublishedByProject = function(project) {
+	Metadata.getByStatus = function(status) {
 		return WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'metadata', 
-			method: 'csv/' + project
-		});
-	};
-	
-	Metadata.getAllPublished = function() {
-		return WsApi.fetch({
-			endpoint: '/private/queue', 
-			controller: 'metadata', 
-			method: 'published'
+			method: 'status/' + status
 		});
 	};
 	

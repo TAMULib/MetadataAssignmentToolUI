@@ -1,10 +1,10 @@
 function setUpApp(bootstrapApp) {
 
-	window.stompClient = Stomp.over(new SockJS(globalConfig.webService+"/connect"));
-	
+	window.stompClient = Stomp.over(new SockJS(appConfig.webService+"/connect", null, {protocols_whitelist: appConfig.sockJsConnectionType}));
+
 	var jwt = getJWT();
 
-	if(!globalConfig.stompDebug) {
+	if(!appConfig.stompDebug) {
 		window.stompClient.debug = null; 
 	}
 
@@ -21,11 +21,11 @@ function setUpApp(bootstrapApp) {
 
 	} else {
 
-		if(globalConfig.mockRole) {
-			window.open(globalConfig.authService + "/token?referer="+location.href + "&mock=" + globalConfig.mockRole, "_self");
+		if(appConfig.mockRole) {
+			window.open(appConfig.authService + "/token?referer="+location.href + "&mock=" + appConfig.mockRole, "_self");
 		}
 		else {
-			window.open(globalConfig.authService + "/token?referer="+location.href, "_self");
+			window.open(appConfig.authService + "/token?referer="+location.href, "_self");
 		}
 
 	} 

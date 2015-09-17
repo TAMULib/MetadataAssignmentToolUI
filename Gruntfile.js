@@ -27,6 +27,9 @@ module.exports = function(grunt) {
 			all: [
 			      'Gruntfile.js',
 			      '<%= build.app %>/**/*.js',
+			      '<%= build.app %>/bower_components/core/**/*',
+			      '<%= build.app %>/bower_components/core/components/**/*',
+			      '<%= build.app %>/bower_components/core/resources/**/*',
 			      '!<%= build.app %>/bower_components/**/*',
 			      '!<%= build.app %>/components/**/*',
 			      '!<%= build.app %>/resources/**/*'
@@ -36,22 +39,28 @@ module.exports = function(grunt) {
 		concat: {			
 			options: {
 				separator: ';'
+			},
+			core: {
+				src: [
+						'<%= build.app %>/bower_components/core/**/*.js',
+						'!<%= build.app %>/bower_components/core/app/core.js',
+						'!<%= build.app %>/bower_components/core/config/coreConfig.js',
+				      	'!<%= build.app %>/bower_components/core/components/**/*',
+				      	'!<%= build.app %>/bower_components/core/resources/**/*'
+					 ],
+				dest: '<%= build.app %>/resources/scripts/core_concat.js'
 			},			
 			angular: {
 				src: [
-				      '<%= build.app %>/**/*.js',
-				      '!<%= build.app %>/config/appConfig.js',
-				      '!<%= build.app %>/config/appConfig_sample.js',
-				      '!<%= build.app %>/bower_components/**/*',
-				      '!<%= build.app %>/components/**/*',
-				      '!<%= build.app %>/resources/**/*',
-				      '!<%= build.app %>/resources/scripts/app_contact.js'
-				      ],
+				      	'<%= build.app %>/**/*.js',
+				      	'!<%= build.app %>/config/appConfig.js',
+				      	'!<%= build.app %>/config/appConfig_sample.js',
+				      	'!<%= build.app %>/bower_components/**/*',
+				      	'!<%= build.app %>/components/**/*',
+				      	'!<%= build.app %>/resources/**/*',
+				      	'!<%= build.app %>/resources/scripts/app_contact.js'
+				     ],
 				dest: '<%= build.app %>/resources/scripts/app_concat.js'
-			},
-			vendor: {
-				src: '<%= build.app %>/resources/scripts/vendor/*.js',
-				dest: '<%= build.app %>/resources/scripts/vendor_concat.js'
 			}
 		},
 
@@ -59,13 +68,13 @@ module.exports = function(grunt) {
 			options: {
 				mangle: false
 			},
+			core: {
+				src:  '<%= build.app %>/resources/scripts/core_concat.js',
+				dest: '<%= build.app %>/resources/scripts/core_concat.js'
+			},
 			angular: {
 				src:  '<%= build.app %>/resources/scripts/app_concat.js',
 				dest: '<%= build.app %>/resources/scripts/app_concat.js'
-			},
-			vendor: {
-				src:  '<%= build.app %>/resources/scripts/vendor_concat.js',
-				dest: '<%= build.app %>/resources/scripts/vendor_concat.js'
 			}
 		},
 

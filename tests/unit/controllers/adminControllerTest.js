@@ -3,6 +3,8 @@ describe('controller: AdminController', function() {
 	//$controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, WsApi
 	var controller, scope, User, Metadata;
 
+	beforeEach(module('core'));
+
 	beforeEach(module('metadataTool'));
 	
 	beforeEach(module('mock.user'));
