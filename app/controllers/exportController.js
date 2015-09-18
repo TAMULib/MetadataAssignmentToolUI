@@ -4,22 +4,25 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 
 	$scope.format = "saf";
 
-	$scope.projects = [];
-	Metadata.getProjects().then(function(data) {
+	metadataTool.getProjects = function() {
+		Metadata.getProjects().then(function(data) {
 
-		rawProjects = JSON.parse(data.body).content["ArrayList<Object[]>"];
+			rawProjects = JSON.parse(data.body).content["ArrayList<Object[]>"];
+			$scope.projects = [];
+			angular.forEach(rawProjects, function(project,k) {
+				$scope.projects.push({"name":project[0],"isLocked":project[1]});
+			});
 
-		angular.forEach(rawProjects, function(project,k) {
-			$scope.projects.push({"name":project[0],"isLocked":project[1]});
+			if($scope.projects.length > 0) {
+				$scope.project = $scope.projects[0];
+			}		
+			$scope.getProjects = function() {	
+				return $scope.projects;
+			};
 		});
+	};
 
-		if(typeof $scope.projects !== 'undefined') {
-			$scope.project = $scope.projects[0];
-		}		
-		$scope.getProjects = function() {	
-			return $scope.projects;
-		};
-	});
+	metadataTool.getProjects();
 	
 	$scope.getFormats = function() {		
 		return ["csv","saf"];
@@ -30,7 +33,9 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		console.log("Exporting " + format + " for " + project + " project");
 
 		if(format == "saf") {			
-			Metadata.export(project, format);
+			Metadata.export(project, format).then(function(data) {
+				metadataTool.getProjects();
+			});
 		}
 		else if(format == "csv") {
 			$scope.headers = [];
@@ -51,5 +56,4 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		}
 			
 	};
-	
 });
