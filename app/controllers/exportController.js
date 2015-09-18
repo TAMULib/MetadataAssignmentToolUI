@@ -56,4 +56,11 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		}
 			
 	};
+
+	$scope.unlock = function(project) {
+		Metadata.unlockProject(project).then(function() {
+			metadataTool.getProjects();
+		});
+	};
+	
 });
