@@ -3,16 +3,11 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
 	$scope.format = "saf";
+	$scope.projects = [];
 
 	metadataTool.getProjects = function() {
 		Metadata.getProjects().then(function(data) {
-
-			rawProjects = JSON.parse(data.body).content["ArrayList<Object[]>"];
-			$scope.projects = [];
-			angular.forEach(rawProjects, function(project,k) {
-				$scope.projects.push({"name":project[0],"isLocked":project[1]});
-			});
-
+			$scope.projects = JSON.parse(data.body).content["ArrayList<ProjectMinimal>"];
 			if($scope.projects.length > 0) {
 				$scope.project = $scope.projects[0];
 			}		
