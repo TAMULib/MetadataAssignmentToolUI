@@ -43,55 +43,50 @@
 
 				<nav class="pull-right userMenu">
 					<ul class="list-inline">
-						<li><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a></li>
+						<li><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a>
+							<div class="col-lg-12" ng-controller="AdminController">
+																		
+										<div ng-if="(isAdmin() || isManager()) == true" role="group">
+											<span class="caret" ng-class="{'active' : view == '/users'}"  data-toggle="dropdown" aria-expanded="false">		
+											</span>
+											<ul class="dropdown-menu" role="menu">
+												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>												
+												<li><a href="users">Manage Users</a></li>
+												<li><a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a></li>
+												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
+
+												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
+												<li ng-if="isAdmin() || isAssuming() == 'true'">
+													<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#assumeUserModal">{{assumedControl.button}} User</a>
+													<a href ng-if="isAssuming() == 'true'"  ng-click="assumeUser(assume)" >{{assumedControl.button}} User</a>
+												</li>
+												<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+											</ul>
+										</div>
+									<modal modal-id="assumeUserModal" 
+										   modal-view="views/modals/assumeUserModal.html"
+										   modal-header-class="modal-header-primary"></modal>
+									<modal modal-id="exportMetadataModal" 
+										   modal-controller="ExportController"
+										   modal-view="views/modals/exportMetadataModal.html"
+										   modal-header-class="modal-header-primary"></modal>				
+								</div>
+						</li>
 					</ul>
 				</nav>
 
 				<div class="row" ng-controller="NavigationController">
 
-					<div class="col-12 col-lg-12" ng-controller="AdminController">
+					<div class="col-12 col-lg-12">
 
 						<div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
 							
 							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
 							
-							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
+							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>						
 							
-							<a ng-if="isAssuming() == 'true' && (isAnnotator() || isUser())" class="btn btn-default" ng-click="assumeUser(assume)" >Unassume</a>
-							
-							<div ng-if="(isAdmin() || isManager()) == true" class="btn-group btn-group-lg" role="group">
-								<button ng-class="{'active' : view == '/users'}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-									<span ng-show="isAdmin() == true">Admin </span>
-									<span ng-show="isManager() == true">Manager </span>
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
-									<li><a href="users">Manage Users</a></li>
-									<li>
-										<a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a>
-									</li>
-									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
-									<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
-									<li ng-if="isAdmin() || isAssuming() == 'true'">
-										<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#assumeUserModal">{{assumedControl.button}} User</a>
-										<a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedControl.button}} User</a>
-									</li>
-									<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
-								</ul>
-							</div>
 							
 						</div>
-
-						<modal modal-id="assumeUserModal" 
-							   modal-view="views/modals/assumeUserModal.html"
-							   modal-header-class="modal-header-primary"></modal>
-
-						<modal modal-id="exportMetadataModal" 
-							   modal-controller="ExportController"
-							   modal-view="views/modals/exportMetadataModal.html"
-							   modal-header-class="modal-header-primary"></modal>
-						
 					</div>
 				</div>
 				
