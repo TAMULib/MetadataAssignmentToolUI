@@ -14,13 +14,13 @@
 					<tbody>					
 						<tr ng-repeat="doc in $data">							
 							<td data-title="'Filename'" sortable="'name'">
-								{{doc[0]}}
+								{{doc.name}}
 							</td>							
 							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
-								{{doc[1]}}
+								{{doc.status}}
 							</td>							
 							<td data-title="'Action'" class="text-center">
-								<a href="annotate/{{doc[0]}}/annotate" class="btn btn-default">Annotate</a>
+								<a href="annotate/{{doc.name}}/annotate" class="btn btn-default">Annotate</a>
 							</td>												
 						</tr>						
 					</tbody>					
