@@ -3,16 +3,21 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
 	$scope.format = "saf";
+	$scope.projects = [];
 
-	Metadata.getProjects().then(function(data) {
-		$scope.projects = JSON.parse(data.body).content["ArrayList<String>"];
-		if(typeof $scope.projects !== 'undefined') {
-			$scope.project = $scope.projects[0];
-		}		
-		$scope.getProjects = function() {		
-			return $scope.projects;
-		};
-	});
+	metadataTool.getProjects = function() {
+		Metadata.getProjects().then(function(data) {
+			$scope.projects = JSON.parse(data.body).content["ArrayList<ProjectMinimal>"];
+			if($scope.projects.length > 0) {
+				$scope.project = $scope.projects[0];
+			}		
+			$scope.getProjects = function() {	
+				return $scope.projects;
+			};
+		});
+	};
+
+	metadataTool.getProjects();
 	
 	$scope.getFormats = function() {		
 		return ["csv","saf"];
@@ -23,7 +28,9 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 		console.log("Exporting " + format + " for " + project + " project");
 
 		if(format == "saf") {			
-			Metadata.export(project, format);
+			Metadata.export(project, format).then(function(data) {
+				metadataTool.getProjects();
+			});
 		}
 		else if(format == "csv") {
 			$scope.headers = [];
@@ -43,6 +50,12 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 			});
 		}
 			
+	};
+
+	$scope.unlock = function(project) {
+		Metadata.unlockProject(project).then(function() {
+			metadataTool.getProjects();
+		});
 	};
 	
 });

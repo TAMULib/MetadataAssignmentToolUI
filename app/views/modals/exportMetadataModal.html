@@ -7,7 +7,7 @@
 	<div class="modal-body">
 		<div class="form-group">
 			<label>Project</label>
-			<select ng-options="project for project in getProjects()" ng-model="project" class="form-control"></select>
+			<select ng-options="project.name for project in getProjects()" ng-model="project" class="form-control"></select>
 		</div>
 
 		<div class="form-group">
@@ -16,8 +16,9 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button ng-hide="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-click="export(project, format)">Export</button>
-		<button ng-show="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-csv="export(project, format)" csv-header='headers' filename="metadata.csv">Export</button>
+		<button ng-show="format == 'saf' && project.isLocked" type="button" class="btn btn-default" data-dismiss="modal" ng-click="unlock(project.name)">Unlock</button>
+		<button ng-disabled="format == 'saf' && project.isLocked" ng-hide="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-click="export(project.name, format)">Export</button>
+		<button ng-show="format == 'csv'" type="button" class="btn btn-default" data-dismiss="modal" ng-csv="export(project.name, format)" csv-header='headers' filename="metadata.csv">Export</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 	</div>
 </form>
