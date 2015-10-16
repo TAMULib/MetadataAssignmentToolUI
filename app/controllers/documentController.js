@@ -3,7 +3,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
 	var view = $window.location.pathname;
-	
+
 	var userRepo;
 	
 	var annotators = [];
@@ -26,8 +26,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        },
 		        filter: {
 		        	name: '',
-		        	status: (view == appConfig.base + 'assignments' || view == appConfig.base + 'users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view == appConfig.base + 'assignments' || view == appConfig.base + 'users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        	status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 		        }
 		    }, {
 		        total: 0,

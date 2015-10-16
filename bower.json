@@ -8,7 +8,7 @@
   "dependencies": {
     "ng-table": "0.5.4",
     "ng-csv": "0.3.2",
-    "core": "git@framework.github.com:TAMULib/Angular-Framework.git#p1.1.9"
+    "core": "git@framework.github.com:TAMULib/Angular-Framework.git#p1.2.1"
   },
   "resolutions": {
     "angular": "1.4.x"

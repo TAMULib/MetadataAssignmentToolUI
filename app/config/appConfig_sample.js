@@ -1,7 +1,5 @@
 var appConfig = { 
 
-		'base': '/metadatatool/',
-		
 		'version': 'metadataTool',
 
 		'allowAnonymous': false,
