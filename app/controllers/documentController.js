@@ -26,8 +26,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        },
 		        filter: {
 		        	name: '',
-		        	status: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view == '/' + appConfig.base + '/assignments' || view == '/' + appConfig.base + '/users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+		        	status: (view == appConfig.base + 'assignments' || view == appConfig.base + 'users') ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+		            annotator: (view == appConfig.base + 'assignments' || view == appConfig.base + 'users') ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
 		        }
 		    }, {
 		        total: 0,
@@ -35,7 +35,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 		        	var key; for(key in params.sorting()) {}
 
 	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-		        		var page = JSON.parse(data.body).content.PageImpl;
+		        		var page = JSON.parse(data.body).payload.PageImpl;
 		        		params.total(page.totalElements);
 		        		$scope.docs = page.content;
 		        		$defer.resolve($scope.docs);
@@ -79,7 +79,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	});
 	
 	UserRepo.listen().then(null, null, function(data) {
-		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
+		if(JSON.parse(data.body).payload.HashMap.changedUserUin == $scope.user.uin) {
 			$scope.user = User.get(true);
 			$route.reload();
 		}			

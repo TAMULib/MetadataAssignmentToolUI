@@ -8,7 +8,7 @@ metadataTool.service("ControlledVocabulary", function(WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "LinkedHashMap");
+		self.unwrap(self, futureData);
 		
 	};
 	
@@ -17,28 +17,24 @@ metadataTool.service("ControlledVocabulary", function(WsApi, AbstractModel) {
 	ControlledVocabulary.promise = null;
 	
 	ControlledVocabulary.set = function(data) {
-		self.unwrap(self, data, "LinkedHashMap");
+		self.unwrap(self, data);
 	};
 
 	ControlledVocabulary.get = function() {
 
 		if(ControlledVocabulary.promise) return ControlledVocabulary.data;
 
-		var newControlledVocabularyPromise = WsApi.fetch({
+		ControlledVocabulary.promise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'cv', 
 				method: 'all'
 		});
 
-		ControlledVocabulary.promise = newControlledVocabularyPromise;
-
 		if(ControlledVocabulary.data) {
-			newControlledVocabularyPromise.then(function(data) {
-				ControlledVocabulary.set(JSON.parse(data.body).content.LinkedHashMap);
-			});
+			self.update(self, ControlledVocabulary.promise);
 		}
 		else {
-			ControlledVocabulary.data = new ControlledVocabulary(newControlledVocabularyPromise);	
+			ControlledVocabulary.data = new ControlledVocabulary(ControlledVocabulary.promise);	
 		}
 
 		return ControlledVocabulary.data;

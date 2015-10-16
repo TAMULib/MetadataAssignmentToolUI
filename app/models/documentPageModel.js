@@ -8,18 +8,18 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "PageImpl");
+		self.unwrap(self, futureData);
 		
 	};
 	
 	Documents.listener = WsApi.listen({
-		endpoint: 'channel', 
+		endpoint: '/channel', 
 		controller: 'documents', 
 		method: '',
 	});
 	
 	Documents.set = function(data) {
-		self.unwrap(self, data, "PageImpl");
+		self.unwrap(self, data);
 	};
 
 	Documents.get = function(page, size, field, direction, filter) {

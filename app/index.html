@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-	<base href="/metadatatool/">
+	<base />
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,10 +19,10 @@
 	<link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-	<link rel="stylesheet" href="resources/styles/app.css">
 	<link rel="stylesheet" href="resources/styles/main.css">
+	<link rel="stylesheet" href="resources/styles/app.css">
 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link href='fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
 	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 
@@ -36,63 +36,64 @@
 	<main>
 
 		<tamuheader title="Metadata Tool"></tamuheader>
+
+		<alerts types="SUCCESS, WARNING, ERROR"></alerts>
 				
 		<div class="container-fluid">
 			<div class="container">
-				<div class="col-md-12 appContent">
+				<div class="col-md-12 appContent" ng-controller="AdminController">
 
-				<nav class="pull-right userMenu">
-					<ul class="list-inline">
-						<li><span class="glyphicon glyphicon-user"></span> <a href="myview"><username></username></a>
-							<div class="caretDropDown col-lg-12" ng-controller="AdminController">
-											<span class="caret" ng-class="{'active' : view == '/users'}"  
-												  data-toggle="dropdown" 
-												  ng-if="(isAdmin() || isManager()) == true" 
-												  role="group">		
-											</span>
-											<ul class="dropdown-menu" role="menu">
-												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>												
-												<li><a href="users">Manage Users</a></li>
-												<li><a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a></li>
-												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
+					<nav class="pull-right userMenu">
+						
+						<div>
+							<modal modal-id="adminModal" 
+								   modal-view="bower_components/core/app/views/modals/assumeUserModal.html"
+								   modal-header-class="modal-header-primary"></modal>
+							<modal modal-id="exportMetadataModal" 
+								   modal-controller="ExportController"
+								   modal-view="views/modals/exportMetadataModal.html"
+								   modal-header-class="modal-header-primary"></modal>				
+						</div>
+						
+						<div class="dropdown">
+							<span class="glyphicon glyphicon-user"></span>
+							
+							<a class="dropdown-toggle toggle-href" data-toggle="dropdown" aria-expanded="false"><username></username> <span class="caret"></span></a>
+							
+							<ul class="dropdown-menu" role="menu">
+								<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
+								<li><a href="users">Manage Users</a></li>
+								<li><a href data-toggle="modal" data-target="#exportMetadataModal">Export Metadata</a></li>
+								<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 
-												<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
-												<li ng-if="isAdmin() || isAssuming() == 'true'">
-													<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#assumeUserModal">{{assumedControl.button}} User</a>
-													<a href ng-if="isAssuming() == 'true'"  ng-click="assumeUser(assume)" >{{assumedControl.button}} User</a>
-												</li>
-												<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
-											</ul>
-										<!--</div> -->
-									<modal modal-id="assumeUserModal" 
-										   modal-view="views/modals/assumeUserModal.html"
-										   modal-header-class="modal-header-primary"></modal>
-									<modal modal-id="exportMetadataModal" 
-										   modal-controller="ExportController"
-										   modal-view="views/modals/exportMetadataModal.html"
-										   modal-header-class="modal-header-primary"></modal>				
-								</div>
-						</li>
-					</ul>
-				</nav>
+								<li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
+								<li ng-if="isAdmin() || isAssuming() == 'true'">
+									<a href ng-if="isAssuming() == 'false'" data-toggle="modal" data-target="#adminModal">{{assumedControl.button}}</a>
+									<a href ng-if="isAssuming() == 'true'"  ng-click="assumeUser(assume)" >{{assumedControl.button}}</a>
+								</li>
+								<li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+							</ul>
+						</div>
+								
+					</nav>
 
-				<div class="row" ng-controller="NavigationController">
+					<div class="row" ng-controller="NavigationController">
 
-					<div class="col-12 col-lg-12">
+						<div class="col-12 col-lg-12">
 
-						<div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">							
-							<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>							
-							<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>							
+							<div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">							
+								<a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>							
+								<a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>							
+							</div>
 						</div>
 					</div>
+					
+					<div ng-view class="view"></div>
+
+					<footer>
+						MetadataTool Version: <span app-version></span>
+					</footer>
 				</div>
-				
-				<div ng-view class="view"></div>
-
-				<footer>
-					MetadataTool Version: <span app-version></span>
-				</footer>
-
 			</div>
 		</div>
 	</main>
@@ -107,7 +108,7 @@
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	
-	<script src="bower_components/sockjs/sockjs.min.js"></script>
+	<script src="bower_components/sockjs-client/dist/sockjs.min.js"></script>
 	<script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
 		
 	<script src="bower_components/angular/angular.js"></script>
@@ -140,10 +141,9 @@
 	<script src="components/version/interpolate-filter.js"></script>
 
 
-
-
 		<!-- Application Start -->	
 	    <script src="bower_components/core/app/core.js"></script>
+	    <script src="bower_components/core/app/setup.js"></script>
 	    <script src="bower_components/core/app/config/logging.js"></script>
 
 	    <!-- Directives -->
@@ -155,9 +155,11 @@
 	    <!-- Services -->
 	    <script src="bower_components/core/app/services/wsservice.js"></script>
 	    <script src="bower_components/core/app/services/wsapi.js"></script>
+	    <script src="bower_components/core/app/services/restapi.js"></script>
 	  	<script src="bower_components/core/app/services/authserviceapi.js"></script>
 	  	<script src="bower_components/core/app/services/storageservice.js"></script>
 	  	<script src="bower_components/core/app/services/utilityservice.js"></script>
+	  	<script src="bower_components/core/app/services/alertservice.js"></script>
 
 	    <!-- Factories -->
 
@@ -184,7 +186,7 @@
 	<!-- build:js resources/scripts/app_concat.js -->
 	
 	    <!-- Application Start -->	    
-	    <script src="setup.js"></script>
+	    
 	    <script src="app.js"></script>
 	    <script src="config/runTime.js"></script>
 	    <script src="config/routes.js"></script>
