@@ -7,13 +7,16 @@ metadataTool.controller('ExportController', function ($controller, $scope, Metad
 
 	metadataTool.getProjects = function() {
 		Metadata.getProjects().then(function(data) {
-			$scope.projects = JSON.parse(data.body).payload["ArrayList<ProjectMinimal>"];
-			if($scope.projects.length > 0) {
-				$scope.project = $scope.projects[0];
-			}		
-			$scope.getProjects = function() {	
-				return $scope.projects;
-			};
+			var projects = JSON.parse(data.body).payload["ArrayList<ProjectMinimal>"];
+			if(typeof projects != 'undefined') {
+				$scope.projects = projects;
+				if($scope.projects.length > 0) {
+					$scope.project = $scope.projects[0];
+				}		
+				$scope.getProjects = function() {	
+					return $scope.projects;
+				};
+			}
 		});
 	};
 
