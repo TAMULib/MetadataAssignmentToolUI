@@ -13,7 +13,7 @@ setUpApp(function(connected) {
 	//Indicates at app start if the app has successfully conenected to the service
 	appConfig.connected = connected;
 
-	myLibrary.constant('appConfig', appConfig);
+	metadataTool.constant('appConfig', appConfig);
 
 	angular.element(document).ready(function() {	   	
 	   	try {
