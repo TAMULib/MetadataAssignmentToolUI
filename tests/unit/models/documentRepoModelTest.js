@@ -21,15 +21,15 @@ describe('model: DocumentRepo', function() {
 	
 	describe('get method should return a Document', function() {
 		it('the Document was returned', function() {
-			expect(DocumentRepo.get().content).toEqual(mockDocumentRepo1);
+			expect(DocumentRepo.get().payload).toEqual(mockDocumentRepo1);
 		});
 	});
 
 	describe('set method should set a Document', function() {
 		it('the Document was set', function() {
 			var documents = DocumentRepo.get();
-			DocumentRepo.set({"unwrap":function(){}, "content":mockDocumentRepo2});
-			expect(documents.content).toEqual(mockDocumentRepo2);
+			DocumentRepo.set({"unwrap":function(){}, "payload":mockDocumentRepo2});
+			expect(documents.payload).toEqual(mockDocumentRepo2);
 		});
 	});
 	
@@ -37,8 +37,8 @@ describe('model: DocumentRepo', function() {
 		it('the document was updated in the DocumentRepo', function() {
 			var docRepo = DocumentRepo.get();			
 			DocumentRepo.update("disseration001.txt", "222222222");
-			docRepo.content['HashMap'].annotator = "222222222";
-			expect(docRepo.content).toEqual(mockDocumentRepo1);
+			docRepo.payload['HashMap'].annotator = "222222222";
+			expect(docRepo.payload).toEqual(mockDocumentRepo1);
 		});
 	});
 

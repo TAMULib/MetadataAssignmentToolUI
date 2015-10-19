@@ -8,7 +8,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "HashMap");
+		self.unwrap(self, futureData);
 		
 	};
 
@@ -21,16 +21,14 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 	};
 	
 	Metadata.get = function(document) {
-		var newMetadataPromise = WsApi.fetch({
+		Metadata.promise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
-				data: JSON.stringify({'name': document.name})
+				data: {'name': document.name}
 		});
 		
-		Metadata.data = new Metadata(newMetadataPromise);
-		
-		Metadata.promise = newMetadataPromise;
+		Metadata.data = new Metadata(Metadata.promise);
 		
 		return Metadata.data;
 	};

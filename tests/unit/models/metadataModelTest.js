@@ -21,15 +21,15 @@ describe('model: Metadata', function() {
 	
 	describe('get method should return a Metadata', function() {
 		it('the Metadata was returned', function() {
-			expect(Metadata.get('mockMetadata1').content).toEqual(mockMetadata1);
+			expect(Metadata.get('mockMetadata1').payload).toEqual(mockMetadata1);
 		});
 	});
 
 	describe('set method should set a Metadata', function() {
 		it('the Metadata was set', function() {
 			var metadata = Metadata.get('mockMetadata1');
-			Metadata.set({"unwrap":function(){}, "content":mockMetadata2});
-			expect(metadata.content).toEqual(mockMetadata2);
+			Metadata.set({"unwrap":function(){}, "payload":mockMetadata2});
+			expect(metadata.payload).toEqual(mockMetadata2);
 		});
 	});
 

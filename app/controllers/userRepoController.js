@@ -41,7 +41,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
     });
 
     UserRepo.listen().then(null, null, function(data) {
-		if(JSON.parse(data.body).content.HashMap.changedUserUin == $scope.user.uin) {
+		if(JSON.parse(data.body).payload.HashMap.changedUserUin == $scope.user.uin) {
 			User.refresh();
 			$route.reload();
 		}			

@@ -21,15 +21,15 @@ describe('model: ControlledVocabulary', function() {
 	
 	describe('get method should return a ControlledVocabulary', function() {
 		it('the ControlledVocabulary was returned', function() {
-			expect(ControlledVocabulary.get().content).toEqual(mockControlledVocabulary1);
+			expect(ControlledVocabulary.get().payload).toEqual(mockControlledVocabulary1);
 		});
 	});
 
 	describe('set method should set a ControlledVocabulary', function() {
 		it('the ControlledVocabulary was set', function() {
 			var cv = ControlledVocabulary.get();
-			ControlledVocabulary.set({"unwrap":function(){}, "content":mockControlledVocabulary2});
-			expect(cv.content).toEqual(mockControlledVocabulary2);
+			ControlledVocabulary.set({"unwrap":function(){}, "payload":mockControlledVocabulary2});
+			expect(cv.payload).toEqual(mockControlledVocabulary2);
 		});
 	});
 

@@ -8,7 +8,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "Document");
+		self.unwrap(self, futureData);
 		
 	};
 
@@ -17,27 +17,25 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	Document.promise = null;
 	
 	Document.listener = WsApi.listen({
-		endpoint: 'channel', 
+		endpoint: '/channel', 
 		controller: 'documents', 
 		method: '',
 	});
 
 	Document.set = function(data) {
-		self.unwrap(self, data, "Document");
+		self.unwrap(self, data);
 	};
 
 	Document.get = function(name) {
 
-		var newDocumentPromise = WsApi.fetch({
+		Document.promise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'document', 
 				method: 'get',
 				data: JSON.stringify({'name': name})
 		});
 		
-		Document.data = new Document(newDocumentPromise);
-		
-		Document.promise = newDocumentPromise;
+		Document.data = new Document(Document.promise);
 		
 		return Document.data;
 	
@@ -56,7 +54,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'update',
-			data: JSON.stringify(change)
+			data: change
 		});
 				
 		if(updateDocumentPromise.$$state) {

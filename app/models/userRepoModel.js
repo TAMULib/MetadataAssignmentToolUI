@@ -8,7 +8,7 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 		//This causes our model to extend AbstractModel
 		angular.extend(self, AbstractModel);
 		
-		self.unwrap(self, futureData, "HashMap");
+		self.unwrap(self, futureData);
 		
 	};
 	
@@ -19,32 +19,28 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 	Users.promise = null;
 	
 	Users.set = function(data) {
-		self.unwrap(self, data, "HashMap");
+		self.unwrap(self, data);
 	};
 
 	Users.get = function() {
 
 		if(Users.promise) return Users.data;
 
-		var newAllUsersPromise = WsApi.fetch({
+		Users.promise = WsApi.fetch({
 				endpoint: '/private/queue', 
 				controller: 'user', 
 				method: 'all',
 		});
 
-		Users.promise = newAllUsersPromise;
-
 		if(Users.data) {
-			newAllUsersPromise.then(function(data) {				
-				Users.set(JSON.parse(data.body).content.HashMap);
-			});
+			self.update(self, Users.promise);
 		}
 		else {
-			Users.data = new Users(newAllUsersPromise);	
+			Users.data = new Users(Users.promise);	
 		}
 		
 		Users.listener = WsApi.listen({
-			endpoint: 'channel', 
+			endpoint: '/channel', 
 			controller: 'users', 
 			method: '',
 		});
@@ -65,8 +61,8 @@ metadataTool.service("UserRepo", function($route, WsApi, AbstractModel) {
 		var updateUserRolePromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'user', 
-			method: 'update_role',
-			data: JSON.stringify(change)
+			method: 'update-role',
+			data: change
 		});
 		
 		if(updateUserRolePromise.$$state) {

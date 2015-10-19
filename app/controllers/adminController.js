@@ -1,23 +1,22 @@
-metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, Metadata, StorageService, User, UserRepo, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, StorageService, User, UserRepo, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
-    if(typeof StorageService.get("assuming") === 'undefined') {
-		StorageService.set('assuming', 'false');
-	}
+	var services = [
+		User,
+		UserRepo
+	];
 
 	$scope.user = User.get();
 
-	$scope.exportFormat = "saf"
-
     $scope.assumedControl = AssumedControl.get();
-    
+
     AssumedControl.set({
 		'netid': '',
-		'button': (StorageService.get("assuming") == 'true') ? 'Unassume' : 'Assume',
-		'status': ''
+		'button': StorageService.get("assuming") == 'true' ? 'Unassume User' : 'Assume User',
+		'status': StorageService.get("assuming") == 'true' ? 'assumed' : '',
 	});
-	
+
 	$scope.$watch('user.role', function() {
 		if($scope.user.role) {
 			StorageService.set('role', $scope.user.role);
@@ -30,66 +29,47 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 		}
 	});
 
-	$scope.isAssuming = function() {
-		return StorageService.get("assuming");
-	};
+	$scope.assumeUser = function(user) {
+	
+		if($scope.isAssuming() == 'false') {
 
+			if ((typeof user !== 'undefined') && user.netid) {	
+				
+				AssumedControl.assume(user, services).then(function(assumed) {
+					if(assumed) {
+						angular.element("#assumeUserModal").modal("hide");
+						$route.reload();
+					}
+				});
+
+			}
+			else {
+				logger.log("User to assume undefined!");
+			}
+
+		} else {
+			
+			AssumedControl.unassume(user, services, $scope.user.role).then(function(unassumed) {
+				$route.reload();
+			});
+			
+		}
+		
+	};
+		
 	$scope.isMocking = function() {
-		if(globalConfig.mockRole) {
+		if(appConfig.mockRole) {
 			return true;
 		}
 		else {
 			return false;
 		}
 	};
-	
-	$scope.assumeUser = function(assume) {
-	
-		if($scope.isAssuming() == 'false') {
 
-			if ((typeof assume !== 'undefined') && assume.netid) {	
-
-				logger.log("Assuming user");
-
-				StorageService.set('assumedUser', JSON.stringify(assume));
-				StorageService.set('assuming', 'true');
-				StorageService.set('adminToken', StorageService.get("token"));
-
-				AuthServiceApi.getAssumedUser(assume).then(function(data) {
-				
-					User.refresh();
-					UserRepo.refresh();
-
-					AssumedControl.set({
-						'netid': '',
-						'button': 'Unassume',
-						'status': ''
-					});
-
-					angular.element("#assumeUserModal").modal("hide");
-					$route.reload();
-				});
-			}
-		} else {
-			console.log("Unassuming user");
-
-			StorageService.delete('assumedUser');
-			StorageService.set('assuming', 'false', 'session');
-			StorageService.set('token', StorageService.get("adminToken"));
-			
-			AssumedControl.set({
-				'netid': '',
-				'button': 'Assume',
-				'status': ''
-			});
-
-			User.refresh();
-			UserRepo.refresh();
-
-			StorageService.set("role", $scope.user.role);
-			$route.reload();
-		}
-		
+	$scope.logout = function(url) {
+		StorageService.delete('token');
+		StorageService.delete('role');
+		window.open(url, "_self");
 	};
 
 	$scope.sync = function() {
