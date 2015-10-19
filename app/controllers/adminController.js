@@ -37,7 +37,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 				
 				AssumedControl.assume(user, services).then(function(assumed) {
 					if(assumed) {
-						angular.element("#adminModal").modal("hide");
+						angular.element("#assumeUserModal").modal("hide");
 						$route.reload();
 					}
 				});
