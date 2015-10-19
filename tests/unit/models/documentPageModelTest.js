@@ -21,7 +21,7 @@ describe('model: DocumentPage', function() {
 	
 	describe('get method should return a Document', function() {
 		it('the Document was returned', function() {
-			expect(DocumentPage.get(1,10,'filename','asc',{'filename':'','status':'','annotator':''}).content).toEqual(mockDocumentPage1);
+			expect(DocumentPage.get(1,10,'filename','asc',{'filename':'','status':'','annotator':''}).payload).toEqual(mockDocumentPage1);
 		});
 	});
 	

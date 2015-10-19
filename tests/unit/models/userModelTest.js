@@ -21,15 +21,15 @@ describe('model: User', function() {
 	
 	describe('get method should return a User', function() {
 		it('the User was returned', function() {
-			expect(User.get().content).toEqual(mockUser1);
+			expect(User.get().payload).toEqual(mockUser1);
 		});
 	});
 
 	describe('set method should set a User', function() {
 		it('the User was set', function() {
 			var user = User.get();
-			User.set({"unwrap":function(){}, "content":mockUser2});
-			expect(user.content).toEqual(mockUser2);
+			User.set({"unwrap":function(){}, "payload":mockUser2});
+			expect(user.payload).toEqual(mockUser2);
 		});
 	});
 

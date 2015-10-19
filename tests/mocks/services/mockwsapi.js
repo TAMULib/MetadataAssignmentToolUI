@@ -8,22 +8,22 @@ angular.module('mock.wsApi', []).
         	var defer = $q.defer();
         	
         	switch(apiReq.method) {        		
-	        	case 'credentials': return {'content':mockUser1};
-	        	case 'page': return {'content':mockDocumentPage1};
+	        	case 'credentials': return {'payload':mockUser1};
+	        	case 'page': return {'payload':mockDocumentPage1};
 	        	case 'all': {	        		
 	        		switch(apiReq.controller) {
-	        			case 'user': return {'content':mockUserRepo1};
-	        			case 'document': return {'content':mockDocumentRepo1};
-	        			case 'cv': return {'content':mockControlledVocabulary1};
-	        			default: return {'content':{}};
+	        			case 'user': return {'payload':mockUserRepo1};
+	        			case 'document': return {'payload':mockDocumentRepo1};
+	        			case 'cv': return {'payload':mockControlledVocabulary1};
+	        			default: return {'payload':{}};
 	        		}	        		
 	        	}
 	        	case 'get': {
 	        		switch(apiReq.controller) {
-		        		case 'user': return {'content':mockUser1};
-		        		case 'metadata': return {'content':mockMetadata1};
-		        		case 'document': return {'content':mockDocumentRepo1};
-		        		default: return {'content':{}};
+		        		case 'user': return {'payload':mockUser1};
+		        		case 'metadata': return {'payload':mockMetadata1};
+		        		case 'document': return {'payload':mockDocumentRepo1};
+		        		default: return {'payload':{}};
 	        		}	        		
 	        	}
 	        	case 'update_role': {	        		
@@ -34,7 +34,7 @@ angular.module('mock.wsApi', []).
 	        		mockDocumentRepo1['HashMap'].annatator = JSON.parse(apiReq['data']).annotator;
 	        		return mockDocumentRepo1;
 	        	}
-	        	default: return {'content':{}};
+	        	default: return {'payload':{}};
         	}
         	            
             return defer.promise;
