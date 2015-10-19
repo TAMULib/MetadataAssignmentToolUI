@@ -54,7 +54,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'update',
-			data: JSON.stringify(change)
+			data: change
 		});
 				
 		if(updateDocumentPromise.$$state) {

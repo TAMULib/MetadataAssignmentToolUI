@@ -34,7 +34,7 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'page',
-			data: JSON.stringify({
+			data: {
 				'page': page,
 				'size': size,
 				'field': field,
@@ -42,7 +42,7 @@ metadataTool.service("DocumentPage", function(WsApi, AbstractModel) {
 				'name': filter.name,
 				'status': filter.status,
 				'annotator': filter.annotator
-			})
+			}
 		});
 		
 	};

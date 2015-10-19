@@ -25,7 +25,7 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: 'get',
-				data: JSON.stringify({'name': document.name})
+				data: {'name': document.name}
 		});
 		
 		Metadata.data = new Metadata(Metadata.promise);

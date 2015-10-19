@@ -91,7 +91,7 @@
 					<div ng-view class="view"></div>
 
 					<footer>
-						MetadataTool Version: <span app-version></span>
+						MetadataTool App Version: <span app-version></span>
 					</footer>
 				</div>
 			</div>
@@ -124,21 +124,28 @@
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
 
-	<!-- Core Configuration -->
-	<script src="bower_components/core/app/config/coreConfig.js"></script>
+	<!--  Core libraries -->
 
-	<!-- Core Modules -->
-	<script src="bower_components/core/app/components/version/version.js"></script>
-	<script src="bower_components/core/app/components/version/version-directive.js"></script>
-	<script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
+	<!-- build:js resources/scripts/core_concat.js -->
 
-	<!-- App Configuration -->
-    <script src="config/appConfig.js"></script>
+	<!-- TODO: concat core js -->
+	<!-- endbuild -->
 
-	<!-- App Modules -->
-	<script src="components/version/version.js"></script>
-	<script src="components/version/version-directive.js"></script>
-	<script src="components/version/interpolate-filter.js"></script>
+		<!-- Core Configuration -->
+		<script src="bower_components/core/app/config/coreConfig.js"></script>
+
+		<!-- Core Modules -->
+		<script src="bower_components/core/app/components/version/version.js"></script>
+		<script src="bower_components/core/app/components/version/version-directive.js"></script>
+		<script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
+
+		<!-- App Configuration -->
+	    <script src="config/appConfig.js"></script>
+
+		<!-- App Modules -->
+		<script src="components/version/version.js"></script>
+		<script src="components/version/version-directive.js"></script>
+		<script src="components/version/interpolate-filter.js"></script>
 
 
 		<!-- Application Start -->	
@@ -172,14 +179,6 @@
 	    <!-- Controllers -->
 	    <script src="bower_components/core/app/controllers/abstractController.js"></script>
 	    <script src="bower_components/core/app/controllers/userController.js"></script>
-
-
-
-	<!--  Core libraries -->
-	<!-- build:js resources/scripts/core_concat.js -->
-
-
-	<!-- endbuild -->
 
 
 	<!--  App libraries -->

@@ -18,7 +18,7 @@ setUpApp(function(connected) {
 	angular.element(document).ready(function() {	   	
 	   	try {
 	   		//If the app is already bootstrapped then an error will be thrown
-			angular.bootstrap(document, ['metadataTool', 'core', 'ui.bootstrap']);
+			angular.bootstrap(document, ['core', 'metadataTool', 'core', 'ui.bootstrap']);
 		} catch (e) {
 			/*
 			 * If websockets dissconnect the app will attempt to re-bootstrap. Since the app is already running we will
