@@ -7,13 +7,13 @@
 		<tbody>					
 			<tr ng-repeat="doc in $data">
 				<td data-title="'FileName'" sortable="'name'">
-					{{doc[0]}}
+					{{doc.name}}
 				</td>							
 				<td data-title="'Status'" sortable="'status'" filter="{'status': 'text'}" class="text-center">
-					{{doc[1]}}
+					{{doc.status}}
 				</td>							
 				<td data-title="'Unassign'" class="text-center">
-					<button ng-click="updateAnnotator(doc[0], 'Open', selectedUser.uin)" class="btn btn-default">
+					<button ng-click="updateAnnotator(doc.name, 'Open', selectedUser.uin)" class="btn btn-default">
 						Unassign
 					</button>
 				</td>												
