@@ -22,7 +22,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
 			for(var k in $scope.document.fields) {
 				var field = $scope.document.fields[k];
-				if(field.values.length == 0) {
+				if(field.values.length === 0) {
 					field.values[0] = {'value' : (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
 				}
 			}
