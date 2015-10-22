@@ -5,6 +5,7 @@
   "homepage": "https://github.com/TAMULib/MetadataAssignmentToolUI",
   "license": "MIT",
   "private": true,
+  "ignore": [],
   "dependencies": {
     "ng-table": "0.5.4",
     "ng-csv": "0.3.2",
