@@ -32,7 +32,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 				endpoint: '/private/queue', 
 				controller: 'document', 
 				method: 'get',
-				data: JSON.stringify({'name': name})
+				data: {'name': name}
 		});
 		
 		Document.data = new Document(Document.promise);
