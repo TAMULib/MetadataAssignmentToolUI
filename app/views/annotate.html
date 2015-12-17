@@ -4,7 +4,12 @@
 	<!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
 	<div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-	<div ng-if="document.publishedHandle">{{document.publishedHandle}}</div>
+	<div ng-if="document.publishedUriString" class="panel panel-success">
+		<div class="panel-heading">This document is published at URI:</div>
+		<div class="panel-body">
+			<a href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+		</div>
+	</div>
 	
 	<div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
 		<img src="resources/images/loading.gif" height="200" width"200"/>
