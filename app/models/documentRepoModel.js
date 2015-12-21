@@ -92,17 +92,10 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 			method: 'push',
 			data: name
 		}).then(function(data){
-			console.log(data);
-			var document = JSON.parse(data.body).payload.Document;
-			Document.data.publishedUriString = document.publishedUriString;			
-			Document.data.status = document.status;
+			var newDocument = JSON.parse(data.body).payload.Document;
+			Document.set(JSON.parse(data.body).payload.Document);
+			logger.log(data);
 		});
-				
-		if(pushDocumentPromise.$$state) {
-			pushDocumentPromise.then(function(data) {	
-				logger.log(data);
-			});
-		}
 
 		return pushDocumentPromise;
 	};
