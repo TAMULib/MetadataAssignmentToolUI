@@ -83,6 +83,29 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 
 		return saveDocumentPromise;
 	};
+	
+	Document.push = function(name) {
+
+		var pushDocumentPromise = WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'document', 
+			method: 'push',
+			data: name
+		}).then(function(data){
+			console.log(data);
+			var document = JSON.parse(data.body).payload.Document;
+			Document.data.publishedUriString = document.publishedUriString;			
+			Document.data.status = document.status;
+		});
+				
+		if(pushDocumentPromise.$$state) {
+			pushDocumentPromise.then(function(data) {	
+				logger.log(data);
+			});
+		}
+
+		return pushDocumentPromise;
+	};
 
 	Document.listen = function() {
 		return Document.listener;

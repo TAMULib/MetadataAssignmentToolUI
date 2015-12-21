@@ -11,6 +11,10 @@
 		</div>
 	</div>
 	
+	<div ng-if="action=='view' && document.status=='Accepted'">
+		<button class="btn" ng-click="push(document.name)">Publish</button>
+	</div>
+	
 	<div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
 		<img src="resources/images/loading.gif" height="200" width"200"/>
 	</div>
@@ -119,6 +123,7 @@
 							   
 						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
 					</div>
+					
 				</div>
 			</form>
 

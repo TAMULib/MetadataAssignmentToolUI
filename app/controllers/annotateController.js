@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $scope, $timeout, ControlledVocabulary, DocumentRepo, StorageService, User) {
+metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $route, $scope, $timeout, ControlledVocabulary, DocumentRepo, StorageService, User) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -66,12 +66,24 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
 				DocumentRepo.save(document).then(function(data) {
 					angular.element("#pleaseWaitDialog").modal('hide');
-					$timeout(function() {
-						$location.path('/documents');
-					}, 500);
+					$scope.action='view';
 				});
 			};
-
+			
+			$scope.push = function(name) {
+				$scope.loadingText = "Pushing document to repository over REST API...";
+				angular.element("#pleaseWaitDialog").modal();
+				
+				DocumentRepo.push(name).then(function(data) {
+					angular.element("#pleaseWaitDialog").modal('hide');
+					$scope.action='view';
+					
+					//TODO:  only set if sucessful...
+					//document.status = 'Published';
+					//document.notes = '';
+				});
+			};
+			
 			$scope.managerAnnotating = function() {
 				return ($routeParams.action == 'annotate');
 			};
