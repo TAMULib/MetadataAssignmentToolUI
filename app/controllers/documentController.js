@@ -59,9 +59,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 			userRepo = UserRepo.get();
 			for(var key in userRepo.list) {
 				var user = userRepo.list[key];
-				if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER') {
-					annotators.push(user);
-				}
+				annotators.push(user);
 			}
 		}
 		return annotators;
