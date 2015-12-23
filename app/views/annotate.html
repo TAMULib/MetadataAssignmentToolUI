@@ -7,7 +7,14 @@
 	<div ng-if="document.publishedUriString" class="panel panel-success">
 		<div class="panel-heading">This document is published at URI:</div>
 		<div class="panel-body">
-			<a href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+			<a target="_blank" href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+		</div>
+	</div>
+	
+	<div ng-if="action=='view' && document.status=='Accepted'" class="panel panel-warning">
+		<div class="panel-heading">This document is accepted but not published.</div>
+		<div class="panel-body">
+			<button class="btn btn-success" ng-click="push(document.name)">Publish</button>
 		</div>
 	</div>
 	
@@ -119,6 +126,7 @@
 							   
 						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
 					</div>
+					
 				</div>
 			</form>
 
