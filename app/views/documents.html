@@ -19,8 +19,11 @@
 							<td data-title="'Filename'" sortable="'name'">
 								{{doc.name}}
 							</td>							
-							<td data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
+							<td ng-if="doc.status!='Published'" data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
 								{{doc.status}}
+							</td>
+							<td ng-if="doc.status=='Published'" data-title="'Status'" sortable="'status'" filter="{ 'status': 'text' }" class="text-center">
+								<a href="{{doc.publishedUriString}}" target="_blank">{{doc.status}}</a>
 							</td>
 							<td data-title="'Annotator'" sortable="'annotator'" class="text-center">								
 								<span ng-if="!doc.annotator">
