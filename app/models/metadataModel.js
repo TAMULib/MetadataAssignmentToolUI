@@ -1,4 +1,4 @@
-metadataTool.service("Metadata", function(WsApi, AbstractModel) {
+metadataTool.service("Metadata", function(WsApi, AbstractModel, AlertService) {
 
 	var self;
 
@@ -46,6 +46,9 @@ metadataTool.service("Metadata", function(WsApi, AbstractModel) {
 				endpoint: '/private/queue', 
 				controller: 'metadata', 
 				method: format + '/' + project
+		}).then(function(data) {
+			AlertService.add(JSON.parse(data.body).meta, "app/export")
+			console.log(JSON.parse(data.body).meta.message);
 		});
 	};
 		

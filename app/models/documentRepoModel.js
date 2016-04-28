@@ -32,7 +32,7 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 				endpoint: '/private/queue', 
 				controller: 'document', 
 				method: 'get',
-				data: JSON.stringify({'name': name})
+				data: {'name': name}
 		});
 		
 		Document.data = new Document(Document.promise);
@@ -67,11 +67,12 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 	};
 
 	Document.save = function(document) {
+
 		var saveDocumentPromise = WsApi.fetch({
 			endpoint: '/private/queue', 
 			controller: 'document', 
 			method: 'save',
-			data: angular.toJson(document)
+			data: JSON.parse(angular.toJson(document))
 		});
 				
 		if(saveDocumentPromise.$$state) {
@@ -81,6 +82,22 @@ metadataTool.service("DocumentRepo", function(WsApi, AbstractModel) {
 		}
 
 		return saveDocumentPromise;
+	};
+	
+	Document.push = function(name) {
+
+		var pushDocumentPromise = WsApi.fetch({
+			endpoint: '/private/queue', 
+			controller: 'document', 
+			method: 'push',
+			data: name
+		}).then(function(data){
+			var newDocument = JSON.parse(data.body).payload.Document;
+			Document.set(JSON.parse(data.body).payload.Document);
+			logger.log(data);
+		});
+
+		return pushDocumentPromise;
 	};
 
 	Document.listen = function() {
