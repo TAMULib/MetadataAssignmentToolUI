@@ -12,43 +12,18 @@ metadataTool.repo("DocumentRepo", function DocumentRepo(Document, WsApi) {
             'user': user,
             'notes': notes
         }});
-                
-        var updateDocumentPromise = WsApi.fetch(this.mapping.update);
-                
-        if(updateDocumentPromise.$$state) {
-            updateDocumentPromise.then(function(data) { 
-                logger.log(data);
-            });
-        }
 
-        return updateDocumentPromise;
+        return WsApi.fetch(this.mapping.update);
     };
 
     this.save = function(document) {
         angular.extend(this.mapping.save, {'data': JSON.parse(angular.toJson(document))});
-
-        var saveDocumentPromise = WsApi.fetch(this.mapping.save);
-                
-        if(saveDocumentPromise.$$state) {
-            saveDocumentPromise.then(function(data) {   
-                logger.log(data);
-            });
-        }
-
-        return saveDocumentPromise;
+        return WsApi.fetch(this.mapping.save);
     };
 
     this.push = function(name) {
         angular.extend(this.mapping.push, {'method': 'get/' + name});
-
-        var pushDocumentPromise = WsApi.fetch({
-            endpoint: '/private/queue', 
-            controller: 'document', 
-            method: 'push',
-            data: name
-        });
-
-        return pushDocumentPromise;
+        return WsApi.fetch(this.mapping.push);
     };
 
     this.page = function(page, size, field, direction, filter) {

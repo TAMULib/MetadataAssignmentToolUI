@@ -6,8 +6,6 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $scope.document = DocumentRepo.get($routeParams.documentKey);
 
-    console.log($scope.document)
-    
     $scope.cv = ControlledVocabularyRepo.getAll();
 
     $scope.action = $routeParams.action;
