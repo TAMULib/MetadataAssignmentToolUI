@@ -1,5 +1,5 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-	<button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
 	<h4 class="modal-title">Assigned Documments for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
 </div>
 <div class="modal-body">
@@ -22,5 +22,5 @@
 	</table>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
 </div>

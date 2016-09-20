@@ -6,7 +6,7 @@ var appConfig = {
 
 		// Set this to the webService if mocking AuthService
 		
-		'authService': 'https://labs.library.tamu.edu/authservice',
+		'authService': 'https://labs.library.tamu.edu/auth2',
 		'webService': '', 
 		
 		'storageType': 'session',

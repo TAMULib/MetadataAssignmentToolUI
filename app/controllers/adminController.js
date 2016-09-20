@@ -1,21 +1,16 @@
-metadataTool.controller('AdminController', function ($controller, $route, $scope, AssumedControl, AuthServiceApi, StorageService, User, UserRepo, WsApi) {
+metadataTool.controller('AdminController', function ($controller, $injector, $route, $scope, AssumedControl, AuthServiceApi, StorageService, UserService, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-
-	var services = [
-		User,
-		UserRepo
-	];
-
-	$scope.user = User.get();
 
     $scope.assumedControl = AssumedControl.get();
 
     AssumedControl.set({
 		'netid': '',
-		'button': StorageService.get("assuming") == 'true' ? 'Unassume User' : 'Assume User',
-		'status': StorageService.get("assuming") == 'true' ? 'assumed' : '',
+		'button': $scope.isAssuming() == 'true' ? 'Unassume User' : 'Assume User',
+		'status': $scope.isAssuming() == 'true' ? 'assumed' : '',
 	});
+
+	$scope.user = UserService.getCurrentUser();
 
 	$scope.$watch('user.role', function() {
 		if($scope.user.role) {
@@ -35,9 +30,9 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 			if ((typeof user !== 'undefined') && user.netid) {	
 				
-				AssumedControl.assume(user, services).then(function(assumed) {
+				AssumedControl.assume(user).then(function(assumed) {
 					if(assumed) {
-						angular.element("#assumeUserModal").modal("hide");
+						$scope.closeModal();
 						$route.reload();
 					}
 				});
@@ -49,7 +44,7 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 		} else {
 			
-			AssumedControl.unassume(user, services, $scope.user.role).then(function(unassumed) {
+			AssumedControl.unassume(user, $scope.user.role).then(function(unassumed) {
 				$route.reload();
 			});
 			
@@ -74,9 +69,9 @@ metadataTool.controller('AdminController', function ($controller, $route, $scope
 
 	$scope.sync = function() {
 		WsApi.fetch({
-				endpoint: '/private/queue', 
-				controller: 'admin', 
-				method: 'sync'
+			endpoint: '/private/queue', 
+			controller: 'admin', 
+			method: 'sync'
 		}).then(function(data) {
 			logger.log(data);
 		});

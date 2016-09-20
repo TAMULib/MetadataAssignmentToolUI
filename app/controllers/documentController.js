@@ -1,53 +1,45 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentRepo, UserService, UserRepo, ngTableParams) {
 
 	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 	
 	var view = $window.location.pathname;
-
-	var userRepo;
 	
-	var annotators = [];
+	$scope.user = UserService.getCurrentUser();
 
-	$scope.user = User.get();
-	
-	$scope.userRepo = UserRepo.get();
+	$scope.users = UserRepo.getAll();
 
 	$scope.selectedUser = null;
 
-	User.ready().then(function() {
+	$scope.setTable = function() {
 
-		$scope.setTable = function() {
+		$scope.tableParams = new ngTableParams({
+	        page: 1,
+	        count: 10,
+	        sorting: {
+	            name: 'asc'
+	        },
+	        filter: {
+	        	name: '',
+	        	status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
+	            annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+	        }
+	    }, {
+	        total: 0,
+	        getData: function($defer, params) {
+	        	var key; for(key in params.sorting()) {}
 
-			$scope.tableParams = new ngTableParams({
-		        page: 1,
-		        count: 10,
-		        sorting: {
-		            name: 'asc'
-		        },
-		        filter: {
-		        	name: '',
-		        	status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
-		        }
-		    }, {
-		        total: 0,
-		        getData: function($defer, params) {
-		        	var key; for(key in params.sorting()) {}
+        		DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
+	        		var page = JSON.parse(data.body).payload.PageImpl;
+	        		params.total(page.totalElements);
+	        		$defer.resolve(page.content);
+	        	});
+				
+	        }
+	    });	
 
-	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-		        		var page = JSON.parse(data.body).payload.PageImpl;
-		        		params.total(page.totalElements);
-		        		$scope.docs = page.content;
-		        		$defer.resolve($scope.docs);
-		        	});
-					
-		        }
-		    });	
-
-		};
-		
-		$scope.setTable();		
-	});
+	};
+	
+	$scope.setTable();
 
 	$scope.setSelectedUser = function(user) {
 		$scope.selectedUser = user;
@@ -55,34 +47,23 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 	};
 	
 	$scope.availableAnnotators = function() {
-		if(!userRepo) {
-			userRepo = UserRepo.get();
-			for(var key in userRepo.list) {
-				var user = userRepo.list[key];
-				if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
-					annotators.push(user);
-				}
+		var annotators = [];
+		for(var key in $scope.users) {
+			var user = $scope.users[key];
+			if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
+				annotators.push(user);
 			}
 		}
 		return annotators;
 	};
 	
 	$scope.updateAnnotator = function(name, status, annotator) {
-		if(!annotator) {
-			annotator = $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")";
-		}
+		annotator = !annotator ? $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")" : annotator;
 		DocumentRepo.update(name, status, annotator);
 	};
 
-	DocumentPage.listen().then(null, null, function(data) {
+	DocumentRepo.listen(function(data) {
 		$scope.tableParams.reload();
-	});
-	
-	UserRepo.listen().then(null, null, function(data) {
-		if(JSON.parse(data.body).payload.HashMap.changedUserUin == $scope.user.uin) {
-			$scope.user = User.get(true);
-			$route.reload();
-		}			
 	});
 	
 });
