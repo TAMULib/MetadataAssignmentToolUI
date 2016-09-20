@@ -1,16 +1,16 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-	<button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title">Reject Metadata</h4>
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Reject Metadata</h4>
 </div>
 <div class="modal-body">
-	<form role="form"  >
-		<div class="form-group">
-			<label>Please indicate which metadata fields need modification: </label>			
-			<textarea ng-model="rejectionNotes" rows="4" cols="75" placeholder="Enter notes" class="form-control"></textarea>
-		</div>
-	</form>
+    <form role="form"  >
+        <div class="form-group">
+            <label>Please indicate which metadata fields need modification: </label>
+            <textarea ng-model="rejectionNotes" rows="4" cols="75" placeholder="Enter notes" class="form-control"></textarea>
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
-	<button type="submit" ng-if="rejectionNotes" class="btn btn-danger" data-dismiss="modal" ng-click="submitRejection(rejectionNotes)">Reject</button>
-	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+    <button type="submit" ng-if="rejectionNotes" class="btn btn-danger" data-dismiss="modal" ng-click="submitRejection(rejectionNotes)">Reject</button>
+    <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
 </div>

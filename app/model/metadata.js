@@ -1,10 +1,10 @@
 metadataTool.model("Metadata", function () {
 
-	return function Metadata() {
-		
-		// additional model methods and variables
+    return function Metadata() {
+        
+        // additional model methods and variables
 
-		return this;
-	}
+        return this;
+    }
 
 });

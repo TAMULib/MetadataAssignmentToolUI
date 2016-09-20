@@ -1,26 +1,26 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-	<button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title">Assigned Documments for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Assigned Documments for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
 </div>
 <div class="modal-body">
-	<table ng-table="tableParams" class="table table-hover table-condensed">					
-		<tbody>					
-			<tr ng-repeat="doc in $data">
-				<td data-title="'FileName'" sortable="'name'">
-					{{doc.name}}
-				</td>							
-				<td data-title="'Status'" sortable="'status'" filter="{'status': 'text'}" class="text-center">
-					{{doc.status}}
-				</td>							
-				<td data-title="'Unassign'" class="text-center">
-					<button ng-click="updateAnnotator(doc.name, 'Open', selectedUser.uin)" class="btn btn-default">
-						Unassign
-					</button>
-				</td>												
-			</tr>						
-		</tbody>					
-	</table>
+    <table ng-table="tableParams" class="table table-hover table-condensed">
+        <tbody>
+            <tr ng-repeat="doc in $data">
+                <td data-title="'FileName'" sortable="'name'">
+                    {{doc.name}}
+                </td>
+                <td data-title="'Status'" sortable="'status'" filter="{'status': 'text'}" class="text-center">
+                    {{doc.status}}
+                </td>
+                <td data-title="'Unassign'" class="text-center">
+                    <button ng-click="updateAnnotator(doc.name, 'Open', selectedUser.uin)" class="btn btn-default">
+                        Unassign
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+    <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
 </div>

@@ -38,7 +38,7 @@ module.exports = function(config){
 
             'app/directives/**/*.js',
             
-            'app/services/**/*.js',            
+            'app/services/**/*.js',
             
             'app/models/**/*.js',
             

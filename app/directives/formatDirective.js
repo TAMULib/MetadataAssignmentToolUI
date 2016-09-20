@@ -6,7 +6,7 @@ metadataTool.directive('format', function () {
                 return input.replace(/([\u0000-\u001f])/g, ' ');
             });
 
-            ngModel.$formatters.push(function toView(input) {                
+            ngModel.$formatters.push(function toView(input) {
                 return input;
             });
         }

@@ -1,10 +1,10 @@
 metadataTool.model("Project", function (WsApi) {
 
-	return function Project() {
-		
-		// additional model methods and variables
+    return function Project() {
+        
+        // additional model methods and variables
 
-		return this;
-	}
+        return this;
+    }
 
 });
