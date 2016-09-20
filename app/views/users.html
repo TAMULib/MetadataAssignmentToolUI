@@ -1,6 +1,8 @@
 <br/>
 <div class="row" ng-controller="UserRepoController">
 
+    
+
     <!-- ADMINS AND MANAGERS ONLY -->
     <div ng-if="!isManager() && !isAdmin()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
@@ -19,6 +21,7 @@
                             <th>Role</th>
                             <th>Change Role To</th>
                             <th ng-if="(isAdmin() || isManager())">Assignments</th>
+                            <th ng-if="(isAdmin() || isManager())">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,9 +43,23 @@
                                        modal-controller="DocumentController"
                                        modal-ng-click-function="setSelectedUser"
                                        modal-ng-click-param="{{thisUser}}"
-                                       modal-header-class="modal-header-primary">View Assignments</modal>
+                                       modal-header-class="modal-header-primary">
+                                       View Assignments
+                                </modal>
                                 
                             </td>
+                            <td ng-if="!((isAdmin() || isManager()) && (thisUser.role == 'ROLE_ANNOTATOR' || thisUser.role == 'ROLE_MANAGER' || thisUser.role == 'ROLE_ADMIN'))"></td>
+                            <td ng-if="(isAdmin() || isManager()) && canDelete(thisUser)">
+
+                                <modal modal-id="ConfirmDeleteUserModal" 
+                                       modal-view="views/modals/confirmDeleteUserModal.html"
+                                       modal-btn-classes="btn btn-danger"
+                                       modal-header-class="modal-header-primary">
+                                       Delete
+                                </modal>
+
+                            </td>
+                            <td ng-if="!((isAdmin() || isManager()) && canDelete(thisUser))"></td>
                         </tr>
                     </tbody>
                 </table>
