@@ -4,7 +4,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
     
     $scope.user = UserService.getCurrentUser();
 
-    if($scope.isAdmin()) {
+    if($scope.isAdmin() || $scope.isManager()) {
 
         var UserRepo = $injector.get("UserRepo");
 
@@ -30,10 +30,10 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
         };
 
         $scope.allowableRoles = function(userRole) {
-            if(StorageService.get('role') == 'ROLE_ADMIN') {
+            if($scope.isAdmin()) {
                 return ['ROLE_ADMIN','ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
             }
-            else if(StorageService.get('role') == 'ROLE_MANAGER') {
+            else if($scope.isManager()) {
                 if(userRole == 'ROLE_ADMIN') {
                     return ['ROLE_ADMIN'];
                 }
@@ -44,12 +44,35 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
             }
         };
 
-        UserRepo.listen(function(response) {
-            console.log(response)
-            if($scope.userUpdated.uin == $scope.user.uin) {
-                $scope.userUpdated = {};
-                $route.reload();
+        $scope.delete = function(user) {
+            user.delete();
+        };
+
+        $scope.canDelete = function(user) {
+            var canDelete;            
+            if($scope.isAdmin()) {
+                canDelete = true;
             }
+            else if($scope.isManager()) {
+                if(user.role == "ROLE_ADMIN") {
+                    canDelete = false;
+                }
+                else {
+                    canDelete = true;
+                }
+            }
+            else {
+                canDelete = false;
+            }
+            if(user.uin == $scope.user.uin) {
+                canDelete = false;
+            }
+            return canDelete;
+        }
+
+        UserRepo.listen(function(response) {
+            $scope.userUpdated = {};
+            $route.reload();
         });
 
     }
