@@ -3,13 +3,13 @@ metadataTool.controller('NavigationController', function ($controller, $scope, $
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     $scope.$on('$routeChangeStart', function(next, current) {
-	    $scope.view = $location.$$path;	    
-	});
+        $scope.view = $location.$$path;     
+    });
 
-	$scope.windowWidth = 0;
-	$scope.windowHeight = 0;
+    $scope.windowWidth = 0;
+    $scope.windowHeight = 0;
 
-	$scope.updateWidth = function() {
+    $scope.updateWidth = function() {
         $scope.windowWidth = $window.innerWidth;
     };
     
@@ -17,13 +17,13 @@ metadataTool.controller('NavigationController', function ($controller, $scope, $
        $scope.windowHeight = $window.innerHeight;
     };
 
-	$window.onresize = function () {
-		$scope.updateWidth();
+    $window.onresize = function () {
+        $scope.updateWidth();
         $scope.updateHeight();
         $scope.$apply();
-	};
+    };
 
-	$scope.updateWidth();
+    $scope.updateWidth();
     $scope.updateHeight();
-	
+
 });

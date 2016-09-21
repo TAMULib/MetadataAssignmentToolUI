@@ -1,165 +1,160 @@
 <br/>
 <div class="row" ng-controller="AnnotateController"> 
 
-	<!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
-	<div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
+    <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
+    <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-	<div ng-if="document.publishedUriString" class="panel panel-success">
-		<div class="panel-heading">This document is published at URI:</div>
-		<div class="panel-body">
-			<a target="_blank" href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
-		</div>
-	</div>
-	
-	<div ng-if="action=='view' && document.status=='Accepted'" class="panel panel-warning">
-		<div class="panel-heading">This document is accepted but not published.</div>
-		<div class="panel-body">
-			<button class="btn btn-success" ng-click="push(document.name)">Publish</button>
-		</div>
-	</div>
-	
-	<div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
-		<img src="resources/images/loading.gif" height="200" width"200"/>
-	</div>
+    <div ng-if="document.publishedUriString" class="panel panel-success">
+        <div class="panel-heading">This document is published at URI:</div>
+        <div class="panel-body">
+            <a target="_blank" href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+        </div>
+    </div>
+    
+    <div ng-if="action=='view' && document.status=='Accepted'" class="panel panel-warning">
+        <div class="panel-heading">This document is accepted but not published.</div>
+        <div class="panel-body">
+            <button class="btn btn-success" ng-click="push(document.name)">Publish</button>
+        </div>
+    </div>
+    
+    <div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
+        <img src="resources/images/loading.gif" height="200" width"200"/>
+    </div>
 
-	<div ng-if="!isUser()" class="row">
-	
-		<div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
-		
-		<div class="col-8 col-lg-8 document-pane">	
-			<div role="tabpanel" class="span6">
-				<h2>Document</h2>
+    <div ng-if="!isUser()" class="row">
+    
+        <div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
+        
+        <div class="col-8 col-lg-8 document-pane">  
+            <div role="tabpanel" class="span6">
+                <h2>Document</h2>
 
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
-					<li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
-				</ul>
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="txtTab" ng-if="document.txtUri">
-						<object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
-					</div>
-					<div role="tabpanel" class="tab-pane" id="pdfTab" ng-if="document.pdfUri">
-						<object id="pdf" data="{{document.pdfUri}}" width="100%" height="600" frameborder="0"></object>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div ng-if="action == 'annotate' || action == 'review'">
-			<h2>Metadata</h2>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
+                    <li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="txtTab" ng-if="document.txtUri">
+                        <object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="pdfTab" ng-if="document.pdfUri">
+                        <object id="pdf" data="{{document.pdfUri}}" width="100%" height="600" frameborder="0"></object>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div ng-if="action == 'annotate' || action == 'review'">
+            <h2>Metadata</h2>
 
-			<form name="metadataForm" novalidate>
-				<span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
-				<div class="col-4 col-lg-4 metadata-pane">
-					<div ng-repeat="field in document.fields" class="row" ng-hide="field.label.profile.hidden">
-						<label ng-required="field.label.profile.required">{{field.label.profile.gloss}}<span ng-show="{{field.label.profile.required}}" class="requiredField"></span></label>
-						<span title="Add metadata field" 
-							  ng-if="field.label.profile.repeatable" 
-							  ng-click="addMetadataField(field)" 
-							  class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;">
-						</span>
-						<span title="Remove metadata field" 
-							  ng-if="field.values.length > 1 && field.label.profile.repeatable" 
-							  ng-click="removeMetadataField(field)" 
-							  class="glyphicon glyphicon-minus-sign label-remove" 
-							  style="text-decoration: none;">
-						</span>
-						<ul class="list-unstyled">
-							<li ng-if="field.label.profile.repeatable" ng-repeat="fieldValue in field.values">
-							
-								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXT'">
-								  	<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<input format name="{{field.label.profile.gloss}}" 
-										   ng-required="field.label.profile.required"
-										   class="form-control" 
-										   type="text" 
-										   ng-readonly="field.label.profile.readOnly" 
-									       ng-model="field.values[$index].value" 
-										   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
-									</input>
-								</div>
-								<div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXTAREA'">
-									<span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
-									<textarea format name="{{field.label.profile.gloss}}"
-											  ng-required="field.label.profile.required"
-									          class="form-control"
-									          ng-readonly="field.label.profile.readOnly" 
-									          ng-model="field.values[$index].value">
-									</textarea>
-								</div>
-							</li>
-							<li ng-if="!field.label.profile.repeatable">
-								<input format name="{{field.label.profile.gloss}}" 
-									   ng-required="field.label.profile.required"
-									   ng-if="field.label.profile.inputType == 'TEXT'" 
-									   class="form-control" 
-									   ng-readonly="field.label.profile.readOnly" 
-									   type="text" 
-									   ng-model="field.values[0].value" 
-									   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
-								</input>
-								<textarea format name="{{field.label.profile.gloss}}"
-										  ng-required="field.label.profile.required"
-										  ng-if="field.label.profile.inputType == 'TEXTAREA'" 
-										  class="form-control" 
-										  ng-readonly="field.label.profile.readOnly" 
-										  ng-model="field.values[0].value">
-								</textarea>
-							</li>
-						</ul>	
-					</div>
+            <form name="metadataForm" novalidate>
+                <span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
+                <div class="col-4 col-lg-4 metadata-pane">
+                    <div ng-repeat="field in document.fields" class="row" ng-hide="field.label.profile.hidden">
+                        <label ng-required="field.label.profile.required">{{field.label.profile.gloss}}<span ng-show="{{field.label.profile.required}}" class="requiredField"></span></label>
+                        <span title="Add metadata field" 
+                              ng-if="field.label.profile.repeatable" 
+                              ng-click="addMetadataField(field)" 
+                              class="glyphicon glyphicon-plus-sign label-add" style="text-decoration: none;">
+                        </span>
+                        <span title="Remove metadata field" 
+                              ng-if="field.values.length > 1 && field.label.profile.repeatable" 
+                              ng-click="removeMetadataField(field)" 
+                              class="glyphicon glyphicon-minus-sign label-remove" 
+                              style="text-decoration: none;">
+                        </span>
+                        <ul class="list-unstyled">
+                            <li ng-if="field.label.profile.repeatable" ng-repeat="fieldValue in field.values">
+                            
+                                <div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXT'">
+                                    <span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+                                    <input format name="{{field.label.profile.gloss}}" 
+                                           ng-required="field.label.profile.required"
+                                           class="form-control" 
+                                           type="text" 
+                                           ng-readonly="field.label.profile.readOnly" 
+                                           ng-model="field.values[$index].value" 
+                                           typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+                                    </input>
+                                </div>
+                                <div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXTAREA'">
+                                    <span class="input-group-addon" id="basic-addon{{$index+1}}">{{$index+1}}</span>
+                                    <textarea format name="{{field.label.profile.gloss}}"
+                                              ng-required="field.label.profile.required"
+                                              class="form-control"
+                                              ng-readonly="field.label.profile.readOnly" 
+                                              ng-model="field.values[$index].value">
+                                    </textarea>
+                                </div>
+                            </li>
+                            <li ng-if="!field.label.profile.repeatable">
+                                <input format name="{{field.label.profile.gloss}}" 
+                                       ng-required="field.label.profile.required"
+                                       ng-if="field.label.profile.inputType == 'TEXT'" 
+                                       class="form-control" 
+                                       ng-readonly="field.label.profile.readOnly" 
+                                       type="text" 
+                                       ng-model="field.values[0].value" 
+                                       typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+                                </input>
+                                <textarea format name="{{field.label.profile.gloss}}"
+                                          ng-required="field.label.profile.required"
+                                          ng-if="field.label.profile.inputType == 'TEXTAREA'" 
+                                          class="form-control" 
+                                          ng-readonly="field.label.profile.readOnly" 
+                                          ng-model="field.values[0].value">
+                                </textarea>
+                            </li>
+                        </ul>
+                    </div>
 
-				</div>
-				<div class="row">			
-					<div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
-						<button class="btn btn-primary" ng-click="save(document)">Save</button>
-						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit(document)">Submit</button>
-					</div>
-					<div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-						<button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
+                </div>
+                <div class="row">
+                    <div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
+                        <button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
+                        <button class="btn btn-primary" ng-click="save(document)">Save</button>
+                        <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit(document)">Submit</button>
+                    </div>
+                    <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
+                        <button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
 
-						<modal modal-id="rejectModal" 
-							   modal-view="views/modals/rejectModal.html" 
-							   modal-btn-classes="btn btn-danger"
-							   modal-header-class="modal-header-danger">Reject</modal>
-							   
-						<button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
-					</div>
-					
-				</div>
-			</form>
+                        <modal modal-id="rejectModal" 
+                               modal-view="views/modals/rejectModal.html" 
+                               modal-btn-classes="btn btn-danger"
+                               modal-header-class="modal-header-danger">Reject</modal>
+                               
+                        <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
+                    </div>
+                    
+                </div>
+            </form>
 
-		</div>
+        </div>
 
-		<div ng-if="action == 'view'">
-			<h2>Metadata</h2>
+        <div ng-if="action == 'view'">
+            <h2>Metadata</h2>
 
-			<div class="col-4 col-lg-4 metadata-pane">
-				<div ng-repeat="field in document.fields" class="row">
-					<label>{{field.label.profile.gloss}}</label>
-					
-					<ul class="list-unstyled">
-						<li ng-if="field.label.profile.repeatable" >
-							<ol>
-								<li ng-repeat="fieldValue in field.values">
-									<span>{{field.values[$index].value}}</span>
-								</li>
-							</ol>
-						</li>
-						<li ng-if="!field.label.profile.repeatable">
-							<div class="tabbed">{{field.values[0].value}}</div>
-						</li>
-					</ul>
-					<hr>	
-				</div>
+            <div class="col-4 col-lg-4 metadata-pane">
+                <div ng-repeat="field in document.fields" class="row">
+                    <label>{{field.label.profile.gloss}}</label>
+                    
+                    <ul class="list-unstyled">
+                        <li ng-if="field.label.profile.repeatable" >
+                            <ol>
+                                <li ng-repeat="fieldValue in field.values">
+                                    <span>{{field.values[$index].value}}</span>
+                                </li>
+                            </ol>
+                        </li>
+                        <li ng-if="!field.label.profile.repeatable">
+                            <div class="tabbed">{{field.values[0].value}}</div>
+                        </li>
+                    </ul>
+                    <hr>
+                </div>
 
-			</div>
-			
-
-		</div>
-
-
-	</div>
-
+            </div>
+        </div>
+    </div>
 </div>

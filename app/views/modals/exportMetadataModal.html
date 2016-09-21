@@ -1,30 +1,30 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-	<button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title">Export Metadata</h4>
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Export Metadata</h4>
 </div>
 
 <alerts ng-show="exportModalForm.$submitted" 
-		types="WARNING, ERROR, SUCCESS" 
-		channels="app/export"
-		exclusive
-		fixed></alerts>
+        types="WARNING, ERROR, SUCCESS" 
+        channels="app/export"
+        exclusive
+        fixed>
+</alerts>
 
 <form name="exportModalForm">
-	<div class="modal-body">
-		<div class="form-group">
-			<label>Project</label>
-			<select ng-options="project.name for project in getProjects()" ng-model="project" class="form-control"></select>
-		</div>
-
-		<div class="form-group">
-			<label>Format</label>
-			<select ng-options="format for format in getFormats()" ng-model="format" class="form-control"></select>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button ng-show="format == 'saf' && project.isLocked" type="submit" class="btn btn-default" ng-click="unlock(project.name)">Unlock</button>
-		<button ng-disabled="format == 'saf' && project.isLocked" ng-hide="format == 'csv'" type="submit" class="btn btn-default" ng-click="export(project.name, format)">Export</button>
-		<button ng-show="format == 'csv'" type="submit" class="btn btn-default" data-dismiss="modal" ng-csv="export(project.name, format)" csv-header='headers' filename="metadata.csv">Export</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="exportModalForm.$setPristine()">{{exportModalForm.$submitted ? 'Done' : 'Cancel'}}</button>
-	</div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Project</label>
+            <select ng-options="project.name for project in projects" ng-model="project" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label>Format</label>
+            <select ng-options="format for format in formats" ng-model="format" class="form-control"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-show="format == 'saf' && project.isLocked" type="submit" class="btn btn-default" ng-click="unlock(project.name)">Unlock</button>
+        <button ng-disabled="format == 'saf' && project.isLocked" ng-hide="format == 'csv'" type="submit" class="btn btn-default" ng-click="export(project.name, format)">Export</button>
+        <button ng-show="format == 'csv'" type="submit" class="btn btn-default" data-dismiss="modal" ng-csv="export(project.name, format)" csv-header='headers' filename="metadata.csv">Export</button>
+        <button type="button" class="btn btn-default" ng-click="exportModalForm.$setPristine(); closeModal();">{{exportModalForm.$submitted ? 'Done' : 'Cancel'}}</button>
+    </div>
 </form>

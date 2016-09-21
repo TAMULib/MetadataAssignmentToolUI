@@ -6,6 +6,7 @@ module.exports = function(config){
         files : [
 
             'app/config/appConfig.js',
+            'app/config/apiMapping.js',
 
             'app/bower_components/jquery/dist/jquery.js',
             'app/bower_components/angular/angular.js',
@@ -37,7 +38,7 @@ module.exports = function(config){
 
             'app/directives/**/*.js',
             
-            'app/services/**/*.js',            
+            'app/services/**/*.js',
             
             'app/models/**/*.js',
             
