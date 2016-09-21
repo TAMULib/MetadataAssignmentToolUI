@@ -43,7 +43,8 @@
             <div class="panel-body " ng-if="isAdmin() || isManager()">
             
                 <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>&nbsp;&nbsp;
-                <button ng-click="tableParams.filter({})" class="btn btn-default">Clear filter</button><br/><br/>
+                <button ng-click="tableParams.filter({})" class="btn btn-default">Clear filter</button>&nbsp;&nbsp;
+                <label class="checkbox-inline"><input type="checkbox" value="" ng-model="showPublished" ng-change="togglePublished()">Show Published</label><br/><br/>
                 
                 <!-- 
                 <p><strong>Sorting:</strong> {{tableParams.sorting()|json}}

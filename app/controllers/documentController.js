@@ -10,6 +10,12 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     $scope.selectedUser = null;
 
+    $scope.showPublished = false;
+
+    var craftAnnotatorString = function(user) {
+        return user.firstName + " " + user.lastName + " (" + user.uin + ")";
+    }
+
     $scope.setTable = function() {
 
         $scope.tableParams = new ngTableParams({
@@ -19,16 +25,42 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
                 name: 'asc'
             },
             filter: {
-                name: '',
-                status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-                annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
+                name: undefined,
+                status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
+                annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined
             }
         }, {
             total: 0,
             getData: function($defer, params) {
                 var key; for(key in params.sorting()) {}
 
-                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
+                var filters = {
+                    name: [],
+                    status: [],
+                    annotator: []
+                };
+
+                if(params.filter().name !== undefined) {
+                    filters.name.push(params.filter().name);
+                }
+
+                if(params.filter().status !== undefined) {
+                    filters.status.push(params.filter().status);
+                    if(params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
+                        filters.status.push('Rejected');
+                        filters.status.push('!Accepted');
+                    }
+                }
+
+                if(params.filter().status != 'Published' && !$scope.showPublished) {
+                    filters.status.push('!Published');
+                }
+
+                if(params.filter().annotator !== undefined) {
+                    filters.annotator.push(params.filter().annotator);
+                }
+
+                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(data) {
                     var page = JSON.parse(data.body).payload.PageImpl;
                     params.total(page.totalElements);
                     $defer.resolve(page.content);
@@ -38,14 +70,19 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         }); 
 
     };
-    
+
     $scope.setTable();
 
     $scope.setSelectedUser = function(user) {
         $scope.selectedUser = user;
         $scope.setTable();
     };
-    
+
+    $scope.togglePublished = function() {
+        $scope.showPublished = !$scope.showPublished;
+        $scope.tableParams.reload();
+    };
+
     $scope.availableAnnotators = function() {
         var annotators = [];
         for(var key in $scope.users) {
@@ -58,7 +95,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
     };
     
     $scope.updateAnnotator = function(name, status, annotator) {
-        annotator = !annotator ? $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")" : annotator;
+        annotator = !annotator ? craftAnnotatorString($scope.user) : annotator;
         DocumentRepo.update(name, status, annotator);
     };
 

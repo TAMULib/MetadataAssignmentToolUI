@@ -22,28 +22,27 @@ metadataTool.repo("DocumentRepo", function DocumentRepo(Document, WsApi) {
     };
 
     this.push = function(name) {
-        angular.extend(this.mapping.push, {'method': 'get/' + name});
+        angular.extend(this.mapping.push, {'method': 'push/' + name});
         return WsApi.fetch(this.mapping.push);
     };
 
-    this.page = function(page, size, field, direction, filter) {
+    this.page = function(number, size, field, direction, filters) {
 
         if(!field) field = 'name';
         if(!direction) direction = 'asc';
-        if(!filter.name) filter.name = '';
-        if(!filter.status) filter.status = '';
-        if(!filter.annotator) filter.annotator = '';
 
         angular.extend(this.mapping.page, {'data': {
-            'page': page,
-            'size': size,
-            'field': field,
-            'direction': direction,
-            'name': filter.name,
-            'status': filter.status,
-            'annotator': filter.annotator
+            'page': {
+                'number': number,
+                'size': size
+            },
+            'sort': {
+                'field': field,
+                'direction': direction
+            },
+            'filters': filters
         }});
-            
+
         return WsApi.fetch(this.mapping.page);
     };
 

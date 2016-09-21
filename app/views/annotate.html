@@ -119,10 +119,14 @@
                     <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
                         <button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
 
-                        <modal modal-id="rejectModal" 
-                               modal-view="views/modals/rejectModal.html" 
-                               modal-btn-classes="btn btn-danger"
-                               modal-header-class="modal-header-danger">Reject</modal>
+                        <span ng-if="document.status == 'Annotated'" >
+                            <modal modal-id="rejectModal" 
+                                   modal-view="views/modals/rejectModal.html" 
+                                   modal-btn-classes="btn btn-danger"
+                                   modal-header-class="modal-header-danger">
+                                   Reject
+                            </modal>
+                        </span>
                                
                         <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
                     </div>
