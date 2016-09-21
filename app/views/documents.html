@@ -73,6 +73,7 @@
                             <td data-title="'Action'" class="text-center">
                                 <a ng-if="doc.status == 'Annotated'" href="annotate/{{doc.name}}/review" class="btn btn-default">Review</a>
                                 <a ng-if="doc.status == 'Accepted' || doc.status == 'Pending' || doc.status == 'Published'" href="annotate/{{doc.name}}/view" class="btn btn-default">View</a>
+                                <a ng-if="doc.status == 'Requires Curation'" href class="btn btn-default" ng-click="updateStatus(doc)">Resume Annotation</a>
                             </td>
                         </tr>
                     </tbody>

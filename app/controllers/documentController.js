@@ -62,6 +62,10 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         DocumentRepo.update(name, status, annotator);
     };
 
+    $scope.updateStatus = function(doc) {
+        DocumentRepo.update(doc.name, 'Assigned');
+    };
+
     DocumentRepo.listen(function(data) {
         $scope.tableParams.reload();
     });

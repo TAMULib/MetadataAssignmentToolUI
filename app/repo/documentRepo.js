@@ -13,6 +13,8 @@ metadataTool.repo("DocumentRepo", function DocumentRepo(Document, WsApi) {
             'notes': notes
         }});
 
+        console.log(this.mapping.update)
+
         return WsApi.fetch(this.mapping.update);
     };
 
