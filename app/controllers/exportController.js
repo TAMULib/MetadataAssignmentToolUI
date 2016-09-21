@@ -34,7 +34,6 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
 
                 return MetadataRepo.export(project, format).then(function(data) {
                     AlertService.add(JSON.parse(data.body).meta, "app/export");
-                    console.log(JSON.parse(data.body))
                     return JSON.parse(data.body).payload["ArrayList<ArrayList>"];
                 });
 

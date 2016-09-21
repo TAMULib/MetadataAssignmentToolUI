@@ -5,6 +5,6 @@ metadataTool.model("Document", function (WsApi) {
         // additional model methods and variables
 
         return this;
-    }
+    };
 
 });

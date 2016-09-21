@@ -5,6 +5,6 @@ metadataTool.model("ControlledVocabulary", function () {
         // additional model methods and variables
 
         return this;
-    }
+    };
 
 });

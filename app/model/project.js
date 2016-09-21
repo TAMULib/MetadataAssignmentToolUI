@@ -5,6 +5,6 @@ metadataTool.model("Project", function (WsApi) {
         // additional model methods and variables
 
         return this;
-    }
+    };
 
 });

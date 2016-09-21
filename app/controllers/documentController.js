@@ -14,7 +14,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     var craftAnnotatorString = function(user) {
         return user.firstName + " " + user.lastName + " (" + user.uin + ")";
-    }
+    };
 
     $scope.setTable = function() {
 

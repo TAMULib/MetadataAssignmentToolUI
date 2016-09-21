@@ -119,4 +119,4 @@ var apiMapping = {
             'controller': 'user'
         }
     }
-}
+};

@@ -68,7 +68,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
                 canDelete = false;
             }
             return canDelete;
-        }
+        };
 
         UserRepo.listen(function(response) {
             $scope.userUpdated = {};
