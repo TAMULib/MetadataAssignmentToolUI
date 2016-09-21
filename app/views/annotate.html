@@ -75,7 +75,8 @@
                                            type="text" 
                                            ng-readonly="field.label.profile.readOnly" 
                                            ng-model="field.values[$index].value" 
-                                           typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+                                           typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue"
+                                           spellcheck="true">
                                     </input>
                                 </div>
                                 <div class="input-group metadata-label" ng-if="field.label.profile.inputType == 'TEXTAREA'">
@@ -84,7 +85,8 @@
                                               ng-required="field.label.profile.required"
                                               class="form-control"
                                               ng-readonly="field.label.profile.readOnly" 
-                                              ng-model="field.values[$index].value">
+                                              ng-model="field.values[$index].value"
+                                              spellcheck="true">
                                     </textarea>
                                 </div>
                             </li>
@@ -96,14 +98,16 @@
                                        ng-readonly="field.label.profile.readOnly" 
                                        type="text" 
                                        ng-model="field.values[0].value" 
-                                       typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue">
+                                       typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue"
+                                       spellcheck="true">
                                 </input>
                                 <textarea format name="{{field.label.profile.gloss}}"
                                           ng-required="field.label.profile.required"
                                           ng-if="field.label.profile.inputType == 'TEXTAREA'" 
                                           class="form-control" 
                                           ng-readonly="field.label.profile.readOnly" 
-                                          ng-model="field.values[0].value">
+                                          ng-model="field.values[0].value"
+                                          spellcheck="true">
                                 </textarea>
                             </li>
                         </ul>
