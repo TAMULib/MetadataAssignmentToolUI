@@ -1,4 +1,4 @@
-metadataTool.model("Metadata", function () {
+metadataTool.model("Metadata", function Metadata() {
 
     return function Metadata() {
         

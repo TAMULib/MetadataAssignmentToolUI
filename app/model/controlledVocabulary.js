@@ -1,4 +1,4 @@
-metadataTool.model("ControlledVocabulary", function () {
+metadataTool.model("ControlledVocabulary", function ControlledVocabulary() {
 
     return function ControlledVocabulary() {
         

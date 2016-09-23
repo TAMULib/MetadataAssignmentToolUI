@@ -1,4 +1,4 @@
-metadataTool.model("Project", function (WsApi) {
+metadataTool.model("Project", function Project(WsApi) {
 
     return function Project() {
         
