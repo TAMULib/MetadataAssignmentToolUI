@@ -44,7 +44,7 @@ var apiMapping = {
         },
         listen: {
             'endpoint': '/channel', 
-            'controller': 'documents', 
+            'controller': 'document', 
         }
     },
     Metadata: {

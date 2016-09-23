@@ -122,7 +122,7 @@
                     </div>
                     <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
                         <button class="btn btn-warning" ng-click="requiresCuration(document.name)">Requires Curation</button>
-
+                        <button class="btn btn-primary" ng-click="save(document)">Save</button>
                         <span ng-if="document.status == 'Annotated'" >
                             <modal modal-id="rejectModal" 
                                    modal-view="views/modals/rejectModal.html" 
@@ -131,7 +131,6 @@
                                    Reject
                             </modal>
                         </span>
-                               
                         <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept(document)" >Accept</button>
                     </div>
                     

@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $route, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -12,7 +12,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $scope.loadingText = "Loading...";
 
-    ControlledVocabularyRepo.ready().then(function() {
+    $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
         for(var k in $scope.document.fields) {
             var field = $scope.document.fields[k];
