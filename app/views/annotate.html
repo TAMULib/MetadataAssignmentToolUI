@@ -51,7 +51,7 @@
             <form name="metadataForm" novalidate>
                 <span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
                 <div class="col-4 col-lg-4 metadata-pane">
-                    <div ng-repeat="field in document.fields" class="row" ng-hide="field.label.profile.hidden">
+                    <div ng-repeat="field in document.fields | orderBy:['label.profile.required', 'label.profile.gloss']:true" class="row" ng-hide="field.label.profile.hidden">
                         <label ng-required="field.label.profile.required">{{field.label.profile.gloss}}<span ng-show="{{field.label.profile.required}}" class="requiredField"></span></label>
                         <span title="Add metadata field" 
                               ng-if="field.label.profile.repeatable" 
@@ -143,7 +143,7 @@
             <h2>Metadata</h2>
 
             <div class="col-4 col-lg-4 metadata-pane">
-                <div ng-repeat="field in document.fields" class="row">
+                <div ng-repeat="field in document.fields | orderBy:['label.profile.required', 'label.profile.gloss']:true" class="row">
                     <label>{{field.label.profile.gloss}}</label>
                     
                     <ul class="list-unstyled">
