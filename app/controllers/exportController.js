@@ -19,6 +19,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
         if(format == "saf") {
             MetadataRepo.export(project, format).then(function(data) {
                 ProjectRepo.reset();
+                $scope.closeModal();
             });
         }
         else if(format == "csv") {
@@ -34,6 +35,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
 
                 return MetadataRepo.export(project, format).then(function(data) {
                     AlertService.add(JSON.parse(data.body).meta, "app/export");
+                    $scope.closeModal();
                     return JSON.parse(data.body).payload["ArrayList<ArrayList>"];
                 });
 
