@@ -14,12 +14,11 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
 
     $scope.export = function(project, format) {
 
-        console.log("Exporting " + format + " for " + project + " project");
-
         if(format == "saf") {
             MetadataRepo.export(project, format).then(function(data) {
                 ProjectRepo.reset();
                 $scope.closeModal();
+                AlertService.add(JSON.parse(data.body).meta, "app/export");
             });
         }
         else if(format == "csv") {
@@ -34,8 +33,8 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
                 }
 
                 return MetadataRepo.export(project, format).then(function(data) {
-                    AlertService.add(JSON.parse(data.body).meta, "app/export");
                     $scope.closeModal();
+                    AlertService.add(JSON.parse(data.body).meta, "app/export");
                     return JSON.parse(data.body).payload["ArrayList<ArrayList>"];
                 });
 

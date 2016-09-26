@@ -37,7 +37,14 @@
         <tamuheader title="MAGPIE"></tamuheader>
 
         <alerts types="WARNING, ERROR"></alerts>
-                
+
+        <alerts 
+            types="SUCCESS,WARNING,ERROR" 
+            channels="app/export"
+            exclusive
+            fixed>
+        </alerts>
+
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12 appContent" ng-controller="AdminController">
