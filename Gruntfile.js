@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['jshint', 'watch']);
 
-    grunt.registerTask('develop', ['jshint', 'useminPrepare', 'concat', 'usemin', 'watch']);
+    grunt.registerTask('develop', ['jshint', 'watch']);
     
     grunt.registerTask('deploy', ['jshint', 'useminPrepare', 'concat', 'uglify', 'usemin', 'compass']);
 
