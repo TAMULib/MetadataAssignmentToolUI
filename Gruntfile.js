@@ -66,7 +66,8 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                mangle: false
+                mangle: false,
+                compress: false
             },
             core: {
                 src:  '<%= build.app %>/resources/scripts/core_concat.js',
