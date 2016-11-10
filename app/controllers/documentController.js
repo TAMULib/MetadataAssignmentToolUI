@@ -1,88 +1,110 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentPage, DocumentRepo, User, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentRepo, UserService, UserRepo, ngTableParams) {
 
-	angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-	
-	var view = $window.location.pathname;
+    angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+    
+    var view = $window.location.pathname;
+    
+    $scope.user = UserService.getCurrentUser();
 
-	var userRepo;
-	
-	var annotators = [];
+    $scope.users = UserRepo.getAll();
 
-	$scope.user = User.get();
-	
-	$scope.userRepo = UserRepo.get();
+    $scope.selectedUser = null;
 
-	$scope.selectedUser = null;
+    $scope.showPublished = false;
 
-	User.ready().then(function() {
+    var craftAnnotatorString = function(user) {
+        return user.firstName + " " + user.lastName + " (" + user.uin + ")";
+    };
 
-		$scope.setTable = function() {
+    $scope.setTable = function() {
 
-			$scope.tableParams = new ngTableParams({
-		        page: 1,
-		        count: 10,
-		        sorting: {
-		            name: 'asc'
-		        },
-		        filter: {
-		        	name: '',
-		        	status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : '',
-		            annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : ''
-		        }
-		    }, {
-		        total: 0,
-		        getData: function($defer, params) {
-		        	var key; for(key in params.sorting()) {}
+        $scope.tableParams = new ngTableParams({
+            page: 1,
+            count: 10,
+            sorting: {
+                name: 'asc'
+            },
+            filter: {
+                name: undefined,
+                status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
+                annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined
+            }
+        }, {
+            total: 0,
+            getData: function($defer, params) {
+                var key; for(key in params.sorting()) {}
 
-	        		DocumentPage.get(params.page(), params.count(), key, params.sorting()[key], params.filter()).then(function(data) {
-		        		var page = JSON.parse(data.body).payload.PageImpl;
-		        		params.total(page.totalElements);
-		        		$scope.docs = page.content;
-		        		$defer.resolve($scope.docs);
-		        	});
-					
-		        }
-		    });	
+                var filters = {
+                    name: [],
+                    status: [],
+                    annotator: []
+                };
 
-		};
-		
-		$scope.setTable();		
-	});
+                if(params.filter().name !== undefined) {
+                    filters.name.push(params.filter().name);
+                }
 
-	$scope.setSelectedUser = function(user) {
-		$scope.selectedUser = user;
-		$scope.setTable();
-	};
-	
-	$scope.availableAnnotators = function() {
-		if(!userRepo) {
-			userRepo = UserRepo.get();
-			for(var key in userRepo.list) {
-				var user = userRepo.list[key];
-				if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
-					annotators.push(user);
-				}
-			}
-		}
-		return annotators;
-	};
-	
-	$scope.updateAnnotator = function(name, status, annotator) {
-		if(!annotator) {
-			annotator = $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")";
-		}
-		DocumentRepo.update(name, status, annotator);
-	};
+                if(params.filter().status !== undefined) {
+                    filters.status.push(params.filter().status);
+                    if(params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
+                        filters.status.push('Rejected');
+                        filters.status.push('!Accepted');
+                    }
+                }
 
-	DocumentPage.listen().then(null, null, function(data) {
-		$scope.tableParams.reload();
-	});
-	
-	UserRepo.listen().then(null, null, function(data) {
-		if(JSON.parse(data.body).payload.HashMap.changedUserUin == $scope.user.uin) {
-			$scope.user = User.get(true);
-			$route.reload();
-		}			
-	});
-	
+                if(params.filter().status != 'Published' && !$scope.showPublished) {
+                    filters.status.push('!Published');
+                }
+
+                if(params.filter().annotator !== undefined) {
+                    filters.annotator.push(params.filter().annotator);
+                }
+
+                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(data) {
+                    var page = JSON.parse(data.body).payload.PageImpl;
+                    params.total(page.totalElements);
+                    $defer.resolve(page.content);
+                });
+                
+            }
+        }); 
+
+    };
+
+    $scope.setTable();
+
+    $scope.setSelectedUser = function(user) {
+        $scope.selectedUser = user;
+        $scope.setTable();
+    };
+
+    $scope.togglePublished = function() {
+        $scope.showPublished = !$scope.showPublished;
+        $scope.tableParams.reload();
+    };
+
+    $scope.availableAnnotators = function() {
+        var annotators = [];
+        for(var key in $scope.users) {
+            var user = $scope.users[key];
+            if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
+                annotators.push(user);
+            }
+        }
+        return annotators;
+    };
+    
+    $scope.updateAnnotator = function(name, status, annotator) {
+        annotator = !annotator ? craftAnnotatorString($scope.user) : annotator;
+        DocumentRepo.update(name, status, annotator);
+    };
+
+    $scope.updateStatus = function(doc) {
+        DocumentRepo.update(doc.name, 'Assigned');
+    };
+
+    DocumentRepo.listen(function(data) {
+        $scope.tableParams.reload();
+    });
+    
 });
