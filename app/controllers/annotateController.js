@@ -14,6 +14,8 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
+    	$scope.document.getSuggestions();
+
         for(var k in $scope.document.fields) {
             var field = $scope.document.fields[k];
             if(field.values.length === 0) {

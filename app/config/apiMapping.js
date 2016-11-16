@@ -22,6 +22,10 @@ var apiMapping = {
             'controller': 'document', 
             'method': 'get'
         },
+        suggest: {
+            'endpoint': '/private/queue',
+            'controller': 'suggest'
+        },
         page: {
             'endpoint': '/private/queue', 
             'controller': 'document', 
