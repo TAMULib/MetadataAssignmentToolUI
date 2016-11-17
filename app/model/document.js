@@ -8,7 +8,7 @@ metadataTool.model("Document", function Document(WsApi) {
 
     	this.getSuggestions = function() {
     		angular.extend(this.getMapping().suggest, {
-    			method: this.name
+    			method: this.project + '/' + this.name
     		});
     		var promise = WsApi.fetch(this.getMapping().suggest);
     		promise.then(function(response) {
@@ -18,6 +18,11 @@ metadataTool.model("Document", function Document(WsApi) {
     		});
     		return promise;
     	};
+
+      this.push = function() {
+          angular.extend(this.mapping.push, {'method': 'push/' + this.project + '/'+ this.name});
+          return WsApi.fetch(this.mapping.push);
+      };
 
     	return this;
     };

@@ -4,7 +4,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $scope.user = UserService.getCurrentUser();
 
-    $scope.document = DocumentRepo.get($routeParams.documentKey);
+    $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -14,72 +14,80 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
-    	$scope.document.getSuggestions();
+        $scope.document.getSuggestions();
+
+        console.log('received', $scope.document);
+
+        var emptyFieldValue = function(field) {
+            return {
+                value: field.label.profile.defaultValue ? field.label.profile.defaultValue : ''
+            };
+        };
 
         for(var k in $scope.document.fields) {
             var field = $scope.document.fields[k];
             if(field.values.length === 0) {
-                field.values[0] = {'value' : (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
+                field.values.push(emptyFieldValue(field));
             }
         }
 
-        $scope.removeMetadataField = function(field, value) {
-            field.values.splice(field.values.length-1, 1);
+        $scope.removeMetadataField = function(field, index) {
+            field.values.splice(index, 1);
         };
-        
+
         $scope.addMetadataField = function(field) {
-            field.values[field.values.length] = {'value': (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
+            field.values.push(emptyFieldValue(field));
         };
-                    
-        $scope.save = function(document) {
+
+        $scope.save = function() {
             $scope.loadingText = "Saving...";
             $scope.openModal('#pleaseWaitDialog');
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
             });
         };
-        
-        $scope.submit = function(document) {
+
+        $scope.submit = function() {
             $scope.loadingText = "Submitting...";
             $scope.openModal('#pleaseWaitDialog');
-            document.status = 'Annotated';
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.status = 'Annotated';
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
                 $timeout(function() {
                     $location.path('/assignments');
-                }, 500);    
+                }, 500);
             });
         };
-        
-        $scope.accept = function(document) {
+
+        $scope.accept = function() {
             $scope.loadingText = "Accepting...";
             $scope.openModal('#pleaseWaitDialog');
-            document.status = 'Accepted';
-            document.notes = '';
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.status = 'Accepted';
+            $scope.document.notes = '';
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
                 $scope.action = 'view';
             });
         };
-        
-        $scope.push = function(name) {
+
+        $scope.push = function() {
             $scope.loadingText = "Pushing document to repository over REST API...";
             $scope.openModal('#pleaseWaitDialog');
-            DocumentRepo.push(name).then(function(data) {
+            $scope.document.push().then(function(data) {
                 $scope.closeModal();
                 $scope.action = 'view';
-                $scope.document = DocumentRepo.get($routeParams.documentKey);
+                $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
             });
         };
-        
+
         $scope.managerAnnotating = function() {
             return ($routeParams.action == 'annotate');
         };
-        
+
         $scope.managerReviewing = function() {
             return ($routeParams.action == 'review');
         };
-        
+
         $scope.submitRejection = function(rejectionNotes) {
             if(rejectionNotes) {
                 DocumentRepo.update($scope.document.name, 'Rejected', $scope.document.annotator, rejectionNotes).then(function() {
@@ -89,9 +97,9 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
                 });
             }
         };
-        
-        $scope.requiresCuration = function(name) { 
-            DocumentRepo.update(name, 'Requires Curation', $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")");
+
+        $scope.requiresCuration = function() {
+            DocumentRepo.update($scope.document.name, 'Requires Curation', $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")");
             $location.path('/assignments');
         };
 
@@ -112,5 +120,5 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
         };
 
     });
-    
+
 });

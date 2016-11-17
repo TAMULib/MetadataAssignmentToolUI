@@ -1,9 +1,9 @@
 metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentRepo, UserService, UserRepo, ngTableParams) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-    
+
     var view = $window.location.pathname;
-    
+
     $scope.user = UserService.getCurrentUser();
 
     $scope.users = UserRepo.getAll();
@@ -65,9 +65,9 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
                     params.total(page.totalElements);
                     $defer.resolve(page.content);
                 });
-                
+
             }
-        }); 
+        });
 
     };
 
@@ -93,7 +93,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         }
         return annotators;
     };
-    
+
     $scope.updateAnnotator = function(name, status, annotator) {
         annotator = !annotator ? craftAnnotatorString($scope.user) : annotator;
         DocumentRepo.update(name, status, annotator);
@@ -106,5 +106,5 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
     DocumentRepo.listen(function(data) {
         $scope.tableParams.reload();
     });
-    
+
 });

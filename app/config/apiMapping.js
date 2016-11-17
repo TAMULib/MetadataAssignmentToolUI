@@ -18,8 +18,8 @@ var apiMapping = {
     },
     Document: {
         instantiate: {
-            'endpoint': '/private/queue', 
-            'controller': 'document', 
+            'endpoint': '/private/queue',
+            'controller': 'document',
             'method': 'get'
         },
         suggest: {
@@ -27,34 +27,34 @@ var apiMapping = {
             'controller': 'suggest'
         },
         page: {
-            'endpoint': '/private/queue', 
-            'controller': 'document', 
+            'endpoint': '/private/queue',
+            'controller': 'document',
             'method': 'page',
         },
         update: {
-            'endpoint': '/private/queue', 
-            'controller': 'document', 
-            'method': 'update',
-        },
-        save: {
-            'endpoint': '/private/queue', 
-            'controller': 'document', 
+            'endpoint': '/private/queue',
+            'controller': 'document',
             'method': 'save',
         },
+        quickUpdate: {
+            'endpoint': '/private/queue',
+            'controller': 'document',
+            'method': 'update',
+        },
         push: {
-            'endpoint': '/private/queue', 
-            'controller': 'document', 
+            'endpoint': '/private/queue',
+            'controller': 'document',
             'method': 'push',
         },
         listen: {
-            'endpoint': '/channel', 
-            'controller': 'document', 
+            'endpoint': '/channel',
+            'controller': 'document',
         }
     },
     Metadata: {
         instantiate: {
-            'endpoint': '/private/queue', 
-            'controller': 'metadata', 
+            'endpoint': '/private/queue',
+            'controller': 'metadata',
             'method': 'get'
         },
         all: {
@@ -99,8 +99,8 @@ var apiMapping = {
     },
     User: {
         instantiate: {
-            'endpoint': '/private/queue', 
-            'controller': 'user', 
+            'endpoint': '/private/queue',
+            'controller': 'user',
             'method': 'credentials'
         },
         all: {

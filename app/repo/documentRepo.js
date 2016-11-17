@@ -1,28 +1,18 @@
 metadataTool.repo("DocumentRepo", function DocumentRepo(Document, WsApi) {
 
-    this.get = function(name) {
-        angular.extend(this.mapping.instantiate, {'method': 'get/' + name});
+    this.get = function(projectName, documentName) {
+        angular.extend(this.mapping.instantiate, {'method': 'get/' + projectName + '/'+ documentName});
         return new Document();
     };
 
     this.update = function(name, status, user, notes) {
-        angular.extend(this.mapping.update, {'data': {
+        angular.extend(this.mapping.quickUpdate, {'data': {
             'name': name,
             'status': status,
             'user': user,
             'notes': notes
         }});
-        return WsApi.fetch(this.mapping.update);
-    };
-
-    this.save = function(document) {
-        angular.extend(this.mapping.save, {'data': JSON.parse(angular.toJson(document))});
-        return WsApi.fetch(this.mapping.save);
-    };
-
-    this.push = function(name) {
-        angular.extend(this.mapping.push, {'method': 'push/' + name});
-        return WsApi.fetch(this.mapping.push);
+        return WsApi.fetch(this.mapping.quickUpdate);
     };
 
     this.page = function(number, size, field, direction, filters) {
