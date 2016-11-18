@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -15,8 +15,6 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
         $scope.document.getSuggestions();
-
-        console.log('received', $scope.document);
 
         var emptyFieldValue = function(field) {
             return {
@@ -90,17 +88,18 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
         };
 
         $scope.submitRejection = function(rejectionNotes) {
-            if(rejectionNotes) {
-                DocumentRepo.update($scope.document.name, 'Rejected', $scope.document.annotator, rejectionNotes).then(function() {
-                    $timeout(function() {
-                        $location.path('/documents');
-                    }, 500);
-                });
-            }
+            $scope.document.status = 'Rejected';
+            $scope.document.notes = rejectionNotes;
+            $scope.document.save().then(function() {
+                $timeout(function() {
+                    $location.path('/documents');
+                }, 500);
+            });
         };
 
         $scope.requiresCuration = function() {
-            DocumentRepo.update($scope.document.name, 'Requires Curation', $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")");
+            $scope.document.status = 'Requires Curation';
+            $scope.document.save();
             $location.path('/assignments');
         };
 

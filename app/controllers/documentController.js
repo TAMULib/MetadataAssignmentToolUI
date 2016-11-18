@@ -1,8 +1,16 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, DocumentRepo, UserService, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     var view = $window.location.pathname;
+
+    var assignmentsView = function() {
+        return view.indexOf('assignments') > -1;
+    };
+
+    var usersView = function() {
+        return view.indexOf('users') > -1;
+    };
 
     $scope.user = UserService.getCurrentUser();
 
@@ -12,9 +20,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     $scope.showPublished = false;
 
-    var craftAnnotatorString = function(user) {
-        return user.firstName + " " + user.lastName + " (" + user.uin + ")";
-    };
+    $scope.documents = [];
 
     $scope.setTable = function() {
 
@@ -26,8 +32,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
             },
             filter: {
                 name: undefined,
-                status: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (view.indexOf('assignments') > -1 || view.indexOf('users') > -1) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined
+                status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined
             }
         }, {
             total: 0,
@@ -63,7 +69,11 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
                 DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(data) {
                     var page = JSON.parse(data.body).payload.PageImpl;
                     params.total(page.totalElements);
-                    $defer.resolve(page.content);
+                    $scope.documents.length = 0;
+                    angular.forEach(page.content, function(document) {
+                      $scope.documents.push(new Document(document));
+                    });
+                    $defer.resolve($scope.documents);
                 });
 
             }
@@ -74,6 +84,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
     $scope.setTable();
 
     $scope.setSelectedUser = function(user) {
+        $scope.documents.length = 0;
         $scope.selectedUser = user;
         $scope.setTable();
     };
@@ -94,17 +105,40 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         return annotators;
     };
 
-    $scope.updateAnnotator = function(name, status, annotator) {
-        annotator = !annotator ? craftAnnotatorString($scope.user) : annotator;
-        DocumentRepo.update(name, status, annotator);
+    $scope.update = function(document, status) {
+        document.status = status;
+        if(document.status == 'Open') {
+          delete document.annotator;
+        }
+        document.save();
     };
 
-    $scope.updateStatus = function(doc) {
-        DocumentRepo.update(doc.name, 'Assigned');
-    };
-
-    DocumentRepo.listen(function(data) {
-        $scope.tableParams.reload();
+    // TODO: push page of documents into repo to avoid this
+    DocumentRepo.selectiveListen().then(null, null, function(data) {
+        var updated = angular.fromJson(data.body).payload.Document;
+        var isNew = true;
+        for(var i in $scope.documents) {
+            var document = $scope.documents[i];
+            if(updated.id === document.id) {
+                angular.extend(document, updated);
+                isNew = false;
+                if((assignmentsView() || usersView()) && document.status !== 'Assigned') {
+                  $scope.documents.splice(i, 1);
+                }
+                break;
+            }
+        }
+        if(isNew) {
+            if($scope.documents.length < $scope.tableParams.count()) {
+                $scope.documents.push(new Document(updated));
+            }
+            else {
+                AlertService.add({
+                  message: "A new document (" + updated.name + ") has been added! The current page of documents may be stale.",
+                  type: "SUCCESS"
+                }, "app/documents");
+            }
+        }
     });
 
 });

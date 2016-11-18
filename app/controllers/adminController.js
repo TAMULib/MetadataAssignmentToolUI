@@ -25,11 +25,11 @@ metadataTool.controller('AdminController', function ($controller, $injector, $ro
     });
 
     $scope.assumeUser = function(user) {
-    
+
         if($scope.isAssuming() == 'false') {
 
-            if ((typeof user !== 'undefined') && user.netid) {  
-                
+            if ((typeof user !== 'undefined') && user.netid) {
+
                 AssumedControl.assume(user).then(function(assumed) {
                     if(assumed) {
                         $scope.closeModal();
@@ -43,15 +43,15 @@ metadataTool.controller('AdminController', function ($controller, $injector, $ro
             }
 
         } else {
-            
+
             AssumedControl.unassume(user, $scope.user.role).then(function(unassumed) {
                 $route.reload();
             });
-            
+
         }
-        
+
     };
-        
+
     $scope.isMocking = function() {
         if(appConfig.mockRole) {
             return true;
@@ -69,12 +69,12 @@ metadataTool.controller('AdminController', function ($controller, $injector, $ro
 
     $scope.sync = function() {
         WsApi.fetch({
-            endpoint: '/private/queue', 
-            controller: 'admin', 
+            endpoint: '/private/queue',
+            controller: 'admin',
             method: 'sync'
         }).then(function(data) {
             logger.log(data);
         });
     };
-    
+
 });

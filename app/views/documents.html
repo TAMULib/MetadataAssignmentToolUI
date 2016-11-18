@@ -25,7 +25,7 @@
                             </td>
                             <td data-title="'Annotator'" sortable="'annotator'" class="text-center">
                                 <span ng-if="!doc.annotator">
-                                    <button class="btn btn-default" ng-click="updateAnnotator(doc.name, 'Assigned')">
+                                    <button class="btn btn-default" ng-click="update(doc, 'Assigned')">
                                         Claim
                                     </button>
                                 </span>
@@ -55,7 +55,7 @@
                             </td>
                             <td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
                                 <span ng-if="doc.status != 'Accepted' && !doc.annotator && availableAnnotators().length > 0">
-                                    <select ng-model="doc.annotator" ng-change="updateAnnotator(doc.name, 'Assigned', doc.annotator)" class="form-control">
+                                    <select ng-model="doc.annotator" ng-change="update(doc, 'Assigned')" class="form-control">
                                         <option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}} ({{annotator.uin}})">{{annotator.firstName}} {{annotator.lastName}}</option>
                                     </select>
                                 </span>
@@ -69,7 +69,7 @@
                             <td data-title="'Action'" class="text-center">
                                 <a ng-if="doc.status == 'Annotated'" href="annotate/{{doc.project}}/{{doc.name}}/review" class="btn btn-default">Review</a>
                                 <a ng-if="doc.status == 'Accepted' || doc.status == 'Pending' || doc.status == 'Published'" href="annotate/{{doc.project}}/{{doc.name}}/view" class="btn btn-default">View</a>
-                                <a ng-if="doc.status == 'Requires Curation'" href class="btn btn-default" ng-click="updateStatus(doc)">Resume Annotation</a>
+                                <a ng-if="doc.status == 'Requires Curation'" href class="btn btn-default" ng-click="update(doc, 'Assigned')">Resume Annotation</a>
                             </td>
                         </tr>
                     </tbody>

@@ -36,13 +36,19 @@
 
         <tamuheader title="MAGPIE"></tamuheader>
 
-        <alerts types="WARNING, ERROR"></alerts>
+        <alerts types="WARNING,ERROR"></alerts>
 
         <alerts
             types="SUCCESS,WARNING,ERROR"
             channels="app/export"
             exclusive
             fixed>
+        </alerts>
+
+        <alerts
+          types="SUCCESS,WARNING,ERROR"
+          channels="app/documents"
+          exclusive>
         </alerts>
 
         <div class="container-fluid">
@@ -128,6 +134,10 @@
     <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
 
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+    <!-- required by core fileapi -->
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	  <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
 
     <!--  Core libraries -->

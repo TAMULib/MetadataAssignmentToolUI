@@ -17,6 +17,7 @@ var apiMapping = {
         }
     },
     Document: {
+        lazy: true,
         instantiate: {
             'endpoint': '/private/queue',
             'controller': 'document',
@@ -36,17 +37,16 @@ var apiMapping = {
             'controller': 'document',
             'method': 'save',
         },
-        quickUpdate: {
-            'endpoint': '/private/queue',
-            'controller': 'document',
-            'method': 'update',
-        },
         push: {
             'endpoint': '/private/queue',
             'controller': 'document',
             'method': 'push',
         },
         listen: {
+            'endpoint': '/channel',
+            'controller': 'documents',
+        },
+        selectiveListen: {
             'endpoint': '/channel',
             'controller': 'document',
         }
