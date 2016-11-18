@@ -5,16 +5,10 @@ metadataTool.model("Document", function Document(WsApi) {
     	var document = this;
 
     	this.getSuggestions = function() {
-    		angular.extend(this.getMapping().suggest, {
-    			method: this.project + '/' + this.name
-    		});
-    		var promise = WsApi.fetch(this.getMapping().suggest);
-    		promise.then(function(response) {
-    			angular.extend(document, {
-    				suggestions: angular.fromJson(response.body).payload["ArrayList<Suggestion>"]
-    			});
-    		});
-    		return promise;
+      		angular.extend(this.getMapping().suggest, {
+      			   method: this.project + '/' + this.name
+      		});
+          return WsApi.fetch(this.getMapping().suggest);
     	};
 
       this.push = function() {
