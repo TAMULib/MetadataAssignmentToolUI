@@ -20,6 +20,7 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
         var emptyFieldValue = function(field) {
             return {
+                field: field.id,
                 value: field.label.profile.defaultValue ? field.label.profile.defaultValue : ''
             };
         };
