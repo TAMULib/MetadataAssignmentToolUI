@@ -120,6 +120,36 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
             return false;
         };
 
+        $scope.addSuggestion = function(field, suggestion) {
+            if(field.values[0].value.length === 0) {
+              field.values[0].value = suggestion.value;
+            }
+            else {
+              var suggestedFieldValue = emptyFieldValue(field);
+              suggestedFieldValue.value = suggestion.value;
+              field.values.push(suggestedFieldValue);
+            }
+        };
+
     });
 
+});
+
+metadataTool.filter('selected', function() {
+    return function(suggestions, fieldValues) {
+        var output = [];
+        for(var i in suggestions) {
+          var suggestion = suggestions[i];
+          var suggest = true;
+          for(var j in fieldValues) {
+              if(suggestion.value == fieldValues[j].value) {
+                  suggest = false;
+              }
+          }
+          if(suggest) {
+            output.push(suggestion);
+          }
+        }
+        return output;
+    }
 });

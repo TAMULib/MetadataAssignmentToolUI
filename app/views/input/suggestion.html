@@ -1,0 +1,13 @@
+<ng-include src="'views/input/text.html'"></ng-include>
+
+<div class="suggestions-expand"><a href ng-click="suggestions = !suggestions">Suggestions</a></div>
+
+<div class="suggestions-section col-sm-12" ng-class="{'suggestions-open': suggestions, 'suggestions-closed': !suggestions}">
+    <div ng-if="document.suggestions" class="list-group">
+        <a class="list-group-item" ng-repeat="suggestion in document.suggestions | selected:field.values" href ng-click="addSuggestion(field, suggestion)">
+            <span class="badge">{{suggestion.occurrences}}</span>
+            {{suggestion.value}}
+        </a>
+    </div>
+    <span ng-if="!document.suggestions">No suggestions available!</span>
+</div>

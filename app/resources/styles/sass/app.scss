@@ -193,3 +193,27 @@ main footer {
 .alert-wrapper {
   word-wrap: break-word;
 }
+
+.suggestions-expand {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.suggestions-section {
+  -webkit-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  -moz-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  -o-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  overflow: scroll;
+}
+
+.suggestions-closed {
+  opacity: 0;
+  max-height: 0px;
+}
+
+.suggestions-open {
+  opacity: 1;
+  max-height: 500px;
+}
