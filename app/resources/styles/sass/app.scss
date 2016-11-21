@@ -126,6 +126,8 @@ main footer {
 
 .label-add {
   color: #4A5C81;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .label-add:hover {
@@ -216,4 +218,8 @@ main footer {
 .suggestions-open {
   opacity: 1;
   max-height: 500px;
+}
+
+.suggestion-popup {
+  z-index: 999;
 }

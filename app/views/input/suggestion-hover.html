@@ -1,0 +1,4 @@
+<ul>
+  <li ng-repeat="synonym in suggestion.synonyms">{{synonym.value}} ({{synonym.occurrences}})</li>
+</ul>
+<span ng-if="suggestion.synonyms.length == 0">Not substituded</span>

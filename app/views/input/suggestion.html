@@ -1,12 +1,21 @@
 <ng-include src="'views/input/text.html'"></ng-include>
 
-<div class="suggestions-expand"><a href ng-click="showSuggestions = !showSuggestions">Suggestions</a></div>
+<div class="suggestions-expand"><a href ng-click="showSuggestions = !showSuggestions">Suggestions ({{suggestions.length || 'Loading...'}})</a></div>
 
 <div class="suggestions-section col-sm-10" ng-class="{'suggestions-open': showSuggestions, 'suggestions-closed': !showSuggestions}">
     <div ng-if="suggestions" class="list-group">
         <a class="list-group-item" ng-repeat="suggestion in suggestions | selected:field.values" href ng-click="addSuggestion(field, suggestion)">
-            <span class="badge">{{suggestion.occurrences}}</span>
-            {{suggestion.value}}
+            <span
+              class="badge suggestion-popup"
+              popover-title="{{getPopoverTitle(suggestion)}}"
+              popover-placement="left"
+              uib-popover-template="'views/input/suggestion-hover.html'"
+              popover-is-open="show"
+              ng-mouseenter="show = true"
+              ng-mouseleave="show = false">
+                {{suggestion.occurrences}}
+            </span>
+            {{suggestion.value}} {{show}}
         </a>
     </div>
     <span ng-if="!suggestions">No suggestions available!</span>

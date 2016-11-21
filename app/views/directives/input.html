@@ -1,4 +1,5 @@
 <div>
     <label ng-required="field.label.profile.required">{{field.label.profile.gloss}}<span ng-show="{{field.label.profile.required}}" class="requiredField"></span></label>
+    <span id="add-{{$index+1}}" class="glyphicon glyphicon-plus-sign label-add" ng-if="field.label.profile.repeatable" ng-click="addMetadataField(field)"></span>
     <ng-include src="inputTemplate"></ng-include>
 </div>

@@ -11,7 +11,6 @@
                    typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue"
                    spellcheck="true">
             </input>
-            <span id="add-{{$index+1}}" class="input-group-addon glyphicon glyphicon-plus-sign label-add" ng-if="field.label.profile.repeatable && $index === 0" ng-click="addMetadataField(field)"></span>
             <span id="remove-{{$index+1}}" class="input-group-addon glyphicon glyphicon-minus-sign label-remove" ng-if="field.label.profile.repeatable && $index > 0" ng-click="removeMetadataField(field, $index)"></span>
         </div>
     </li>
