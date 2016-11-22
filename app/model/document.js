@@ -12,8 +12,8 @@ metadataTool.model("Document", function Document(WsApi) {
     	};
 
       this.push = function() {
-          angular.extend(this.mapping.push, {'method': 'push/' + this.project + '/'+ this.name});
-          return WsApi.fetch(this.mapping.push);
+          angular.extend(this.getMapping().push, {'method': 'push/' + this.project + '/'+ this.name});
+          return WsApi.fetch(this.getMapping().push);
       };
 
     	return this;
