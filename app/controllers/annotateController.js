@@ -15,7 +15,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
         $scope.document.getSuggestions().then(function(response) {
-            $scope.suggestions = angular.fromJson(response.body).payload["ArrayList<Suggestion>"];
+            var payload = angular.fromJson(response.body).payload;
+            $scope.suggestions = payload["ArrayList<Suggestion>"] != undefined ? payload["ArrayList<Suggestion>"] : payload["ArrayList"];
         });
 
         var emptyFieldValue = function(field) {
