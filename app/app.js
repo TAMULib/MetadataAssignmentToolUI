@@ -1,9 +1,10 @@
-var metadataTool = angular.module('metadataTool', 
+var metadataTool = angular.module('metadataTool',
 [
     'ngRoute',
     'ngTable',
     'ngSanitize',
     'ngCsv',
+    'ngFileUpload',
     'metadataTool.version'
 ]);
 
@@ -20,16 +21,20 @@ setUpApp(function(connected) {
     metadataTool.constant('api', apiMapping);
 
     angular.element(document).ready(function() {
+
         var doc = angular.element(document);
         var injector = doc.injector();
         try {
+
             // If the app is already bootstrapped then an error will be thrown
-            angular.bootstrap(document, ['metadataTool', 'core', 'ui.bootstrap']);
+            angular.bootstrap(document, ['core', 'metadataTool', 'ui.bootstrap']);
+            
             if(!window.stompClient.connected) {
                 AlertService = injector.get('AlertService');
                 AlertService.add({type: "ERROR", message: "Web service cannot be reached."}, "/app/errors");
             }
         } catch (e) {
+
             /*
              * If websockets dissconnect the app will attempt to re-bootstrap. Since the app is already running we will
              * end up in this block, and can generate an error indicating the disconnect.

@@ -1,10 +1,10 @@
-metadataTool.controller('AnnotateController', function($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     $scope.user = UserService.getCurrentUser();
 
-    $scope.document = DocumentRepo.get($routeParams.documentKey);
+    $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -14,82 +14,95 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
 
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function() {
 
+        $scope.document.getSuggestions().then(function(response) {
+            var payload = angular.fromJson(response.body).payload;
+            $scope.suggestions = payload["ArrayList<Suggestion>"] != undefined ? payload["ArrayList<Suggestion>"] : payload["ArrayList"];
+        });
+
+        var emptyFieldValue = function(field) {
+            return {
+                field: field.id,
+                value: field.label.profile.defaultValue ? field.label.profile.defaultValue : ''
+            };
+        };
+
         for(var k in $scope.document.fields) {
             var field = $scope.document.fields[k];
             if(field.values.length === 0) {
-                field.values[0] = {'value' : (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
+                field.values.push(emptyFieldValue(field));
             }
         }
 
-        $scope.removeMetadataField = function(field, value) {
-            field.values.splice(field.values.length-1, 1);
+        $scope.removeMetadataField = function(field, index) {
+            field.values.splice(index, 1);
         };
-        
+
         $scope.addMetadataField = function(field) {
-            field.values[field.values.length] = {'value': (field.label.profile.defaultValue) ? field.label.profile.defaultValue : ''};
+            field.values.push(emptyFieldValue(field));
         };
-                    
-        $scope.save = function(document) {
+
+        $scope.save = function() {
             $scope.loadingText = "Saving...";
             $scope.openModal('#pleaseWaitDialog');
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
             });
         };
-        
-        $scope.submit = function(document) {
+
+        $scope.submit = function() {
             $scope.loadingText = "Submitting...";
             $scope.openModal('#pleaseWaitDialog');
-            document.status = 'Annotated';
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.status = 'Annotated';
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
                 $timeout(function() {
                     $location.path('/assignments');
-                }, 500);    
+                }, 500);
             });
         };
-        
-        $scope.accept = function(document) {
+
+        $scope.accept = function() {
             $scope.loadingText = "Accepting...";
             $scope.openModal('#pleaseWaitDialog');
-            document.status = 'Accepted';
-            document.notes = '';
-            DocumentRepo.save(document).then(function(data) {
+            $scope.document.status = 'Accepted';
+            $scope.document.notes = '';
+            $scope.document.save().then(function(data) {
                 $scope.closeModal();
                 $scope.action = 'view';
             });
         };
-        
-        $scope.push = function(name) {
+
+        $scope.push = function() {
             $scope.loadingText = "Pushing document to repository over REST API...";
             $scope.openModal('#pleaseWaitDialog');
-            DocumentRepo.push(name).then(function(data) {
+            $scope.document.push().then(function(data) {
                 $scope.closeModal();
                 $scope.action = 'view';
-                $scope.document = DocumentRepo.get($routeParams.documentKey);
+                $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
             });
         };
-        
+
         $scope.managerAnnotating = function() {
             return ($routeParams.action == 'annotate');
         };
-        
+
         $scope.managerReviewing = function() {
             return ($routeParams.action == 'review');
         };
-        
+
         $scope.submitRejection = function(rejectionNotes) {
-            if(rejectionNotes) {
-                DocumentRepo.update($scope.document.name, 'Rejected', $scope.document.annotator, rejectionNotes).then(function() {
-                    $timeout(function() {
-                        $location.path('/documents');
-                    }, 500);
-                });
-            }
+            $scope.document.status = 'Rejected';
+            $scope.document.notes = rejectionNotes;
+            $scope.document.save().then(function() {
+                $timeout(function() {
+                    $location.path('/documents');
+                }, 500);
+            });
         };
-        
-        $scope.requiresCuration = function(name) { 
-            DocumentRepo.update(name, 'Requires Curation', $scope.user.firstName + " " + $scope.user.lastName + " (" + $scope.user.uin + ")");
+
+        $scope.requiresCuration = function() {
+            $scope.document.status = 'Requires Curation';
+            $scope.document.save();
             $location.path('/assignments');
         };
 
@@ -109,6 +122,36 @@ metadataTool.controller('AnnotateController', function($controller, $http, $loca
             return false;
         };
 
+        $scope.addSuggestion = function(field, suggestion) {
+            if(field.values[0].value.length === 0) {
+              field.values[0].value = suggestion.value;
+            }
+            else {
+              var suggestedFieldValue = emptyFieldValue(field);
+              suggestedFieldValue.value = suggestion.value;
+              field.values.push(suggestedFieldValue);
+            }
+        };
+
     });
-    
+
+});
+
+metadataTool.filter('selected', function() {
+    return function(suggestions, fieldValues) {
+        var output = [];
+        for(var i in suggestions) {
+          var suggestion = suggestions[i];
+          var suggest = true;
+          for(var j in fieldValues) {
+              if(suggestion.value == fieldValues[j].value) {
+                  suggest = false;
+              }
+          }
+          if(suggest) {
+            output.push(suggestion);
+          }
+        }
+        return output;
+    }
 });

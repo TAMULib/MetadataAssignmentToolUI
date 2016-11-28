@@ -17,7 +17,7 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
         when('/myview', {
             templateUrl: 'views/myview.html'
         }).
-        when('/annotate/:documentKey/:action', {
+        when('/annotate/:projectKey/:documentKey/:action', {
             templateUrl: 'views/annotate.html'
         }).
         when('/restrictedAccess', {

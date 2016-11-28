@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" type='text/css' href="bower_components/html5-boilerplate/css/normalize.css">
     <link rel="stylesheet" type='text/css' href="bower_components/html5-boilerplate/css/main.css">
-    
+
     <link rel="stylesheet" type='text/css' href="bower_components/ng-table/dist/ng-table.css">
     <link rel="stylesheet" type='text/css' href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
@@ -36,13 +36,19 @@
 
         <tamuheader title="MAGPIE"></tamuheader>
 
-        <alerts types="WARNING, ERROR"></alerts>
+        <alerts types="WARNING,ERROR"></alerts>
 
-        <alerts 
-            types="SUCCESS,WARNING,ERROR" 
+        <alerts
+            types="SUCCESS,WARNING,ERROR"
             channels="app/export"
             exclusive
             fixed>
+        </alerts>
+
+        <alerts
+          types="SUCCESS,WARNING,ERROR"
+          channels="app/documents"
+          exclusive>
         </alerts>
 
         <div class="container-fluid">
@@ -50,22 +56,22 @@
                 <div class="col-md-12 appContent" ng-controller="AdminController">
 
                     <nav class="userMenu">
-                        
+
                         <div>
-                            <modal modal-id="assumeUserModal" 
+                            <modal modal-id="assumeUserModal"
                                    modal-view="bower_components/core/app/views/modals/assumeUserModal.html"
                                    modal-header-class="modal-header-primary"></modal>
-                            <modal modal-id="exportMetadataModal" 
+                            <modal modal-id="exportMetadataModal"
                                    modal-controller="ExportController"
                                    modal-view="views/modals/exportMetadataModal.html"
-                                   modal-header-class="modal-header-primary"></modal>               
+                                   modal-header-class="modal-header-primary"></modal>
                         </div>
-                        
+
                         <div class="dropdown">
                             <span class="glyphicon glyphicon-user"></span>
-                            
+
                             <a class="dropdown-toggle toggle-href" data-toggle="dropdown" aria-expanded="false"><username></username> <span class="caret"></span></a>
-                            
+
                             <ul class="dropdown-menu" role="menu">
                                 <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
                                 <li><a href="users">Manage Users</a></li>
@@ -80,7 +86,7 @@
                                 <li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
                             </ul>
                         </div>
-                                
+
                     </nav>
 
                     <div class="row" ng-controller="NavigationController">
@@ -109,25 +115,29 @@
 
     <!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
 
-    
+
     <!-- Bower component -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    
+
     <script src="bower_components/sockjs-client/dist/sockjs.min.js"></script>
     <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
-        
+
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-loader/angular-loader.js"></script>
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-    
+
     <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
-    
+
     <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
-    
+
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+    <!-- required by core fileapi -->
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	  <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
 
     <!--  Core libraries -->
@@ -152,7 +162,7 @@
         <script src="components/version/interpolate-filter.js"></script>
 
 
-        <!-- Application Start -->  
+        <!-- Application Start -->
         <script src="bower_components/core/app/core.js"></script>
         <script src="bower_components/core/app/setup.js"></script>
         <script src="bower_components/core/app/config/logging.js"></script>
@@ -202,27 +212,28 @@
 
     <!-- endbuild -->
 
-        
+
 
 
     <!--  App libraries -->
 
     <!-- build:js resources/scripts/app_concat.js -->
-    
-        <!-- Application Start -->      
-        
+
+        <!-- Application Start -->
+
         <script src="app.js"></script>
         <script src="config/runTime.js"></script>
         <script src="config/routes.js"></script>
 
-         <!-- Directives -->
+        <!-- Directives -->
         <script src="directives/formatDirective.js"></script>
+        <script src="directives/inputDirective.js"></script>
 
         <!-- Services -->
 
         <!-- Factories -->
 
-        <!-- Repos -->      
+        <!-- Repos -->
         <script src="repo/abstractAppRepo.js"></script>
         <script src="repo/userRepo.js"></script>
         <script src="repo/documentRepo.js"></script>

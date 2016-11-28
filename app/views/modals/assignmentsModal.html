@@ -1,6 +1,6 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
     <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Assigned Documments for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
+    <h4 class="modal-title">Assigned Documents for {{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
 </div>
 <div class="modal-body">
     <table ng-table="tableParams" class="table table-hover table-condensed">
@@ -13,7 +13,7 @@
                     {{doc.status}}
                 </td>
                 <td data-title="'Unassign'" class="text-center">
-                    <button ng-click="updateAnnotator(doc.name, 'Open', selectedUser.uin)" class="btn btn-default">
+                    <button ng-click="update(doc, 'Open')" class="btn btn-default">
                         Unassign
                     </button>
                 </td>
