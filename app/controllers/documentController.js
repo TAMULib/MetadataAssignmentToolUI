@@ -134,7 +134,7 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
             }
             else {
                 AlertService.add({
-                  message: "A new document (" + updated.name + ") has been added! The current page of documents may be stale.",
+                  message: "A new document (" + updated.name + ") has been added or modified! The current page of documents may be stale.",
                   type: "SUCCESS"
                 }, "app/documents");
             }
