@@ -1,17 +1,11 @@
 <ul class="list-unstyled">
-    <li ng-repeat="fieldValue in field.values">
-        <div class="metadata-input" ng-class="{'input-group': field.label.profile.repeatable}">
-            <span id="id-{{$index+1}}" class="input-group-addon" ng-if="field.label.profile.repeatable">{{$index+1}}</span>
-            <input format name="{{field.label.profile.gloss}}"
-                   ng-required="field.label.profile.required"
-                   class="form-control"
-                   type="text"
-                   ng-readonly="field.label.profile.readOnly"
-                   ng-model="field.values[$index].value"
-                   typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue"
-                   spellcheck="true">
-            </input>
-            <span id="remove-{{$index+1}}" class="input-group-addon glyphicon glyphicon-minus-sign label-remove" ng-if="field.label.profile.repeatable && $index > 0" ng-click="removeMetadataField(field, $index)"></span>
-        </div>
-    </li>
+  <li ng-repeat="fieldValue in field.values">
+    <div class="metadata-input" ng-class="{'input-group': field.label.profile.repeatable}">
+      <span id="id-{{$index+1}}" class="input-group-addon" ng-if="field.label.profile.repeatable">{{$index+1}}</span>
+      <input format name="{{field.label.profile.gloss}}" ng-required="field.label.profile.required" class="form-control" type="text" ng-readonly="field.label.profile.readOnly" ng-model="field.values[$index].value" typeahead="vocab for vocab in getControlledVocabulary(field.label.name) | filter:$viewValue"
+          spellcheck="true">
+      </input>
+      <span id="remove-{{$index+1}}" class="input-group-addon glyphicon glyphicon-minus-sign label-remove" ng-if="field.label.profile.repeatable && $index > 0" ng-click="removeMetadataField(field, $index)"></span>
+    </div>
+  </li>
 </ul>
