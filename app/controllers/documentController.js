@@ -110,6 +110,11 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         if(document.status == 'Open') {
           delete document.annotator;
         }
+        else {
+          if(!document.annotator) {
+            document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName + ' (' + $scope.user.uin + ')';
+          }
+        }
         document.save();
     };
 
