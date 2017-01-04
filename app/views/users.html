@@ -1,13 +1,11 @@
 <br/>
 <div class="row" ng-controller="UserRepoController">
 
-    
-
     <!-- ADMINS AND MANAGERS ONLY -->
     <div ng-if="!isManager() && !isAdmin()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
     <div ng-if="isManager() || isAdmin()" class="col-12">
-        <div class="panel panel-default users-container">           
+        <div class="panel panel-default users-container">
             <div class="panel-heading">
                 <h3 class="panel-title">Users</h3>
             </div>
@@ -36,8 +34,8 @@
                                 </select>
                             </td>
                             <td ng-if="(isAdmin() || isManager()) && (thisUser.role == 'ROLE_ANNOTATOR' || thisUser.role == 'ROLE_MANAGER' || thisUser.role == 'ROLE_ADMIN')">
-                                
-                                <modal modal-id="{{thisUser.uin}}AssignmentsModal" 
+
+                                <modal modal-id="{{thisUser.uin}}AssignmentsModal"
                                        modal-view="views/modals/assignmentsModal.html"
                                        modal-btn-classes="btn btn-primary"
                                        modal-controller="DocumentController"
@@ -46,12 +44,12 @@
                                        modal-header-class="modal-header-primary">
                                        View Assignments
                                 </modal>
-                                
+
                             </td>
                             <td ng-if="!((isAdmin() || isManager()) && (thisUser.role == 'ROLE_ANNOTATOR' || thisUser.role == 'ROLE_MANAGER' || thisUser.role == 'ROLE_ADMIN'))"></td>
                             <td ng-if="(isAdmin() || isManager()) && canDelete(thisUser)">
 
-                                <modal modal-id="ConfirmDeleteUserModal" 
+                                <modal modal-id="ConfirmDeleteUserModal"
                                        modal-view="views/modals/confirmDeleteUserModal.html"
                                        modal-btn-classes="btn btn-danger"
                                        modal-header-class="modal-header-primary">
@@ -66,6 +64,5 @@
             </div>
         </div>
     </div>
-
 
 </div>

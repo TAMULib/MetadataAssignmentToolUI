@@ -30,7 +30,7 @@ main footer {
   cursor: pointer;
 }
 
-.tab-pane .well { 
+.tab-pane .well {
   min-height: 600px
 }
 
@@ -116,12 +116,18 @@ main footer {
   line-height: 1.1;
 }
 
-.metadata-label {
+.metadata-input {
   margin-bottom: 15px;
+}
+
+.metadata-input .input-group-addon.glyphicon {
+  top: 0px;
 }
 
 .label-add {
   color: #4A5C81;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .label-add:hover {
@@ -188,4 +194,32 @@ main footer {
 
 .alert-wrapper {
   word-wrap: break-word;
+}
+
+.suggestions-expand {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.suggestions-section {
+  -webkit-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  -moz-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  -o-transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  overflow: scroll;
+}
+
+.suggestions-closed {
+  opacity: 0;
+  max-height: 0px;
+}
+
+.suggestions-open {
+  opacity: 1;
+  max-height: 500px;
+}
+
+.suggestion-popup {
+  z-index: 999;
 }

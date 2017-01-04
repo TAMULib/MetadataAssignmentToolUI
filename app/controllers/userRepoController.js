@@ -1,7 +1,7 @@
 metadataTool.controller('UserRepoController', function ($controller, $location, $injector, $scope, $route, StorageService, UserService) {
-    
+
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
-    
+
     $scope.user = UserService.getCurrentUser();
 
     if($scope.isAdmin() || $scope.isManager()) {
@@ -11,9 +11,9 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
         $scope.userUpdated = {};
 
         $scope.userRepo = UserRepo.getAll();
-            
+
         $scope.updateRole = function(user) {
-            
+
             angular.extend($scope.userUpdated, user);
 
             user.save();
@@ -49,7 +49,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
         };
 
         $scope.canDelete = function(user) {
-            var canDelete;            
+            var canDelete;
             if($scope.isAdmin()) {
                 canDelete = true;
             }
