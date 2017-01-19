@@ -87,6 +87,11 @@ var apiMapping = {
         }
     },
     Project: {
+        batchpublish: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'batchpublish'
+        },
         all: {
             'endpoint': '/private/queue',
             'controller': 'project',

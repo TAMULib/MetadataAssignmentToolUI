@@ -1,0 +1,22 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Batch Publish</h4>
+</div>
+
+<form name="batchPublishModalForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Project</label>
+            <select ng-options="project.name for project in projects" ng-model="batchProject" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label>Repository</label>
+			<select ng-options="repository.name for repository in batchProject.repositories" ng-model="batchRepository" class="form-control"></select>
+        </div>
+		<div ng-repeat="document in batchProject.documents">{{document.name}}</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="publishDocuments();">Publish Documents</button>
+        <button type="button" class="btn btn-default" ng-click="closeModal();">Cancel</button>
+    </div>
+</form>
