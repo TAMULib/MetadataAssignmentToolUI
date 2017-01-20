@@ -13,10 +13,9 @@
             <label>Repository</label>
 			<select ng-options="repository.name for repository in batchProject.repositories" ng-model="batchRepository" class="form-control"></select>
         </div>
-		<div ng-repeat="document in batchProject.documents">{{document.name}}</div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="publishDocuments();">Publish Documents</button>
+        <button type="button" class="btn btn-default" ng-click="publishDocuments(batchProject,batchRepository);" ng-disabled="isPublishing">{{isPublishing ? 'Publishing...':'Publish Documents'}}</button>
         <button type="button" class="btn btn-default" ng-click="closeModal();">Cancel</button>
     </div>
 </form>
