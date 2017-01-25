@@ -15,8 +15,8 @@ metadataTool.repo("MetadataRepo", function MetadataRepo(Metadata, WsApi) {
         return WsApi.fetch(this.mapping.export);
     };
 
-    this.getHeaders = function(project) {
-        angular.extend(this.mapping.headers, {'method': 'headers/' + project});
+    this.getHeaders = function(format, project) {
+        angular.extend(this.mapping.headers, {'method': 'headers/' + format +"/"+ project});
         return WsApi.fetch(this.mapping.headers);
     };
 

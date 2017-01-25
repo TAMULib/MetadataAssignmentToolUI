@@ -2,7 +2,7 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
-    $scope.formats = ["csv", "saf"];
+    $scope.formats = ["dspacecsv", "saf", "spotlight"];
 
     $scope.format = $scope.formats[0];
 
@@ -21,11 +21,11 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
                 AlertService.add(angular.fromJson(data.body).meta, "app/export");
             });
         }
-        else if(format == "csv") {
+        else if(format == "dspacecsv" || format == "spotlight") { 
+
             $scope.headers = [];
 
-            return MetadataRepo.getHeaders(project).then(function(data) {
-
+            return MetadataRepo.getHeaders(format, project).then(function(data) {
                 var headers = angular.fromJson(data.body).payload["ArrayList<String>"];
 
                 for(var key in headers) {
@@ -36,6 +36,9 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
                     $scope.closeModal();
                     var resObj = angular.fromJson(data.body);
                     AlertService.add(resObj.meta, "app/export");
+
+                    console.log(headers, resObj.payload["ArrayList<ArrayList>"]);
+
                     return resObj.payload["ArrayList<ArrayList>"];
                 });
 
