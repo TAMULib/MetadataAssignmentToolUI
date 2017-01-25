@@ -11,12 +11,15 @@ metadataTool.repo("MetadataRepo", function MetadataRepo(Metadata, WsApi) {
     };
 
     this.export = function(project, format) {
+
+        console.log(project, format);
+
         angular.extend(this.mapping.export, {'method': format + '/' + project});
         return WsApi.fetch(this.mapping.export);
     };
 
-    this.getHeaders = function(project) {
-        angular.extend(this.mapping.headers, {'method': 'headers/' + project});
+    this.getHeaders = function(format, project) {
+        angular.extend(this.mapping.headers, {'method': 'headers/' + format +"/"+ project});
         return WsApi.fetch(this.mapping.headers);
     };
 
