@@ -5,25 +5,29 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
         appConfig.webService + "/**"
     ]);
     $routeProvider.
-        when('/users', {
-            templateUrl: 'views/users.html'
-        }).
-        when('/assignments', {
-            templateUrl: 'views/assignments.html'
-        }).
-        when('/documents', {
-            templateUrl: 'views/documents.html'
-        }).
-        when('/myview', {
-            templateUrl: 'views/myview.html'
-        }).
-        when('/annotate/:projectKey/:documentKey/:action', {
-            templateUrl: 'views/annotate.html'
-        }).
-        when('/restrictedAccess', {
-            templateUrl: 'views/restrictedAccess.html'
-        }).
-        otherwise({redirectTo: '/',
-            templateUrl: 'views/home.html'
-        });
+    when('/users', {
+        templateUrl: 'views/users.html'
+    }).
+    when('/assignments', {
+        templateUrl: 'views/assignments.html'
+    }).
+    when('/documents', {
+        redirectTo: '/documents/1',
+    }).
+    when('/documents/:page', {
+        templateUrl: 'views/documents.html'
+    }).
+    when('/myview', {
+        templateUrl: 'views/myview.html'
+    }).
+    when('/annotate/:projectKey/:documentKey/:action', {
+        templateUrl: 'views/annotate.html'
+    }).
+    when('/restrictedAccess', {
+        templateUrl: 'views/restrictedAccess.html'
+    }).
+    otherwise({
+        redirectTo: '/',
+        templateUrl: 'views/home.html'
+    });
 }]);

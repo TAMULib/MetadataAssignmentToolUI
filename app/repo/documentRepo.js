@@ -1,35 +1,70 @@
-metadataTool.repo("DocumentRepo", function DocumentRepo(Document, WsApi) {
+metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
 
-    this.get = function(projectName, documentName) {
-        // TODO: check repo first then fetch, requires page being pushed to repo
-        angular.extend(this.mapping.instantiate, {'method': 'get/' + projectName + '/'+ documentName});
-        return new Document();
+    var documentRepo = this;
+
+    documentRepo.get = function(projectName, documentName) {
+        var document;
+
+        for (var d in documentRepo.getAll()) {
+            if (d.project === projectName && d.name === documentName) {
+                document = d;
+                break;
+            }
+        }
+
+        if (document === undefined) {
+            document = new Document();
+            angular.extend(documentRepo.mapping.instantiate, {
+                'method': 'get/' + projectName + '/' + documentName
+            });
+            document.fetch();
+        }
+
+        return document;
     };
 
-    this.page = function(number, size, field, direction, filters) {
+    documentRepo.page = function(number, size, field, direction, filters) {
 
-        if(!field) field = 'name';
-        if(!direction) direction = 'asc';
+        return $q(function(resolve) {
+            if (!field) field = 'name';
+            if (!direction) direction = 'asc';
 
-        angular.extend(this.mapping.page, {'data': {
-            'page': {
-                'number': number,
-                'size': size
-            },
-            'sort': {
-                'field': field,
-                'direction': direction
-            },
-            'filters': filters
-        }});
+            angular.extend(documentRepo.mapping.page, {
+                'data': {
+                    'page': {
+                        'number': number,
+                        'size': size
+                    },
+                    'sort': {
+                        'field': field,
+                        'direction': direction
+                    },
+                    'filters': filters
+                }
+            });
 
-        return WsApi.fetch(this.mapping.page);
+            WsApi.fetch(documentRepo.mapping.page).then(function(data) {
+                var page = angular.fromJson(data.body).payload.PageImpl;
+                documentRepo.empty();
+                documentRepo.addAll(page.content);
+                resolve(page);
+            });
+        });
+
     };
 
-    this.selectiveListen = function() {
-        return WsApi.listen(this.mapping.selectiveListen);
+    WsApi.listen(documentRepo.mapping.listenForUpdate).then(null, null, function(data) {
+        var document = angular.fromJson(data.body).payload.Document;
+        var docInRepo = documentRepo.findById(document.id);
+        if (docInRepo !== undefined) {
+            angular.extend(docInRepo, document);
+        }
+    });
+
+    documentRepo.listenForNew = function() {
+        return WsApi.listen(documentRepo.mapping.listenForNew);
     };
 
-    return this;
+    return documentRepo;
 
 });

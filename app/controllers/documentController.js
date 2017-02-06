@@ -1,6 +1,8 @@
-metadataTool.controller('DocumentController', function ($controller, $route, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function($controller, $location, $route, $routeParams, $scope, $timeout, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams) {
 
-    angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+    angular.extend(this, $controller('AbstractController', {
+        $scope: $scope
+    }));
 
     var view = $window.location.pathname;
 
@@ -20,12 +22,10 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     $scope.showPublished = false;
 
-    $scope.documents = [];
-
     $scope.setTable = function() {
 
         $scope.tableParams = new ngTableParams({
-            page: 1,
+            page: $routeParams.page,
             count: 10,
             sorting: {
                 name: 'asc'
@@ -38,7 +38,8 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
         }, {
             total: 0,
             getData: function($defer, params) {
-                var key; for(key in params.sorting()) {}
+                var key;
+                for (key in params.sorting()) {}
 
                 var filters = {
                     name: [],
@@ -46,35 +47,32 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
                     annotator: []
                 };
 
-                if(params.filter().name !== undefined) {
+                if (params.filter().name !== undefined) {
                     filters.name.push(params.filter().name);
                 }
 
-                if(params.filter().status !== undefined) {
+                if (params.filter().status !== undefined) {
                     filters.status.push(params.filter().status);
-                    if(params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
+                    if (params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
                         filters.status.push('Rejected');
                         filters.status.push('!Accepted');
                     }
                 }
 
-                if(params.filter().status != 'Published' && !$scope.showPublished) {
+                if (params.filter().status != 'Published' && !$scope.showPublished) {
                     filters.status.push('!Published');
                 }
 
-                if(params.filter().annotator !== undefined) {
+                if (params.filter().annotator !== undefined) {
                     filters.annotator.push(params.filter().annotator);
                 }
 
-                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(data) {
-                    var page = JSON.parse(data.body).payload.PageImpl;
+                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(page) {
                     params.total(page.totalElements);
-                    $scope.documents.length = 0;
-                    angular.forEach(page.content, function(document) {
-                      $scope.documents.push(new Document(document));
-                    });
-                    $defer.resolve($scope.documents);
+                    $defer.resolve(DocumentRepo.getAll());
                 });
+
+                $location.path('/documents/' + params.page(), false);
 
             }
         });
@@ -84,7 +82,6 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
     $scope.setTable();
 
     $scope.setSelectedUser = function(user) {
-        $scope.documents.length = 0;
         $scope.selectedUser = user;
         $scope.setTable();
     };
@@ -96,9 +93,9 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     $scope.availableAnnotators = function() {
         var annotators = [];
-        for(var key in $scope.users) {
+        for (var key in $scope.users) {
             var user = $scope.users[key];
-            if(user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
+            if (user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
                 annotators.push(user);
             }
         }
@@ -107,43 +104,18 @@ metadataTool.controller('DocumentController', function ($controller, $route, $sc
 
     $scope.update = function(document, status) {
         document.status = status;
-        if(document.status == 'Open') {
-          delete document.annotator;
-        }
-        else {
-          if(!document.annotator) {
-            document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName + ' (' + $scope.user.uin + ')';
-          }
+        if (document.status == 'Open') {
+            delete document.annotator;
+        } else {
+            if (!document.annotator) {
+                document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName + ' (' + $scope.user.uin + ')';
+            }
         }
         document.save();
     };
 
-    // TODO: push page of documents into repo to avoid this
-    DocumentRepo.selectiveListen().then(null, null, function(data) {
-        var updated = angular.fromJson(data.body).payload.Document;
-        var isNew = true;
-        for(var i in $scope.documents) {
-            var document = $scope.documents[i];
-            if(updated.id === document.id) {
-                angular.extend(document, updated);
-                isNew = false;
-                if((assignmentsView() || usersView()) && document.status !== 'Assigned') {
-                  $scope.documents.splice(i, 1);
-                }
-                break;
-            }
-        }
-        if(isNew) {
-            if($scope.documents.length < $scope.tableParams.count()) {
-                $scope.documents.push(new Document(updated));
-            }
-            else {
-                AlertService.add({
-                  message: "A new document (" + updated.name + ") has been added or modified! The current page of documents may be stale.",
-                  type: "SUCCESS"
-                }, "app/documents");
-            }
-        }
+    DocumentRepo.listenForNew().then(null, null, function(data) {
+        $scope.tableParams.reload();
     });
 
 });
