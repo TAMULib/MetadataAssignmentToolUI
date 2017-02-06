@@ -9,13 +9,12 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
         templateUrl: 'views/users.html'
     }).
     when('/assignments', {
-        templateUrl: 'views/assignments.html'
+        templateUrl: 'views/assignments.html',
+        reloadOnSearch: false
     }).
     when('/documents', {
-        redirectTo: '/documents/1',
-    }).
-    when('/documents/:page', {
-        templateUrl: 'views/documents.html'
+        templateUrl: 'views/documents.html',
+        reloadOnSearch: false
     }).
     when('/myview', {
         templateUrl: 'views/myview.html'

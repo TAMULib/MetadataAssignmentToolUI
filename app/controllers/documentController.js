@@ -22,10 +22,12 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
     $scope.showPublished = false;
 
+    var initialPage = $location.search().page ? $location.search().page : 1;
+
     $scope.setTable = function() {
 
         $scope.tableParams = new ngTableParams({
-            page: $routeParams.page,
+            page: initialPage,
             count: 10,
             sorting: {
                 name: 'asc'
@@ -72,8 +74,7 @@ metadataTool.controller('DocumentController', function($controller, $location, $
                     $defer.resolve(DocumentRepo.getAll());
                 });
 
-                $location.path('/documents/' + params.page(), false);
-
+                $location.search('page', params.page());
             }
         });
 
