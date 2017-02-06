@@ -46,9 +46,13 @@ var apiMapping = {
             'endpoint': '/channel',
             'controller': 'documents',
         },
-        selectiveListen: {
+        listenForUpdate: {
             'endpoint': '/channel',
-            'controller': 'document',
+            'controller': 'update-document',
+        },
+        listenForNew: {
+            'endpoint': '/channel',
+            'controller': 'new-document',
         }
     },
     Metadata: {

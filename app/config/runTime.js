@@ -1,4 +1,4 @@
-metadataTool.run(function($rootScope) {
+metadataTool.run(function($route, $rootScope, $location) {
 
     angular.element("body").fadeIn(300);
 
