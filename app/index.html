@@ -51,6 +51,12 @@
           exclusive>
         </alerts>
 
+        <alerts
+          types="SUCCESS,WARNING,ERROR"
+          channels="app/projects"
+          exclusive>
+        </alerts>
+
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12 appContent" ng-controller="AdminController">
@@ -65,6 +71,10 @@
                                    modal-controller="ExportController"
                                    modal-view="views/modals/exportMetadataModal.html"
                                    modal-header-class="modal-header-primary"></modal>
+                            <modal modal-id="batchPublishModal"
+                                   modal-controller="BatchPublishController"
+                                   modal-view="views/modals/batchPublishModal.html"
+                                   modal-header-class="modal-header-primary"></modal>
                         </div>
 
                         <div class="dropdown">
@@ -76,6 +86,7 @@
                                 <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
                                 <li><a href="users">Manage Users</a></li>
                                 <li><a href ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
+                                <li><a href ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
                                 <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 
                                 <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
@@ -250,6 +261,7 @@
 
         <!-- Controllers -->
         <script src="controllers/adminController.js"></script>
+        <script src="controllers/batchPublishController.js"></script>
         <script src="controllers/userRepoController.js"></script>
         <script src="controllers/documentController.js"></script>
         <script src="controllers/exportController.js"></script>
