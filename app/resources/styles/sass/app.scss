@@ -223,3 +223,12 @@ main footer {
 .suggestion-popup {
   z-index: 999;
 }
+
+#pleaseWaitDialog .loading-text {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 6px;
+  max-width: 200px;
+  opacity: .8;
+}
