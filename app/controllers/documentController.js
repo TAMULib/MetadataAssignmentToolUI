@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams) {
+metadataTool.controller('DocumentController', function($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -18,14 +18,17 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
     $scope.users = UserRepo.getAll();
 
+    $scope.projects = ProjectRepo.getAll();
+
     $scope.selectedUser = null;
 
     $scope.showPublished = false;
 
+    $scope.showProjectsFilter = false;
+
     var initialPage = $location.search().page ? $location.search().page : 1;
 
     $scope.setTable = function() {
-
         $scope.tableParams = new ngTableParams({
             page: initialPage,
             count: 10,
@@ -35,7 +38,8 @@ metadataTool.controller('DocumentController', function($controller, $location, $
             filter: {
                 name: undefined,
                 status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined,
+                projects: undefined
             }
         }, {
             total: 0,
@@ -46,7 +50,8 @@ metadataTool.controller('DocumentController', function($controller, $location, $
                 var filters = {
                     name: [],
                     status: [],
-                    annotator: []
+                    annotator: [],
+                    projects: []
                 };
 
                 if (params.filter().name !== undefined) {
@@ -67,6 +72,10 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
                 if (params.filter().annotator !== undefined) {
                     filters.annotator.push(params.filter().annotator);
+                }
+
+                if ($scope.tableParams.filter().projects !== undefined) {
+                    filters.projects.push($scope.tableParams.filter().projects);
                 }
 
                 DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(page) {
@@ -113,6 +122,10 @@ metadataTool.controller('DocumentController', function($controller, $location, $
             }
         }
         document.save();
+    };
+
+    $scope.toggleProjectsFilter = function() {
+        $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
     DocumentRepo.listenForNew().then(null, null, function(data) {
