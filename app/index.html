@@ -2,8 +2,11 @@
 <!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-<head>
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!--<![endif]-->
+
+  <head>
     <base href="/metadatatool/">
 
     <meta charset="utf-8">
@@ -13,20 +16,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" type='text/css' href="bower_components/html5-boilerplate/css/normalize.css">
-    <link rel="stylesheet" type='text/css' href="bower_components/html5-boilerplate/css/main.css">
-
     <link rel="stylesheet" type='text/css' href="bower_components/ng-table/dist/ng-table.css">
     <link rel="stylesheet" type='text/css' href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
     <link rel="stylesheet" type='text/css' href="resources/styles/app.css">
 
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300'>
+  </head>
 
-    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-
-</head>
-<body>
+  <body>
     <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -34,258 +31,235 @@
     <!-- Content placed here will appear on every page -->
     <main>
 
-        <tamuheader title="MAGPIE"></tamuheader>
+      <tamuheader title="MAGPIE"></tamuheader>
 
-        <alerts types="WARNING,ERROR"></alerts>
+      <alerts types="WARNING,ERROR"></alerts>
 
-        <alerts
-            types="SUCCESS,WARNING,ERROR"
-            channels="app/export"
-            exclusive
-            fixed>
-        </alerts>
+      <alerts types="SUCCESS,WARNING,ERROR" channels="app/export" exclusive fixed>
+      </alerts>
 
-        <alerts
-          types="SUCCESS,WARNING,ERROR"
-          channels="app/documents"
-          exclusive>
-        </alerts>
+      <alerts types="SUCCESS,WARNING,ERROR" channels="app/documents" exclusive>
+      </alerts>
 
-        <alerts
-          types="SUCCESS,WARNING,ERROR"
-          channels="app/projects"
-          exclusive>
-        </alerts>
+      <alerts types="SUCCESS,WARNING,ERROR" channels="app/projects" exclusive>
+      </alerts>
 
-        <div class="container-fluid">
-            <div class="container">
-                <div class="col-md-12 appContent" ng-controller="AdminController">
+      <div class="container-fluid">
+        <div class="container">
+          <div class="col-md-12 appContent" ng-controller="AdminController">
 
-                    <nav class="userMenu">
+            <nav class="userMenu">
 
-                        <div>
-                            <modal modal-id="assumeUserModal"
-                                   modal-view="bower_components/core/app/views/modals/assumeUserModal.html"
-                                   modal-header-class="modal-header-primary"></modal>
-                            <modal modal-id="exportMetadataModal"
-                                   modal-controller="ExportController"
-                                   modal-view="views/modals/exportMetadataModal.html"
-                                   modal-header-class="modal-header-primary"></modal>
-                            <modal modal-id="batchPublishModal"
-                                   modal-controller="BatchPublishController"
-                                   modal-view="views/modals/batchPublishModal.html"
-                                   modal-header-class="modal-header-primary"></modal>
-                        </div>
+              <div>
+                <modal modal-id="assumeUserModal" modal-view="bower_components/core/app/views/modals/assumeUserModal.html" modal-header-class="modal-header-primary"></modal>
+                <modal modal-id="exportMetadataModal" modal-controller="ExportController" modal-view="views/modals/exportMetadataModal.html" modal-header-class="modal-header-primary"></modal>
+                <modal modal-id="batchPublishModal" modal-controller="BatchPublishController" modal-view="views/modals/batchPublishModal.html" modal-header-class="modal-header-primary"></modal>
+              </div>
 
-                        <div class="dropdown">
-                            <span class="glyphicon glyphicon-user"></span>
+              <div class="dropdown">
+                <span class="glyphicon glyphicon-user"></span>
 
-                            <a class="dropdown-toggle toggle-href" data-toggle="dropdown" aria-expanded="false"><username></username> <span class="caret"></span></a>
+                <a class="dropdown-toggle toggle-href" data-toggle="dropdown" aria-expanded="false">
+                  <username></username> <span class="caret"></span></a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
-                                <li><a href="users">Manage Users</a></li>
-                                <li><a href ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
-                                <li><a href ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
-                                <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
+                <ul class="dropdown-menu" role="menu">
+                  <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
+                  <li><a href="users">Manage Users</a></li>
+                  <li><a href ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
+                  <li><a href ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
+                  <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 
-                                <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
-                                <li ng-if="isAdmin() || isAssuming() == 'true'">
-                                    <a href ng-if="isAssuming() == 'false'" data-toggle="modal" ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
-                                    <a href ng-if="isAssuming() == 'true'"  ng-click="assumeUser(assume)" >{{assumedControl.button}}</a>
-                                </li>
-                                <li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
-                            </ul>
-                        </div>
+                  <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
+                  <li ng-if="isAdmin() || isAssuming() == 'true'">
+                    <a href ng-if="isAssuming() == 'false'" data-toggle="modal" ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
+                    <a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedControl.button}}</a>
+                  </li>
+                  <li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+                </ul>
+              </div>
 
-                    </nav>
+            </nav>
 
-                    <div class="row" ng-controller="NavigationController">
+            <div class="row" ng-controller="NavigationController">
 
-                        <div class="col-12 col-lg-12">
+              <div class="col-12 col-lg-12">
 
-                            <div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
-                                <a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
-                                <a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div ng-view class="view"></div>
-
-                    <footer>
-                        MetadataTool App Version: <span app-version></span>
-                    </footer>
+                <div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
+                  <a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
+                  <a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
                 </div>
+              </div>
             </div>
+
+            <div ng-view class="view"></div>
+
+            <footer>
+              MetadataTool App Version: <span app-version></span>
+            </footer>
+          </div>
         </div>
+      </div>
     </main>
 
     <tamufooter></tamufooter>
 
-
-    <!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
-
-
     <!-- Bower component -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+      <!-- build:js resources/scripts/vendor_concat.js -->
+      <script src="bower_components/sockjs-client/dist/sockjs.min.js"></script>
+      <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
 
-    <script src="bower_components/sockjs-client/dist/sockjs.min.js"></script>
-    <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/angular-loader/angular-loader.js"></script>
-    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+      <script src="bower_components/angular/angular.min.js"></script>
+      <script src="bower_components/angular-route/angular-route.min.js"></script>
+      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+      <script src="bower_components/angular-loader/angular-loader.min.js"></script>
+      <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+      <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
-    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+      <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
 
-    <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+      <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
 
-    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-
-    <!-- required by core fileapi -->
-    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
-	  <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
-
+      <!-- required by core fileapi -->
+      <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+      <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+      <!-- endbuild -->
 
     <!--  Core libraries -->
+      <!-- build:js resources/scripts/core_concat.js -->
+      <!-- Core Configuration -->
+      <script src="bower_components/core/app/config/coreConfig.js"></script>
 
-    <!-- build:js resources/scripts/core_concat.js -->
+      <!-- Core Modules -->
+      <script src="bower_components/core/app/components/version/version.js"></script>
+      <script src="bower_components/core/app/components/version/version-directive.js"></script>
+      <script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
 
-        <!-- Core Configuration -->
-        <script src="bower_components/core/app/config/coreConfig.js"></script>
+      <!-- App Configuration -->
+      <script src="config/appConfig.js"></script>
+      <script src="config/apiMapping.js"></script>
 
-        <!-- Core Modules -->
-        <script src="bower_components/core/app/components/version/version.js"></script>
-        <script src="bower_components/core/app/components/version/version-directive.js"></script>
-        <script src="bower_components/core/app/components/version/interpolate-filter.js"></script>
-
-        <!-- App Configuration -->
-        <script src="config/appConfig.js"></script>
-        <script src="config/apiMapping.js"></script>
-
-        <!-- App Modules -->
-        <script src="components/version/version.js"></script>
-        <script src="components/version/version-directive.js"></script>
-        <script src="components/version/interpolate-filter.js"></script>
+      <!-- App Modules -->
+      <script src="components/version/version.js"></script>
+      <script src="components/version/version-directive.js"></script>
+      <script src="components/version/interpolate-filter.js"></script>
 
 
-        <!-- Application Start -->
-        <script src="bower_components/core/app/core.js"></script>
-        <script src="bower_components/core/app/setup.js"></script>
-        <script src="bower_components/core/app/config/logging.js"></script>
+      <!-- Application Start -->
+      <script src="bower_components/core/app/core.js"></script>
+      <script src="bower_components/core/app/setup.js"></script>
+      <script src="bower_components/core/app/config/coreRuntime.js"></script>
+      <script src="bower_components/core/app/config/coreAngularConfig.js"></script>
+      <script src="bower_components/core/app/config/logging.js"></script>
 
-        <!-- Directives -->
-        <script src="bower_components/core/app/directives/headerDirective.js"></script>
-        <script src="bower_components/core/app/directives/footerDirective.js"></script>
-        <script src="bower_components/core/app/directives/userDirective.js"></script>
-        <script src="bower_components/core/app/directives/modalDirective.js"></script>
-        <script src="bower_components/core/app/directives/alertDirective.js"></script>
-        <script src="bower_components/core/app/directives/tooltipDirective.js"></script>
-        <script src="bower_components/core/app/directives/validationMessageDirective.js"></script>
-        <script src="bower_components/core/app/directives/validatedInputDirective.js"></script>
-        <script src="bower_components/core/app/directives/validatedSelectDirective.js"></script>
-        <script src="bower_components/core/app/directives/validatedTextAreaDirective.js"></script>
+      <!-- Directives -->
+      <script src="bower_components/core/app/directives/headerDirective.js"></script>
+      <script src="bower_components/core/app/directives/footerDirective.js"></script>
+      <script src="bower_components/core/app/directives/userDirective.js"></script>
+      <script src="bower_components/core/app/directives/modalDirective.js"></script>
+      <script src="bower_components/core/app/directives/alertDirective.js"></script>
+      <script src="bower_components/core/app/directives/tooltipDirective.js"></script>
+      <script src="bower_components/core/app/directives/validationMessageDirective.js"></script>
+      <script src="bower_components/core/app/directives/validatedInputDirective.js"></script>
+      <script src="bower_components/core/app/directives/validatedSelectDirective.js"></script>
+      <script src="bower_components/core/app/directives/validatedTextAreaDirective.js"></script>
 
-        <!-- Services -->
-        <script src="bower_components/core/app/services/accesscontrollservice.js"></script>
-        <script src="bower_components/core/app/services/wsservice.js"></script>
-        <script src="bower_components/core/app/services/wsapi.js"></script>
-        <script src="bower_components/core/app/services/restapi.js"></script>
-        <script src="bower_components/core/app/services/authserviceapi.js"></script>
-        <script src="bower_components/core/app/services/storageservice.js"></script>
-        <script src="bower_components/core/app/services/utilityservice.js"></script>
-        <script src="bower_components/core/app/services/alertservice.js"></script>
-        <script src="bower_components/core/app/services/validationstore.js"></script>
-        <script src="bower_components/core/app/services/userservice.js"></script>
-        <script src="bower_components/core/app/services/modalservice.js"></script>
+      <!-- Services -->
+      <script src="bower_components/core/app/services/accesscontrollservice.js"></script>
+      <script src="bower_components/core/app/services/wsservice.js"></script>
+      <script src="bower_components/core/app/services/wsapi.js"></script>
+      <script src="bower_components/core/app/services/restapi.js"></script>
+      <script src="bower_components/core/app/services/authserviceapi.js"></script>
+      <script src="bower_components/core/app/services/storageservice.js"></script>
+      <script src="bower_components/core/app/services/utilityservice.js"></script>
+      <script src="bower_components/core/app/services/alertservice.js"></script>
+      <script src="bower_components/core/app/services/validationstore.js"></script>
+      <script src="bower_components/core/app/services/userservice.js"></script>
+      <script src="bower_components/core/app/services/modalservice.js"></script>
+      <script src="bower_components/core/app/services/modelcache.js"></script>
+      <script src="bower_components/core/app/services/modelupdateservice.js"></script>
 
-        <!-- Factories -->
+      <!-- Factories -->
 
-        <!-- Repo -->
-        <script src="bower_components/core/app/repo/abstractRepo.js"></script>
+      <!-- Repo -->
+      <script src="bower_components/core/app/repo/abstractRepo.js"></script>
 
-        <!-- Models -->
-        <script src="bower_components/core/app/model/abstractModel.js"></script>
-        <script src="bower_components/core/app/model/assumedControl.js"></script>
-        <script src="bower_components/core/app/model/user.js"></script>
+      <!-- Models -->
+      <script src="bower_components/core/app/model/abstractModel.js"></script>
+      <script src="bower_components/core/app/model/assumedControl.js"></script>
+      <script src="bower_components/core/app/model/user.js"></script>
 
-        <!-- Controllers -->
-        <script src="bower_components/core/app/controllers/abstractController.js"></script>
-        <script src="bower_components/core/app/controllers/authenticationController.js"></script>
-        <script src="bower_components/core/app/controllers/loginController.js"></script>
-        <script src="bower_components/core/app/controllers/registrationController.js"></script>
-        <script src="bower_components/core/app/controllers/userController.js"></script>
-        <script src="bower_components/core/app/controllers/errorpagecontroller.js"></script>
-
-    <!-- endbuild -->
-
-
+      <!-- Controllers -->
+      <script src="bower_components/core/app/controllers/abstractController.js"></script>
+      <script src="bower_components/core/app/controllers/coreAdminController.js"></script>
+      <script src="bower_components/core/app/controllers/authenticationController.js"></script>
+      <script src="bower_components/core/app/controllers/loginController.js"></script>
+      <script src="bower_components/core/app/controllers/registrationController.js"></script>
+      <script src="bower_components/core/app/controllers/userController.js"></script>
+      <script src="bower_components/core/app/controllers/errorpagecontroller.js"></script>
+      <!-- endbuild -->
 
 
     <!--  App libraries -->
+      <!-- build:js resources/scripts/app_concat.js -->
+      <!-- Application Start -->
+      <script src="app.js"></script>
+      <script src="config/runTime.js"></script>
+      <script src="config/routes.js"></script>
 
-    <!-- build:js resources/scripts/app_concat.js -->
+      <!-- Directives -->
+      <script src="directives/formatDirective.js"></script>
+      <script src="directives/inputDirective.js"></script>
 
-        <!-- Application Start -->
+      <!-- Services -->
 
-        <script src="app.js"></script>
-        <script src="config/runTime.js"></script>
-        <script src="config/routes.js"></script>
+      <!-- Factories -->
 
-        <!-- Directives -->
-        <script src="directives/formatDirective.js"></script>
-        <script src="directives/inputDirective.js"></script>
+      <!-- Repos -->
+      <script src="repo/abstractAppRepo.js"></script>
+      <script src="repo/userRepo.js"></script>
+      <script src="repo/documentRepo.js"></script>
+      <script src="repo/projectRepo.js"></script>
+      <script src="repo/metadataRepo.js"></script>
+      <script src="repo/controlledVocabularyRepo.js"></script>
 
-        <!-- Services -->
+      <!-- Models -->
+      <script src="model/abstractAppModel.js"></script>
+      <script src="model/document.js"></script>
+      <script src="model/project.js"></script>
+      <script src="model/metadata.js"></script>
+      <script src="model/controlledVocabulary.js"></script>
 
-        <!-- Factories -->
-
-        <!-- Repos -->
-        <script src="repo/abstractAppRepo.js"></script>
-        <script src="repo/userRepo.js"></script>
-        <script src="repo/documentRepo.js"></script>
-        <script src="repo/projectRepo.js"></script>
-        <script src="repo/metadataRepo.js"></script>
-        <script src="repo/controlledVocabularyRepo.js"></script>
-
-        <!-- Models -->
-        <script src="model/abstractAppModel.js"></script>
-        <script src="model/document.js"></script>
-        <script src="model/project.js"></script>
-        <script src="model/metadata.js"></script>
-        <script src="model/controlledVocabulary.js"></script>
-
-        <!-- Controllers -->
-        <script src="controllers/adminController.js"></script>
-        <script src="controllers/batchPublishController.js"></script>
-        <script src="controllers/userRepoController.js"></script>
-        <script src="controllers/documentController.js"></script>
-        <script src="controllers/exportController.js"></script>
-        <script src="controllers/annotateController.js"></script>
-        <script src="controllers/navigationController.js"></script>
-
-    <!-- endbuild -->
+      <!-- Controllers -->
+      <script src="controllers/adminController.js"></script>
+      <script src="controllers/batchPublishController.js"></script>
+      <script src="controllers/userRepoController.js"></script>
+      <script src="controllers/documentController.js"></script>
+      <script src="controllers/exportController.js"></script>
+      <script src="controllers/annotateController.js"></script>
+      <script src="controllers/navigationController.js"></script>
+      <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
-        (function(b, o, i, l, e, r) {
-            b.GoogleAnalyticsObject = l;
-            b[l] || (b[l] = function() {
-                (b[l].q = b[l].q || []).push(arguments)
-            });
-            b[l].l = +new Date;
-            e = o.createElement(i);
-            r = o.getElementsByTagName(i)[0];
-            e.src = '//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e, r)
-        }(window, document, 'script', 'ga'));
-        ga('create', 'UA-XXXXX-X');
-        ga('send', 'pageview');
+      (function(b, o, i, l, e, r) {
+        b.GoogleAnalyticsObject = l;
+        b[l] || (b[l] = function() {
+          (b[l].q = b[l].q || []).push(arguments)
+        });
+        b[l].l = +new Date;
+        e = o.createElement(i);
+        r = o.getElementsByTagName(i)[0];
+        e.src = '//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e, r)
+      }(window, document, 'script', 'ga'));
+      ga('create', 'UA-XXXXX-X');
+      ga('send', 'pageview');
+
     </script>
 
-</body>
+  </body>
+
 </html>
