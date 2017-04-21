@@ -218,8 +218,18 @@ main footer {
 .suggestions-open {
   opacity: 1;
   max-height: 500px;
+  padding-top: 22px;
 }
 
 .suggestion-popup {
   z-index: 999;
+}
+
+#pleaseWaitDialog .loading-text {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 6px;
+  max-width: 200px;
+  opacity: .8;
 }

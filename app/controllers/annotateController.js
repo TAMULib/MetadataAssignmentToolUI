@@ -73,7 +73,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.push = function() {
-            $scope.loadingText = "Pushing document to repository over REST API...";
+            $scope.loadingText = "Pushing document to registered repositories...";
             $scope.openModal('#pleaseWaitDialog');
             $scope.document.push().then(function(data) {
                 $scope.closeModal();
