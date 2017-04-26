@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, ngTableParams, ProjectRepo) {
+metadataTool.controller('DocumentController', function ($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, NgTableParams, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -6,11 +6,11 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
     var view = $window.location.pathname;
 
-    var assignmentsView = function() {
+    var assignmentsView = function () {
         return view.indexOf('assignments') > -1;
     };
 
-    var usersView = function() {
+    var usersView = function () {
         return view.indexOf('users') > -1;
     };
 
@@ -28,8 +28,8 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
     var initialPage = $location.search().page ? $location.search().page : 1;
 
-    $scope.setTable = function() {
-        $scope.tableParams = new ngTableParams({
+    $scope.setTable = function () {
+        $scope.tableParams = new NgTableParams({
             page: initialPage,
             count: 10,
             sorting: {
@@ -43,7 +43,7 @@ metadataTool.controller('DocumentController', function($controller, $location, $
             }
         }, {
             total: 0,
-            getData: function($defer, params) {
+            getData: function ($defer, params) {
                 var key;
                 for (key in params.sorting()) {}
 
@@ -78,7 +78,7 @@ metadataTool.controller('DocumentController', function($controller, $location, $
                     filters.projects.push($scope.tableParams.filter().projects);
                 }
 
-                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function(page) {
+                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
                     $defer.resolve(DocumentRepo.getAll());
                 });
@@ -91,17 +91,17 @@ metadataTool.controller('DocumentController', function($controller, $location, $
 
     $scope.setTable();
 
-    $scope.setSelectedUser = function(user) {
+    $scope.setSelectedUser = function (user) {
         $scope.selectedUser = user;
         $scope.setTable();
     };
 
-    $scope.togglePublished = function() {
+    $scope.togglePublished = function () {
         $scope.showPublished = !$scope.showPublished;
         $scope.tableParams.reload();
     };
 
-    $scope.availableAnnotators = function() {
+    $scope.availableAnnotators = function () {
         var annotators = [];
         for (var key in $scope.users) {
             var user = $scope.users[key];
@@ -112,7 +112,7 @@ metadataTool.controller('DocumentController', function($controller, $location, $
         return annotators;
     };
 
-    $scope.update = function(document, status) {
+    $scope.update = function (document, status) {
         document.status = status;
         if (document.status == 'Open') {
             delete document.annotator;
@@ -124,11 +124,11 @@ metadataTool.controller('DocumentController', function($controller, $location, $
         document.save();
     };
 
-    $scope.toggleProjectsFilter = function() {
+    $scope.toggleProjectsFilter = function () {
         $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
-    DocumentRepo.listenForNew().then(null, null, function(data) {
+    DocumentRepo.listenForNew().then(null, null, function (data) {
         $scope.tableParams.reload();
     });
 
