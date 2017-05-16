@@ -58,13 +58,13 @@
                 </div>
                 <div class="row">
                     <div ng-if="isAnnotator() || (isManager() && managerAnnotating())" style="float: right;">
-                        <button class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
-                        <button class="btn btn-primary" ng-click="save(document)">Save</button>
-                        <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit()">Submit</button>
+                        <button type="button" class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
+                        <button type="button" class="btn btn-primary" ng-click="save(document)">Save</button>
+                        <button type="button" ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="submit()">Submit</button>
                     </div>
                     <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
-                        <button class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
-                        <button class="btn btn-primary" ng-click="save()">Save</button>
+                        <button type="button" class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
+                        <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
                         <span ng-if="document.status === 'Annotated'" >
                             <modal modal-id="rejectModal"
                                    modal-view="views/modals/rejectModal.html"
@@ -73,7 +73,7 @@
                                    Reject
                             </modal>
                         </span>
-                        <button ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept()" >Accept</button>
+                        <button type="button" ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept()" >Accept</button>
                     </div>
 
                 </div>
