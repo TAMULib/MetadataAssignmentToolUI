@@ -4,10 +4,12 @@
     <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
     <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-    <div ng-if="document.publishedUriString" class="panel panel-success">
+    <div ng-if="document.publishedLocations.length > 0" class="panel panel-success">
         <div class="panel-heading">This document is published at URI:</div>
         <div class="panel-body">
-            <a target="_blank" href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+            <span ng-repeat="publishedLocation in document.publishedLocations">
+              <b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a>
+            </span>
         </div>
     </div>
 
