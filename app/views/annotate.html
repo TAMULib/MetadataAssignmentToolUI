@@ -7,9 +7,11 @@
     <div ng-if="document.publishedLocations.length > 0" class="panel panel-success">
         <div class="panel-heading">This document is published at URI:</div>
         <div class="panel-body">
-            <span ng-repeat="publishedLocation in document.publishedLocations">
-              <b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a>
-            </span>
+            <ul class="list-unstyled">
+            <li ng-repeat="publishedLocation in document.publishedLocations">
+              <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
+            </li>
+          </ul>
         </div>
     </div>
 
