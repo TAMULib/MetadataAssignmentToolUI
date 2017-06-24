@@ -73,11 +73,11 @@ var apiMapping = {
         },
         export: {
             'endpoint': '/private/queue',
-            'controller': 'metadata'
+            'controller': 'export'
         },
         headers: {
             'endpoint': '/private/queue',
-            'controller': 'metadata',
+            'controller': 'export',
             'method': 'headers'
         },
         status: {
