@@ -16,12 +16,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function () {
 
-        $scope.document.getSuggestions().then(function (response) {
-            var payload = angular.fromJson(response.body).payload;
-            $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
-        });
-
-        var emptyFieldValue = function (field) {
+    	var emptyFieldValue = function (field) {
             return {
                 field: field.id,
                 value: field.label.profile.defaultValue ? field.label.profile.defaultValue : ''
@@ -34,6 +29,35 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 field.values.push(emptyFieldValue(field));
             }
         }
+
+        $scope.document.getSuggestions().then(function (response) {
+            var payload = angular.fromJson(response.body).payload;
+            $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
+        });
+
+    	var types = {
+			text: ['text/plain'],
+			pdf: ['application/pdf'],
+			image: ['image/jpeg', 'image/jpg', 'image/bmp', 'image/png', 'image/tiff']
+	    };
+
+	    $scope.hasFileType = function(type) {
+	    	for (var k in $scope.document.resources) {
+	            var resource = $scope.document.resources[k];
+	            if(types[type].indexOf(resource.mimeType) >= 0) {
+	            	return true;
+	            }
+	        }
+	    	return false;
+	    };
+
+	    $scope.getFilesByType = function(type) {
+	    	return $scope.document.resources.filter(function(resource) {
+	    		return types[type].indexOf(resource.mimeType) >= 0;
+	    	});
+	    };
+	    
+	    $scope.active = $scope.hasFileType('text') ? 'text' : $scope.hasFileType('pdf') ? 'pdf' : $scope.hasFileType('image') ? 'image': undefined;
 
         $scope.removeMetadataField = function (field, index) {
             field.values.splice(index, 1);

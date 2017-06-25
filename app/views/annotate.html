@@ -27,28 +27,39 @@
         <div class="loading-text">{{loadingText}}</div>
     </div>
 
-    <div ng-if="!isUser()" class="row">
+    <div ng-if="isAdmin() || isManager() || isAnnotator()" class="row">
 
         <div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
 
         <div class="col-8 col-lg-8 document-pane">
+            
+            
             <div role="tabpanel" class="span6">
                 <h2>Document</h2>
 
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
-                    <li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
+                    <li role="presentation" ng-if="hasFileType('text')" ng-class="{'active': active === 'text'}"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
+                    <li role="presentation" ng-if="hasFileType('pdf')" ng-class="{'active': active === 'pdf'}"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
+                    <li role="presentation" ng-if="hasFileType('image')" ng-class="{'active': active === 'image'}"><a href="#imageTab" aria-controls="imageTab" role="tab" data-toggle="tab">Images</a></li>
                 </ul>
+
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="txtTab" ng-if="document.txtUri">
-                        <object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
+
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'text'}" id="txtTab" ng-if="hasFileType('text')">
+                        <object data="{{getFilesByType('text')[0].url}}" type="{{getFilesByType('text')[0].mimeType}}"></object>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="pdfTab" ng-if="document.pdfUri">
+                    
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'pdf'}" id="pdfTab" ng-if="hasFileType('pdf')">
                         <div class="text-right">
-                            <a title="Open PDF in a new window/tab" target="_blank" href="{{document.pdfUri}}"><span class="glyphicon glyphicon-new-window"></span></a>
+                            <a title="Open PDF in a new window/tab" target="_blank" href="{{getFilesByType('pdf')[0].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
                         </div>
-                        <object id="pdf" data="{{document.pdfUri}}" width="100%" height="600" frameborder="0"></object>
+                        <object id="pdf" data="{{getFilesByType('pdf')[0].url}}" frameborder="0"></object>
                     </div>
+
+                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'image'}" id="imageTab" ng-if="hasFileType('image')">
+                        <object data="{{getFilesByType('image')[0].url}}" type="{{getFilesByType('image')[0].mimeType}}"></object>
+                    </div>
+
                 </div>
             </div>
         </div>
