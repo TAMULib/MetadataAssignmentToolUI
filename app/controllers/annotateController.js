@@ -75,6 +75,9 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 	    };
 	    
 	    $scope.getFiles = function() {
+	    	if($scope.document.resources === undefined) {
+	    		return [];
+	    	}
 	    	return $scope.document.resources.filter(function(resource) {
 	    		return types[$scope.active].indexOf(resource.mimeType) >= 0;
 	    	});
