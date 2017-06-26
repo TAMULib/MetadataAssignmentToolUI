@@ -30,9 +30,44 @@ main footer {
   cursor: pointer;
 }
 
+.documents-container div h3 {
+  margin-top: 0px;
+}
+
+.metadata-container h3 {
+  margin-top: 0px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .metadata-container h3 {
+    margin-top: 15px;
+  }
+}
+
 .tab-pane {
   width: 100%;
-  height: 750px;
+  height: 675px;
+}
+
+.tab-pane.hide {
+  display: none;
+}
+
+.loading-pane {
+  z-index: -10;
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  height: 700px;
+  line-height: 600px;  
+  text-align: center;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.loading-pane.show {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
 }
 
 .tab-pane object {
@@ -105,13 +140,21 @@ main footer {
   border-color: #d58512;
 }
 
-@media (min-width: 1200px) {
-  .metadata-pane {
-    height: 800px;
-    overflow-y: auto;
-    position: relative;
-    margin-bottom: 25px;
-  }
+.documents-pane {
+  height: 800px;
+  border-radius: 5px;
+  padding: 5px 10px 0px 10px;
+  border: 1px solid lightgray;
+}
+
+.metadata-pane {
+  height: 800px;
+  overflow-y: auto;
+  position: relative;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  padding: 0px 25px 25px 25px;
+  border: 1px solid lightgray;
 }
 
 .metadata-pane label {
