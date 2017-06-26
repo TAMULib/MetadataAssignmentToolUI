@@ -15,9 +15,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button ng-show="format == 'saf' && project.isLocked" type="submit" class="btn btn-default" ng-click="unlock(project.name)">Unlock</button>
-        <button ng-disabled="format == 'saf' && project.isLocked" ng-hide="format == 'dspacecsv' || format == 'spotlight'" type="submit" class="btn btn-default" ng-click="export(project.name, format)">Export</button>
-        <button ng-show="format == 'dspacecsv' || format == 'spotlight'" type="submit" class="btn btn-default" data-dismiss="modal" ng-csv="export(project.name, format)" csv-header='headers' filename="metadata.csv">Export</button>
+        <button ng-show="format === 'dsapce-saf' && project.isLocked" type="submit" class="btn btn-default" ng-click="unlock(project.name)">Unlock</button>
+        <button ng-disabled="format === 'dsapce-saf' && project.isLocked" ng-hide="format === 'dspace-csv' || format === 'spotlight-csv'" type="submit" class="btn btn-default" ng-click="export(project.name, format)">Export</button>
+        <button ng-show="format === 'dspace-csv' || format === 'spotlight-csv'" type="submit" class="btn btn-default" data-dismiss="modal" ng-csv="export(project.name, format)" csv-header='headers' filename="metadata.csv">Export</button>
         <button type="button" class="btn btn-default" ng-click="exportModalForm.$setPristine(); closeModal();">{{exportModalForm.$submitted ? 'Done' : 'Cancel'}}</button>
     </div>
 </form>
