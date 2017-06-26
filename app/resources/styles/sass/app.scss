@@ -158,12 +158,12 @@ main footer {
 }
 
 .metadata-pane label {
-  font-size: 24px;
-  margin: 20px 0;
-  color: inherit;
+  font-size: 16px;
+  margin: 10px 0px 10px 0px;
   font-family: inherit;
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .metadata-input {
@@ -268,7 +268,6 @@ main footer {
 .suggestions-open {
   opacity: 1;
   max-height: 500px;
-  padding-top: 22px;
 }
 
 .suggestion-popup {
