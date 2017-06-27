@@ -14,13 +14,18 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
         $scope.project = $scope.projects[0];
     });
 
+    $scope.isExporting = false;
+
     $scope.export = function (project, format) {
 
+        $scope.isExporting = true;
+
         if (format === "dspace-saf") {
-            MetadataRepo.export(project, format).then(function (data) {
+            MetadataRepo.export(project, format).then(function (response) {
                 ProjectRepo.reset();
                 $scope.closeModal();
-                AlertService.add(angular.fromJson(data.body).meta, "app/export");
+                $scope.isExporting = false;
+                AlertService.add(angular.fromJson(response.body).meta, "app/export");
             });
         } else if (format === "dspace-csv" || format === "spotlight-csv") {
 
@@ -33,9 +38,10 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
                     $scope.headers.push(headers[key]);
                 }
 
-                return MetadataRepo.export(project, format).then(function (data) {
+                return MetadataRepo.export(project, format).then(function (response) {
                     $scope.closeModal();
-                    var resObj = angular.fromJson(data.body);
+                    var resObj = angular.fromJson(response.body);
+                    $scope.isExporting = false;
                     AlertService.add(resObj.meta, "app/export");
                     return resObj.payload["ArrayList<ArrayList>"];
                 });
