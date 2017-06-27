@@ -38,7 +38,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         var types = {
             text: ['text/plain'],
             pdf: ['application/pdf'],
-            image: ['image/jpeg', 'image/jpg', 'image/bmp', 'image/png', 'image/tiff']
+            image: ['image/jpeg', 'image/jpg', 'image/jp2', 'image/jpx', 'image/svg', 'image/bmp', 'image/gif', 'image/png', 'image/tif', 'image/tiff']
         };
 
         var selected = {
