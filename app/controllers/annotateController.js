@@ -16,7 +16,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function () {
 
-    	var emptyFieldValue = function (field) {
+        var emptyFieldValue = function (field) {
             return {
                 field: field.id,
                 value: field.label.profile.defaultValue ? field.label.profile.defaultValue : ''
@@ -35,71 +35,71 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
         });
 
-    	var types = {
-			text: ['text/plain'],
-			pdf: ['application/pdf'],
-			image: ['image/jpeg', 'image/jpg', 'image/bmp', 'image/png', 'image/tiff']
-	    };
-    	
-    	var selected = {
-			text: 0,
-			pdf: 0,
-			image: 0
-    	};
-    	
-    	var transition = function() {
-    		$scope.loading = true;
-    		$scope.switching = true;	    	
-	    	$timeout(function() {
-	    		$scope.loading = false;
-	    	}, 1000);
-	    	$timeout(function() {
-	    		$scope.switching = false;
-	    	}, 250);
-    	};
+        var types = {
+            text: ['text/plain'],
+            pdf: ['application/pdf'],
+            image: ['image/jpeg', 'image/jpg', 'image/jp2', 'image/jpx', 'image/svg', 'image/bmp', 'image/gif', 'image/png', 'image/tif', 'image/tiff']
+        };
 
-	    $scope.hasFileType = function(type) {
-	    	for (var k in $scope.document.resources) {
-	            var resource = $scope.document.resources[k];
-	            if(types[type].indexOf(resource.mimeType) >= 0) {
-	            	return true;
-	            }
-	        }
-	    	return false;
-	    };
-	    
-	    $scope.active = $scope.hasFileType('text') ? 'text' : $scope.hasFileType('pdf') ? 'pdf' : $scope.hasFileType('image') ? 'image': undefined;
+        var selected = {
+            text: 0,
+            pdf: 0,
+            image: 0
+        };
 
-	    $scope.select = function(type) {
-	    	$scope.active = type;	    	
-	    };
-	    
-	    $scope.getFiles = function() {
-	    	if($scope.document.resources === undefined) {
-	    		return [];
-	    	}
-	    	return $scope.document.resources.filter(function(resource) {
-	    		return types[$scope.active].indexOf(resource.mimeType) >= 0;
-	    	});
-	    };
-	    
-	    $scope.selected = function() {
-	    	return selected[$scope.active];
-	    };
-	    
-	    $scope.next = function() {
-	    	if($scope.selected() < $scope.getFiles().length - 1) {
-	    		transition();
-	    		selected[$scope.active]++;
-	    	}
-	    };
-	    
-	    $scope.previous = function() {
-	    	if($scope.selected() > 0) {
-	    		transition();
-	    		selected[$scope.active]--;
-	    	}
-	    };
+        var transition = function () {
+            $scope.loading = true;
+            $scope.switching = true;
+            $timeout(function () {
+                $scope.loading = false;
+            }, 1000);
+            $timeout(function () {
+                $scope.switching = false;
+            }, 250);
+        };
+
+        $scope.hasFileType = function (type) {
+            for (var k in $scope.document.resources) {
+                var resource = $scope.document.resources[k];
+                if (types[type].indexOf(resource.mimeType) >= 0) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        $scope.active = $scope.hasFileType('text') ? 'text' : $scope.hasFileType('pdf') ? 'pdf' : $scope.hasFileType('image') ? 'image' : undefined;
+
+        $scope.select = function (type) {
+            $scope.active = type;
+        };
+
+        $scope.getFiles = function () {
+            if ($scope.document.resources === undefined) {
+                return [];
+            }
+            return $scope.document.resources.filter(function (resource) {
+                return types[$scope.active].indexOf(resource.mimeType) >= 0;
+            });
+        };
+
+        $scope.selected = function () {
+            return selected[$scope.active];
+        };
+
+        $scope.next = function () {
+            if ($scope.selected() < $scope.getFiles().length - 1) {
+                transition();
+                selected[$scope.active]++;
+            }
+        };
+
+        $scope.previous = function () {
+            if ($scope.selected() > 0) {
+                transition();
+                selected[$scope.active]--;
+            }
+        };
 
         $scope.removeMetadataField = function (field, index) {
             field.values.splice(index, 1);

@@ -1,4 +1,4 @@
-metadataTool.controller('BatchPublishController', function($controller, $scope, ProjectRepo, AlertService) {
+metadataTool.controller('BatchPublishController', function ($controller, $scope, ProjectRepo, AlertService) {
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
     }));
@@ -7,7 +7,7 @@ metadataTool.controller('BatchPublishController', function($controller, $scope, 
 
     $scope.isPublishing = false;
 
-    ProjectRepo.ready().then(function() {
+    ProjectRepo.ready().then(function () {
         if ($scope.projects.length > 0) {
             $scope.batchProject = $scope.projects[0];
 
@@ -17,9 +17,9 @@ metadataTool.controller('BatchPublishController', function($controller, $scope, 
                 $scope.batchRepository = {};
             }
 
-            $scope.publishDocuments = function(project, repository) {
+            $scope.publishDocuments = function (project, repository) {
                 $scope.isPublishing = true;
-                ProjectRepo.batchPublishDocuments(project.id, repository.id).then(function(rawResponse) {
+                ProjectRepo.batchPublishDocuments(project.id, repository.id).then(function (rawResponse) {
                     var response = angular.fromJson(rawResponse.body);
                     AlertService.add(response.meta, "app/projects");
                     $scope.isPublishing = false;
