@@ -2,7 +2,7 @@
 <div class="row" ng-controller="DocumentController">
 
     <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
-    <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
+    <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'"></div>
 
     <div ng-if="!isUser()" class="col-2">
         <div class="panel panel-default documents-container" >
@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <table ng-table="tableParams" class="table table-hover table-condensed">
                     <tbody>
-                        <tr ng-repeat="doc in $data">
+                        <tr ng-repeat="doc in $data | filter:{status: 'Assigned', annotator: user.uin}">
                             <td data-title="'Filename'" sortable="'name'">
                                 {{doc.name}}
                             </td>

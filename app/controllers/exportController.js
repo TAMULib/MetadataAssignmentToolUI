@@ -1,44 +1,48 @@
 metadataTool.controller('ExportController', function ($controller, $scope, AlertService, MetadataRepo, ProjectRepo) {
 
-    angular.extend(this, $controller('AbstractController', {$scope: $scope}));
+    angular.extend(this, $controller('AbstractController', {
+        $scope: $scope
+    }));
 
-    $scope.formats = ["dspacecsv", "saf", "spotlight"];
+    $scope.formats = ["dspace-csv", "dspace-saf", "spotlight-csv"];
 
     $scope.format = $scope.formats[0];
 
     $scope.projects = ProjectRepo.getAll();
 
-    ProjectRepo.ready().then(function() {
+    ProjectRepo.ready().then(function () {
         $scope.project = $scope.projects[0];
     });
 
-    $scope.export = function(project, format) {
+    $scope.isExporting = false;
 
-        if(format == "saf") {
-            MetadataRepo.export(project, format).then(function(data) {
+    $scope.export = function (project, format) {
+
+        $scope.isExporting = true;
+
+        if (format === "dspace-saf") {
+            MetadataRepo.export(project, format).then(function (response) {
                 ProjectRepo.reset();
                 $scope.closeModal();
-                AlertService.add(angular.fromJson(data.body).meta, "app/export");
+                $scope.isExporting = false;
+                AlertService.add(angular.fromJson(response.body).meta, "app/export");
             });
-        }
-        else if(format == "dspacecsv" || format == "spotlight") { 
+        } else if (format === "dspace-csv" || format === "spotlight-csv") {
 
             $scope.headers = [];
 
-            return MetadataRepo.getHeaders(format, project).then(function(data) {
+            return MetadataRepo.getHeaders(format, project).then(function (data) {
                 var headers = angular.fromJson(data.body).payload["ArrayList<String>"];
 
-                for(var key in headers) {
+                for (var key in headers) {
                     $scope.headers.push(headers[key]);
                 }
 
-                return MetadataRepo.export(project, format).then(function(data) {
+                return MetadataRepo.export(project, format).then(function (response) {
                     $scope.closeModal();
-                    var resObj = angular.fromJson(data.body);
+                    var resObj = angular.fromJson(response.body);
+                    $scope.isExporting = false;
                     AlertService.add(resObj.meta, "app/export");
-
-                    console.log(headers, resObj.payload["ArrayList<ArrayList>"]);
-
                     return resObj.payload["ArrayList<ArrayList>"];
                 });
 
@@ -47,8 +51,8 @@ metadataTool.controller('ExportController', function ($controller, $scope, Alert
 
     };
 
-    $scope.unlock = function(project) {
-        MetadataRepo.unlockProject(project).then(function() {
+    $scope.unlock = function (project) {
+        MetadataRepo.unlockProject(project).then(function () {
             ProjectRepo.reset();
         });
     };

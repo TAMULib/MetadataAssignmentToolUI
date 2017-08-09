@@ -105,7 +105,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         var annotators = [];
         for (var key in $scope.users) {
             var user = $scope.users[key];
-            if (user.role == 'ROLE_ANNOTATOR' || user.role == 'ROLE_MANAGER' || user.role == 'ROLE_ADMIN') {
+            if (user.role === 'ROLE_ANNOTATOR' || user.role === 'ROLE_MANAGER' || user.role === 'ROLE_ADMIN') {
                 annotators.push(user);
             }
         }
@@ -114,7 +114,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
     $scope.update = function (document, status) {
         document.status = status;
-        if (document.status == 'Open') {
+        if (document.status === 'Open') {
             delete document.annotator;
         } else {
             if (!document.annotator) {

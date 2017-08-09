@@ -4,14 +4,18 @@
     <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
     <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-    <div ng-if="document.publishedUriString" class="panel panel-success">
-        <div class="panel-heading">This document is published at URI:</div>
+    <div ng-if="document.publishedLocations.length > 0" class="panel panel-success">
+        <div class="panel-heading">This document is published at:</div>
         <div class="panel-body">
-            <a target="_blank" href="{{document.publishedUriString}}">{{document.publishedUriString}}</a>
+            <ul class="list-unstyled">
+            <li ng-repeat="publishedLocation in document.publishedLocations">
+              <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
+            </li>
+          </ul>
         </div>
     </div>
 
-    <div ng-if="action === 'view' && document.status === 'Accepted'" class="panel panel-warning">
+    <div ng-if="action === 'view' && document.status === 'Accepted' && document.getProject().repositories.length > 0" class="panel panel-warning">
         <div class="panel-heading">This document is accepted but not published.</div>
         <div class="panel-body">
             <button class="btn btn-success" ng-click="push()">Publish</button>
@@ -19,41 +23,64 @@
     </div>
 
     <div id="pleaseWaitDialog" class="modal fade centerProgress" role="dialog">
-        <img src="resources/images/loading.gif" height="200" width"200"/>
+        <img src="resources/images/loading.gif" height="200" width="200"/>
         <div class="loading-text">{{loadingText}}</div>
     </div>
 
-    <div ng-if="!isUser()" class="row">
+    <div ng-if="isAdmin() || isManager() || isAnnotator()" class="row">
 
         <div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
 
-        <div class="col-8 col-lg-8 document-pane">
-            <div role="tabpanel" class="span6">
-                <h2>Document</h2>
+        <div class="col-lg-8 documents-container">
 
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab">Text</a></li>
-                    <li role="presentation"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab">PDF</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="txtTab" ng-if="document.txtUri">
-                        <object data="{{document.txtUri}}" type="text/plain" width="100%" height="600"></object>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="pdfTab" ng-if="document.pdfUri">
-                        <div class="text-right">
-                            <a title="Open PDF in a new window/tab" target="_blank" href="{{document.pdfUri}}"><span class="glyphicon glyphicon-new-window"></span></a>
-                        </div>
-                        <object id="pdf" data="{{document.pdfUri}}" width="100%" height="600" frameborder="0"></object>
-                    </div>
+            <div role="tabpanel">
+                <h3>Documents</h3>
+                <div class="documents-pane">
+	                <ul class="nav nav-tabs" role="tablist">
+	                    <li role="presentation" ng-if="hasFileType('text')" ng-class="{'active': active === 'text'}"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab" ng-click="select('text')">Text</a></li>
+	                    <li role="presentation" ng-if="hasFileType('pdf')" ng-class="{'active': active === 'pdf'}"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab" ng-click="select('pdf')">PDF</a></li>
+	                    <li role="presentation" ng-if="hasFileType('image')" ng-class="{'active': active === 'image'}"><a href="#imageTab" aria-controls="imageTab" role="tab" data-toggle="tab" ng-click="select('image')">Images</a></li>
+	                </ul>
+
+	                <div class="tab-content">
+
+	                	<nav aria-label="...">
+						  <ul class="pager">
+						    <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
+						    <li class="title">{{getFiles()[selected()].name}}</li>
+						    <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
+						  </ul>
+						</nav>
+
+						<span class="loading-pane" ng-class="{'show': loading}">
+							<img src="resources/images/loading.gif" height="100" width="100"/>
+						</span>
+
+	                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'text', 'hide': switching}" id="txtTab" ng-if="hasFileType('text')">
+	                        <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}"></object>
+	                    </div>
+
+	                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'pdf', 'hide': switching}" id="pdfTab" ng-if="hasFileType('pdf')">
+	                        <div class="text-right">
+	                            <a title="Open PDF in a new window/tab" target="_blank" href="{{getFiles()[selected()].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
+	                        </div>
+	                        <object id="pdf" data="{{getFiles()[selected()].url}}" frameborder="0"></object>
+	                    </div>
+
+	                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'image', 'hide': switching}" id="imageTab" ng-if="hasFileType('image')">
+	                        <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}"></object>
+	                    </div>
+
+	                </div>
                 </div>
             </div>
         </div>
 
-        <div ng-if="action === 'annotate' || action === 'review'">
-            <h2>Metadata</h2>
+        <div ng-if="action === 'annotate' || action === 'review'" class="col-lg-4 metadata-container">
+            <h3>Metadata</h3>
             <form name="metadataForm" novalidate>
                 <span ng-show="requiredFieldsPresent()" class="requiredField">required flield</span>
-                <div class="col-4 col-lg-4 metadata-pane">
+                <div class="metadata-pane">
                     <metadatainput ng-repeat="field in document.fields | orderBy:['-label.profile.required', 'label.profile.gloss']" class="row" ng-hide="field.label.profile.hidden"></metadatainput>
                 </div>
                 <div class="row">
@@ -75,19 +102,15 @@
                         </span>
                         <button type="button" ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept()" >Accept</button>
                     </div>
-
                 </div>
             </form>
-
         </div>
 
-        <div ng-if="action === 'view'">
-            <h2>Metadata</h2>
-
-            <div class="col-4 col-lg-4 metadata-pane">
+        <div ng-if="action === 'view'" class="col-lg-4 metadata-container">
+            <h3>Metadata</h3>
+            <div class="metadata-pane">
                 <div ng-repeat="field in document.fields | orderBy:['-label.profile.required', 'label.profile.gloss']" class="row">
                     <label>{{field.label.profile.gloss}}</label>
-
                     <ul class="list-unstyled">
                         <li ng-if="field.label.profile.repeatable" >
                             <ol>
@@ -102,7 +125,6 @@
                     </ul>
                     <hr>
                 </div>
-
             </div>
         </div>
     </div>
