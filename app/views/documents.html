@@ -65,7 +65,7 @@
                                         <option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}} ({{annotator.uin}})">{{annotator.firstName}} {{annotator.lastName}}</option>
                                     </select>
                                 </span>
-                                <span ng-if="doc.status !== 'Accepted' && !doc.annotator && availableAnnotators().length == 0">
+                                <span ng-if="doc.status !== 'Accepted' && !doc.annotator && availableAnnotators().length === 0">
                                     No Annotators
                                 </span>
                                 <span ng-if="doc.annotator">
@@ -73,9 +73,9 @@
                                 </span>
                             </td>
                             <td data-title="'Action'" class="text-center">
-                                <a ng-if="doc.status == 'Annotated'" href="annotate/{{doc.project}}/{{doc.name}}/review" class="btn btn-default">Review</a>
-                                <a ng-if="doc.status == 'Accepted' || doc.status == 'Pending' || doc.status == 'Published'" href="annotate/{{doc.project}}/{{doc.name}}/view" class="btn btn-default">View</a>
-                                <a ng-if="doc.status == 'Requires Curation'" href class="btn btn-default" ng-click="update(doc, 'Assigned')">Resume Annotation</a>
+                                <a ng-if="doc.status === 'Annotated'" href="annotate/{{doc.project}}/{{doc.name}}/review" class="btn btn-default">Review</a>
+                                <a ng-if="doc.status === 'Accepted' || doc.status === 'Pending' || doc.status === 'Published'" href="annotate/{{doc.project}}/{{doc.name}}/view" class="btn btn-default">View</a>
+                                <a ng-if="doc.status === 'Requires Curation'" href class="btn btn-default" ng-click="update(doc, 'Assigned')">Resume Annotation</a>
                             </td>
                         </tr>
                     </tbody>
