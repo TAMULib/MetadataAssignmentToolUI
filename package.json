@@ -15,7 +15,9 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor e2e-tests/protractor.conf.js",
-    "start": "wvr server"
+    "stop": "wvr server --stop",
+    "start": "wvr server -b /magpie --prod --uid magpie-webserver",
+    "start-dev": "wvr server -b /magpie --uid magpie-webserver"
   },
   "dependencies": {
     "core": "git+https://github.com/TAMULib/Weaver-UI-Core.git#2.0.x-webservice",

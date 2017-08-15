@@ -15,3 +15,5 @@ app/resources/styles/*
 !app/resources/styles/sass/
 app/resources/scripts/*
 !app/resources/scripts/vendor/
+app/node_modules
+*.log
