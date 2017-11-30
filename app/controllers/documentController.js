@@ -43,7 +43,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             }
         }, {
             total: 0,
-            getData: function ($defer, params) {
+            getData: function (params) {
+
                 var key;
                 for (key in params.sorting()) {}
 
@@ -78,12 +79,11 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                     filters.projects.push($scope.tableParams.filter().projects);
                 }
 
-                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
+                return DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
-                    $defer.resolve(DocumentRepo.getAll());
+                    $location.search('page', params.page());
+                    return DocumentRepo.getAll();
                 });
-
-                $location.search('page', params.page());
             }
         });
 
@@ -118,8 +118,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             delete document.annotator;
         } else {
             if (!document.annotator) {
-                document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName + ' (' + $scope.user.uin + ')';
-            }
+                document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName;
+            } 
         }
         document.save();
     };
