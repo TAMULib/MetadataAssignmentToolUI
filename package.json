@@ -20,11 +20,7 @@
     "start-dev": "wvr server -b /magpie --uid magpie-webserver"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "core": "git+https://github.com/TAMULib/Weaver-UI-Core.git#1.5.x",
-=======
     "weaver-ui-core": "git+https://github.com/TAMULib/Weaver-UI-Core.git#1.5.x",
->>>>>>> 5bfe96c2852d6608ca5104297d405ebc05d9be4b
     "ng-csv": "^0.3.6",
     "ng-file-upload": "12.2.13",
     "ng-table": "3.0.1"
