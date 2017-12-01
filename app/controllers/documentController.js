@@ -92,8 +92,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
     };
 
-    UserService.ready().then(function(event) {
-      $scope.setTable();  
+    UserService.userReady().then(function(event) {
+      $scope.setTable();
     });
 
     $scope.setSelectedUser = function (user) {
@@ -124,7 +124,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         } else {
             if (!document.annotator) {
                 document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName;
-            } 
+            }
         }
         document.save();
     };
