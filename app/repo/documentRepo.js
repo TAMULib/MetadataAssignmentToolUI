@@ -3,24 +3,36 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
     var documentRepo = this;
 
     documentRepo.get = function(projectName, documentName) {
+        var documentDefer = $q.defer();
         var document;
 
         for (var d in documentRepo.getAll()) {
             if (d.project === projectName && d.name === documentName) {
-                document = d;
+                documentDefer = $q(function(resolve) {
+                    documentDefer.resolve(d);
+                });
                 break;
             }
         }
 
         if (document === undefined) {
-            document = new Document();
+
             angular.extend(documentRepo.mapping.instantiate, {
                 'method': 'get/' + projectName + '/' + documentName
             });
-            document.fetch();
-        }
+            documentPromise = WsApi.fetch(documentRepo.mapping.instantiate).then(function(data) {
+                var documentPayload = angular.fromJson(data.body).payload.Document;
+                document = new Document(documentPayload);
+                documentRepo.empty();
+                documentRepo.add(document);
+                documentRepo.makeReady();
+                documentDefer.resolve(document);
+            });
 
-        return document;
+        }
+        
+
+        return documentDefer.promise;
     };
 
     documentRepo.page = function(number, size, field, direction, filters) {
