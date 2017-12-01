@@ -37,8 +37,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             },
             filter: {
                 name: undefined,
-                status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined,
+                status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role === 'ROLE_ANNOTATOR') ? 'Open' : undefined,
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.uin : undefined,
                 projects: undefined
             }
         }, {
@@ -55,19 +55,21 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                     projects: []
                 };
 
+                console.log(params.filter());
+
                 if (params.filter().name !== undefined) {
                     filters.name.push(params.filter().name);
                 }
 
                 if (params.filter().status !== undefined) {
                     filters.status.push(params.filter().status);
-                    if (params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
+                    if (params.filter().status === 'Assigned' && params.filter().annotator !== undefined) {
                         filters.status.push('Rejected');
                         filters.status.push('!Accepted');
                     }
                 }
 
-                if (params.filter().status != 'Published' && !$scope.showPublished) {
+                if (params.filter().status !== 'Published' && !$scope.showPublished) {
                     filters.status.push('!Published');
                 }
 
@@ -82,14 +84,17 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                 return DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
                     $location.search('page', params.page());
-                    return DocumentRepo.getAll();
+                    var all = DocumentRepo.getAll();
+                    return all;
                 });
             }
         });
 
     };
 
-    $scope.setTable();
+    UserService.ready().then(function(event) {
+      $scope.setTable();  
+    });
 
     $scope.setSelectedUser = function (user) {
         $scope.selectedUser = user;

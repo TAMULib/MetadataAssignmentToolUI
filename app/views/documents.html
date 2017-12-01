@@ -39,7 +39,6 @@
             </div>
 
             <div class="panel-body " ng-if="isAdmin() || isManager()">
-
                 <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>&nbsp;&nbsp;
                 <button ng-click="tableParams.filter({})" class="btn btn-default">Clear filter</button>&nbsp;&nbsp;
                 <label class="checkbox-inline"><input type="checkbox" value="" ng-model="showPublished" ng-change="togglePublished()">Show Published</label><br/><br/>
@@ -50,6 +49,7 @@
                         ng-options="project.id as project.name for project in projects">
                     </select>&nbsp;&nbsp;
                 </div>
+                
                 <table ng-table="tableParams" show-filter="true" class="table table-hover table-condensed">
                     <tbody>
                         <tr ng-repeat="doc in $data">
@@ -62,7 +62,7 @@
                             <td data-title="'Annotator'" sortable="'annotator'" filter="{ 'annotator': 'text' }" class="text-center">
                                 <span ng-if="(doc.status !== 'Accepted' && doc.status !== 'Published' && !doc.annotator && availableAnnotators().length > 0)">
                                     <select ng-model="doc.annotator" ng-change="update(doc, 'Assigned')" class="form-control">
-                                        <option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}}">{{annotator.firstName}} {{annotator.lastName}}</option>
+                                        <option ng-repeat="annotator in availableAnnotators()" value="{{annotator.firstName}} {{annotator.lastName}} ({{annotator.username}})">{{annotator.firstName}} {{annotator.lastName}} ({{annotator.username}})</option>
                                     </select>
                                 </span>
                                 <span ng-if="doc.status !== 'Accepted' && !doc.annotator && availableAnnotators().length === 0">
