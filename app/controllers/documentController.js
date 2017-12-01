@@ -55,8 +55,6 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                     projects: []
                 };
 
-                console.log(params.filter());
-
                 if (params.filter().name !== undefined) {
                     filters.name.push(params.filter().name);
                 }
@@ -84,8 +82,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                 return DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
                     $location.search('page', params.page());
-                    var all = DocumentRepo.getAll();
-                    return all;
+                    return DocumentRepo.getAll();
                 });
             }
         });
