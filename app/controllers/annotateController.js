@@ -6,7 +6,9 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.user = UserService.getCurrentUser();
 
-    $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
+    var documentPromise = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
+
+    var resourcesPromise = ResourceRepo.getAllByDocumentName($routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -14,11 +16,10 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.loadingText = "Loading...";
 
-    $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready(), ResourceRepo.getAllByDocumentName($routeParams.documentKey)]).then(function (data) {
+    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+        $scope.document = args[0];
 
-        $scope.resources = angular.fromJson(data[2].body).payload['ArrayList<Resource>'];
-
-        console.log($scope.resources);
+        $scope.resources = args[1];
 
         var emptyFieldValue = function (field) {
             return {
