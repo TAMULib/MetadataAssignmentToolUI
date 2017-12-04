@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, NgTableParams, ProjectRepo) {
+metadataTool.controller('DocumentController', function ($controller, $location, $route, $routeParams, $scope, $window, ApiResponseActions, AlertService, Document, DocumentRepo, UserService, UserRepo, NgTableParams, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -130,7 +130,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
-    DocumentRepo.listenForNew().then(null, null, function (data) {
+    DocumentRepo.listen(ApiResponseActions.CREATE, function (data) {
         $scope.tableParams.reload();
     });
 
