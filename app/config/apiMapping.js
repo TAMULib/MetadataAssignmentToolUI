@@ -55,6 +55,19 @@ var apiMapping = {
             'controller': 'new-document',
         }
     },
+    Resource: {
+        lazy: true,
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
+        },
+        allByDocumentName: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
+        }
+    },
     Metadata: {
         instantiate: {
             'endpoint': '/private/queue',
