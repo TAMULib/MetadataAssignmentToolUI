@@ -6,7 +6,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.user = UserService.getCurrentUser();
 
-    $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
+    var documentPromise = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -14,7 +14,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.loadingText = "Loading...";
 
-    $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function () {
+    $q.all([documentPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+        $scope.document = args[0];
 
         var emptyFieldValue = function (field) {
             return {
