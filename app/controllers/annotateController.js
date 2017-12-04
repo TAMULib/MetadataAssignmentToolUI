@@ -151,7 +151,6 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             $scope.document.push().then(function (data) {
                 $scope.closeModal();
                 $scope.action = 'view';
-                $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
             });
         };
 
