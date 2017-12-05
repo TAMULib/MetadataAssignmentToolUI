@@ -41,6 +41,19 @@ var apiMapping = {
             'method': 'push',
         }
     },
+    Resource: {
+        lazy: true,
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
+        },
+        allByDocumentName: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
+        }
+    },
     Metadata: {
         channel: '/channel/metadata',
         instantiate: {

@@ -2,10 +2,13 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
 
     var documentRepo = this;
 
+    var resolver = function(resolve) {
+        documentDefer.resolve(d);
+    };
+
     documentRepo.get = function(projectName, documentName) {
       var documentDefer = $q.defer();
       var doc;
-
       for (var d in documentRepo.getAll()) {
         if (d.project === projectName && d.name === documentName) {
           doc = d;
@@ -13,17 +16,33 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
         }
       }
 
+      if (document === undefined) {
+
+          angular.extend(documentRepo.mapping.instantiate, {
+            'method': 'get/' + projectName + '/' + documentName
+          });
+          documentPromise = WsApi.fetch(documentRepo.mapping.instantiate).then(function(data) {
+            var documentPayload = angular.fromJson(data.body).payload.Document;
+            document = new Document(documentPayload);
+            documentRepo.empty();
+            documentRepo.add(document);
+            documentRepo.makeReady();
+            documentDefer.resolve(document);
+          });
+
+      }
+
       if (doc === undefined) {
         angular.extend(documentRepo.mapping.instantiate, {
-            'method': 'get/' + projectName + '/' + documentName
+          'method': 'get/' + projectName + '/' + documentName
         });
         documentPromise = WsApi.fetch(documentRepo.mapping.instantiate).then(function(data) {
-            var documentPayload = angular.fromJson(data.body).payload.Document;
-            doc = new Document(documentPayload);
-            documentRepo.empty();
-            documentRepo.add(doc);
-            documentRepo.makeReady();
-            documentDefer.resolve(documentRepo.findById(doc.id));
+          var documentPayload = angular.fromJson(data.body).payload.Document;
+          doc = new Document(documentPayload);
+          documentRepo.empty();
+          documentRepo.add(doc);
+          documentRepo.makeReady();
+          documentDefer.resolve(documentRepo.findById(doc.id));
         });
       } else {
         documentDefer.resolve(doc);

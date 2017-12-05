@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -8,14 +8,18 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     var documentPromise = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
 
+    var resourcesPromise = ResourceRepo.getAllByDocumentName($routeParams.documentKey);
+
     $scope.cv = ControlledVocabularyRepo.getAll();
 
     $scope.action = $routeParams.action;
 
     $scope.loadingText = "Loading...";
 
-    $q.all([documentPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
         $scope.document = args[0];
+
+        $scope.resources = args[1];
 
         var emptyFieldValue = function (field) {
             return {
@@ -60,8 +64,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.hasFileType = function (type) {
-            for (var k in $scope.document.resources) {
-                var resource = $scope.document.resources[k];
+            for (var k in $scope.resources) {
+                var resource = $scope.resources[k];
                 if (types[type].indexOf(resource.mimeType) >= 0) {
                     return true;
                 }
@@ -76,10 +80,10 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.getFiles = function () {
-            if ($scope.document.resources === undefined) {
+            if ($scope.resources === undefined) {
                 return [];
             }
-            return $scope.document.resources.filter(function (resource) {
+            return $scope.resources.filter(function (resource) {
                 return types[$scope.active].indexOf(resource.mimeType) >= 0;
             });
         };
