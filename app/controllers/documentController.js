@@ -135,7 +135,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
     $scope.updateTable = function() {
       $scope.tableParams.reload();
       $scope.tableNeedsUpdating = false;
-    }
+    };
 
     DocumentRepo.listen([ApiResponseActions.CREATE, ApiResponseActions.DELETE], function () {
         $scope.tableNeedsUpdating = true;
