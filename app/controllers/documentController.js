@@ -26,6 +26,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
     $scope.showProjectsFilter = false;
 
+    $scope.tableNeedsUpdating = false;
+
     var initialPage = $location.search().page ? $location.search().page : 1;
 
     $scope.setTable = function () {
@@ -130,8 +132,13 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
-    DocumentRepo.listen(ApiResponseActions.CREATE, function (data) {
-        $scope.tableParams.reload();
+    $scope.updateTable = function() {
+      $scope.tableParams.reload();
+      $scope.tableNeedsUpdating = false;
+    }
+
+    DocumentRepo.listen([ApiResponseActions.CREATE, ApiResponseActions.DELETE], function () {
+        $scope.tableNeedsUpdating = true;
     });
 
 });
