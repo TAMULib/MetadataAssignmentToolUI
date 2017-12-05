@@ -1,4 +1,4 @@
-metadataTool.controller('DocumentController', function ($controller, $location, $route, $routeParams, $scope, $window, AlertService, Document, DocumentRepo, UserService, UserRepo, NgTableParams, ProjectRepo) {
+metadataTool.controller('DocumentController', function ($controller, $location, $route, $routeParams, $scope, $window, ApiResponseActions, AlertService, Document, DocumentRepo, UserService, UserRepo, NgTableParams, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -37,13 +37,14 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             },
             filter: {
                 name: undefined,
-                status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role == 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.uin : $scope.user.uin : undefined,
+                status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role === 'ROLE_ANNOTATOR') ? 'Open' : undefined,
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.uin : undefined,
                 projects: undefined
             }
         }, {
             total: 0,
-            getData: function ($defer, params) {
+            getData: function (params) {
+
                 var key;
                 for (key in params.sorting()) {}
 
@@ -60,13 +61,13 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
                 if (params.filter().status !== undefined) {
                     filters.status.push(params.filter().status);
-                    if (params.filter().status == 'Assigned' && params.filter().annotator !== undefined) {
+                    if (params.filter().status === 'Assigned' && params.filter().annotator !== undefined) {
                         filters.status.push('Rejected');
                         filters.status.push('!Accepted');
                     }
                 }
 
-                if (params.filter().status != 'Published' && !$scope.showPublished) {
+                if (params.filter().status !== 'Published' && !$scope.showPublished) {
                     filters.status.push('!Published');
                 }
 
@@ -78,18 +79,19 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                     filters.projects.push($scope.tableParams.filter().projects);
                 }
 
-                DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
+                return DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
-                    $defer.resolve(DocumentRepo.getAll());
+                    $location.search('page', params.page());
+                    return DocumentRepo.getAll();
                 });
-
-                $location.search('page', params.page());
             }
         });
 
     };
 
-    $scope.setTable();
+    UserService.userReady().then(function(event) {
+      $scope.setTable();
+    });
 
     $scope.setSelectedUser = function (user) {
         $scope.selectedUser = user;
@@ -118,7 +120,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             delete document.annotator;
         } else {
             if (!document.annotator) {
-                document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName + ' (' + $scope.user.uin + ')';
+                document.annotator = $scope.user.firstName + ' ' + $scope.user.lastName;
             }
         }
         document.save();
@@ -128,7 +130,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
-    DocumentRepo.listenForNew().then(null, null, function (data) {
+    DocumentRepo.listen(ApiResponseActions.CREATE, function (data) {
         $scope.tableParams.reload();
     });
 

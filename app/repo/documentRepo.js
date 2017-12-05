@@ -2,25 +2,53 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
 
     var documentRepo = this;
 
+    var resolver = function(resolve) {
+        documentDefer.resolve(d);
+    };
+
     documentRepo.get = function(projectName, documentName) {
-        var document;
-
-        for (var d in documentRepo.getAll()) {
-            if (d.project === projectName && d.name === documentName) {
-                document = d;
-                break;
-            }
+      var documentDefer = $q.defer();
+      var doc;
+      for (var d in documentRepo.getAll()) {
+        if (d.project === projectName && d.name === documentName) {
+          doc = d;
+          break;
         }
+      }
 
-        if (document === undefined) {
-            document = new Document();
-            angular.extend(documentRepo.mapping.instantiate, {
-                'method': 'get/' + projectName + '/' + documentName
-            });
-            document.fetch();
-        }
+      if (document === undefined) {
 
-        return document;
+          angular.extend(documentRepo.mapping.instantiate, {
+            'method': 'get/' + projectName + '/' + documentName
+          });
+          documentPromise = WsApi.fetch(documentRepo.mapping.instantiate).then(function(data) {
+            var documentPayload = angular.fromJson(data.body).payload.Document;
+            document = new Document(documentPayload);
+            documentRepo.empty();
+            documentRepo.add(document);
+            documentRepo.makeReady();
+            documentDefer.resolve(document);
+          });
+
+      }
+
+      if (doc === undefined) {
+        angular.extend(documentRepo.mapping.instantiate, {
+          'method': 'get/' + projectName + '/' + documentName
+        });
+        documentPromise = WsApi.fetch(documentRepo.mapping.instantiate).then(function(data) {
+          var documentPayload = angular.fromJson(data.body).payload.Document;
+          doc = new Document(documentPayload);
+          documentRepo.empty();
+          documentRepo.add(doc);
+          documentRepo.makeReady();
+          documentDefer.resolve(documentRepo.findById(doc.id));
+        });
+      } else {
+        documentDefer.resolve(doc);
+      }
+
+      return documentDefer.promise;
     };
 
     documentRepo.page = function(number, size, field, direction, filters) {
@@ -51,18 +79,6 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi) {
             });
         });
 
-    };
-
-    WsApi.listen(documentRepo.mapping.listenForUpdate).then(null, null, function(data) {
-        var document = angular.fromJson(data.body).payload.Document;
-        var docInRepo = documentRepo.findById(document.id);
-        if (docInRepo !== undefined) {
-            angular.extend(docInRepo, document);
-        }
-    });
-
-    documentRepo.listenForNew = function() {
-        return WsApi.listen(documentRepo.mapping.listenForNew);
     };
 
     return documentRepo;

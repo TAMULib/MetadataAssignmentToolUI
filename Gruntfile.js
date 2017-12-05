@@ -9,8 +9,18 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
 
-        // Project settings
         build: build,
+
+        symlink: {
+            options: {
+                overwrite: true,
+                force: true
+            },
+            explicit: {
+                src: 'node_modules',
+                dest: 'app/node_modules'
+            }
+        },
 
         useminPrepare: {
             html: '<%= build.app %>/index.html',
@@ -27,10 +37,11 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= build.app %>/**/*.js',
-                '<%= build.app %>/bower_components/core/**/*',
-                '<%= build.app %>/bower_components/core/components/**/*',
-                '<%= build.app %>/bower_components/core/resources/**/*',
-                '!<%= build.app %>/bower_components/**/*',
+                'node_modules/weaver-ui-core/**/*',
+                'node_modules/weaver-ui-core/components/**/*',
+                'node_modules/weaver-ui-core/resources/**/*',
+                '!node_modules/**/*',
+                '!<%= build.app %>/node_modules/**/*',
                 '!<%= build.app %>/components/**/*',
                 '!<%= build.app %>/resources/**/*'
             ]
@@ -40,31 +51,13 @@ module.exports = function (grunt) {
             options: {
                 separator: ';'
             },
-            vendor: {
-                src: [
-                    '<%= build.app %>/bower_components/sockjs-client/dist/sockjs.min.js',
-                    '<%= build.app %>/bower_components/stomp-websocket/lib/stomp.min.js',
-                    '<%= build.app %>/bower_components/jquery/dist/jquery.min.js',
-                    '<%= build.app %>/bower_components/bootstrap/dist/js/bootstrap.min.js',
-                    '<%= build.app %>/bower_components/angular/angular.min.js',
-                    '<%= build.app %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-                    '<%= build.app %>/bower_components/angular-loader/angular-loader.min.js',
-                    '<%= build.app %>/bower_components/angular-mocks/angular-mocks.js',
-                    '<%= build.app %>/bower_components/angular-table/dist/angular-table.min.js',
-                    '<%= build.app %>/bower_components/angular-csv/build/angular-csv.min.js',
-                    '<%= build.app %>/bower_components/angular-sanitize/angular-sanitize.min.js',
-                    '<%= build.app %>/bower_components/ng-file-upload/ng-file-upload-shim.min.js',
-                    '<%= build.app %>/bower_components/ng-file-upload/ng-file-upload.min.js'
-                ],
-                dest: '<%= build.app %>/resources/scripts/vendor_concat.js'
-            },
             core: {
                 src: [
-                    '<%= build.app %>/bower_components/core/**/*.js',
-                    '!<%= build.app %>/bower_components/core/app/core.js',
-                    '!<%= build.app %>/bower_components/core/config/coreConfig.js',
-                    '!<%= build.app %>/bower_components/core/components/**/*',
-                    '!<%= build.app %>/bower_components/core/resources/**/*'
+                    'node_modules/node_modules/**/*.js',
+                    '!node_modules/node_modules/app/core.js',
+                    '!node_modules/node_modules/config/coreConfig.js',
+                    '!node_modules/node_modules/components/**/*',
+                    '!node_modules/node_modules/resources/**/*'
                 ],
                 dest: '<%= build.app %>/resources/scripts/core_concat.js'
             },
@@ -73,7 +66,8 @@ module.exports = function (grunt) {
                     '<%= build.app %>/**/*.js',
                     '!<%= build.app %>/config/appConfig.js',
                     '!<%= build.app %>/config/appConfig_sample.js',
-                    '!<%= build.app %>/bower_components/**/*',
+                    '!node_modules/**/*',
+                    '!<%= build.app %>/node_modules/**/*',
                     '!<%= build.app %>/components/**/*',
                     '!<%= build.app %>/resources/**/*',
                     '!<%= build.app %>/resources/scripts/app_concat.js'
@@ -84,14 +78,7 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                mangle: false,
-                compress: {
-                    unused: false
-                }
-            },
-            vendor: {
-                src: '<%= build.app %>/resources/scripts/vendor_concat.js',
-                dest: '<%= build.app %>/resources/scripts/vendor_concat.js'
+                mangle: false
             },
             core: {
                 src: '<%= build.app %>/resources/scripts/core_concat.js',
@@ -110,34 +97,44 @@ module.exports = function (grunt) {
             }
         },
 
-        compass: {
+        sass: {
+            options: {
+                sourceMap: false
+            },
             dist: {
-                options: {
-                    sassDir: '<%= build.app %>/resources/styles/sass',
-                    cssDir: '<%= build.app %>/resources/styles'
-                }
+                files: [{
+                    expand: true,
+                    cwd: 'app/resources/styles/sass',
+                    src: ['*.scss'],
+                    dest: 'app/resources/styles',
+                    ext: '.css'
+                }]
             }
         },
+
         watch: {
             css: {
                 files: '**/*.scss',
-                tasks: ['compass']
+                tasks: ['sass']
             }
         }
 
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-usemin');
 
-    grunt.registerTask('default', ['jshint', 'watch']);
+    grunt.registerTask('default', ['jshint', 'sass', 'symlink']);
+
+    grunt.registerTask('watch', ['watch']);
 
     grunt.registerTask('develop', ['jshint', 'useminPrepare', 'concat', 'usemin', 'watch']);
 
-    grunt.registerTask('deploy', ['jshint', 'useminPrepare', 'concat', 'uglify', 'usemin', 'compass']);
+    grunt.registerTask('deploy', ['jshint', 'useminPrepare', 'concat', 'uglify', 'usemin', 'sass']);
 
 };

@@ -1,6 +1,6 @@
-angular.module('mock.authServiceApi', []).
-    service('AuthServiceApi', function($q) {
+angular.module('mock.authService', []).
+    service('AuthService', function($q) {
 
-        var AuthServiceApi = this;
+        var AuthService = this;
 
 });
