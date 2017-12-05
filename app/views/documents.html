@@ -4,11 +4,15 @@
     <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
     <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
 
-    <div ng-if="!isUser()" class="col-12">
+    <div ng-if="!isUser()" class="col-12">    
 
-        <div class="panel panel-default documents-container">
+        <div class="panel panel-default documents-container" ng-class="{'panel-warning':tableNeedsUpdating}">
 
             <div class="panel-heading">
+                <label ng-if="tableNeedsUpdating" class="checkbox-inline pull-right">
+                    You page is out of date
+                    <button class="btn btn-xs btn-success" ng-click="updateTable()">Refresh</button>
+                </label>
                 <h3 class="panel-title">Documents</h3>
             </div>
 
