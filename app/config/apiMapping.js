@@ -1,6 +1,7 @@
 // CONVENTION: must match model name, case sensitive
 var apiMapping = {
     ControlledVocabulary: {
+        channel: '/channel/cv',
         all: {
             'endpoint': '/private/queue',
             'controller': 'cv',
@@ -10,10 +11,6 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'cv',
             'method': 'update'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'cv'
         }
     },
     Document: {
@@ -45,6 +42,7 @@ var apiMapping = {
         }
     },
     Metadata: {
+        channel: '/channel/metadata',
         instantiate: {
             'endpoint': '/private/queue',
             'controller': 'metadata',
@@ -73,13 +71,10 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'metadata',
             'method': 'status'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'metadata'
         }
     },
     Project: {
+        channel: '/channel/project',
         batchpublish: {
             'endpoint': '/private/queue',
             'controller': 'project',
@@ -89,13 +84,10 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'all'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'project'
         }
     },
     User: {
+        channel: '/channel/user',
         instantiate: {
             'endpoint': '/private/queue',
             'controller': 'user',
@@ -115,10 +107,6 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'user',
             'method': 'delete'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'user'
         }
     }
 };
