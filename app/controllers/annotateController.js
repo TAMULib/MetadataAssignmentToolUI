@@ -204,6 +204,30 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             }
         };
 
+        var getSetting = function(settings, key) {
+          for(var j in settings) {
+            var setting = settings[j];
+            if(setting.key === key) {
+              return setting;
+            }
+          }
+        };
+
+        $scope.getIIIFUrls = function() {
+            var urls = [];
+            for(var i in $scope.document.publishedLocations) {
+                var publishedLocation = $scope.document.publishedLocations[i];
+                if(publishedLocation.repository.type === 'FEDORA_PCDM') {
+                  var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
+                  var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
+                  var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath;
+                  var iiifUrl = publishedLocation.url.replace(fedoraRestBaseUrl, appConfig.iiifService + '/presentation?path=');
+                  urls.push(iiifUrl);
+                }
+            }
+            return urls;
+        };
+
     });
 
 });

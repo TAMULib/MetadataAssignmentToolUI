@@ -8,10 +8,17 @@
         <div class="panel-heading">This document is published at:</div>
         <div class="panel-body">
             <ul class="list-unstyled">
-            <li ng-repeat="publishedLocation in document.publishedLocations">
-              <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
-            </li>
-          </ul>
+                <li ng-repeat="publishedLocation in document.publishedLocations">
+                  <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
+                </li>
+            </ul>
+
+            <hr/>
+            <ul class="list-unstyled">
+                <li ng-repeat="iiifUrl in getIIIFUrls()">
+                    <span><strong>IIIF Url: </strong><a target="_blank" href="{{iiifUrl}}">{{iiifUrl}}</a></span>
+                </li>
+            </ul>
         </div>
     </div>
 
