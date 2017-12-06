@@ -6,9 +6,7 @@ metadataTool.repo("DocumentRepo", function DocumentRepo($q, Document, WsApi, Api
         documentDefer.resolve(d);
     };
 
-    documentRepo.overrideAction(ApiResponseActions.CREATE, function(modelObj) {
-      console.log(modelObj);
-    });
+    documentRepo.overrideAction(ApiResponseActions.CREATE, function(modelObj) {});
 
     documentRepo.get = function(projectName, documentName) {
       var documentDefer = $q.defer();
