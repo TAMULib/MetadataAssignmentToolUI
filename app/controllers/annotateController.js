@@ -220,14 +220,21 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 if(publishedLocation.repository.type === 'FEDORA_PCDM') {
                   var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
                   var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
-                  var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath;
-                  var iiifUrl = publishedLocation.url.replace(fedoraRestBaseUrl, appConfig.iiifService + '/presentation?path=');
-                  urls.push(iiifUrl);
+                  var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
+                  var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
+
+                  console.log(containerContextPath);
+                  var iiifPresentationUrl = appConfig.iiifService + '/presentation?path=' + containerContextPath;
+
+                  var iiifCollectionUrl = appConfig.iiifService + '/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', '');
+
+                  urls.push(iiifPresentationUrl);
+                  urls.push(iiifCollectionUrl);
+
                 }
             }
             return urls;
         };
-
     });
 
 });

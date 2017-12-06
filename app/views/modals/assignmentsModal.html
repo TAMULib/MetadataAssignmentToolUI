@@ -5,7 +5,7 @@
 <div class="modal-body">
     <table ng-table="tableParams" class="table table-hover table-condensed">
         <tbody>
-            <tr ng-repeat="doc in $data | filter:{status: 'Assigned'}">
+            <tr ng-repeat="doc in $data">
                 <td data-title="'FileName'" sortable="'name'">
                     {{doc.name}}
                 </td>
