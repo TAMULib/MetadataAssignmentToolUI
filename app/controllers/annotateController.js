@@ -222,15 +222,10 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                   var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
                   var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
                   var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
-
-                  console.log(containerContextPath);
                   var iiifPresentationUrl = appConfig.iiifService + '/presentation?path=' + containerContextPath;
-
                   var iiifCollectionUrl = appConfig.iiifService + '/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', '');
-
                   urls.push(iiifPresentationUrl);
                   urls.push(iiifCollectionUrl);
-
                 }
             }
             return urls;
