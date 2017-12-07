@@ -14,11 +14,14 @@
             </ul>
 
             <hr/>
-            <ul class="list-unstyled">
-                <li ng-repeat="iiifUrl in getIIIFUrls()">
-                    <span><strong>IIIF Url: </strong><a target="_blank" href="{{iiifUrl}}">{{iiifUrl}}</a></span>
-                </li>
-            </ul>
+            <span><strong>IIIF Urls: </strong></span>
+            <div class="container">
+                <ul class="list-unstyled">
+                    <li ng-repeat="iiifUrl in getIIIFUrls()">
+                        <span><a target="_blank" href="{{iiifUrl}}">{{iiifUrl}}</a></span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
