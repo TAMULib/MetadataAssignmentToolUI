@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -6,7 +6,9 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.user = UserService.getCurrentUser();
 
-    $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
+    var documentPromise = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
+
+    var resourcesPromise = ResourceRepo.getAllByDocumentName($routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -14,7 +16,10 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.loadingText = "Loading...";
 
-    $q.all([$scope.document.ready(), ControlledVocabularyRepo.ready()]).then(function () {
+    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+        $scope.document = args[0];
+
+        $scope.resources = args[1];
 
         var emptyFieldValue = function (field) {
             return {
@@ -59,8 +64,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.hasFileType = function (type) {
-            for (var k in $scope.document.resources) {
-                var resource = $scope.document.resources[k];
+            for (var k in $scope.resources) {
+                var resource = $scope.resources[k];
                 if (types[type].indexOf(resource.mimeType) >= 0) {
                     return true;
                 }
@@ -75,10 +80,10 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.getFiles = function () {
-            if ($scope.document.resources === undefined) {
+            if ($scope.resources === undefined) {
                 return [];
             }
-            return $scope.document.resources.filter(function (resource) {
+            return $scope.resources.filter(function (resource) {
                 return types[$scope.active].indexOf(resource.mimeType) >= 0;
             });
         };
@@ -146,7 +151,6 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             $scope.document.push().then(function (data) {
                 $scope.closeModal();
                 $scope.action = 'view';
-                $scope.document = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
             });
         };
 
@@ -200,6 +204,32 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             }
         };
 
+        var getSetting = function(settings, key) {
+          for(var j in settings) {
+            var setting = settings[j];
+            if(setting.key === key) {
+              return setting;
+            }
+          }
+        };
+
+        $scope.getIIIFUrls = function() {
+            var urls = [];
+            for(var i in $scope.document.publishedLocations) {
+                var publishedLocation = $scope.document.publishedLocations[i];
+                if(publishedLocation.repository.type === 'FEDORA_PCDM') {
+                  var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
+                  var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
+                  var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
+                  var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
+                  var iiifPresentationUrl = appConfig.iiifService + '/presentation?path=' + containerContextPath;
+                  var iiifCollectionUrl = appConfig.iiifService + '/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', '');
+                  urls.push(iiifPresentationUrl);
+                  urls.push(iiifCollectionUrl);
+                }
+            }
+            return urls;
+        };
     });
 
 });

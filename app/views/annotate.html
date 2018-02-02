@@ -8,10 +8,20 @@
         <div class="panel-heading">This document is published at:</div>
         <div class="panel-body">
             <ul class="list-unstyled">
-            <li ng-repeat="publishedLocation in document.publishedLocations">
-              <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
-            </li>
-          </ul>
+                <li ng-repeat="publishedLocation in document.publishedLocations">
+                  <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
+                </li>
+            </ul>
+
+            <hr/>
+            <span><strong>IIIF Urls: </strong></span>
+            <div class="container">
+                <ul class="list-unstyled">
+                    <li ng-repeat="iiifUrl in getIIIFUrls()">
+                        <span><a target="_blank" href="{{iiifUrl}}">{{iiifUrl}}</a></span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -44,17 +54,17 @@
 
 	                <div class="tab-content">
 
-	                	<nav aria-label="...">
-						  <ul class="pager">
-						    <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
-						    <li class="title">{{getFiles()[selected()].name}}</li>
-						    <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
-						  </ul>
-						</nav>
+  	                	<nav aria-label="...">
+            						  <ul class="pager">
+              						    <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
+              						    <li class="title">{{getFiles()[selected()].name}}</li>
+              						    <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
+            						  </ul>
+          						</nav>
 
-						<span class="loading-pane" ng-class="{'show': loading}">
-							<img src="resources/images/loading.gif" height="100" width="100"/>
-						</span>
+          						<span class="loading-pane" ng-class="{'show': loading}">
+    							       <img src="resources/images/loading.gif" height="100" width="100"/>
+          						</span>
 
 	                    <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'text', 'hide': switching}" id="txtTab" ng-if="hasFileType('text')">
 	                        <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}"></object>

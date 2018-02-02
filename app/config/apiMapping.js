@@ -1,6 +1,7 @@
 // CONVENTION: must match model name, case sensitive
 var apiMapping = {
     ControlledVocabulary: {
+        channel: '/channel/cv',
         all: {
             'endpoint': '/private/queue',
             'controller': 'cv',
@@ -10,13 +11,10 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'cv',
             'method': 'update'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'cv'
         }
     },
     Document: {
+        channel: '/channel/document',
         lazy: true,
         instantiate: {
             'endpoint': '/private/queue',
@@ -41,21 +39,23 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'document',
             'method': 'push',
+        }
+    },
+    Resource: {
+        lazy: true,
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
         },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'documents',
-        },
-        listenForUpdate: {
-            'endpoint': '/channel',
-            'controller': 'update-document',
-        },
-        listenForNew: {
-            'endpoint': '/channel',
-            'controller': 'new-document',
+        allByDocumentName: {
+            'endpoint': '/private/queue',
+            'controller': 'resource',
+            'method': 'all'
         }
     },
     Metadata: {
+        channel: '/channel/metadata',
         instantiate: {
             'endpoint': '/private/queue',
             'controller': 'metadata',
@@ -84,13 +84,10 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'metadata',
             'method': 'status'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'metadata'
         }
     },
     Project: {
+        channel: '/channel/project',
         batchpublish: {
             'endpoint': '/private/queue',
             'controller': 'project',
@@ -100,13 +97,10 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'all'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'project'
         }
     },
     User: {
+        channel: '/channel/user',
         instantiate: {
             'endpoint': '/private/queue',
             'controller': 'user',
@@ -126,10 +120,6 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'user',
             'method': 'delete'
-        },
-        listen: {
-            'endpoint': '/channel',
-            'controller': 'user'
         }
     }
 };

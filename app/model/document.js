@@ -2,7 +2,7 @@ metadataTool.model("Document", function Document(WsApi, ProjectRepo) {
 
     return function Document() {
 
-        var document = this;
+        var doc = this;
 
         this.getSuggestions = function () {
             angular.extend(this.getMapping().suggest, {
@@ -12,10 +12,11 @@ metadataTool.model("Document", function Document(WsApi, ProjectRepo) {
         };
 
         this.push = function () {
-            angular.extend(this.getMapping().push, {
-                'method': 'push/' + this.project + '/' + this.name
-            });
-            return WsApi.fetch(this.getMapping().push);
+          angular.extend(this.getMapping().push, {
+              'method': 'push/' + this.project + '/' + this.name
+          });
+
+          return WsApi.fetch(this.getMapping().push);
         };
 
         this.getProject = function () {
