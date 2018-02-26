@@ -4,13 +4,15 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 
     $scope.user = UserService.getCurrentUser();
 
+    UserService.userReady().then(function() {
+
     if($scope.isAdmin() || $scope.isManager()) {
 
         var UserRepo = $injector.get("UserRepo");
 
         $scope.userUpdated = {};
 
-        $scope.userRepo = UserRepo.getAll();
+        $scope.users = UserRepo.getAll();
 
         $scope.updateRole = function(user) {
 
@@ -76,5 +78,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
         });
 
     }
+
+    });
 
 });
