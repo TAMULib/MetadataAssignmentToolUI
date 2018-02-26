@@ -40,7 +40,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             filter: {
                 name: undefined,
                 status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role === 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.uin : undefined,
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.username : undefined,
                 projects: undefined
             }
         }, {

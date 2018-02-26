@@ -18,7 +18,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 
             user.save();
 
-            if($scope.user.uin == user.uin) {
+            if($scope.user.username == user.username) {
                 if(user.role == 'ROLE_ANNOTATOR') {
                     $location.path('/assignments');
                 }

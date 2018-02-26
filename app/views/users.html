@@ -23,8 +23,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="thisUser in userRepo track by thisUser.uin">
-                            <td>{{thisUser.uin}}</td>
+                        <tr ng-repeat="thisUser in userRepo track by thisUser.username">
+                            <td>{{thisUser.username}}</td>
                             <td>{{thisUser.firstName}}</td>
                             <td>{{thisUser.lastName}}</td>
                             <td>{{thisUser.role}}</td>
@@ -35,7 +35,7 @@
                             </td>
                             <td ng-if="(isAdmin() || isManager()) && (thisUser.role == 'ROLE_ANNOTATOR' || thisUser.role == 'ROLE_MANAGER' || thisUser.role == 'ROLE_ADMIN')">
 
-                                <modal modal-id="{{thisUser.uin}}AssignmentsModal"
+                                <modal modal-id="{{thisUser.username}}AssignmentsModal"
                                        modal-view="views/modals/assignmentsModal.html"
                                        modal-btn-classes="btn btn-primary"
                                        modal-controller="DocumentController"
