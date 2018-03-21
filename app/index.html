@@ -67,6 +67,7 @@
                   <li><a href="users">Manage Users</a></li>
                   <li><a href ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
                   <li><a href ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
+                  <li><a href="repositories">Manage Repositories</a></li>
                   <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 
                   <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
@@ -229,6 +230,7 @@
       <script src="repo/projectRepo.js"></script>
       <script src="repo/metadataRepo.js"></script>
       <script src="repo/controlledVocabularyRepo.js"></script>
+      <script src="repo/projectRepositoryRepo.js"></script>
 
       <!-- Models -->
       <script src="model/abstractAppModel.js"></script>
@@ -237,6 +239,7 @@
       <script src="model/project.js"></script>
       <script src="model/metadata.js"></script>
       <script src="model/controlledVocabulary.js"></script>
+      <script src="model/projectRepository.js"></script>
 
       <!-- Controllers -->
       <script src="controllers/adminController.js"></script>
@@ -246,6 +249,7 @@
       <script src="controllers/exportController.js"></script>
       <script src="controllers/annotateController.js"></script>
       <script src="controllers/navigationController.js"></script>
+      <script src="controllers/projectRepositoryController.js"></script>
       <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
