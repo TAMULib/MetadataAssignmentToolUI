@@ -201,6 +201,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 var suggestedFieldValue = emptyFieldValue(field);
                 suggestedFieldValue.value = suggestion.value;
                 field.values.push(suggestedFieldValue);
+                $scope.document.dirty(true);
             }
         };
 
