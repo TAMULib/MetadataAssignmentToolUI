@@ -106,6 +106,11 @@ var apiMapping = {
             'controller': 'project-repository',
             'method': 'all'
         },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'create'
+        },
         update: {
             'endpoint': '/private/queue',
             'controller': 'project-repository',

@@ -16,6 +16,12 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
                 $scope.closeModal();
             });
         };
+
+        $scope.create = function(newRepository) {
+            ProjectRepositoryRepo.create(newRepository).then(function() {
+                $scope.closeModal();
+            });
+        };
     }
   });
 

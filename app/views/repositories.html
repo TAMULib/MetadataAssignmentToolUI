@@ -10,6 +10,13 @@
                 <h3 class="panel-title">Repositories</h3>
             </div>
             <div class="panel-body">
+                <modal class="pull-right" modal-id="{{repository.id}}AddRepositoryModal"
+                       modal-view="views/modals/addRepositoryModal.html"
+                       modal-btn-classes="btn btn-primary"
+                       modal-controller="ProjectRepositoryController"
+                       modal-header-class="modal-header-primary">
+                       Add
+                </modal>            	
                 <table class="table table-hover table-condensed">
                     <thead>
                         <tr>
@@ -23,8 +30,8 @@
                             <td>{{repository.name}}</td>
                             <td>{{repository.type}}</td>
                             <td>
-                                <modal modal-id="{{repository.id}}RepositoryModal"
-                                       modal-view="views/modals/repositoryModal.html"
+                                <modal modal-id="{{repository.id}}EditRepositoryModal"
+                                       modal-view="views/modals/editRepositoryModal.html"
                                        modal-btn-classes="btn btn-primary"
                                        modal-controller="ProjectRepositoryController"
                                        modal-header-class="modal-header-primary">
