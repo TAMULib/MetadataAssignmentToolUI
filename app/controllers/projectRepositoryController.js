@@ -10,6 +10,12 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
 
     if($scope.isAdmin() || $scope.isManager()) {
         $scope.projectRepositories = ProjectRepositoryRepo.getAll();
+
+        $scope.update = function(repository) {
+            ProjectRepositoryRepo.save(repository).then(function() {
+                $scope.closeModal();
+            });
+        };
     }
   });
 
