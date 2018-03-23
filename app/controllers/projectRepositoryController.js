@@ -18,13 +18,15 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
         });
 
         $scope.update = function(repository) {
-            ProjectRepositoryRepo.save(repository).then(function() {
-                $scope.closeModal();
-            });
+            manageRepository('save',repository);
         };
 
         $scope.create = function(newRepository) {
-            ProjectRepositoryRepo.create(newRepository).then(function() {
+            manageRepository('create',newRepository);
+        };
+
+        var manageRepository = function(method,repository) {
+            ProjectRepositoryRepo[method](repository).then(function() {
                 $scope.closeModal();
             });
         };
