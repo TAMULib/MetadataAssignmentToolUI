@@ -1,18 +1,20 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">New Repository</h4>
+  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">New Repository</h4>
 </div>
 <div class="modal-body">
-    <form name="addRepository" novalidate>
-        <div class="row">
-			<div>
-			    <label>Name</label>
-			    <input type="text" name="name" ng-model="newRepository.name" />
-			</div>        	
-        </div>
-    </form>	
+  <form name="addRepository" novalidate>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" name="name" ng-model="newRepository.name" />
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select ng-model="newRepository.type" ng-options="type for type in types"></select>
+    </div>
+  </form>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
-	<button type="button" class="btn btn-success" ng-click="create(newRepository)" >Create</button>
+  <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+  <button type="button" class="btn btn-success" ng-click="create(newRepository)" >Create</button>
 </div>

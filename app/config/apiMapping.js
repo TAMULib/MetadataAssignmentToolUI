@@ -120,6 +120,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project-repository',
             'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'types'
         }
     },
     User: {

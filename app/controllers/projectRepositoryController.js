@@ -6,10 +6,16 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
 
     $scope.projectRepositories = [];
 
+    $scope.types = [];
+
     UserService.userReady().then(function() {
 
     if($scope.isAdmin() || $scope.isManager()) {
         $scope.projectRepositories = ProjectRepositoryRepo.getAll();
+        ProjectRepositoryRepo.getTypes().then(function(data) {
+            var serviceTypes = angular.fromJson(data.body).payload["ArrayList<ServiceType>"];
+            $scope.types = serviceTypes;
+        });
 
         $scope.update = function(repository) {
             ProjectRepositoryRepo.save(repository).then(function() {
