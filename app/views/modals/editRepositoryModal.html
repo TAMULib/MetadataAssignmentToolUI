@@ -13,6 +13,12 @@
       <select ng-model="repository.type" ng-options="type for type in types"></select>
     </div>
   </form>
+  <ul>
+    <li ng-repeat="setting in repository.settings track by $index">{{setting.key}}:
+      <span ng-repeat="value in setting.values">{{value}}</span>
+      <input ng-repeat="value in setting.values track by $index" type="text" name="name" ng-model="repository.settings[$parent.$index].values[$index]" />
+    </li>
+  </ul>
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>

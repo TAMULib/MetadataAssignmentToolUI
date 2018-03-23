@@ -18,6 +18,7 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
         });
 
         $scope.update = function(repository) {
+            repository.dirty(true);
             manageRepository('save',repository);
         };
 
