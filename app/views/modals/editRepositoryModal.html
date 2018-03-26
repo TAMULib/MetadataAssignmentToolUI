@@ -6,19 +6,22 @@
   <form name="editRepository" novalidate>
     <div class="form-group">
       <label>Name</label>
-      <input type="text" name="name" ng-model="repository.name" />
+      <input class="form-control" type="text" name="name" ng-model="repository.name" />
     </div>
     <div class="form-group">
       <label>Type</label>
-      <select ng-model="repository.type" ng-options="type for type in types"></select>
+      <input class="form-control" readonly value="{{repository.type}}" />
+      <!--<select class="form-control" ng-model="repository.type" ng-options="type for type in types"></select>-->
     </div>
-  </form>
-  <ul>
-    <li ng-repeat="setting in repository.settings track by $index">{{setting.key}}:
-      <span ng-repeat="value in setting.values">{{value}}</span>
-      <input ng-repeat="value in setting.values track by $index" type="text" name="name" ng-model="repository.settings[$parent.$index].values[$index]" />
+    <label>Settings</label>
+    <ul class="list-group">
+    <li class="list-group-item" ng-repeat="setting in repository.settings track by $index">
+      <label>{{setting.key}}</label>
+      <input class="form-control" ng-repeat="value in setting.values track by $index" type="{{setting.key == 'password' ? 'password':'text'}}" name="name" ng-model="repository.settings[$parent.$index].values[$index]" />
     </li>
   </ul>
+  </form>
+
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
