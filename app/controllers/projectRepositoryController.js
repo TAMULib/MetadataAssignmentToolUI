@@ -8,12 +8,15 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
 
     $scope.types = [];
 
+    $scope.newRepository = {};
+    $scope.newRepositorySettings = {};
+
     UserService.userReady().then(function() {
 
     if($scope.isAdmin() || $scope.isManager()) {
         $scope.projectRepositories = ProjectRepositoryRepo.getAll();
         ProjectRepositoryRepo.getTypes().then(function(data) {
-            var serviceTypes = angular.fromJson(data.body).payload["ArrayList<ServiceType>"];
+            var serviceTypes = angular.fromJson(data.body).payload["HashMap"];
             $scope.types = serviceTypes;
         });
 
@@ -22,12 +25,21 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
             manageRepository('save',repository);
         };
 
-        $scope.create = function(newRepository) {
-            manageRepository('create',newRepository);
+        $scope.create = function(newRepository,newRepositorySettings) {
+            var settings = [];
+            angular.forEach(newRepositorySettings, function(valueObj,key) {
+                this.push({"key":key,"values": [valueObj.value]});
+            },settings);
+            newRepository.settings = settings;
+            manageRepository('create',newRepository).then(function() {
+                $scope.newRepository = {};
+                $scope.newRepositorySettings = {};
+            });
+
         };
 
         var manageRepository = function(method,repository) {
-            ProjectRepositoryRepo[method](repository).then(function() {
+            return ProjectRepositoryRepo[method](repository).then(function() {
                 $scope.closeModal();
             });
         };

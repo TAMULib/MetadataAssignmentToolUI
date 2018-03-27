@@ -10,11 +10,18 @@
     </div>
     <div class="form-group">
       <label>Type</label>
-      <select class="form-control" ng-model="newRepository.type" ng-options="type for type in types"></select>
+      <select class="form-control" ng-model="newRepository.type" ng-options="typeKey as typeKey for (typeKey,settingKeys) in types"></select>
     </div>
+    <label>Settings</label>
+    <ul class="list-group" ng-show="newRepository.type">
+      <li class="list-group-item" ng-repeat="settingKey in types[newRepository.type] track by $index">
+        <label>{{settingKey}}</label>
+        <input class="form-control" type="{{settingKey == 'password' ? 'password':'text'}}" name="settingValue" ng-model="newRepositorySettings[settingKey].value" />
+      </li>
+    </ul>
   </form>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
-  <button type="button" class="btn btn-success" ng-click="create(newRepository)" >Create</button>
+  <button type="button" class="btn btn-success" ng-click="create(newRepository,newRepositorySettings)" >Create</button>
 </div>
