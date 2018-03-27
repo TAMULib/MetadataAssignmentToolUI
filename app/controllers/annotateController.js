@@ -107,10 +107,12 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.removeMetadataField = function (field, index) {
+            $scope.document.dirty(true);
             field.values.splice(index, 1);
         };
 
         $scope.addMetadataField = function (field) {
+            $scope.document.dirty(true);
             field.values.push(emptyFieldValue(field));
         };
 
@@ -195,6 +197,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.addSuggestion = function (field, suggestion) {
+            $scope.document.dirty(true);
             if (field.values[0].value.length === 0) {
                 field.values[0].value = suggestion.value;
             } else {
