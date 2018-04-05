@@ -55,6 +55,7 @@ var apiMapping = {
         }
     },
     Metadata: {
+        lazy: true,
         channel: '/channel/metadata',
         instantiate: {
             'endpoint': '/private/queue',
