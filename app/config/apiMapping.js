@@ -100,6 +100,34 @@ var apiMapping = {
             'method': 'all'
         }
     },
+    ProjectRepository: {
+        channel: '/channel/project-repository',
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-repository',
+            'method': 'types'
+        }
+    },
     User: {
         channel: '/channel/user',
         instantiate: {
