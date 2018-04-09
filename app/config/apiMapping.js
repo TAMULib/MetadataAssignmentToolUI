@@ -23,7 +23,7 @@ var apiMapping = {
         },
         suggest: {
             'endpoint': '/private/queue',
-            'controller': 'suggest'
+            'controller': 'project-suggestor'
         },
         page: {
             'endpoint': '/private/queue',
@@ -125,6 +125,34 @@ var apiMapping = {
         types: {
             'endpoint': '/private/queue',
             'controller': 'project-repository',
+            'method': 'types'
+        }
+    },
+    ProjectSuggestor: {
+        channel: '/channel/project-suggestor',
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
             'method': 'types'
         }
     },
