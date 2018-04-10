@@ -14,6 +14,9 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
     when('/suggestors', {
         templateUrl: 'views/suggestors.html'
     }).
+    when('/authorities', {
+        templateUrl: 'views/authorities.html'
+    }).
     when('/assignments', {
         templateUrl: 'views/assignments.html',
         reloadOnSearch: false
