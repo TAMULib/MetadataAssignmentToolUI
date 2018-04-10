@@ -128,6 +128,34 @@ var apiMapping = {
             'method': 'types'
         }
     },
+    ProjectAuthority: {
+        channel: '/channel/project-authority',
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'types'
+        }
+    },
     ProjectSuggestor: {
         channel: '/channel/project-suggestor',
         all: {
