@@ -98,6 +98,21 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'delete'
         }
     },
     ProjectRepository: {

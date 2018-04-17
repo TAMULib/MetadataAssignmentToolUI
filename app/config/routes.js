@@ -8,6 +8,9 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
     when('/users', {
         templateUrl: 'views/users.html'
     }).
+    when('/projects', {
+        templateUrl: 'views/projects.html'
+    }).
     when('/repositories', {
         templateUrl: 'views/repositories.html'
     }).
