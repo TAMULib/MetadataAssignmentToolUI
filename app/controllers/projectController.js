@@ -18,9 +18,9 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
     UserService.userReady().then(function() {
 
     if($scope.isAdmin() || $scope.isManager()) {
-        $scope.projectServices['repositories'] = ProjectRepositoryRepo.getAll();
-        $scope.projectServices['authorities'] = ProjectAuthorityRepo.getAll();
-        $scope.projectServices['suggestors'] = ProjectSuggestorRepo.getAll();
+        $scope.projectServices.repositories = ProjectRepositoryRepo.getAll();
+        $scope.projectServices.authorities = ProjectAuthorityRepo.getAll();
+        $scope.projectServices.suggestors = ProjectSuggestorRepo.getAll();
 
         $scope.ingestTypes = ProjectRepo.getIngestTypes().then(function(data) {
             $scope.ingestTypes = angular.fromJson(data.body).payload["ArrayList<IngestType>"];
