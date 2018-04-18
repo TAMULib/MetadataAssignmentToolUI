@@ -13,6 +13,10 @@ metadataTool.repo("ProjectRepo", function ProjectRepo(WsApi) {
         })[0];
     };
 
+    this.getIngestTypes = function () {
+        return WsApi.fetch(this.mapping.ingestTypes);
+    };
+
     return this;
 
 });

@@ -11,6 +11,9 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
     $scope.updateableProjectServices = {};
 
     $scope.newProject = {};
+    $scope.newProjectServices = {};
+
+    $scope.ingestTypes = [];
 
     UserService.userReady().then(function() {
 
@@ -18,6 +21,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
         $scope.projectServices['repositories'] = ProjectRepositoryRepo.getAll();
         $scope.projectServices['authorities'] = ProjectAuthorityRepo.getAll();
         $scope.projectServices['suggestors'] = ProjectSuggestorRepo.getAll();
+
+        $scope.ingestTypes = ProjectRepo.getIngestTypes().then(function(data) {
+            $scope.ingestTypes = angular.fromJson(data.body).payload["ArrayList<IngestType>"];
+        });
 
         $scope.projects = ProjectRepo.getAll();
 
@@ -35,15 +42,20 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
             manageProject('save', project);
         };
 
-        $scope.create = function(newProject,newProjectSettings) {
-            var settings = [];
-            angular.forEach(newProjectSettings, function(valueObj,key) {
-                this.push({"key":key,"values": [valueObj.value]});
-            },settings);
-            newProject.settings = settings;
+        $scope.create = function(newProject,newProjectServices) {
+            angular.forEach(newProjectServices, function(serviceIndexes, serviceType) {
+                newProject[serviceType] = [];
+                angular.forEach(serviceIndexes, function(isPresent, index) {
+                    if (isPresent) {
+                        newProject[serviceType].push($scope.projectServices[serviceType][index]);
+                    }
+
+                });
+            });
+
             manageProject('create',newProject).then(function() {
                 $scope.newProject = {};
-                $scope.newProjectSettings = {};
+                $scope.newProjectServices = {};
             });
 
         };

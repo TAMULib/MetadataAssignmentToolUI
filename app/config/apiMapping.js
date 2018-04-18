@@ -113,6 +113,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'delete'
+        },
+        ingestTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'ingest-types'
         }
     },
     ProjectRepository: {
