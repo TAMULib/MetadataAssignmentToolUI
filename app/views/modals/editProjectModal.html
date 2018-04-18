@@ -14,12 +14,14 @@
     </div>
     <ul class="list-group" ng-repeat="(serviceType, services) in projectServices">
       <li class="list-group-item">
-        <label class="text-capitalize">{{serviceType}}</label>
-        <div class="checkbox checkbox-circle" ng-repeat="service in services track by $index">
-          <input type="checkbox" ng-model="updateableProjectServices[serviceType][$index]" ng-init="updateableProjectServices[serviceType][$index]=projectHasService(project,serviceType,$index)" />
-          <label>
-          {{service.name}}
-          </label>
+        <div class="input-group">
+          <label class="text-capitalize">{{serviceType}}</label>
+          <div class="checkbox" ng-repeat="service in services track by $index">
+            <label>
+              <input type="checkbox" ng-model="updateableProjectServices[serviceType][$index]" ng-init="updateableProjectServices[serviceType][$index]=projectHasService(project,serviceType,$index)" />
+              {{service.name}}
+            </label>
+          </div>
         </div>
       </li>
     </ul>
