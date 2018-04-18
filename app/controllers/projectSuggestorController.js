@@ -16,7 +16,7 @@ metadataTool.controller('ProjectSuggestorController', function ($controller, $sc
     if($scope.isAdmin() || $scope.isManager()) {
         $scope.projectSuggestors = ProjectSuggestorRepo.getAll();
         ProjectSuggestorRepo.getTypes().then(function(data) {
-            var serviceTypes = angular.fromJson(data.body).payload["HashMap"];
+            var serviceTypes = angular.fromJson(data.body).payload.HashMap;
             $scope.types = serviceTypes;
         });
 
