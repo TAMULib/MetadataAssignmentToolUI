@@ -118,6 +118,16 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'ingest-types'
+        },
+        inputTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'input-types'
+        },
+        addFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'add-field-profile'
         }
     },
     ProjectRepository: {

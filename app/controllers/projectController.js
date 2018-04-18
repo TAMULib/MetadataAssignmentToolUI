@@ -14,6 +14,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
     $scope.newProjectServices = {};
 
     $scope.ingestTypes = [];
+    $scope.inputTypes = [];
+
+    $scope.newProfile = {};
+    $scope.newLabelNames = [];
 
     UserService.userReady().then(function() {
 
@@ -24,6 +28,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
 
         $scope.ingestTypes = ProjectRepo.getIngestTypes().then(function(data) {
             $scope.ingestTypes = angular.fromJson(data.body).payload["ArrayList<IngestType>"];
+        });
+
+        $scope.inputTypes = ProjectRepo.getInputTypes().then(function(data) {
+            $scope.inputTypes = angular.fromJson(data.body).payload["ArrayList<InputType>"];
         });
 
         $scope.projects = ProjectRepo.getAll();
@@ -57,7 +65,6 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
                 $scope.newProject = {};
                 $scope.newProjectServices = {};
             });
-
         };
 
         $scope.projectHasService = function(project, serviceType, index) {
@@ -74,6 +81,16 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
 
         var manageProject = function(method,project) {
             return ProjectRepo[method](project).then(function() {
+                $scope.closeModal();
+            });
+        };
+
+        /*
+        *   Field Profile Management
+        */
+
+        $scope.addFieldProfile = function(projectId, newProfile, newLabelNames) {
+            ProjectRepo.addFieldProfile(projectId, newProfile, newLabelNames).then(function() {
                 $scope.closeModal();
             });
         };

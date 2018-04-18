@@ -1,0 +1,97 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Edit {{project.name}} Project</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Current Field Profiles</h4>
+      <div ng-repeat="profile in project.profiles">
+        <div>{{profile.gloss}}</div>
+
+        <!--
+        <div>{{profile.repeatable}}</div>
+        <div>{{profile.readOnly}}</div>
+        <div>{{profile.hidden}}</div>
+        <div>{{profile.required}}</div>
+        <div>{{profile.inputType}}</div>
+        <div>{{profile.defaultValue}}</div>
+      -->
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Add Field Profile</h4>
+      <form name="createProfile" novalidate>
+        <div class="form-group">
+          <label>Gloss</label>
+          <input class="form-control" type="text" name="gloss" ng-model="newProfile.gloss" />
+        </div>
+        <div class="form-group">
+          <label>Label</label>
+          <input class="form-control" type="text" name="label" ng-model="newLabelNames[0]" />
+        </div>        
+        <div class="form-group">
+          <label>Default Value</label>
+          <input class="form-control" type="text" name="defaultValue" ng-model="newProfile.defaultValue" />
+        </div>
+        <div class="form-group">
+          <label>Input Type</label>
+          <select class="form-control" ng-model="newProfile.inputType" ng-options="inputType for inputType in inputTypes"></select>
+        </div>
+        <div class="form-group">
+          <label>Repeatable</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="repeatable" ng-model="newProfile.repeatable" value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="repeatable" ng-model="newProfile.repeatable" value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Read Only</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="readOnly" ng-model="newProfile.readOnly" value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="readOnly" ng-model="newProfile.readOnly" value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hidden</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="hidden" ng-model="newProfile.hidden" value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="hidden" ng-model="newProfile.hidden" value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Required</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="required" ng-model="newProfile.required" value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="required" ng-model="newProfile.required" value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="addFieldProfile(project.id, newProfile, newLabelNames)">Create Profile</button>      
+      </form>
+    </div>
+  </div>
+</div>
