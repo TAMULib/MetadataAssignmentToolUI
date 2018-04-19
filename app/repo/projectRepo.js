@@ -21,12 +21,28 @@ metadataTool.repo("ProjectRepo", function ProjectRepo(WsApi) {
         return WsApi.fetch(this.mapping.inputTypes);
     };
 
-    this.addFieldProfile = function (projectId, fieldProfile, labelNames) {
+    this.addFieldProfile = function (projectId, fieldProfile, labels) {
+        console.log("adding");
         angular.extend(this.mapping.addFieldProfile, {
             'method': projectId+'/add-field-profile',
-            'data': {"fieldProfile": fieldProfile, "labelNames":labelNames}
+            'data': {"fieldProfile": fieldProfile, "labels":labels}
         });
         return WsApi.fetch(this.mapping.addFieldProfile);
+    };
+
+    this.updateFieldProfile = function (projectId, fieldProfile, labels) {
+        angular.extend(this.mapping.updateFieldProfile, {
+            'method': projectId+'/update-field-profile',
+            'data': {"fieldProfile": fieldProfile, "labels":labels}
+        });
+        return WsApi.fetch(this.mapping.updateFieldProfile);
+    };
+
+    this.getFieldProfileLabels = function (fieldProfileId) {
+        angular.extend(this.mapping.getFieldProfileLabels, {
+            'method': 'field-profile/' + fieldProfileId + '/get-labels'
+        });
+        return WsApi.fetch(this.mapping.getFieldProfileLabels);
     };
 
     return this;

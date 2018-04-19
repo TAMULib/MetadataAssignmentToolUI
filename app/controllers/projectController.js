@@ -1,4 +1,4 @@
-metadataTool.controller('ProjectController', function ($controller, $scope, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo) {
+metadataTool.controller('ProjectController', function ($controller, $scope, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo, MetadataRepo) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -16,8 +16,27 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
     $scope.ingestTypes = [];
     $scope.inputTypes = [];
 
-    $scope.newProfile = {};
-    $scope.newLabelNames = [];
+    $scope.isEditing = false;
+
+    $scope.setFieldProfileForm = function(profile) {
+        if (profile) {
+            $scope.fieldProfileFormTitle = "Editing "+profile.gloss;
+            $scope.managingProfile = profile;
+            $scope.isEditing = true;
+            ProjectRepo.getFieldProfileLabels(profile.id).then(function(data) {
+                $scope.managingLabels = angular.fromJson(data.body).payload["LinkedHashSet"];
+                console.log($scope.managingLabels);
+            });
+
+        } else {
+            $scope.fieldProfileFormTitle = "Add Field Profile";
+            $scope.managingProfile = {};
+            $scope.managingLabels = [];
+            $scope.isEditing = false;
+        }
+    };
+
+    $scope.setFieldProfileForm();
 
     UserService.userReady().then(function() {
 
@@ -89,10 +108,17 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
         *   Field Profile Management
         */
 
-        $scope.addFieldProfile = function(projectId, newProfile, newLabelNames) {
-            ProjectRepo.addFieldProfile(projectId, newProfile, newLabelNames).then(function() {
-                $scope.closeModal();
-            });
+        $scope.updateFieldProfile = function(projectId, profile, labels) {
+            if ($scope.isEditing) {
+                console.log("updating!");
+                ProjectRepo.updateFieldProfile(projectId, profile, labels).then(function() {
+                    $scope.setFieldProfileForm();
+                });
+            } else {
+                ProjectRepo.addFieldProfile(projectId, profile, labels).then(function() {
+                    $scope.setFieldProfileForm();
+                });
+            }
         };
     }
   });

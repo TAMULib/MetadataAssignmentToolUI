@@ -128,6 +128,16 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'add-field-profile'
+        },
+        updateFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update-field-profile'
+        },
+        getFieldProfileLabels: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'get-field-profile-labels'
         }
     },
     ProjectRepository: {
