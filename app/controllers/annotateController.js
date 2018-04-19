@@ -225,20 +225,16 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                     var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
                     var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
                     var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
-                    var iiifPresentationUrl = appConfig.iiifService + '/fedora/presentation?path=' + containerContextPath;
-                    var iiifCollectionUrl = appConfig.iiifService + '/fedora/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', '');
-                    urls.push(iiifPresentationUrl);
-                    urls.push(iiifCollectionUrl);
+                    urls.push(appConfig.iiifService + '/fedora/presentation?path=' + containerContextPath);
+                    urls.push(appConfig.iiifService + '/fedora/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
                 }
                 if (publishedLocation.repository.type === 'DSPACE') {
                     var dspaceUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
                     var dspaceXmluiPath = getSetting(publishedLocation.repository.settings, 'repoContextPath').values[0];
                     var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
-                    var containerContextPath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
-                    var iiifPresentationUrl = appConfig.iiifService + '/dspace/presentation?path=' + containerContextPath;
-                    var iiifCollectionUrl = appConfig.iiifService + '/dspace/collection?path=' + containerContextPath;
-                    urls.push(iiifPresentationUrl);
-                    urls.push(iiifCollectionUrl);
+                    var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
+                    urls.push(appConfig.iiifService + '/dspace/presentation?path=' + handlePath);
+                    urls.push(appConfig.iiifService + '/dspace/collection?path=' + handlePath);
                 }
             }
             return urls;
