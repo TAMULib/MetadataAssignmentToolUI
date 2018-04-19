@@ -39,6 +39,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'document',
             'method': 'push',
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'document',
+            'method': 'remove',
         }
     },
     Resource: {

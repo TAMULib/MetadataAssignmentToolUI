@@ -8,7 +8,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     var documentPromise = DocumentRepo.get($routeParams.projectKey, $routeParams.documentKey);
 
-    var resourcesPromise = ResourceRepo.getAllByDocumentName($routeParams.documentKey);
+    var resourcesPromise = ResourceRepo.getAllByProjectNameAndDocumentName($routeParams.projectKey, $routeParams.documentKey);
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
@@ -178,6 +178,13 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             $scope.document.status = 'Requires Curation';
             $scope.document.save();
             $location.path('/assignments');
+        };
+
+        $scope.delete = function (document) {
+            document.delete().then( function(response) {
+                    console.log(response);
+                }
+            );
         };
 
         $scope.getControlledVocabulary = function (label) {
