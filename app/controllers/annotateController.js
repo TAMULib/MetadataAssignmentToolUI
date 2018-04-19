@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $route, $q, $scope, $timeout, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -182,9 +182,14 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
         $scope.delete = function (document) {
             document.delete().then( function(response) {
-                    console.log(response);
+                var apiRes = angular.fromJson(response.body);
+                if(apiRes.meta.status === 'SUCCESS') {
+                    $location.path('/assignments');
+                    $timeout(function () {
+                        AlertService.add(apiRes.meta, "app/documents");
+                    });
                 }
-            );
+            });
         };
 
         $scope.getControlledVocabulary = function (label) {
