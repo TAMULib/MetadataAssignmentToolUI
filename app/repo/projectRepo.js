@@ -22,7 +22,6 @@ metadataTool.repo("ProjectRepo", function ProjectRepo(WsApi) {
     };
 
     this.addFieldProfile = function (projectId, fieldProfile, labels) {
-        console.log("adding");
         angular.extend(this.mapping.addFieldProfile, {
             'method': projectId+'/add-field-profile',
             'data': {"fieldProfile": fieldProfile, "labels":labels}

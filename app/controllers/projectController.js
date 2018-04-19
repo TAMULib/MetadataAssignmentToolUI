@@ -18,6 +18,8 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
 
     $scope.isEditing = false;
 
+    $scope.displayResponse = {"status":null,"message":null};
+
     $scope.setFieldProfileForm = function(profile) {
         if (profile) {
             $scope.fieldProfileFormTitle = "Editing "+profile.gloss;
@@ -108,15 +110,51 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
         */
 
         $scope.updateFieldProfile = function(projectId, profile, labels) {
+            var success = false;
             if ($scope.isEditing) {
-                ProjectRepo.updateFieldProfile(projectId, profile, labels).then(function() {
-                    $scope.setFieldProfileForm();
+                ProjectRepo.updateFieldProfile(projectId, profile, labels).then(function(data) {
+                    var response = processRestResponse(data, 'displayResponse');
+                    if (response) {
+                        $scope.setFieldProfileForm();
+                    }
                 });
             } else {
-                ProjectRepo.addFieldProfile(projectId, profile, labels).then(function() {
-                    $scope.setFieldProfileForm();
+                ProjectRepo.addFieldProfile(projectId, profile, labels).then(function(data) {
+                    var response = processRestResponse(data, 'displayResponse');
+                    if (response) {
+                        $scope.setFieldProfileForm();
+                    }
                 });
             }
+        };
+
+        $scope.clearDisplayResponse = function() {
+            $scope.displayResponse = {"status":null,"message":null};
+        };
+
+        /*
+         * Processes Rest response for modal context
+         * Writes error message to provided model
+         *
+         * returns null on error, the parsed server response on success
+         *
+         */
+
+        var processRestResponse = function(data, displayModelName) {
+            var response = angular.fromJson(data.body);
+            var result = null;
+            if (response.status == 500) {
+                $scope[displayModelName].status = false;
+                $scope[displayModelName].message = response.error;
+            } else if (response.meta.status == "ERROR") {
+                $scope[displayModelName].status = false;
+                $scope[displayModelName].message = response.meta.message;
+            } else {
+                $scope[displayModelName].status = true;
+                $scope[displayModelName].message = response.meta.message;
+                result = response;
+            }
+            return result;
         };
     }
   });
