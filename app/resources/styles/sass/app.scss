@@ -242,3 +242,8 @@ main footer {
 .list-group-item-click {
   cursor: pointer;
 }
+
+#fieldProfileList {
+  height: 600px;
+  overflow-y:auto;
+}
