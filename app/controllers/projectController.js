@@ -26,7 +26,7 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
             $scope.managingProfile = profile;
             $scope.isEditing = true;
             ProjectRepo.getFieldProfileLabels(profile.id).then(function(data) {
-                $scope.managingLabels = angular.fromJson(data.body).payload["LinkedHashSet"];
+                $scope.managingLabels = angular.fromJson(data.body).payload.LinkedHashSet;
             });
 
         } else {
