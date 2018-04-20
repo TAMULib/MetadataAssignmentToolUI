@@ -12,6 +12,19 @@
       <label>Ingest Type</label>
       <select class="form-control" ng-model="newProject.ingestType" ng-options="type for type in ingestTypes"></select>
     </div>
+    <div class="form-group">
+      <label>Headless</label>
+      <div>
+        <label class="radio-inline">
+          <input type="radio" ng-model="newProject.headless" ng-value="true" />
+          Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="newProject.headless" ng-value="false" />
+          No
+        </label>
+      </div>
+    </div>
     <ul class="list-group" ng-repeat="(serviceType, services) in projectServices">
       <li class="list-group-item">
         <div class="input-group">
