@@ -98,6 +98,46 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'delete'
+        },
+        ingestTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'ingest-types'
+        },
+        inputTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'input-types'
+        },
+        addFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'add-field-profile'
+        },
+        updateFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update-field-profile'
+        },
+        getFieldProfileLabels: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'get-field-profile-labels'
         }
     },
     ProjectRepository: {

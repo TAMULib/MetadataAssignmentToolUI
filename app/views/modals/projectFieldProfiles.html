@@ -1,0 +1,95 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Edit Field Profiles for {{project.name}}</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Current Field Profiles</h4>
+      <div>
+      <ul id="fieldProfileList" class="list-group">
+        <li class="list-group-item list-group-item-click" ng-class="{active:profile.id==managingProfile.id}" ng-repeat="profile in project.profiles" ng-click="setFieldProfileForm(profile)">
+          {{profile.gloss}}
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <h4>{{fieldProfileFormTitle}}</h4>
+      <div ng-if="displayResponse.message" class="alert alert-wrapper" ng-class="{'alert-success':displayResponse.status,'alert-danger':!displayResponse.status}" ng-click="clearDisplayResponse()" role="alert">{{displayResponse.message}}</div>
+      <form name="manageProfile" novalidate>
+        <div class="form-group">
+          <label>Gloss</label>
+          <input class="form-control" type="text" name="gloss" ng-model="managingProfile.gloss" />
+        </div>
+        <div class="form-group">
+          <label>Label</label>
+          <input ng-if="!isEditing" class="form-control" type="text" name="label" ng-model="managingLabels[0].name" />
+          <input ng-if="isEditing" class="form-control" type="text" name="label" ng-model="label.name" ng-repeat="label in managingLabels" />
+        </div>        
+        <div class="form-group">
+          <label>Default Value</label>
+          <input class="form-control" type="text" name="defaultValue" ng-model="managingProfile.defaultValue" />
+        </div>
+        <div class="form-group">
+          <label>Input Type</label>
+          <select class="form-control" ng-model="managingProfile.inputType" ng-options="inputType for inputType in inputTypes"></select>
+        </div>
+        <div class="form-group">
+          <label>Repeatable</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.repeatable" ng-value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.repeatable" ng-value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Read Only</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.readOnly" ng-value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.readOnly" ng-value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hidden</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.hidden" ng-value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="managingProfile.hidden" ng-value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Required</label>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="required" ng-model="managingProfile.required" ng-value="true" />
+              Yes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="required" ng-model="managingProfile.required" ng-value="false" />
+              No
+            </label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="updateFieldProfile(project.id, managingProfile, managingLabels)">{{isEditing ? 'Update':'Create'}} Profile</button>
+        <button ng-if="isEditing" type="button" class="btn btn-warning" ng-click="setFieldProfileForm()">Cancel Edit</button>
+      </form>
+    </div>
+  </div>
+</div>
