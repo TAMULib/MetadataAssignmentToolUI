@@ -28,7 +28,7 @@
                     <tbody>
                         <tr ng-repeat="project in projects track by project.id">
                             <td>{{project.name}}</td>
-                            <td>{{project.type}}</td>
+                            <td>{{project.ingestType}}</td>
                             <td>
                                 <modal wvr-modal-backdrop="true" modal-id="{{project.id}}EditProjectModal"
                                        modal-view="views/modals/editProjectModal.html"
