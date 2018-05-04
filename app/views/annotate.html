@@ -39,6 +39,8 @@
         <div class="loading-text">{{loadingText}}</div>
     </div>
 
+
+
     <div ng-if="isAdmin() || isManager() || isAnnotator()" class="row">
 
         <div class="notesWarning bg-warning" ng-if="document.notes">Rejection notes: <span class="notesText">{{document.notes}}</span></div>
@@ -103,6 +105,14 @@
                     </div>
                     <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
                         <button type="button" class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
+                        <span>
+                            <modal modal-id="deleteModal"
+                                   modal-view="views/modals/confirmDeleteDocumentModal.html"
+                                   modal-btn-classes="btn btn-danger"
+                                   modal-header-class="modal-header-danger">
+                                   Delete
+                            </modal>
+                        </span>
                         <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
                         <span ng-if="document.status === 'Annotated'" >
                             <modal modal-id="rejectModal"

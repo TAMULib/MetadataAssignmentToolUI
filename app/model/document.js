@@ -19,6 +19,15 @@ metadataTool.model("Document", function Document(WsApi, ProjectRepo) {
           return WsApi.fetch(this.getMapping().push);
         };
 
+
+        this.delete = function () {
+          angular.extend(this.getMapping().remove, {
+            'method': 'remove/' + this.project + '/' + this.name
+          });
+
+          return WsApi.fetch(this.getMapping().remove);
+        };
+
         this.getProject = function () {
             return ProjectRepo.findByName(this.project);
         };

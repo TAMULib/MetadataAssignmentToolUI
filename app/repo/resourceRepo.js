@@ -2,9 +2,9 @@ metadataTool.repo("ResourceRepo", function ResourceRepo($q, WsApi) {
 
     var resourceRepo = this;
 
-    resourceRepo.getAllByDocumentName = function(documentName) {
+    resourceRepo.getAllByProjectNameAndDocumentName = function(projectName, documentName) {
       angular.extend(resourceRepo.mapping.allByDocumentName, {
-        'method': 'all/' + documentName
+        'method': 'all/' + projectName + '/' + documentName
       });
       var defer = $q.defer();
       WsApi.fetch(resourceRepo.mapping.allByDocumentName).then(function(data) {
