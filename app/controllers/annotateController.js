@@ -181,9 +181,9 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.delete = function (document) {
-            document.delete().then( function(response) {
+            document.delete().then(function (response) {
                 var apiRes = angular.fromJson(response.body);
-                if(apiRes.meta.status === 'SUCCESS') {
+                if (apiRes.meta.status === 'SUCCESS') {
                     $location.path('/assignments');
                     $timeout(function () {
                         AlertService.add(apiRes.meta, "app/documents");
@@ -219,28 +219,34 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             }
         };
 
-        var getSetting = function(settings, key) {
-          for(var j in settings) {
-            var setting = settings[j];
-            if(setting.key === key) {
-              return setting;
+        var getSetting = function (settings, key) {
+            for (var j in settings) {
+                var setting = settings[j];
+                if (setting.key === key) {
+                    return setting;
+                }
             }
-          }
         };
 
-        $scope.getIIIFUrls = function() {
+        $scope.getIIIFUrls = function () {
             var urls = [];
-            for(var i in $scope.document.publishedLocations) {
+            for (var i in $scope.document.publishedLocations) {
                 var publishedLocation = $scope.document.publishedLocations[i];
-                if(publishedLocation.repository.type === 'FEDORA_PCDM') {
-                  var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
-                  var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
-                  var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
-                  var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
-                  var iiifPresentationUrl = appConfig.iiifService + '/presentation?path=' + containerContextPath;
-                  var iiifCollectionUrl = appConfig.iiifService + '/collection?path=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', '');
-                  urls.push(iiifPresentationUrl);
-                  urls.push(iiifCollectionUrl);
+                if (publishedLocation.repository.type === 'FEDORA_PCDM') {
+                    var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
+                    var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
+                    var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
+                    var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
+                    urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
+                    urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
+                }
+                if (publishedLocation.repository.type === 'DSPACE') {
+                    var dspaceUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
+                    var dspaceXmluiPath = getSetting(publishedLocation.repository.settings, 'repoContextPath').values[0];
+                    var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
+                    var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
+                    urls.push(appConfig.iiifService + '/dspace/presentation?context=' + handlePath);
+                    urls.push(appConfig.iiifService + '/dspace/collection?context=' + handlePath);
                 }
             }
             return urls;
