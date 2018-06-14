@@ -1,0 +1,48 @@
+<br/>
+<div class="row" ng-controller="ProjectAuthorityController">
+
+    <!-- ADMINS AND MANAGERS ONLY -->
+    <div ng-if="!isManager() && !isAdmin()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
+
+    <div ng-if="isManager() || isAdmin()" class="col-12">
+        <div class="panel panel-default users-container">
+            <div class="panel-heading">
+                <h3 class="panel-title">Authorities</h3>
+            </div>
+            <div class="panel-body">
+                <modal wvr-modal-backdrop="true" class="pull-right" modal-id="{{authority.id}}AddAuthorityModal"
+                       modal-view="views/modals/addAuthorityModal.html"
+                       modal-btn-classes="btn btn-primary"
+                       modal-controller="ProjectAuthorityController"
+                       modal-header-class="modal-header-primary">
+                       Add
+                </modal>
+                <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="authority in projectAuthorities track by authority.id">
+                            <td>{{authority.name}}</td>
+                            <td>{{authority.type}}</td>
+                            <td>
+                                <modal wvr-modal-backdrop="true" modal-id="{{authority.id}}EditAuthorityModal"
+                                       modal-view="views/modals/editAuthorityModal.html"
+                                       modal-btn-classes="btn btn-primary"
+                                       modal-controller="ProjectAuthorityController"
+                                       modal-header-class="modal-header-primary">
+                                       Edit
+                                </modal>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

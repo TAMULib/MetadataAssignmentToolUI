@@ -1,0 +1,46 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Edit {{project.name}} Project</h4>
+</div>
+<div class="modal-body">
+  <form name="editProject" novalidate>
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" type="text" name="name" ng-model="project.name" />
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <input class="form-control" readonly value="{{project.ingestType}}" />
+    </div>
+    <div class="form-group">
+      <label>Headless</label>
+      <div>
+        <label class="radio-inline">
+          <input type="radio" ng-model="project.headless" ng-value="true" />
+          Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="project.headless" ng-value="false" />
+          No
+        </label>
+      </div>
+    </div>
+    <ul class="list-group" ng-repeat="(serviceType, services) in projectServices">
+      <li class="list-group-item">
+        <div class="input-group">
+          <label class="text-capitalize">{{serviceType}}</label>
+          <div class="checkbox" ng-repeat="service in services track by $index">
+            <label>
+              <input type="checkbox" ng-model="updateableProjectServices[serviceType][$index]" ng-init="updateableProjectServices[serviceType][$index]=projectHasService(project,serviceType,$index)" />
+              {{service.name}}
+            </label>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+  <button type="button" class="btn btn-success" ng-click="update(project)" >Update</button>
+</div>

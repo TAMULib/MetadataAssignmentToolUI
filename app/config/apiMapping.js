@@ -23,7 +23,7 @@ var apiMapping = {
         },
         suggest: {
             'endpoint': '/private/queue',
-            'controller': 'suggest'
+            'controller': 'project-suggestor'
         },
         page: {
             'endpoint': '/private/queue',
@@ -103,6 +103,46 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'delete'
+        },
+        ingestTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'ingest-types'
+        },
+        inputTypes: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'input-types'
+        },
+        addFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'add-field-profile'
+        },
+        updateFieldProfile: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'update-field-profile'
+        },
+        getFieldProfileLabels: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'get-field-profile-labels'
         }
     },
     ProjectRepository: {
@@ -130,6 +170,62 @@ var apiMapping = {
         types: {
             'endpoint': '/private/queue',
             'controller': 'project-repository',
+            'method': 'types'
+        }
+    },
+    ProjectAuthority: {
+        channel: '/channel/project-authority',
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'types'
+        }
+    },
+    ProjectSuggestor: {
+        channel: '/channel/project-suggestor',
+        all: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'all'
+        },
+        create: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'create'
+        },
+        update: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'update'
+        },
+        remove: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
+            'method': 'delete'
+        },
+        types: {
+            'endpoint': '/private/queue',
+            'controller': 'project-suggestor',
             'method': 'types'
         }
     },
