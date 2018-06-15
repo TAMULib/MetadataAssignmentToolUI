@@ -20,6 +20,10 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
             $scope.types = serviceTypes;
         });
 
+        $scope.delete = function(repository) {
+            manageRepository('delete',repository);
+        };
+
         $scope.update = function(repository) {
             repository.dirty(true);
             manageRepository('save',repository);

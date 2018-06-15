@@ -20,6 +20,10 @@ metadataTool.controller('ProjectSuggestorController', function ($controller, $sc
             $scope.types = serviceTypes;
         });
 
+        $scope.delete = function(suggestor) {
+            manageSuggestor('delete',suggestor);
+        };
+
         $scope.update = function(suggestor) {
             suggestor.dirty(true);
             manageSuggestor('save',suggestor);

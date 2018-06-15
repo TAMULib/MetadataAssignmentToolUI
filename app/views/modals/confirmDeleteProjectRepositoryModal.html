@@ -1,0 +1,19 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Delete {{repository.name}}</h4>
+</div>
+<div class="modal-body">
+    <form role="form"  >
+        <div class="form-group">
+            <label>Are you sure you want to delete this Project Repository: </label>
+            <div>{{repository.name}}</div>
+            <ul>
+              <li ng-repeat="project in getAssociatedProjects(repository)">{{project.name}}</li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-danger" ng-click="delete(repository)">Confirm</button>
+    <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+</div>
