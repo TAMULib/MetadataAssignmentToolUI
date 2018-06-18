@@ -1,3 +1,12 @@
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
 language: node_js
 
 node_js:
@@ -14,5 +23,6 @@ before_script:
   - sleep 1 # give server time to start
 
 script:
+  - export CHROME_BIN=chromium-browser
   - npm run test-ci
   - grunt
