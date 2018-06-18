@@ -194,7 +194,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['jshint', 'sass', 'symlink']);
 
-    grunt.registerTask('coveralls', ['coveralls']);
+    grunt.registerTask('coverage', ['jshint', 'sass', 'symlink', 'coveralls']);
 
     grunt.registerTask('watch', ['watch']);
 

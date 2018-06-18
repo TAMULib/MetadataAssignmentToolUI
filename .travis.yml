@@ -25,4 +25,4 @@ before_script:
 script:
   - export CHROME_BIN=chromium-browser
   - npm run test-ci
-  - grunt coveralls
+  - grunt coverage
