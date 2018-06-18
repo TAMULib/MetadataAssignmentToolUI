@@ -1,10 +1,12 @@
-metadataTool.controller('ProjectSuggestorController', function ($controller, $scope, UserService, ProjectSuggestorRepo) {
+metadataTool.controller('ProjectSuggestorController', function ($controller, $scope, UserService, ProjectSuggestorRepo, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     $scope.user = UserService.getCurrentUser();
 
     $scope.projectSuggestors = [];
+
+    $scope.projects = [];
 
     $scope.types = [];
 
@@ -19,6 +21,8 @@ metadataTool.controller('ProjectSuggestorController', function ($controller, $sc
             var serviceTypes = angular.fromJson(data.body).payload.HashMap;
             $scope.types = serviceTypes;
         });
+
+        $scope.projects = ProjectRepo.getAll();
 
         $scope.delete = function(suggestor) {
             manageSuggestor('delete',suggestor);
@@ -40,6 +44,17 @@ metadataTool.controller('ProjectSuggestorController', function ($controller, $sc
                 $scope.newSuggestorSettings = {};
             });
 
+        };
+
+        $scope.getProjectById = function(projectId) {
+            var project = null;
+            for (var i in $scope.projects) {
+                if (projectId == $scope.projects[i].id) {
+                    project = $scope.projects[i];
+                    break;
+                }
+            }
+            return project;
         };
 
         var manageSuggestor = function(method,suggestor) {

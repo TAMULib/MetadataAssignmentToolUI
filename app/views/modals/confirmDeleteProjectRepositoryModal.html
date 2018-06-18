@@ -5,11 +5,15 @@
 <div class="modal-body">
     <form role="form"  >
         <div class="form-group">
-            <label>Are you sure you want to delete this Project Repository: </label>
-            <div>{{repository.name}}</div>
-            <ul>
-              <li ng-repeat="project in getAssociatedProjects(repository)">{{project.name}}</li>
-            </ul>
+            <label>Are you sure you want to delete the Project Repository: {{repository.name}}</label>
+            <div ng-if="repository.projects.length > 0">
+              <p>
+                The following projects are currently associated with <b>{{repository.name}}</b>
+              </p>
+              <ul>
+                <li ng-repeat="projectId in repository.projects">{{getProjectById(projectId).name}}</li>
+              </ul>
+            </div>
         </div>
     </form>
 </div>
