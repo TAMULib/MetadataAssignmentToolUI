@@ -188,10 +188,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-usemin');
 
-    grunt.registerTask('default', ['jshint', 'sass', 'symlink', 'coveralls']);
+    grunt.registerTask('default', ['jshint', 'sass', 'symlink']);
+
+    grunt.registerTask('coveralls', ['coveralls']);
 
     grunt.registerTask('watch', ['watch']);
 

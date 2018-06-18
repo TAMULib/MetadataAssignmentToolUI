@@ -60,6 +60,8 @@ module.exports = function (config) {
 
         frameworks: ['jasmine'],
 
+        failOnEmptyTestSuite: false,
+
         browsers: ['Chrome', 'Firefox'],
 
         plugins: [
