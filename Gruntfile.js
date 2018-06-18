@@ -172,6 +172,13 @@ module.exports = function (grunt) {
                 files: '**/*.scss',
                 tasks: ['sass']
             }
+        },
+
+        coveralls: {
+            options: {
+                debug: true,
+                coverageDir: 'coverage/'
+            }
         }
 
     });
@@ -184,7 +191,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-usemin');
 
-    grunt.registerTask('default', ['jshint', 'sass', 'symlink']);
+    grunt.registerTask('default', ['jshint', 'sass', 'symlink', 'coveralls']);
 
     grunt.registerTask('watch', ['watch']);
 
