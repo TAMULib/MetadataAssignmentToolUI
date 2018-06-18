@@ -1,9 +1,16 @@
-module.exports = function(config){
+module.exports = function (config) {
     config.set({
 
-        basePath : './',
+        preprocessors: {
+            "app/**/*.js": "coverage",
+            '**/*.html': ['ng-html2js']
+        },
 
-        files : [
+        reporters: ['coverage'],
+
+        basePath: './',
+
+        files: [
 
             'app/config/appConfig.js',
             'app/config/apiMapping.js',
@@ -49,22 +56,26 @@ module.exports = function(config){
 
         ],
 
-        autoWatch : true,
+        autoWatch: true,
 
         frameworks: ['jasmine'],
 
-        browsers : ['Chrome'],
+        failOnEmptyTestSuite: false,
 
-        plugins : [
+        browsers: ['Chrome', 'Firefox'],
+
+        plugins: [
             'karma-chrome-launcher',
+            'karma-coverage',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
-            ],
+            'karma-junit-reporter',
+            'karma-ng-html2js-preprocessor'
+        ],
 
-        junitReporter : {
-            outputFile: 'test_out/unit.xml',
-            suite: 'unit'
+        coverageReporter: {
+            type: "lcov",
+            dir: "coverage/"
         }
 
     });
