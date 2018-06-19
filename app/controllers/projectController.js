@@ -56,6 +56,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
 
         $scope.projects = ProjectRepo.getAll();
 
+        $scope.delete = function(project) {
+            manageProject('delete',project);
+        };
+
         $scope.update = function(project) {
             angular.forEach($scope.updateableProjectServices, function(serviceIndexes, serviceType) {
                 project[serviceType] = [];

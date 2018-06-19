@@ -45,6 +45,12 @@
                                        modal-header-class="modal-header-primary">
                                        Field Profiles
                                 </modal>
+                                <modal ng-if="project.documents.length < 1" wvr-modal-backdrop="true" modal-id="{{project.id}}ConfirmDeleteProjectModal"
+                                       modal-view="views/modals/confirmDeleteProjectModal.html"
+                                       modal-btn-classes="btn btn-danger"
+                                       modal-header-class="modal-header-primary">
+                                       Delete
+                                </modal>
                             </td>
                         </tr>
                     </tbody>

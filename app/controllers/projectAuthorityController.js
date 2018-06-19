@@ -1,10 +1,12 @@
-metadataTool.controller('ProjectAuthorityController', function ($controller, $scope, UserService, ProjectAuthorityRepo) {
+metadataTool.controller('ProjectAuthorityController', function ($controller, $scope, UserService, ProjectAuthorityRepo, ProjectRepo) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
     $scope.user = UserService.getCurrentUser();
 
     $scope.projectAuthorities = [];
+
+    $scope.projects = [];
 
     $scope.types = [];
 
@@ -19,6 +21,12 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
             var serviceTypes = angular.fromJson(data.body).payload.HashMap;
             $scope.types = serviceTypes;
         });
+
+        $scope.projects = ProjectRepo.getAll();
+
+        $scope.delete = function(authority) {
+            manageAuthority('delete',authority);
+        };
 
         $scope.update = function(authority) {
             repository.dirty(true);
@@ -36,6 +44,17 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
                 $scope.newAuthoritySettings = {};
             });
 
+        };
+
+        $scope.getProjectById = function(projectId) {
+            var project = null;
+            for (var i in $scope.projects) {
+                if (projectId == $scope.projects[i].id) {
+                    project = $scope.projects[i];
+                    break;
+                }
+            }
+            return project;
         };
 
         var manageAuthority = function(method,authority) {

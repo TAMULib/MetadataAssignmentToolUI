@@ -16,7 +16,7 @@
                        modal-controller="ProjectRepositoryController"
                        modal-header-class="modal-header-primary">
                        Add
-                </modal>            	
+                </modal>
                 <table class="table table-hover table-condensed">
                     <thead>
                         <tr>
@@ -36,6 +36,12 @@
                                        modal-controller="ProjectRepositoryController"
                                        modal-header-class="modal-header-primary">
                                        Edit
+                                </modal>
+                                <modal wvr-modal-backdrop="true" modal-id="{{repository.id}}ConfirmDeleteProjectRepositoryModal"
+                                       modal-view="views/modals/confirmDeleteProjectRepositoryModal.html"
+                                       modal-btn-classes="btn btn-danger"
+                                       modal-header-class="modal-header-primary">
+                                       Delete
                                 </modal>
                             </td>
                         </tr>
