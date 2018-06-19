@@ -6,7 +6,6 @@
   "repository": "https://github.com/TAMULib/MetadataAssignmentToolUI",
   "license": "MIT",
   "scripts": {
-    "prestart": "npm install -g grunt-cli",
     "pretest": "npm install",
     "postinstall": "grunt",
     "test": "karma start karma.conf.js",
