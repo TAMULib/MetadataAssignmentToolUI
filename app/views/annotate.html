@@ -3,19 +3,18 @@
 
     <!-- ADMINS, MANAGERS AND ANNOTATORS ONLY -->
     <div ng-if="isUser()" class="row" ng-include src="'views/restrictedAccess.html'" ></div>
-
     <div ng-if="document.publishedLocations.length > 0" class="panel panel-success">
         <div class="panel-heading">This document is published at:</div>
         <div class="panel-body">
             <ul class="list-unstyled">
                 <li ng-repeat="publishedLocation in document.publishedLocations">
-                  <span><b>{{publishedLocation.repository.name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
+                  <span><b>{{getRepositoryById(publishedLocation.repository).name}}</b>: <a target="_blank" href="{{publishedLocation.url}}">{{publishedLocation.url}}</a></span>
                 </li>
             </ul>
 
             <div ng-if="getIIIFUrls().length > 0">
                 <hr/>
-                <span ><strong>IIIF Urls: </strong></span>
+                <span><strong>IIIF Urls: </strong></span>
                 <div class="container">
                     <ul class="list-unstyled">
                         <li ng-repeat="iiifUrl in getIIIFUrls()">
@@ -26,7 +25,6 @@
             </div>
         </div>
     </div>
-
     <div ng-if="action === 'view' && document.status === 'Accepted' && document.getProject().repositories.length > 0" class="panel panel-warning">
         <div class="panel-heading">This document is accepted but not published.</div>
         <div class="panel-body">

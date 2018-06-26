@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -12,11 +12,13 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
+    $scope.repositories = ProjectRepositoryRepo.getAll();
+
     $scope.action = $routeParams.action;
 
     $scope.loadingText = "Loading...";
 
-    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready(), ProjectRepositoryRepo.ready()]).then(function (args) {
         $scope.document = args[0];
 
         $scope.resources = args[1];
@@ -232,17 +234,18 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             var urls = [];
             for (var i in $scope.document.publishedLocations) {
                 var publishedLocation = $scope.document.publishedLocations[i];
-                if (publishedLocation.repository.type === 'FEDORA_PCDM') {
-                    var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
-                    var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
+                var publishedRepository = $scope.getRepositoryById(publishedLocation.repository);
+                if (publishedRepository.type === 'FEDORA_PCDM') {
+                    var fedoraUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                    var fedoraRestPath = getSetting(publishedRepository.settings, 'restPath').values[0];
                     var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
                     var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
                     urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
                     urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
                 }
-                if (publishedLocation.repository.type === 'DSPACE') {
-                    var dspaceUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
-                    var dspaceXmluiPath = getSetting(publishedLocation.repository.settings, 'repoContextPath').values[0];
+                if (publishedRepository.type === 'DSPACE') {
+                    var dspaceUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                    var dspaceXmluiPath = getSetting(publishedRepository.settings, 'repoContextPath').values[0];
                     var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
                     var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
                     urls.push(appConfig.iiifService + '/dspace/presentation?context=' + handlePath);
@@ -250,6 +253,17 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 }
             }
             return urls;
+        };
+
+        $scope.getRepositoryById = function(repositoryId) {
+            var respository = null;
+            for (var i in $scope.repositories) {
+                if (repositoryId == $scope.repositories[i].id) {
+                    repository = $scope.repositories[i];
+                    break;
+                }
+            }
+            return repository;
         };
     });
 
