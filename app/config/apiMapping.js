@@ -199,6 +199,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project-authority',
             'method': 'types'
+        },
+        uploadCsv: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'upload-csv'
         }
     },
     ProjectSuggestor: {

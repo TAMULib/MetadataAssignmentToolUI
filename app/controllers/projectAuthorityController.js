@@ -33,17 +33,16 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
             manageRepository('save',authority);
         };
 
-        $scope.create = function(newAuthority,newAuthoritySettings) {
-            var settings = [];
-            angular.forEach(newAuthoritySettings, function(valueObj,key) {
-                this.push({"key":key,"values": [valueObj.value]});
-            },settings);
-            newAuthority.settings = settings;
-            manageAuthority('create',newAuthority).then(function() {
-                $scope.newAuthority = {};
-                $scope.newAuthoritySettings = {};
-            });
-
+        $scope.create = function(newAuthority,newAuthoritySettings,file) {
+            if (typeof file !== 'undefined') {
+                ProjectAuthorityRepo.uploadCsv(file).then(function(data) {
+                    var body = angular.fromJson(data.body);
+                    newAuthoritySettings.paths = {"value":body.payload.String};
+                    create(newAuthority,newAuthoritySettings);
+                });
+            } else {
+                create(newAuthority,newAuthoritySettings);
+            }
         };
 
         $scope.getProjectById = function(projectId) {
@@ -55,6 +54,18 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
                 }
             }
             return project;
+        };
+
+        var create = function(newAuthority,newAuthoritySettings) {
+            var settings = [];
+            angular.forEach(newAuthoritySettings, function(valueObj,key) {
+                this.push({"key":key,"values": [valueObj.value]});
+            },settings);
+            newAuthority.settings = settings;
+            manageAuthority('create',newAuthority).then(function() {
+                $scope.newAuthority = {};
+                $scope.newAuthoritySettings = {};
+            });
         };
 
         var manageAuthority = function(method,authority) {
