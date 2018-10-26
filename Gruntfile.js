@@ -1,3 +1,5 @@
+var sass = require('node-sass');
+
 module.exports = function (grunt) {
 
     // Configurable paths
@@ -154,7 +156,9 @@ module.exports = function (grunt) {
 
         sass: {
             options: {
-                sourceMap: false
+                sourceMap: false,
+                loadPath: '.',
+                implementation: sass
             },
             dist: {
                 files: [{
@@ -188,8 +192,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-symlink');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-usemin');
 
     grunt.registerTask('default', ['jshint', 'sass', 'symlink']);
