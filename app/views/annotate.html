@@ -105,24 +105,20 @@
                     </div>
                     <div ng-if="isAdmin() || (isManager() && managerReviewing())" style="float: right;">
                         <button type="button" class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
-                        <span>
-                            <modal modal-id="deleteModal"
-                                   modal-view="views/modals/confirmDeleteDocumentModal.html"
-                                   modal-btn-classes="btn btn-danger"
-                                   modal-header-class="modal-header-danger">
-                                   Delete
-                            </modal>
-                        </span>
+                        <button type="button" class="btn btn-danger" ng-click="openModal('#deleteModal')">Delete</button>
                         <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
-                        <span ng-if="document.status === 'Annotated'" >
-                            <modal modal-id="rejectModal"
-                                   modal-view="views/modals/rejectModal.html"
-                                   modal-btn-classes="btn btn-danger"
-                                   modal-header-class="modal-header-danger">
-                                   Reject
-                            </modal>
-                        </span>
+                        <button ng-if="document.status === 'Annotated'" type="button" class="btn btn-danger" ng-click="openModal('#rejectModal')">Reject</modal>
                         <button type="button" ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept()" >Accept</button>
+                        <modal modal-id="deleteModal"
+                            modal-view="views/modals/confirmDeleteDocumentModal.html"
+                            modal-header-class="modal-header-danger"
+                            wvr-modal-backdrop="static">
+                        </modal>
+                        <modal modal-id="rejectModal"
+                            modal-view="views/modals/rejectModal.html"
+                            modal-header-class="modal-header-danger"
+                            wvr-modal-backdrop="static">
+                        </modal>
                     </div>
                 </div>
             </form>
