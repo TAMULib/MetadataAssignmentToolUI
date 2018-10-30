@@ -162,7 +162,9 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
             $scope.isSyncing = true;
             ProjectRepo.syncDocuments(project.id).then(function (rawResponse) {
                 var response = angular.fromJson(rawResponse.body);
-                AlertService.add(response.meta, "app/projects");
+                if (response.meta.status === "SUCCESS") {
+                  AlertService.add(response.meta, "app/projects");
+                }
                 $scope.closeModal();
                 $scope.isSyncing = false;
             });
