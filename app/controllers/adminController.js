@@ -4,14 +4,4 @@ metadataTool.controller('AdminController', function ($controller, $injector, $ro
         $scope: $scope
     }));
 
-    $scope.sync = function () {
-        WsApi.fetch({
-            endpoint: '/private/queue',
-            controller: 'admin',
-            method: 'sync'
-        }).then(function (data) {
-            logger.log(data);
-        });
-    };
-
 });

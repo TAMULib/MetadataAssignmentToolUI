@@ -143,6 +143,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'get-field-profile-labels'
+        },
+        syncDocuments: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'sync'
         }
     },
     ProjectRepository: {
