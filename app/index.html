@@ -54,6 +54,7 @@
                 <modal modal-id="assumeUserModal" modal-view="node_modules/weaver-ui-core/app/views/modals/assumeUserModal.html" modal-header-class="modal-header-primary"></modal>
                 <modal modal-id="exportMetadataModal" modal-controller="ExportController" modal-view="views/modals/exportMetadataModal.html" modal-header-class="modal-header-primary"></modal>
                 <modal modal-id="batchPublishModal" modal-controller="BatchPublishController" modal-view="views/modals/batchPublishModal.html" modal-header-class="modal-header-primary"></modal>
+                <modal modal-id="syncDocumentsModal" modal-controller="ProjectController" modal-view="views/modals/syncDocumentsModal.html" modal-header-class="modal-header-primary"></modal>
               </div>
 
               <div class="dropdown">
@@ -78,7 +79,7 @@
                     <a href ng-if="isAssuming() == 'false'" data-toggle="modal" ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
                     <a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedControl.button}}</a>
                   </li>
-                  <li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+                  <li><a ng-if="isAdmin()" ng-click="openModal('#syncDocumentsModal')" href="#">Sync Documents</a></li>
                 </ul>
               </div>
 

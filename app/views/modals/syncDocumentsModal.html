@@ -1,0 +1,17 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Sync Documents</h4>
+</div>
+
+<form name="syncDocumentsModalForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Project</label>
+            <select ng-options="project.name for project in projects | orderBy: 'name'" ng-model="projectName" class="form-control"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="syncDocuments(projectName);" ng-disabled="isSyncing || !projectName"><span ng-if="isSyncing" class="glyphicon glyphicon-refresh spinning"></span> Sync Documents</button>
+        <button type="button" class="btn btn-default" ng-click="closeModal();">Cancel</button>
+    </div>
+</form>
