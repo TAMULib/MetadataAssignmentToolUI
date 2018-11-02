@@ -117,7 +117,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project',
-            'method': 'delete'
+            'method': 'remove'
         },
         ingestTypes: {
             'endpoint': '/private/queue',

@@ -87,6 +87,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
             });
         };
 
+        $scope.delete = function(project) {
+            manageProject('delete', project);
+        };
+
         $scope.projectHasService = function(project, serviceType, index) {
             var hasService = false;
 
