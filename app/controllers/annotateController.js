@@ -10,6 +10,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     var resourcesPromise = ResourceRepo.getAllByProjectNameAndDocumentName($routeParams.projectKey, $routeParams.documentKey);
 
+    var contentMap = appConfig.contentMap ? appConfig.contentMap : {};
+
     $scope.cv = ControlledVocabularyRepo.getAll();
 
     $scope.action = $routeParams.action;
@@ -43,7 +45,15 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         var types = {
             text: ['text/plain'],
             pdf: ['application/pdf'],
-            image: ['image/jpeg', 'image/jpg', 'image/jp2', 'image/jpx', 'image/svg', 'image/bmp', 'image/gif', 'image/png', 'image/tif', 'image/tiff']
+            image: function() {
+              var types = contentMap.image ? contentMap.image : [];
+
+              if (contentMap.seadragon) {
+                types = types.concat(contentMap.seadragon);
+              }
+
+              return types;
+            }(),
         };
 
         var selected = {
@@ -71,6 +81,14 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 }
             }
             return false;
+        };
+
+        $scope.hasImageMap = function (map) {
+            if (!contentMap[map]) {
+                return false;
+            }
+
+            return contentMap[map].indexOf($scope.resources[$scope.selected()].mimeType) >= 0 ? true : false;
         };
 
         $scope.active = $scope.hasFileType('text') ? 'text' : $scope.hasFileType('pdf') ? 'pdf' : $scope.hasFileType('image') ? 'image' : undefined;

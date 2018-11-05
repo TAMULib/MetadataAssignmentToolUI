@@ -131,6 +131,9 @@
 
   <script src="node_modules/ng-csv/build/ng-csv.min.js"></script>
 
+  <script src="node_modules/openseadragon/build/openseadragon/openseadragon.min.js"></script>
+  <script src="node_modules/ng-openseadragon/dist/ng-openseadragon.min.js"></script>
+
   <!--  Core libraries -->
 
   <!-- build:js resources/scripts/core_concat.js -->
@@ -219,12 +222,16 @@
       <script src="config/routes.js"></script>
 
       <!-- Directives -->
+      <script src="directives/contentViewerDirective.js"></script>
       <script src="directives/formatDirective.js"></script>
       <script src="directives/inputDirective.js"></script>
 
       <!-- Services -->
 
       <!-- Factories -->
+
+      <!-- Filters -->
+      <script src="filters/cantaloupeUrlFilter.js"></script>
 
       <!-- Repos -->
       <script src="repo/abstractAppRepo.js"></script>

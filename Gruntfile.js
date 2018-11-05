@@ -115,6 +115,9 @@ module.exports = function (grunt) {
                     'node_modules/weaver-ui-core/app/controllers/registrationController.js',
                     'node_modules/weaver-ui-core/app/controllers/userController.js',
                     'node_modules/weaver-ui-core/app/controllers/errorPageController.js',
+
+                    'node_modules/openseadragon/build/openseadragon/openseadragon.min.js',
+                    'node_modules/ng-openseadragon/dist/ng-openseadragon.min.js'
                 ],
                 dest: '<%= build.app %>/resources/scripts/core_concat.js'
             },

@@ -8,8 +8,11 @@ var appConfig = {
 
     'authService': 'http://labs.library.tamu.edu/auth3',
     'webService': 'http://localhost:9001',
-
     'iiifService': 'http://localhost:9003',
+    'cantaloupeService': 'http://localhost:9006/iiif/2/',
+
+    'basePath': '/metadatatool',
+    'fedoraPath': '/fcrepo/rest/',
 
     'storageType': 'session',
 
@@ -30,6 +33,8 @@ var appConfig = {
             jsonp-polling
     */
     'sockJsConnectionType': ['websocket', 'iframe-eventsource', 'iframe-htmlfile', 'jsonp-polling'],
+
+    'contentMap': {"image": ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg", "image/bmp"], "seadragon": ["image/jp2", "image/jpx", "image/tif", "image/tiff"]},
 
     // Set this to 'admin' or 'user' if using mock AuthService
     // otherwise set to null or false
