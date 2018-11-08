@@ -82,8 +82,7 @@
                       </div>
 
                       <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'image', 'hide': switching}" id="imageTab" ng-if="hasFileType('image')">
-                          <contentviewer content-type="getFiles()[selected()].mimeType" resource="getFiles()[selected()].url" ng-if="hasImageMap('seadragon')"></contentviewer>
-                          <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}" ng-if="hasImageMap('image')"></object>
+                          <contentviewer content-type="getFilesByType('image')[selected()].mimeType" resource="getFilesByType('image')[selected()].url"></contentviewer>
                       </div>
 
                   </div>

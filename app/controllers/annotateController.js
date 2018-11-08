@@ -106,6 +106,15 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             });
         };
 
+        $scope.getFilesByType = function (type) {
+            if ($scope.resources === undefined) {
+                return [];
+            }
+            return $scope.resources.filter(function (resource) {
+                return types[type].indexOf(resource.mimeType) >= 0;
+            });
+        };
+
         $scope.selected = function () {
             return selected[$scope.active];
         };
@@ -269,6 +278,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             }
             return urls;
         };
+
     });
 
 });
