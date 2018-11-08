@@ -50,42 +50,11 @@
             <div role="tabpanel">
                 <h3>Documents</h3>
                 <div class="documents-pane">
-                  <ul class="nav nav-tabs" role="tablist">
-                      <li role="presentation" ng-if="hasFileType('text')" ng-class="{'active': active === 'text'}"><a href="#txtTab" aria-controls="txtTab" role="tab" data-toggle="tab" ng-click="select('text')">Text</a></li>
-                      <li role="presentation" ng-if="hasFileType('pdf')" ng-class="{'active': active === 'pdf'}"><a href="#pdfTab" aria-controls="pdfTab" role="tab" data-toggle="tab" ng-click="select('pdf')">PDF</a></li>
-                      <li role="presentation" ng-if="hasFileType('image')" ng-class="{'active': active === 'image'}"><a href="#imageTab" aria-controls="imageTab" role="tab" data-toggle="tab" ng-click="select('image')">Images</a></li>
-                  </ul>
-
-                  <div class="tab-content">
-
-                      <nav aria-label="...">
-                          <ul class="pager">
-                              <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
-                              <li class="title">{{getFiles()[selected()].name}}</li>
-                              <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
-                          </ul>
-                      </nav>
-
-                      <span class="loading-pane" ng-class="{'show': loading}">
-                         <img src="resources/images/loading.gif" height="100" width="100"/>
-                      </span>
-
-                      <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'text', 'hide': switching}" id="txtTab" ng-if="hasFileType('text')">
-                          <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}"></object>
-                      </div>
-
-                      <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'pdf', 'hide': switching}" id="pdfTab" ng-if="hasFileType('pdf')">
-                          <div class="text-right">
-                              <a title="Open PDF in a new window/tab" target="_blank" href="{{getFiles()[selected()].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
-                          </div>
-                          <object id="pdf" data="{{getFiles()[selected()].url}}" frameborder="0"></object>
-                      </div>
-
-                      <div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'image', 'hide': switching}" id="imageTab" ng-if="hasFileType('image')">
-                          <contentviewer content-type="getFilesByType('image')[selected()].mimeType" resource="getFilesByType('image')[selected()].url"></contentviewer>
-                      </div>
-
-                  </div>
+                  <content-tabs>
+                    <content-viewer title="Text" resource="{{getFilesByType('text')}}" ng-if="hasFileType('text')"></content-viewer>
+                    <content-viewer title="PDFs" resource="{{getFilesByType('pdf')}}" ng-if="hasFileType('pdf')"></content-viewer>
+                    <content-viewer title="Images" resource="{{getFilesByType('image')}}" ng-if="hasFileType('image')"></content-viewer>
+                  </content-tabs>
                 </div>
             </div>
         </div>

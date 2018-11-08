@@ -1,15 +1,18 @@
-metadataTool.directive("contentviewer", function($filter) {
+metadataTool.directive("contentViewer", function($filter) {
     var viewerMap = appConfig.contentMap;
     return {
+        require: '^^contentTabs',
         templateUrl: "views/directives/viewers/viewerWrapper.html",
         scope: {
-          contentType: "=",
-          resource: "="
+          resource: "@",
+          title: "@"
         },
         link:
-            function($scope) {
-                var viewerTemplate = "default";
+            function($scope, element, attrs, contentTabs) {
+                contentTabs.addPane($scope);
 
+                var viewerTemplate = "default";
+/*
                 typeLoop:
                 for (var type in viewerMap) {
                     for (var supportedType in viewerMap[type]) {
@@ -25,8 +28,9 @@ metadataTool.directive("contentviewer", function($filter) {
                   $scope.options.prefixUrl = appConfig.basePath + '/resources/images/openseadragon/';
                   $scope.options.tileSources = [$filter("cantaloupeUrl")($scope.resource)];
                 }
-
+*/
                 $scope.includeTemplateUrl = "views/directives/viewers/" + viewerTemplate + "Viewer.html";
+
         },
         restrict: "E",
         transclude: true
