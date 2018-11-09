@@ -1,4 +1,4 @@
-angular.module('mock.authService', []).service('AuthService', function ($q) {
+angular.module('mock.alertService', []).service('AlertService', function ($q) {
     var service = this;
     var defer;
 

@@ -1,4 +1,4 @@
-angular.module('mock.authService', []).service('AuthService', function ($q) {
+angular.module('mock.restApi', []).service('RestApi', function ($q) {
     var service = this;
     var defer;
 
@@ -22,6 +22,26 @@ angular.module('mock.authService', []).service('AuthService', function ($q) {
                 }
             })
         });
+    };
+
+    service.get = function () {
+        defer = $q.defer();
+        return defer.promise;
+    };
+
+    service.head = function () {
+        defer = $q.defer();
+        return defer.promise;
+    };
+
+    service.post = function () {
+        defer = $q.defer();
+        return defer.promise;
+    };
+
+    service.put = function () {
+        defer = $q.defer();
+        return defer.promise;
     };
 
     return service;
