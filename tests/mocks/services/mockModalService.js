@@ -1,4 +1,4 @@
-angular.module('mock.authService', []).service('AuthService', function ($q) {
+angular.module('mock.modalService', []).service('ModalService', function ($q) {
     var service = this;
     var defer;
 
@@ -22,6 +22,12 @@ angular.module('mock.authService', []).service('AuthService', function ($q) {
                 }
             })
         });
+    };
+
+    service.openModal = function (id) {
+    };
+
+    service.closeModal = function () {
     };
 
     return service;
