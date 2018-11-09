@@ -1,5 +1,3 @@
-
-
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li ng-repeat="pane in panes" ng-class="{active:pane.selected}">
@@ -8,25 +6,3 @@
   </ul>
   <div class="tab-content" ng-transclude></div>
 </div>
-
-<!--
-<span class="loading-pane" ng-class="{'show': loading}">
-   <img src="resources/images/loading.gif" height="100" width="100"/>
-</span>
-
-<div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'text', 'hide': switching}" id="txtTab" ng-if="hasFileType('text')">
-    <object data="{{getFiles()[selected()].url}}" type="{{getFiles()[selected()].mimeType}}"></object>
-</div>
-
-<div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'pdf', 'hide': switching}" id="pdfTab" ng-if="hasFileType('pdf')">
-    <div class="text-right">
-        <a title="Open PDF in a new window/tab" target="_blank" href="{{getFiles()[selected()].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
-    </div>
-    <object id="pdf" data="{{getFiles()[selected()].url}}" frameborder="0"></object>
-</div>
-
-<div role="tabpanel" class="tab-pane" ng-class="{'active': active === 'image', 'hide': switching}" id="imageTab" ng-if="hasFileType('image')">
-    <contentviewer></contentviewer>
-</div>
-
-</div>-->

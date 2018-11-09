@@ -18,6 +18,8 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.loadingText = "Loading...";
 
+    var types = appConfig.contentMap;
+
     $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
         $scope.document = args[0];
 
@@ -41,20 +43,6 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             var payload = angular.fromJson(response.body).payload;
             $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
         });
-
-        var types = {
-            text: ['text/plain'],
-            pdf: ['application/pdf'],
-            image: function() {
-              var types = contentMap.image ? contentMap.image : [];
-
-              if (contentMap.seadragon) {
-                types = types.concat(contentMap.seadragon);
-              }
-
-              return types;
-            }(),
-        };
 
         $scope.hasFileType = function (type) {
             for (var k in $scope.resources) {
