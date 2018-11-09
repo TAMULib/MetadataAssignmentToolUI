@@ -13,7 +13,8 @@ metadataTool.directive("contentViewer", function($filter) {
                 contentTabs.addPane($scope);
                 var viewerTemplate = $scope.type;
 
-                if ($scope.type == 'image') {
+                if (appConfig.cantaloupeService != null && $scope.type == 'image') {
+                    viewerTemplate = 'seadragon';
                     $scope.options = {};
                     $scope.options.prefixUrl = appConfig.basePath + '/resources/images/openseadragon/';
                     $scope.options.tileSources = [];
