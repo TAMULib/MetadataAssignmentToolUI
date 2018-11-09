@@ -1,1 +1,8 @@
-<object data="{{getFiles()[0].url}}" type="{{getFiles()[0].mimeType}}"></object>
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
+        <li class="title">{{getFiles()[current].name}}</li>
+        <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
+    </ul>
+</nav>
+<object data="{{getFiles()[current].url}}" type="{{getFiles()[current].mimeType}}"></object>

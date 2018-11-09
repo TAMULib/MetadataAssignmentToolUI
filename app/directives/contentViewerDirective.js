@@ -22,6 +22,20 @@ metadataTool.directive("contentViewer", function($filter) {
                     angular.forEach($scope.getFiles(),function(file) {
                         $scope.options.tileSources.push($filter("cantaloupeUrl")(file.url));
                     });
+                } else {
+                    $scope.current = 0;
+
+                    $scope.next = function () {
+                        if ($scope.current < $scope.getFiles().length - 1) {
+                            $scope.current++;
+                        }
+                    };
+
+                    $scope.previous = function () {
+                        if ($scope.current > 0) {
+                            $scope.current--;
+                        }
+                    };
                 }
 
                 $scope.includeTemplateUrl = "views/directives/viewers/" + viewerTemplate + "Viewer.html";

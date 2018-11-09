@@ -1,4 +1,11 @@
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === 0}"><a class="toggle-href" ng-click="previous()">Previous</a></li>
+        <li class="title">{{getFiles()[current].name}}</li>
+        <li class="next" ng-if="getFiles().length > 1" ng-class="{ 'disabled': selected() === getFiles().length-1}"><a class="toggle-href" ng-click="next()">Next</a></li>
+    </ul>
+</nav>
 <div class="text-right">
-    <a title="Open PDF in a new window/tab" target="_blank" href="{{getFiles()[0].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
+    <a title="Open PDF in a new window/tab" target="_blank" href="{{getFiles()[current].url}}"><span class="glyphicon glyphicon-new-window"></span></a>
 </div>
-<object id="pdf" data="{{getFiles()[0].url}}" frameborder="0"></object>
+<object id="pdf" data="{{getFiles()[current].url}}" frameborder="0"></object>
