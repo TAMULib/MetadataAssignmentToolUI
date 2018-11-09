@@ -106,7 +106,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             });
         };
 
-        $scope.getFilesByType = function (type) {
+        $scope.getFilesOfType = function (type) {
             if ($scope.resources === undefined) {
                 return [];
             }

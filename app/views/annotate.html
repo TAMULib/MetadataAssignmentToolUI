@@ -51,9 +51,9 @@
                 <h3>Documents</h3>
                 <div class="documents-pane">
                   <content-tabs>
-                    <content-viewer title="Text" resource="{{getFilesByType('text')}}" ng-if="hasFileType('text')"></content-viewer>
-                    <content-viewer title="PDFs" resource="{{getFilesByType('pdf')}}" ng-if="hasFileType('pdf')"></content-viewer>
-                    <content-viewer title="Images" resource="{{getFilesByType('image')}}" ng-if="hasFileType('image')"></content-viewer>
+                    <content-viewer title="Text" type="text" get-files="getFilesOfType('text')" ng-if="hasFileType('text')"></content-viewer>
+                    <content-viewer title="PDFs" type="pdf" get-files="getFilesOfType('pdf')" ng-if="hasFileType('pdf')"></content-viewer>
+                    <content-viewer title="Images" type="image" get-files="getFilesOfType('image')" ng-if="hasFileType('image')"></content-viewer>
                   </content-tabs>
                 </div>
             </div>
