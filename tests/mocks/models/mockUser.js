@@ -28,44 +28,53 @@ var mockUser3 = {
     "netId": "jsmith"
 };
 
-angular.module('mock.user', []).
-    service('User', function($q) {
-    	
-    	var self;
-    	
-    	var User = function(futureData) {
-    		self = this;
-			
-    		if(!futureData.$$state) {
-    			angular.extend(self, futureData);
-    			return;
-    		}
+angular.module('mock.user', []).service('User', function ($q) {
+    var model = this;
+    var defer;
+    var payloadResponse = function (payload) {
+        return defer.resolve({
+            body: angular.toJson({
+                meta: {
+                    status: 'SUCCESS'
+                },
+                payload: payload
+            })
+        });
+    };
 
-    		futureData.then(null, null, function(data) {
-    			angular.extend(self, data);	
-    		});
+    model.isDirty = false;
 
-    	}
-    	
-    	User.get = function() {
-            return new User(mockUser1);
-        };
-        
-        User.set = function(credentials) {
-        	angular.extend(self, credentials);
-        };
-        
-        User.fetch = function() {
-        	return $q(function(resolve) {            	
-            	resolve(mockUser3);
-            });
-        }; 
+    model.mock = function(toMock) {
+        model.lastName = toMock.lastName;
+        model.firstName = toMock.firstName;
+        model.uin = toMock.uin;
+        model.exp = toMock.exp;
+        model.email = toMock.email;
+        model.role = toMock.role;
+        model.netId = toMock.netId;
+    };
 
-        User.ready = function() {
-            return $q(function(resolve) {               
-                resolve(mockUser3);
-            });
-        };
-        
-        return User;
+    model.clearValidationResults = function () {
+    };
+
+    model.delete = function() {
+        defer = $q.defer();
+        payloadResponse(true);
+        return defer.promise;
+    };
+
+    model.dirty = function(boolean) {
+        model.isDirty = boolean;
+    };
+
+    model.reload = function() {
+    };
+
+    model.save = function() {
+        defer = $q.defer();
+        payloadResponse(true);
+        return defer.promise;
+    };
+
+    return model;
 });

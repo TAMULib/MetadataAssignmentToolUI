@@ -1,16 +1,19 @@
-var mockMetadata1 = {
-    'id': 1
+var mockDocument1 = {
+    'id': 1,
+    'project': {}
 };
 
-var mockMetadata2 = {
-    'id': 2
+var mockDocument2 = {
+    'id': 2,
+    'project': {}
 };
 
-var mockMetadata3 = {
-    'id': 3
+var mockDocument3 = {
+    'id': 3,
+    'project': {}
 };
 
-angular.module('mock.metadata', []).service('Metadata', function($q) {
+angular.module('mock.document', []).service('Document', function($q) {
     var model = this;
     var defer;
     var payloadResponse = function (payload) {
@@ -28,6 +31,7 @@ angular.module('mock.metadata', []).service('Metadata', function($q) {
 
     model.mock = function(toMock) {
         model.id = toMock.id;
+        model.project = toMock.project;
     };
 
     model.clearValidationResults = function () {
@@ -41,6 +45,26 @@ angular.module('mock.metadata', []).service('Metadata', function($q) {
 
     model.dirty = function(boolean) {
         model.isDirty = boolean;
+    };
+
+    model.getProject = function() {
+        defer = $q.defer();
+        payloadResponse(model.project);
+        return defer.promise;
+    };
+
+    model.getSuggestions = function() {
+        defer = $q.defer();
+        var suggestions = [];
+        // TODO
+        payloadResponse(suggestions);
+        return defer.promise;
+    };
+
+    model.push = function() {
+        defer = $q.defer();
+        payloadResponse(true);
+        return defer.promise;
     };
 
     model.reload = function() {
