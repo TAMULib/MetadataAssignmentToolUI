@@ -12,7 +12,6 @@ var appConfig = {
     'cantaloupeService': 'http://localhost:9006/iiif/2/',
 
     'basePath': '/metadatatool',
-    'fedoraPath': '/fcrepo/rest/',
 
     'storageType': 'session',
 

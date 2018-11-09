@@ -18,28 +18,30 @@ metadataTool.directive("contentViewer", function($filter) {
                     $scope.options.prefixUrl = appConfig.basePath + '/resources/images/openseadragon/';
                     $scope.options.tileSources = [];
                     $scope.options.sequenceMode = true;
+                    $scope.options.nextButton = "next";
+                    $scope.options.previousButton = "previous";
 
                     angular.forEach($scope.getFiles(),function(file) {
                         $scope.options.tileSources.push($filter("cantaloupeUrl")(file.url));
                     });
-                } else {
-                    $scope.current = 0;
-
-                    $scope.next = function () {
-                        if ($scope.current < $scope.getFiles().length - 1) {
-                            $scope.current++;
-                        }
-                    };
-
-                    $scope.previous = function () {
-                        if ($scope.current > 0) {
-                            $scope.current--;
-                        }
-                    };
                 }
 
+                $scope.current = 0;
+
+                $scope.next = function () {
+                    if ($scope.current < $scope.getFiles().length - 1) {
+                        $scope.current++;
+                    }
+                };
+
+                $scope.previous = function () {
+                    if ($scope.current > 0) {
+                        $scope.current--;
+                    }
+                };
+
                 $scope.includeTemplateUrl = "views/directives/viewers/" + viewerTemplate + "Viewer.html";
-        },
+            },
         restrict: "E",
         transclude: true
     };
