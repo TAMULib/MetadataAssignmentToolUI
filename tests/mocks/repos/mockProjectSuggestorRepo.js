@@ -1,73 +1,61 @@
-var mockUserRepo1 = {
-    'HashMap': {
-        '0': {
-            "uin": "123456789",
-            "lastName": "Daniels",
-            "firstName": "Jack",
-            "role": "ROLE_ADMIN"
+var mockProjectSuggestorRepo1 = {
+    'HashMap':{
+        '0':{
+            file: null,
+            filename: "disseration001.txt",
+            status: "Open",
+            annotator: "111111111"
         },
-        '1': {
-            "uin": "987654321",
-            "lastName": "Daniels",
-            "firstName": "Jill",
-            "role": "ROLE_USER"
+        '1':{
+            file: null,
+            filename: "disseration002.txt",
+            status: "Open",
+            annotator: "222222222"
         },
-        '2': {
-            "uin": "192837465",
-            "lastName": "Smith",
-            "firstName": "Jacob",
-            "role": "ROLE_USER"
+        '2':{
+            file: null,
+            filename: "disseration003.txt",
+            status: "Open",
+            annotator: "333333333"
         }
     }
 };
 
-var mockUserRepo2 = {
-    'HashMap': {
-        '0': {
-            "uin": "321654987",
-            "lastName": "Daniels",
-            "firstName": "John",
-            "role": "ROLE_ADMIN"
+var mockProjectSuggestorRepo2 = {
+    'HashMap':{
+        '0':{
+            file: null,
+            filename: "disseration002.txt",
+            status: "Open",
+            annotator: "222222222"
         },
-        '1': {
-            "uin": "789456123",
-            "lastName": "Daniels",
-            "firstName": "Joann",
-            "role": "ROLE_USER"
+        '1':{
+            file: null,
+            filename: "disseration003.txt",
+            status: "Open",
+            annotator: "333333333"
         },
-        '2': {
-            "uin": "564738291",
-            "lastName": "Smith",
-            "firstName": "Joseph",
-            "role": "ROLE_USER"
+        '2':{
+            file: null,
+            filename: "disseration004.txt",
+            status: "Open",
+            annotator: "444444444"
         }
     }
 };
 
-var mockUserRepo3 = {
-    'HashMap': {
-        '0': {
-            "uin": "111111111",
-            "lastName": "User1",
-            "firstName": "Test",
-            "role": "ROLE_ADMIN"
-        },
-        '1': {
-            "uin": "222222222",
-            "lastName": "User2",
-            "firstName": "Test",
-            "role": "ROLE_USER"
-        },
-        '2': {
-            "uin": "333333333",
-            "lastName": "User3",
-            "firstName": "Test",
-            "role": "ROLE_USER"
+var mockProjectSuggestorRepo3 = {
+    'HashMap':{
+        '0':{
+            file: null,
+            filename: "disseration003.txt",
+            status: "Open",
+            annotator: "333333333"
         }
     }
 };
 
-angular.module('mock.userRepo', []).service('UserRepo', function ($q) {
+angular.module('mock.projectSuggestorRepo', []).service('ProjectSuggestorRepo', function($q) {
     var repo = this;
     var defer;
     var validations = {};
@@ -103,7 +91,7 @@ angular.module('mock.userRepo', []).service('UserRepo', function ($q) {
         this.originalList = toMock;
     };
 
-    repo.mock(mockUserRepo1);
+    repo.mock(mockProjectSuggestorRepo1);
 
     repo.add = function (modelJson) {
         if (!repo.contains(modelJson)) {
@@ -168,6 +156,12 @@ angular.module('mock.userRepo', []).service('UserRepo', function ($q) {
         return defer.promise;
     };
 
+    repo.fetch = function () {
+        defer = $q.defer();
+        payloadResponse(mockProjectSuggestorRepo3);
+        return defer.promise;
+    };
+
     repo.findById = function (id) {
         var found;
         for (var i in repo.mockedList) {
@@ -214,7 +208,7 @@ angular.module('mock.userRepo', []).service('UserRepo', function ($q) {
     };
 
     repo.getEntityName = function () {
-        return "UserRepo";
+        return "SuggestorRepo";
     };
 
     repo.getValidations = function () {
@@ -226,12 +220,14 @@ angular.module('mock.userRepo', []).service('UserRepo', function ($q) {
     };
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
-        // TODO
+        defer = $q.defer();
+        payloadResponse(mockProjectSuggestorRepo3);
+        return defer.promise;
     };
 
     repo.ready = function () {
         defer = $q.defer();
-        payloadResponse();
+        payloadResponse(mockProjectSuggestorRepo3);
         return defer.promise;
     };
 
