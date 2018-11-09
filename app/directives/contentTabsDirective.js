@@ -3,7 +3,7 @@ metadataTool.directive("contentTabs", function($filter) {
     restrict: 'E',
     transclude: true,
     scope: {},
-    controller: ['$scope', function MyTabsController($scope) {
+    controller: ['$scope', function TabsController($scope) {
       var panes = $scope.panes = [];
 
       $scope.select = function(pane) {

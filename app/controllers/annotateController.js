@@ -10,8 +10,6 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     var resourcesPromise = ResourceRepo.getAllByProjectNameAndDocumentName($routeParams.projectKey, $routeParams.documentKey);
 
-    var contentMap = appConfig.contentMap ? appConfig.contentMap : {};
-
     $scope.cv = ControlledVocabularyRepo.getAll();
 
     $scope.action = $routeParams.action;
