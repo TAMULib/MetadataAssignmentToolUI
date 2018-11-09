@@ -1,16 +1,16 @@
-var mockMetadata1 = {
+var mockResource1 = {
     'id': 1
 };
 
-var mockMetadata2 = {
+var mockResource2 = {
     'id': 2
 };
 
-var mockMetadata3 = {
+var mockResource3 = {
     'id': 3
 };
 
-angular.module('mock.metadata', []).service('Metadata', function($q) {
+angular.module('mock.resource', []).service('Resource', function($q) {
     var model = this;
     var defer;
     var payloadResponse = function (payload) {

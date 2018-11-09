@@ -1,77 +1,56 @@
 var mockControlledVocabulary1 = {
-   "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    'id': 1
 };
 
 var mockControlledVocabulary2 = {
-   "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    'id': 2
 };
 
 var mockControlledVocabulary3 = {
-    "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    'id': 3
 };
 
-angular.module('mock.controlledVocabulary', []).
-    service('ControlledVocabulary', function($q) {
-    	
-    	var self;
-    	
-    	var ControlledVocabulary = function(futureData) {
-    		self = this;
-			
-    		if(!futureData.$$state) {
-    			angular.extend(self, futureData);
-    			return;
-    		}
+angular.module('mock.controlledVocabulary', []).service('ControlledVocabulary', function($q) {
+    var model = this;
+    var defer;
+    var payloadResponse = function (payload) {
+        return defer.resolve({
+            body: angular.toJson({
+                meta: {
+                    status: 'SUCCESS'
+                },
+                payload: payload
+            })
+        });
+    };
 
-    		futureData.then(null, null, function(data) {
-    			angular.extend(self, data);	
-    		});
+    model.isDirty = false;
 
-    	}
-    	
-    	ControlledVocabulary.get = function() {
-            return new ControlledVocabulary(mockControlledVocabulary1);
-        };
-        
-        ControlledVocabulary.set = function(data) {
-        	angular.extend(self, data);
-        };
-        
-        ControlledVocabulary.fetch = function() {
-        	return $q(function(resolve) {            	
-            	resolve(mockControlledVocabulary3);
-            });
-        }; 
+    model.mock = function(toMock) {
+        model.id = toMock.id;
+    };
 
-        ControlledVocabulary.ready = function() {
-            return $q(function(resolve) {               
-                resolve(mockControlledVocabulary3);
-            });
-        };
-        
-        return ControlledVocabulary;
+    model.clearValidationResults = function () {
+    };
+
+    model.delete = function() {
+        defer = $q.defer();
+        payloadResponse(true);
+        return defer.promise;
+    };
+
+    model.dirty = function(boolean) {
+        model.isDirty = boolean;
+    };
+
+    model.reload = function() {
+    };
+
+    model.save = function() {
+        defer = $q.defer();
+        payloadResponse(true);
+        return defer.promise;
+    };
+
+    return model;
 });
