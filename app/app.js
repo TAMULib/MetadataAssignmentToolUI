@@ -3,7 +3,8 @@ var metadataTool = angular.module('metadataTool', [
     'ngTable',
     'ngSanitize',
     'ngCsv',
-    'ngFileUpload'
+    'ngFileUpload',
+    'ui.openseadragon'
 ]);
 
 metadataTool.model = core.model;
