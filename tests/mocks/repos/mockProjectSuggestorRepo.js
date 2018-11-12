@@ -1,4 +1,4 @@
-var mockSuggestorRepo1 = {
+var mockProjectSuggestorRepo1 = {
     'HashMap':{
         '0':{
             file: null,
@@ -21,7 +21,7 @@ var mockSuggestorRepo1 = {
     }
 };
 
-var mockSuggestorRepo2 = {
+var mockProjectSuggestorRepo2 = {
     'HashMap':{
         '0':{
             file: null,
@@ -44,7 +44,7 @@ var mockSuggestorRepo2 = {
     }
 };
 
-var mockSuggestorRepo3 = {
+var mockProjectSuggestorRepo3 = {
     'HashMap':{
         '0':{
             file: null,
@@ -55,7 +55,7 @@ var mockSuggestorRepo3 = {
     }
 };
 
-angular.module('mock.suggestorRepo', []).service('SuggestorRepo', function($q) {
+angular.module('mock.projectSuggestorRepo', []).service('ProjectSuggestorRepo', function($q) {
     var repo = this;
     var defer;
     var validations = {};
@@ -91,7 +91,7 @@ angular.module('mock.suggestorRepo', []).service('SuggestorRepo', function($q) {
         this.originalList = toMock;
     };
 
-    repo.mock(mockSuggestorRepo1);
+    repo.mock(mockProjectSuggestorRepo1);
 
     repo.add = function (modelJson) {
         if (!repo.contains(modelJson)) {
@@ -158,7 +158,7 @@ angular.module('mock.suggestorRepo', []).service('SuggestorRepo', function($q) {
 
     repo.fetch = function () {
         defer = $q.defer();
-        payloadResponse(mockSuggestorRepo3);
+        payloadResponse(mockProjectSuggestorRepo3);
         return defer.promise;
     };
 
@@ -208,7 +208,7 @@ angular.module('mock.suggestorRepo', []).service('SuggestorRepo', function($q) {
     };
 
     repo.getEntityName = function () {
-        return "SuggestorRepo";
+        return "ProjectSuggestorRepo";
     };
 
     repo.getValidations = function () {
@@ -221,13 +221,13 @@ angular.module('mock.suggestorRepo', []).service('SuggestorRepo', function($q) {
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
         defer = $q.defer();
-        payloadResponse(mockSuggestorRepo3);
+        payloadResponse(mockProjectSuggestorRepo3);
         return defer.promise;
     };
 
     repo.ready = function () {
         defer = $q.defer();
-        payloadResponse(mockSuggestorRepo3);
+        payloadResponse(mockProjectSuggestorRepo3);
         return defer.promise;
     };
 

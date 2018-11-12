@@ -12,11 +12,11 @@ describe('controller: ProjectController', function () {
         module('mock.projectRepositoryRepo');
         module('mock.restApi');
         module('mock.storageService');
-        module('mock.suggestorRepo');
+        module('mock.projectSuggestorRepo');
         module('mock.userService');
         module('mock.wsApi');
 
-        inject(function ($controller, $rootScope, $window, _MetadataRepo_, _ModalService_, _RestApi_, _ProjectRepo_, _ProjectAuthorityRepo_, _ProjectRepositoryRepo_, _StorageService_, _SuggestorRepo_, _UserService_, _WsApi_) {
+        inject(function ($controller, $rootScope, $window, _MetadataRepo_, _ModalService_, _RestApi_, _ProjectRepo_, _ProjectAuthorityRepo_, _ProjectRepositoryRepo_, _StorageService_, _ProjectSuggestorRepo_, _UserService_, _WsApi_) {
             installPromiseMatchers();
             scope = $rootScope.$new();
 
@@ -30,7 +30,7 @@ describe('controller: ProjectController', function () {
                 ProjectRepositoryRepo: _ProjectRepositoryRepo_,
                 RestApi: _RestApi_,
                 StorageService: _StorageService_,
-                SuggestorRepo: _SuggestorRepo_,
+                ProjectSuggestorRepo: _ProjectSuggestorRepo_,
                 UserService: _UserService_,
                 WsApi: _WsApi_
             });

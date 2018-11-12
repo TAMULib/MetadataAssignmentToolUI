@@ -8,6 +8,7 @@ describe('controller: DocumentController', function () {
         module('mock.alertService');
         module('mock.apiResponseActions');
         module('mock.document');
+        module('mock.documentRepo');
         module('mock.modalService');
         module('mock.ngTableParams');
         module('mock.projectRepo');

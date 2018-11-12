@@ -8,11 +8,11 @@ describe('controller: ProjectSuggestorController', function () {
         module('mock.modalService');
         module('mock.restApi');
         module('mock.storageService');
-        module('mock.suggestorRepo');
+        module('mock.projectSuggestorRepo');
         module('mock.userService');
         module('mock.wsApi');
 
-        inject(function ($controller, $rootScope, $window, _ModalService_, _RestApi_, _StorageService_, _SuggestorRepo_, _UserService_, _WsApi_) {
+        inject(function ($controller, $rootScope, $window, _ModalService_, _ProjectSuggestorRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
             scope = $rootScope.$new();
 
@@ -22,7 +22,7 @@ describe('controller: ProjectSuggestorController', function () {
                 ModalService: _ModalService_,
                 RestApi: _RestApi_,
                 StorageService: _StorageService_,
-                SuggestorRepo: _SuggestorRepo_,
+                ProjectSuggestorRepo: _ProjectSuggestorRepo_,
                 UserService: _UserService_,
                 WsApi: _WsApi_
             });
