@@ -117,7 +117,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project',
-            'method': 'delete'
+            'method': 'remove'
         },
         ingestTypes: {
             'endpoint': '/private/queue',
@@ -143,6 +143,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'get-field-profile-labels'
+        },
+        syncDocuments: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'sync'
         }
     },
     ProjectRepository: {

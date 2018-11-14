@@ -48,10 +48,15 @@ main footer {
   }
 }
 
-.tab-pane {
+.tab-pane, .tab-pane .viewer-wrapper {
   width: 100%;
   height: 675px;
 }
+
+.viewer-wrapper {
+  padding: 8px;
+}
+
 
 .tab-pane.hide {
   display: none;
@@ -246,4 +251,8 @@ main footer {
 #fieldProfileList {
   height: 600px;
   overflow-y:auto;
+}
+
+.openseadragon-container {
+  min-height: 675px;
 }

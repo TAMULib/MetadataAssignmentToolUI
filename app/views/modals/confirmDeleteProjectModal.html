@@ -1,11 +1,12 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
     <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Delete {{project.name}}</h4>
+    <h4 class="modal-title">Delete Project</h4>
 </div>
 <div class="modal-body">
     <form role="form"  >
         <div class="form-group">
-            <label>Are you sure you want to delete the Project: {{project.name}}</label>
+            <label>Are you sure you want to delete this project and its {{project.documents.length}} associated document(s): </label>
+            <div>{{project.name}}</div>
         </div>
     </form>
 </div>
