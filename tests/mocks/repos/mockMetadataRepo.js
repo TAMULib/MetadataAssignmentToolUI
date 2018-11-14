@@ -94,8 +94,8 @@ angular.module('mock.metadataRepo', []).service('MetadataRepo', function($q) {
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
-        repo.mockedList = toMock;
-        this.originalList = toMock;
+        repo.mockedList = toMock.HashMap;
+        this.originalList = toMock.HashMap;
     };
 
     repo.mock(mockMetadataRepo1);

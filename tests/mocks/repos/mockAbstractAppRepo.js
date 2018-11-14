@@ -87,8 +87,8 @@ angular.module('mock.abstractAppRepo', []).service('AbstractAppRepo', function($
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
-        repo.mockedList = toMock;
-        this.originalList = toMock;
+        repo.mockedList = toMock.HashMap;
+        this.originalList = toMock.HashMap;
     };
 
     repo.mock(mockAbstractAppRepo1);
