@@ -170,7 +170,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-repository',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',
@@ -198,7 +198,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-authority',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',
@@ -231,7 +231,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-suggestor',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',
