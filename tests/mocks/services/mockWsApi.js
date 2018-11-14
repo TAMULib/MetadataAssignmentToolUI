@@ -1,6 +1,7 @@
 angular.module('mock.wsApi', []).service('WsApi', function ($q) {
     var service = this;
     var defer;
+    var mapping;
 
     var payloadResponse = function (payload) {
         return defer.resolve({
@@ -22,6 +23,13 @@ angular.module('mock.wsApi', []).service('WsApi', function ($q) {
                 }
             })
         });
+    };
+
+    service.mockMapping = function(toMock) {
+        mapping = {};
+        for (var key in toMock) {
+            mapping[key] = toMock[key];
+        }
     };
 
     service.fetch = function (apiReq) {
@@ -75,6 +83,10 @@ angular.module('mock.wsApi', []).service('WsApi', function ($q) {
         payloadResponse(payload);
 
         return defer.promise;
+    };
+
+    service.getMapping = function () {
+        return mapping;
     };
 
     service.listen = function (apiReq) {
