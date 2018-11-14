@@ -15,7 +15,7 @@ metadataTool.repo("ProjectAuthorityRepo", function ProjectAuthorityRepo(WsApi) {
                 data: formData
             }
         );
-    }
+    };
 
     return this;
 
