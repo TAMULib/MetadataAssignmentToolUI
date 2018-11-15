@@ -197,40 +197,6 @@ angular.module('mock.metadataRepo', []).service('MetadataRepo', function($q) {
         return angular.copy(repo.mockedList);
     };
 
-    repo.getAllByRole = function (role) {
-        var found;
-        for (var i in repo.mockedList) {
-            if (repo.mockedList[i].role == role) {
-                found = angular.copy(repo.mockedList[i]);
-                break;
-            }
-        }
-
-        return found;
-    };
-
-    repo.getAllFiltered = function(predicate) {
-        var data = repo.mockedList;
-        var filteredData = [];
-        // TODO
-        return filteredData;
-    };
-
-    repo.get = function (document) {
-        defer = $q.defer();
-        var found;
-        if (document.name) {
-            for (var doc in repo.mockedList) {
-                if (doc.name === documentName) {
-                  found = document;
-                  break;
-                }
-            }
-        }
-        payloadResponse(found);
-        return defer.promise;
-    };
-
     repo.getAssignableUsers = function (roles) {
         var payload = {};
         defer = $q.defer();

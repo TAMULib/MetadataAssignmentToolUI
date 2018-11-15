@@ -183,33 +183,6 @@ angular.module('mock.controlledVocabularyRepo', []).service('ControlledVocabular
         return angular.copy(repo.mockedList);
     };
 
-    repo.getAllByRole = function (role) {
-        var found;
-        for (var i in repo.mockedList) {
-            if (repo.mockedList[i].role == role) {
-                found = angular.copy(repo.mockedList[i]);
-                break;
-            }
-        }
-
-        return found;
-    };
-
-    repo.getAllFiltered = function(predicate) {
-        var data = repo.mockedList;
-        var filteredData = [];
-        // TODO
-        return filteredData;
-    };
-
-    repo.getAssignableUsers = function (roles) {
-        var payload = {};
-        defer = $q.defer();
-        // TODO
-        payloadResponse(payload);
-        return defer.promise;
-    };
-
     repo.getContents = function () {
         return angular.copy(repo.mockedList);
     };
