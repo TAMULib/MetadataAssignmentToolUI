@@ -7,7 +7,7 @@ var appConfig = {
     // Set this to the webService if mocking AuthService
 
     'authService': 'http://labs.library.tamu.edu/auth3',
-    'webService': 'http://localhost:9001',
+    'webService': 'http://localhost:9000',
     'iiifService': 'http://localhost:9003',
     //If cantaloupeService is null, a simple image viewer will be used instead of the OpenSeaDragon viewer
     'cantaloupeService': 'http://localhost:8182/iiif/2/',
