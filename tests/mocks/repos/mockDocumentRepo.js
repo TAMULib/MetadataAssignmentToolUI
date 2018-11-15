@@ -90,8 +90,15 @@ angular.module('mock.documentRepo', []).service('DocumentRepo', function($q) {
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
-        repo.mockedList = toMock;
-        this.originalList = toMock;
+        repo.mockedList = [];
+        originalList = [];
+
+        if (toMock.HashMap) {
+            for (var i in toMock.HashMap) {
+                repo.mockedList.push(toMock.HashMap[i]);
+                originalList.push(toMock.HashMap[i]);
+            }
+        }
     };
 
     repo.mock(mockDocumentRepo1);

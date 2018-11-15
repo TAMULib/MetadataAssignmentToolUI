@@ -87,8 +87,15 @@ angular.module('mock.controlledVocabularyRepo', []).service('ControlledVocabular
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
-        repo.mockedList = toMock.HashMap;
-        this.originalList = toMock.HashMap;
+        repo.mockedList = [];
+        originalList = [];
+
+        if (toMock.HashMap) {
+            for (var i in toMock.HashMap) {
+                repo.mockedList.push(toMock.HashMap[i]);
+                originalList.push(toMock.HashMap[i]);
+            }
+        }
     };
 
     repo.mock(mockControlledVocabularyRepo1);
