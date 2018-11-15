@@ -1,56 +1,35 @@
 var mockProjectRepositoryRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            projects: []
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            projects: []
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            projects: []
         }
     }
 };
 
 var mockProjectRepositoryRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            projects: []
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            projects: []
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            projects: []
         }
     }
 };
 
 var mockProjectRepositoryRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+    'HashMap': {
+        '0': {
+            projects: []
         }
     }
 };
@@ -85,6 +64,7 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
     };
 
     repo.mockedList = [];
+    repo.mockedTypes = {};
 
     repo.mock = function(toMock) {
         repo.mockedList = [];
@@ -96,6 +76,10 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
                 originalList.push(toMock.HashMap[i]);
             }
         }
+    };
+
+    repo.mockTypes = function(toMock) {
+        repo.mockedTypes = toMock;
     };
 
     repo.mock(mockProjectRepositoryRepo1);
@@ -189,6 +173,12 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
 
     repo.getEntityName = function () {
         return "ProjectRepositoryRepo";
+    };
+
+    repo.getTypes = function() {
+        defer = $q.defer();
+        payloadResponse(repo.mockedTypes);
+        return defer.promise;
     };
 
     repo.getValidations = function () {

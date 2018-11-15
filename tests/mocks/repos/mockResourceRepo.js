@@ -1,56 +1,56 @@
 var mockResourceRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            document: "plain.txt",
+            mimeType: "text/plain",
+            name: "Resource 001",
+            path: "001"
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            document: "application.pdf",
+            mimeType: "application/pdf",
+            name: "Resource 002",
+            path: "002"
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            document: "image.jpg",
+            mimeType: "image/jpeg",
+            name: "Resource 003",
+            path: "003"
         }
     }
 };
 
 var mockResourceRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            document: "plain.txt",
+            mimeType: "text/plain",
+            name: "Resource 004",
+            path: "004"
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            document: "application.pdf",
+            mimeType: "application/pdf",
+            name: "Resource 005",
+            path: "005"
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            document: "image.jpg",
+            mimeType: "image/jpeg",
+            name: "Resource 006",
+            path: "006"
         }
     }
 };
 
 var mockResourceRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+    'HashMap': {
+        '0': {
+            document: "image.jpg",
+            mimeType: "image/jpeg",
+            name: "Resource 003",
+            path: "003"
         }
     }
 };

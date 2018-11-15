@@ -1,32 +1,32 @@
 var mockAssumedControl1 = {
-    'user': {
-        "uin": "123456789",
-        "lastName": "Daniels",
-        "firstName": "Jack",
-        "role": "ROLE_ADMIN"
-    },
-    'netid': '',
-    'button': 'Unassume',
-    'status': ''
+    button: 'Unassume',
+    netid: '',
+    status: '',
+    user: {
+        firstName: "Jack",
+        lastName: "Daniels",
+        role: "ROLE_ADMIN",
+        uin: "123456789"
+    }
 };
 
 var mockAssumedControl2 = {
-    'user': {
-        "uin": "987654321",
-        "lastName": "Daniels",
-        "firstName": "Jill",
-        "role": "ROLE_USER"
-    },
-    'netid': '',
-    'button': 'Unassume',
-    'status': ''
+    button: 'Unassume',
+    netid: '',
+    status: '',
+    user: {
+        firstName: "Jill",
+        lastName: "Daniels",
+        role: "ROLE_USER",
+        uin: "987654321"
+    }
 };
 
 var mockAssumedControl3 = {
-    'user': {},
-    'netid': '',
-    'button': 'Assume',
-    'status': ''
+    button: 'Assume',
+    netid: '',
+    status: '',
+    user: {}
 };
 
 angular.module('mock.assumedControl', []).service('AssumedControl', function($q) {

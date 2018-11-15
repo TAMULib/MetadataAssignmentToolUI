@@ -1,63 +1,49 @@
 var mockMetadataRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            name: "Dissertation 001",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            document: "",
+            label: "Metadata 001",
+            values: []
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            name: "Dissertation 002",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            document: "",
+            label: "Metadata 002",
+            values: []
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            document: "",
+            label: "Metadata 003",
+            values: []
         }
     }
 };
 
 var mockMetadataRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            name: "Dissertation 002",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            document: "",
+            label: "Metadata 004",
+            values: []
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            document: "",
+            label: "Metadata 005",
+            values: []
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            name: "Dissertation 004",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            document: "",
+            label: "Metadata 006",
+            values: []
         }
     }
 };
 
 var mockMetadataRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+    'HashMap': {
+        '0': {
+            document: "",
+            label: "Metadata 003",
+            values: []
         }
     }
 };

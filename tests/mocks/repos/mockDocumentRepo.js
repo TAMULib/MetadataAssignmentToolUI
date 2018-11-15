@@ -1,59 +1,84 @@
 var mockDocumentRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            name: "Dissertation 001",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            annotator: "",
+            fields: [],
+            name: "Document 001",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            name: "Dissertation 002",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            annotator: "",
+            fields: [],
+            name: "Document 002",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            annotator: "",
+            fields: [],
+            name: "Document 003",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         }
     }
 };
 
 var mockDocumentRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            annotator: "",
+            fields: [],
+            name: "Document 004",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            annotator: "",
+            fields: [],
+            name: "Document 005",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            annotator: "",
+            fields: [],
+            name: "Document 006",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         }
     }
 };
 
 var mockDocumentRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+    'HashMap': {
+        '0': {
+            annotator: "",
+            fields: [],
+            name: "Document 003",
+            notes: "",
+            path: "",
+            project: {},
+            publishedLocations: [],
+            status: ""
         }
     }
 };

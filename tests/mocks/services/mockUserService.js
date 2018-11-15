@@ -1,31 +1,45 @@
 var mockUserService1 = {
-    "lastName": "Daniels",
-    "firstName": "Jack",
-    "uin": "123456789",
-    "exp": "1425393875282",
-    "email": "aggieJack@library.tamu.edu",
-    "role": "ROLE_ADMIN",
-    "netId": "aggieJack"
+    anonymous: false,
+    email: "aggieJack@library.tamu.edu",
+    exp: "1425393875282",
+    firstName: "Jack",
+    lastName: "Daniels",
+    netId: "aggieJack",
+    role: "ROLE_ADMIN",
+    uin: "123456789"
 };
 
 var mockUserService2 = {
-    "lastName": "Daniels",
-    "firstName": "Jill",
-    "uin": "987654321",
-    "exp": "1425393875282",
-    "email": "aggieJill@library.tamu.edu",
-    "role": "ROLE_USER",
-    "netId": "aggieJill"
+    anonymous: false,
+    email: "aggieJill@library.tamu.edu",
+    exp: "1425393875282",
+    firstName: "Jill",
+    lastName: "Daniels",
+    netId: "aggieJill",
+    role: "ROLE_ADMIN",
+    uin: "987654321"
 };
 
 var mockUserService3 = {
-    "lastName": "Smith",
-    "firstName": "Jacob",
-    "uin": "192837465",
-    "exp": "1425393875282",
-    "email": "jsmith@library.tamu.edu",
-    "role": "ROLE_USER",
-    "netId": "jsmith"
+    anonymous: false,
+    email: "jsmith@library.tamu.edu",
+    exp: "1425393875282",
+    firstName: "Jacob",
+    lastName: "Smith",
+    netId: "jsmith",
+    role: "ROLE_USER",
+    uin: "192837465"
+};
+
+var mockUserService4 = {
+    anonymous: true,
+    email: "",
+    exp: "",
+    firstName: "",
+    lastName: "",
+    netId: "",
+    role: "ROLE_ANONYMOUS",
+    uin: ""
 };
 
 angular.module('mock.userService', []).service('UserService', function ($q) {
@@ -56,24 +70,44 @@ angular.module('mock.userService', []).service('UserService', function ($q) {
     };
 
     service.mockCurrentUser = function(toMock) {
-        currentUser.lastName = toMock.lastName;
-        currentUser.firstName = toMock.firstName;
-        currentUser.uin = toMock.uin;
-        currentUser.exp = toMock.exp;
+        delete sessionStorage.role;
+
+        currentUser.anonymous = toMock.anonymous;
         currentUser.email = toMock.email;
-        currentUser.role = toMock.role;
+        currentUser.exp = toMock.exp;
+        currentUser.firstName = toMock.firstName;
+        currentUser.lastName = toMock.lastName;
         currentUser.netId = toMock.netId;
+        currentUser.role = toMock.role;
+        currentUser.uin = toMock.uin;
+
+        sessionStorage.role = toMock.role;
+    };
+
+    service.fetchUser = function () {
+        defer = $q.defer();
+        delete sessionStorage.role;
+        defer.resolve(currentUser);
+        sessionStorage.role = currentUser.role;
+        return defer.promise;
     };
 
     service.getCurrentUser = function () {
+        return currentUser;
+    };
+
+    service.setCurrentUser = function (user) {
+        angular.extend(currentUser, user);
+    };
+
+    service.userEvents = function () {
         defer = $q.defer();
-        payloadResponse(mockUserService1);
         return defer.promise;
     };
 
     service.userReady = function () {
         defer = $q.defer();
-        payloadResponse(true);
+        defer.resolve(currentUser);
         return defer.promise;
     };
 

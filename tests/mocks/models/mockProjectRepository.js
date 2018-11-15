@@ -1,13 +1,13 @@
 var mockProjectRepository1 = {
-    'id': 1
+    projects: []
 };
 
 var mockProjectRepository2 = {
-    'id': 2
+    projects: []
 };
 
 var mockProjectRepository3 = {
-    'id': 3
+    projects: []
 };
 
 angular.module('mock.projectRepository', []).service('ProjectRepository', function($q) {

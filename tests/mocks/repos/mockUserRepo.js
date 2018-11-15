@@ -1,22 +1,22 @@
 var mockUserRepo1 = {
     'HashMap': {
         '0': {
-            "uin": "123456789",
-            "lastName": "Daniels",
-            "firstName": "Jack",
-            "role": "ROLE_ADMIN"
+            firstName: "Jack",
+            lastName: "Daniels",
+            role: "ROLE_ADMIN",
+            uin: "123456789"
         },
         '1': {
-            "uin": "987654321",
-            "lastName": "Daniels",
-            "firstName": "Jill",
-            "role": "ROLE_USER"
+            firstName: "Jill",
+            lastName: "Daniels",
+            role: "ROLE_USER",
+            uin: "987654321"
         },
         '2': {
-            "uin": "192837465",
-            "lastName": "Smith",
-            "firstName": "Jacob",
-            "role": "ROLE_USER"
+            firstName: "Jacob",
+            lastName: "Smith",
+            role: "ROLE_USER",
+            uin: "192837465"
         }
     }
 };
@@ -24,22 +24,22 @@ var mockUserRepo1 = {
 var mockUserRepo2 = {
     'HashMap': {
         '0': {
-            "uin": "321654987",
-            "lastName": "Daniels",
-            "firstName": "John",
-            "role": "ROLE_ADMIN"
+            firstName: "John",
+            lastName: "Daniels",
+            role: "ROLE_ADMIN",
+            uin: "321654987"
         },
         '1': {
-            "uin": "789456123",
-            "lastName": "Daniels",
-            "firstName": "Joann",
-            "role": "ROLE_USER"
+            firstName: "Joann",
+            lastName: "Daniels",
+            role: "ROLE_USER",
+            uin: "789456123"
         },
         '2': {
-            "uin": "564738291",
-            "lastName": "Smith",
-            "firstName": "Joseph",
-            "role": "ROLE_USER"
+            firstName: "Joseph",
+            lastName: "Smith",
+            role: "ROLE_USER",
+            uin: "564738291"
         }
     }
 };
@@ -47,22 +47,22 @@ var mockUserRepo2 = {
 var mockUserRepo3 = {
     'HashMap': {
         '0': {
-            "uin": "111111111",
-            "lastName": "User1",
-            "firstName": "Test",
-            "role": "ROLE_ADMIN"
+            firstName: "Test",
+            lastName: "User1",
+            role: "ROLE_ADMIN",
+            uin: "111111111"
         },
         '1': {
-            "uin": "222222222",
-            "lastName": "User2",
-            "firstName": "Test",
-            "role": "ROLE_USER"
+            firstName: "Test",
+            lastName: "User2",
+            role: "ROLE_USER",
+            uin: "222222222"
         },
         '2': {
-            "uin": "333333333",
-            "lastName": "User3",
-            "firstName": "Test",
-            "role": "ROLE_USER"
+            firstName: "Test",
+            lastName: "User3",
+            role: "ROLE_USER",
+            uin: "333333333"
         }
     }
 };

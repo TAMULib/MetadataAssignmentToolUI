@@ -1,64 +1,92 @@
 var mockProjectRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            name: "Dissertation 001",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 001",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            name: "Dissertation 002",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 002",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 003",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         }
     }
 };
 
 var mockProjectRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            name: "Dissertation 002",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 004",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 005",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            name: "Dissertation 004",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 006",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
         }
     }
 };
 
 var mockProjectRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            name: "Dissertation 003",
-            status: "Open",
-            annotator: "333333333"
-        }
+    'HashMap': {
+        '0': {
+            authorities: [],
+            documents: [],
+            headless: false,
+            injestType: null,
+            name: "Project 003",
+            locked: false,
+            profiles: [],
+            repositories: [],
+            suggestors: []
+        },
     }
 };
 
@@ -232,7 +260,7 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
         return defer.promise;
     };
 
-    repo.getInjectTypes = function () {
+    repo.getIngestTypes = function () {
         defer = $q.defer();
         // TODO
         payloadResponse({});

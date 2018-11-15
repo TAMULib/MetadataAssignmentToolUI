@@ -1,56 +1,42 @@
 var mockControlledVocabularyRepo1 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration001.txt",
-            status: "Open",
-            annotator: "111111111"
+    'HashMap': {
+        '0': {
+            value: "Controlled Vocabulary 001",
+            values: []
         },
-        '1':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+        '1': {
+            value: "Controlled Vocabulary 002",
+            values: []
         },
-        '2':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '2': {
+            value: "Controlled Vocabulary 003",
+            values: []
         }
     }
 };
 
 var mockControlledVocabularyRepo2 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration002.txt",
-            status: "Open",
-            annotator: "222222222"
+    'HashMap': {
+        '0': {
+            value: "Controlled Vocabulary 004",
+            values: []
         },
-        '1':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+        '1': {
+            value: "Controlled Vocabulary 005",
+            values: []
         },
-        '2':{
-            file: null,
-            filename: "disseration004.txt",
-            status: "Open",
-            annotator: "444444444"
+        '2': {
+            value: "Controlled Vocabulary 006",
+            values: []
         }
     }
 };
 
 var mockControlledVocabularyRepo3 = {
-    'HashMap':{
-        '0':{
-            file: null,
-            filename: "disseration003.txt",
-            status: "Open",
-            annotator: "333333333"
+    'HashMap': {
+        '0': {
+            value: "Controlled Vocabulary 003",
+            values: []
         }
     }
 };

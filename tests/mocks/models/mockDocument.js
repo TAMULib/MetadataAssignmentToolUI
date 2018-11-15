@@ -1,16 +1,34 @@
 var mockDocument1 = {
-    'id': 1,
-    'project': {}
+    annotator: "",
+    fields: [],
+    name: "Document 001",
+    notes: "",
+    path: "",
+    project: {},
+    publishedLocations: [],
+    status: ""
 };
 
 var mockDocument2 = {
-    'id': 2,
-    'project': {}
+    annotator: "",
+    fields: [],
+    name: "Document 002",
+    notes: "",
+    path: "",
+    project: {},
+    publishedLocations: [],
+    status: ""
 };
 
 var mockDocument3 = {
-    'id': 3,
-    'project': {}
+    annotator: "",
+    fields: [],
+    name: "Document 003",
+    notes: "",
+    path: "",
+    project: {},
+    publishedLocations: [],
+    status: ""
 };
 
 angular.module('mock.document', []).service('Document', function($q) {
