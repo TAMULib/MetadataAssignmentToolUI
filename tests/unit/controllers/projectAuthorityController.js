@@ -16,6 +16,8 @@ describe('controller: ProjectAuthorityController', function () {
             installPromiseMatchers();
             scope = $rootScope.$new();
 
+            sessionStorage.role = "ROLE_ADMIN";
+
             controller = $controller('ProjectAuthorityController', {
                 $scope: scope,
                 $window: $window,
@@ -35,6 +37,18 @@ describe('controller: ProjectAuthorityController', function () {
     describe('Is the controller defined', function () {
         it('should be defined', function () {
             expect(controller).toBeDefined();
+        });
+    });
+
+    describe('Are the scope methods defined', function () {
+        it('create should be defined', function () {
+            //
+            expect(scope.create).toBeDefined();
+            expect(typeof scope.create).toEqual("function");
+        });
+        it('update should be defined', function () {
+            expect(scope.update).toBeDefined();
+            expect(typeof scope.update).toEqual("function");
         });
     });
 

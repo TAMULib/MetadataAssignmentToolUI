@@ -40,4 +40,15 @@ describe('controller: ExportController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('export should be defined', function () {
+            expect(scope.export).toBeDefined();
+            expect(typeof scope.export).toEqual("function");
+        });
+        it('unlock should be defined', function () {
+            expect(scope.unlock).toBeDefined();
+            expect(typeof scope.unlock).toEqual("function");
+        });
+    });
+
 });

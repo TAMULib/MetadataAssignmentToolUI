@@ -46,4 +46,35 @@ describe('controller: ProjectController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('clearDisplayResponse should be defined', function () {
+            expect(scope.clearDisplayResponse).toBeDefined();
+            expect(typeof scope.clearDisplayResponse).toEqual("function");
+        });
+        it('create should be defined', function () {
+            expect(scope.create).toBeDefined();
+            expect(typeof scope.create).toEqual("function");
+        });
+        it('delete should be defined', function () {
+            expect(scope.delete).toBeDefined();
+            expect(typeof scope.delete).toEqual("function");
+        });
+        it('projectHasService should be defined', function () {
+            expect(scope.projectHasService).toBeDefined();
+            expect(typeof scope.projectHasService).toEqual("function");
+        });
+        it('syncDocuments should be defined', function () {
+            expect(scope.syncDocuments).toBeDefined();
+            expect(typeof scope.syncDocuments).toEqual("function");
+        });
+        it('update should be defined', function () {
+            expect(scope.update).toBeDefined();
+            expect(typeof scope.update).toEqual("function");
+        });
+        it('updateFieldProfile should be defined', function () {
+            expect(scope.updateFieldProfile).toBeDefined();
+            expect(typeof scope.updateFieldProfile).toEqual("function");
+        });
+    });
+
 });

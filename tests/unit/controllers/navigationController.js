@@ -35,4 +35,19 @@ describe('controller: NavigationController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('$on should be defined', function () {
+            expect(scope.$on).toBeDefined();
+            expect(typeof scope.$on).toEqual("function");
+        });
+        it('updateHeight should be defined', function () {
+            expect(scope.updateHeight).toBeDefined();
+            expect(typeof scope.updateHeight).toEqual("function");
+        });
+        it('updateWidth should be defined', function () {
+            expect(scope.updateWidth).toBeDefined();
+            expect(typeof scope.updateWidth).toEqual("function");
+        });
+    });
+
 });

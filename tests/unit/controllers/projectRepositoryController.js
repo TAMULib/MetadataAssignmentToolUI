@@ -38,4 +38,15 @@ describe('controller: ProjectRepositoryController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('update should be defined', function () {
+            expect(scope.update).toBeDefined();
+            expect(typeof scope.update).toEqual("function");
+        });
+        it('create should be defined', function () {
+            expect(scope.create).toBeDefined();
+            expect(typeof scope.create).toEqual("function");
+        });
+    });
+
 });

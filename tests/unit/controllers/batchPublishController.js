@@ -38,4 +38,11 @@ describe('controller: BatchPublishController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('publishDocuments should be defined', function () {
+            expect(scope.publishDocuments).toBeDefined();
+            expect(typeof scope.publishDocuments).toEqual("function");
+        });
+    });
+
 });

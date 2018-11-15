@@ -53,4 +53,35 @@ describe('controller: DocumentController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('availableAnnotators should be defined', function () {
+            expect(scope.availableAnnotators).toBeDefined();
+            expect(typeof scope.availableAnnotators).toEqual("function");
+        });
+        it('setSelectedUser should be defined', function () {
+            expect(scope.setSelectedUser).toBeDefined();
+            expect(typeof scope.setSelectedUser).toEqual("function");
+        });
+        it('setTable should be defined', function () {
+            expect(scope.setTable).toBeDefined();
+            expect(typeof scope.setTable).toEqual("function");
+        });
+        it('togglePublished should be defined', function () {
+            expect(scope.togglePublished).toBeDefined();
+            expect(typeof scope.togglePublished).toEqual("function");
+        });
+        it('toggleProjectsFilter should be defined', function () {
+            expect(scope.toggleProjectsFilter).toBeDefined();
+            expect(typeof scope.toggleProjectsFilter).toEqual("function");
+        });
+        it('update should be defined', function () {
+            expect(scope.update).toBeDefined();
+            expect(typeof scope.update).toEqual("function");
+        });
+        it('updateTable should be defined', function () {
+            expect(scope.updateTable).toBeDefined();
+            expect(typeof scope.updateTable).toEqual("function");
+        });
+    });
+
 });

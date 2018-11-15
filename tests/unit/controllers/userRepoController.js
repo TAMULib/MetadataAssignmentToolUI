@@ -39,4 +39,23 @@ describe('controller: UserRepoController', function () {
         });
     });
 
+    describe('Are the scope methods defined', function () {
+        it('updateRole should be defined', function () {
+            expect(scope.updateRole).toBeDefined();
+            expect(typeof scope.updateRole).toEqual("function");
+        });
+        it('allowableRoles should be defined', function () {
+            expect(scope.allowableRoles).toBeDefined();
+            expect(typeof scope.allowableRoles).toEqual("function");
+        });
+        it('delete should be defined', function () {
+            expect(scope.delete).toBeDefined();
+            expect(typeof scope.delete).toEqual("function");
+        });
+        it('canDelete should be defined', function () {
+            expect(scope.canDelete).toBeDefined();
+            expect(typeof scope.canDelete).toEqual("function");
+        });
+    });
+
 });
