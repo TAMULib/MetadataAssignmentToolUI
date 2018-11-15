@@ -10,6 +10,7 @@ describe('controller: AnnotateController', function () {
         module('mock.document');
         module('mock.documentRepo');
         module('mock.modalService');
+        module('mock.projectRepositoryRepo');
         module('mock.restApi');
         module('mock.resource');
         module('mock.resourceRepo');
@@ -17,7 +18,7 @@ describe('controller: AnnotateController', function () {
         module('mock.userService');
         module('mock.wsApi');
 
-        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _Document_, _DocumentRepo_, _ModalService_, _RestApi_, _Resource_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _Document_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _Resource_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
             q = $q;
             scope = $rootScope.$new();
@@ -54,6 +55,7 @@ describe('controller: AnnotateController', function () {
                 ControlledVocabularyRepo: _ControlledVocabularyRepo_,
                 DocumentRepo: _DocumentRepo_,
                 ModalService: _ModalService_,
+                ProjectRepositoryRepo: _ProjectRepositoryRepo_,
                 RestApi: _RestApi_,
                 ResourceRepo: _ResourceRepo_,
                 StorageService: _StorageService_,
@@ -108,6 +110,10 @@ describe('controller: AnnotateController', function () {
         it('getIIIFUrls should be defined', function () {
             expect(scope.getIIIFUrls).toBeDefined();
             expect(typeof scope.getIIIFUrls).toEqual("function");
+        });
+        it('getRepositoryById should be defined', function () {
+            expect(scope.getRepositoryById).toBeDefined();
+            expect(typeof scope.getRepositoryById).toEqual("function");
         });
         it('push should be defined', function () {
             expect(scope.push).toBeDefined();
