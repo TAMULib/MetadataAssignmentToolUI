@@ -58,7 +58,7 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
         $scope.projects = ProjectRepo.getAll();
 
         $scope.delete = function(project) {
-            manageProject('delete',project);
+            manageProject('delete', project);
         };
 
         $scope.update = function(project) {
@@ -90,10 +90,6 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
                 $scope.newProject = {};
                 $scope.newProjectServices = {};
             });
-        };
-
-        $scope.delete = function(project) {
-            manageProject('delete', project);
         };
 
         $scope.projectHasService = function(project, serviceType, index) {

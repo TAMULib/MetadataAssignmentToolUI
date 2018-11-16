@@ -74,7 +74,7 @@
                         <button type="button" class="btn btn-warning" ng-click="requiresCuration()">Requires Curation</button>
                         <button type="button" class="btn btn-danger" ng-click="openModal('#deleteModal')">Delete</button>
                         <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
-                        <button ng-if="document.status === 'Annotated'" type="button" class="btn btn-danger" ng-click="openModal('#rejectModal')">Reject</modal>
+                        <button ng-if="document.status === 'Annotated'" type="button" class="btn btn-danger" ng-click="openModal('#rejectModal')">Reject</button>
                         <button type="button" ng-disabled="metadataForm.$invalid" class="btn btn-success" ng-click="accept()" >Accept</button>
                         <modal modal-id="deleteModal"
                             modal-view="views/modals/confirmDeleteDocumentModal.html"
