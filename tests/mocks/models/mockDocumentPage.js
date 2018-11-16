@@ -1,13 +1,13 @@
 var mockDocumentPage1 = {
-    'id': 1
+    id: 1
 };
 
 var mockDocumentPage2 = {
-    'id': 2
+    id: 2
 };
 
 var mockDocumentPage3 = {
-    'id': 3
+    id: 3
 };
 
 angular.module('mock.documentPage', []).service('DocumentPage', function($q) {

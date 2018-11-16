@@ -1,18 +1,21 @@
 var mockResourceRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             document: "plain.txt",
             mimeType: "text/plain",
             name: "Resource 001",
             path: "001"
         },
         '1': {
+            id: 2,
             document: "application.pdf",
             mimeType: "application/pdf",
             name: "Resource 002",
             path: "002"
         },
         '2': {
+            id: 3,
             document: "image.jpg",
             mimeType: "image/jpeg",
             name: "Resource 003",
@@ -24,18 +27,21 @@ var mockResourceRepo1 = {
 var mockResourceRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             document: "plain.txt",
             mimeType: "text/plain",
             name: "Resource 004",
             path: "004"
         },
         '1': {
+            id: 5,
             document: "application.pdf",
             mimeType: "application/pdf",
             name: "Resource 005",
             path: "005"
         },
         '2': {
+            id: 6,
             document: "image.jpg",
             mimeType: "image/jpeg",
             name: "Resource 006",
@@ -47,6 +53,7 @@ var mockResourceRepo2 = {
 var mockResourceRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             document: "image.jpg",
             mimeType: "image/jpeg",
             name: "Resource 003",

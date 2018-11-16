@@ -1,16 +1,19 @@
 var mockMetadataRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             document: "",
             label: "Metadata 001",
             values: []
         },
         '1': {
+            id: 2,
             document: "",
             label: "Metadata 002",
             values: []
         },
         '2': {
+            id: 3,
             document: "",
             label: "Metadata 003",
             values: []
@@ -21,16 +24,19 @@ var mockMetadataRepo1 = {
 var mockMetadataRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             document: "",
             label: "Metadata 004",
             values: []
         },
         '1': {
+            id: 5,
             document: "",
             label: "Metadata 005",
             values: []
         },
         '2': {
+            id: 6,
             document: "",
             label: "Metadata 006",
             values: []
@@ -41,6 +47,7 @@ var mockMetadataRepo2 = {
 var mockMetadataRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             document: "",
             label: "Metadata 003",
             values: []

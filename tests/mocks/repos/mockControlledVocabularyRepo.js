@@ -1,14 +1,17 @@
 var mockControlledVocabularyRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             value: "Controlled Vocabulary 001",
             values: []
         },
         '1': {
+            id: 2,
             value: "Controlled Vocabulary 002",
             values: []
         },
         '2': {
+            id: 3,
             value: "Controlled Vocabulary 003",
             values: []
         }
@@ -18,14 +21,17 @@ var mockControlledVocabularyRepo1 = {
 var mockControlledVocabularyRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             value: "Controlled Vocabulary 004",
             values: []
         },
         '1': {
+            id: 5,
             value: "Controlled Vocabulary 005",
             values: []
         },
         '2': {
+            id: 6,
             value: "Controlled Vocabulary 006",
             values: []
         }
@@ -35,6 +41,7 @@ var mockControlledVocabularyRepo2 = {
 var mockControlledVocabularyRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             value: "Controlled Vocabulary 003",
             values: []
         }

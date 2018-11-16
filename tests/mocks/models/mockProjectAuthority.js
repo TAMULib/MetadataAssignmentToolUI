@@ -1,12 +1,15 @@
 var mockProjectAuthority1 = {
+    id: 1,
     projects: []
 };
 
 var mockProjectAuthority2 = {
+    id: 2,
     projects: []
 };
 
 var mockProjectAuthority3 = {
+    id: 3,
     projects: []
 };
 

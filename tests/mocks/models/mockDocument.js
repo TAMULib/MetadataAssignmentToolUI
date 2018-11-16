@@ -1,4 +1,5 @@
 var mockDocument1 = {
+    id: 1,
     annotator: "",
     fields: [],
     name: "Document 001",
@@ -10,6 +11,7 @@ var mockDocument1 = {
 };
 
 var mockDocument2 = {
+    id: 2,
     annotator: "",
     fields: [],
     name: "Document 002",
@@ -21,6 +23,7 @@ var mockDocument2 = {
 };
 
 var mockDocument3 = {
+    id: 3,
     annotator: "",
     fields: [],
     name: "Document 003",

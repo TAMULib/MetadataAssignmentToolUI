@@ -1,4 +1,5 @@
 var mockResource1 = {
+    id: 1,
     document: "plain.txt",
     name: "Resource 001",
     path: "001",
@@ -6,6 +7,7 @@ var mockResource1 = {
 };
 
 var mockResource2 = {
+    id: 2,
     document: "application.pdf",
     name: "Resource 002",
     path: "002",
@@ -13,6 +15,7 @@ var mockResource2 = {
 };
 
 var mockResource3 = {
+    id: 3,
     document: "image.jpg",
     name: "Resource 003",
     path: "003",

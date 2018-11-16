@@ -1,12 +1,15 @@
 var mockProjectRepositoryRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             projects: []
         },
         '1': {
+            id: 2,
             projects: []
         },
         '2': {
+            id: 3,
             projects: []
         }
     }
@@ -15,12 +18,15 @@ var mockProjectRepositoryRepo1 = {
 var mockProjectRepositoryRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             projects: []
         },
         '1': {
+            id: 5,
             projects: []
         },
         '2': {
+            id: 6,
             projects: []
         }
     }
@@ -29,6 +35,7 @@ var mockProjectRepositoryRepo2 = {
 var mockProjectRepositoryRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             projects: []
         }
     }

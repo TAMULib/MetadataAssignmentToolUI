@@ -1,28 +1,35 @@
 var mockAbstractAppRepo1 = {
-    'HashMap':{
-        '0':{
+    'HashMap': {
+        '0': {
+            id: 1
         },
-        '1':{
+        '1': {
+            id: 2
         },
-        '2':{
+        '2': {
+            id: 3
         }
     }
 };
 
 var mockAbstractAppRepo2 = {
-    'HashMap':{
-        '0':{
+    'HashMap': {
+        '0': {
+            id: 4
         },
-        '1':{
+        '1': {
+            id: 5
         },
-        '2':{
+        '2': {
+            id: 6
         }
     }
 };
 
 var mockAbstractAppRepo3 = {
-    'HashMap':{
-        '0':{
+    'HashMap': {
+        '0': {
+            id: 3
         }
     }
 };

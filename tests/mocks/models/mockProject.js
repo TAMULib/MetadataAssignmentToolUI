@@ -1,4 +1,5 @@
 var mockProject1 = {
+    id: 1,
     authorities: [],
     documents: [],
     headless: false,
@@ -11,6 +12,7 @@ var mockProject1 = {
 };
 
 var mockProject2 = {
+    id: 2,
     authorities: [],
     documents: [],
     headless: false,
@@ -23,6 +25,7 @@ var mockProject2 = {
 };
 
 var mockProject3 = {
+    id: 3,
     authorities: [],
     documents: [],
     headless: false,

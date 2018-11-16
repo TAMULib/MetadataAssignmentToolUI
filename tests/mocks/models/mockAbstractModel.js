@@ -1,13 +1,13 @@
 var mockAbstractModel1 = {
-    'id': 1
+    id: 1
 };
 
 var mockAbstractModel2 = {
-    'id': 2
+    id: 2
 };
 
 var mockAbstractModel3 = {
-    'id': 3
+    id: 3
 };
 
 angular.module('mock.abstractModel', []).service('AbstractModel', function($q) {

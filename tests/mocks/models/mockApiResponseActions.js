@@ -1,13 +1,13 @@
 var mockApiResponseActions1 = {
-    'id': 1
+    id: 1
 };
 
 var mockApiResponseActions2 = {
-    'id': 2
+    id: 2
 };
 
 var mockApiResponseActions3 = {
-    'id': 3
+    id: 3
 };
 
 angular.module('mock.apiResponseActions', []).service('ApiResponseActions', function($q) {

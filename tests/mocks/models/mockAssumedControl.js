@@ -1,4 +1,5 @@
 var mockAssumedControl1 = {
+    id: 1,
     button: 'Unassume',
     netid: '',
     status: '',
@@ -11,6 +12,7 @@ var mockAssumedControl1 = {
 };
 
 var mockAssumedControl2 = {
+    id: 2,
     button: 'Unassume',
     netid: '',
     status: '',
@@ -23,6 +25,7 @@ var mockAssumedControl2 = {
 };
 
 var mockAssumedControl3 = {
+    id: 3,
     button: 'Assume',
     netid: '',
     status: '',

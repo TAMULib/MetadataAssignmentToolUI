@@ -1,6 +1,7 @@
 var mockDocumentRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             annotator: "",
             fields: [],
             name: "Document 001",
@@ -11,6 +12,7 @@ var mockDocumentRepo1 = {
             status: ""
         },
         '1': {
+            id: 2,
             annotator: "",
             fields: [],
             name: "Document 002",
@@ -21,6 +23,7 @@ var mockDocumentRepo1 = {
             status: ""
         },
         '2': {
+            id: 3,
             annotator: "",
             fields: [],
             name: "Document 003",
@@ -36,6 +39,7 @@ var mockDocumentRepo1 = {
 var mockDocumentRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             annotator: "",
             fields: [],
             name: "Document 004",
@@ -46,6 +50,7 @@ var mockDocumentRepo2 = {
             status: ""
         },
         '1': {
+            id: 5,
             annotator: "",
             fields: [],
             name: "Document 005",
@@ -56,6 +61,7 @@ var mockDocumentRepo2 = {
             status: ""
         },
         '2': {
+            id: 6,
             annotator: "",
             fields: [],
             name: "Document 006",
@@ -71,6 +77,7 @@ var mockDocumentRepo2 = {
 var mockDocumentRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             annotator: "",
             fields: [],
             name: "Document 003",

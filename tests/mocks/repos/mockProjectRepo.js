@@ -1,6 +1,7 @@
 var mockProjectRepo1 = {
     'HashMap': {
         '0': {
+            id: 1,
             authorities: [],
             documents: [],
             headless: false,
@@ -12,6 +13,7 @@ var mockProjectRepo1 = {
             suggestors: []
         },
         '1': {
+            id: 2,
             authorities: [],
             documents: [],
             headless: false,
@@ -23,6 +25,7 @@ var mockProjectRepo1 = {
             suggestors: []
         },
         '2': {
+            id: 3,
             authorities: [],
             documents: [],
             headless: false,
@@ -39,6 +42,7 @@ var mockProjectRepo1 = {
 var mockProjectRepo2 = {
     'HashMap': {
         '0': {
+            id: 4,
             authorities: [],
             documents: [],
             headless: false,
@@ -50,6 +54,7 @@ var mockProjectRepo2 = {
             suggestors: []
         },
         '1': {
+            id: 5,
             authorities: [],
             documents: [],
             headless: false,
@@ -61,6 +66,7 @@ var mockProjectRepo2 = {
             suggestors: []
         },
         '2': {
+            id: 6,
             authorities: [],
             documents: [],
             headless: false,
@@ -77,6 +83,7 @@ var mockProjectRepo2 = {
 var mockProjectRepo3 = {
     'HashMap': {
         '0': {
+            id: 3,
             authorities: [],
             documents: [],
             headless: false,
