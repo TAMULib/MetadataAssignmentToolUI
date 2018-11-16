@@ -1,4 +1,4 @@
-metadataTool.controller('ProjectController', function ($controller, $scope, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo, MetadataRepo) {
+metadataTool.controller('ProjectController', function ($controller, $scope, AlertService, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo, MetadataRepo) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
@@ -17,6 +17,7 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
     $scope.inputTypes = [];
 
     $scope.isEditing = false;
+    $scope.isSyncing = false;
 
     $scope.displayResponse = {"status":null,"message":null};
 
@@ -55,6 +56,10 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
         });
 
         $scope.projects = ProjectRepo.getAll();
+
+        $scope.delete = function(project) {
+            manageProject('delete', project);
+        };
 
         $scope.update = function(project) {
             angular.forEach($scope.updateableProjectServices, function(serviceIndexes, serviceType) {
@@ -155,6 +160,18 @@ metadataTool.controller('ProjectController', function ($controller, $scope, User
                 result = response;
             }
             return result;
+        };
+
+        $scope.syncDocuments = function (project) {
+            $scope.isSyncing = true;
+            ProjectRepo.syncDocuments(project.id).then(function (rawResponse) {
+                var response = angular.fromJson(rawResponse.body);
+                if (response.meta.status === "SUCCESS") {
+                  AlertService.add(response.meta, "app/projects");
+                }
+                $scope.closeModal();
+                $scope.isSyncing = false;
+            });
         };
     }
   });

@@ -54,6 +54,7 @@
                 <modal modal-id="assumeUserModal" modal-view="node_modules/weaver-ui-core/app/views/modals/assumeUserModal.html" modal-header-class="modal-header-primary"></modal>
                 <modal modal-id="exportMetadataModal" modal-controller="ExportController" modal-view="views/modals/exportMetadataModal.html" modal-header-class="modal-header-primary"></modal>
                 <modal modal-id="batchPublishModal" modal-controller="BatchPublishController" modal-view="views/modals/batchPublishModal.html" modal-header-class="modal-header-primary"></modal>
+                <modal modal-id="syncDocumentsModal" modal-controller="ProjectController" modal-view="views/modals/syncDocumentsModal.html" modal-header-class="modal-header-primary"></modal>
               </div>
 
               <div class="dropdown">
@@ -78,7 +79,7 @@
                     <a href ng-if="isAssuming() == 'false'" data-toggle="modal" ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
                     <a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedControl.button}}</a>
                   </li>
-                  <li><a ng-if="isAdmin()" ng-click="sync()" href="#">Sync Documents</a></li>
+                  <li><a ng-if="isAdmin()" ng-click="openModal('#syncDocumentsModal')" href="#">Sync Documents</a></li>
                 </ul>
               </div>
 
@@ -129,6 +130,9 @@
   <script src="node_modules/ng-table/bundles/ng-table.min.js"></script>
 
   <script src="node_modules/ng-csv/build/ng-csv.min.js"></script>
+
+  <script src="node_modules/openseadragon/build/openseadragon/openseadragon.min.js"></script>
+  <script src="node_modules/ng-openseadragon/dist/ng-openseadragon.min.js"></script>
 
   <!--  Core libraries -->
 
@@ -218,12 +222,17 @@
       <script src="config/routes.js"></script>
 
       <!-- Directives -->
+      <script src="directives/contentTabsDirective.js"></script>
+      <script src="directives/contentViewerDirective.js"></script>
       <script src="directives/formatDirective.js"></script>
       <script src="directives/inputDirective.js"></script>
 
       <!-- Services -->
 
       <!-- Factories -->
+
+      <!-- Filters -->
+      <script src="filters/cantaloupeUrlFilter.js"></script>
 
       <!-- Repos -->
       <script src="repo/abstractAppRepo.js"></script>

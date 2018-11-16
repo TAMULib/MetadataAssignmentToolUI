@@ -1,0 +1,23 @@
+<div class="modal-header {{attr.modalHeaderClass}}">
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Delete {{suggestor.name}}</h4>
+</div>
+<div class="modal-body">
+    <form role="form"  >
+        <div class="form-group">
+            <label>Are you sure you want to delete the Project Suggestor: {{suggestor.name}}</label>
+            <div ng-if="suggestor.projects.length > 0">
+              <p>
+                The following projects are currently associated with <b>{{suggestor.name}}</b>
+              </p>
+              <ul>
+                <li ng-repeat="projectId in suggestor.projects">{{getProjectById(projectId).name}}</li>
+              </ul>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-danger" ng-click="delete(suggestor)">Confirm</button>
+    <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+</div>

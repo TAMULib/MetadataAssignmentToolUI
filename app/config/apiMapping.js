@@ -117,7 +117,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project',
-            'method': 'delete'
+            'method': 'remove'
         },
         ingestTypes: {
             'endpoint': '/private/queue',
@@ -143,6 +143,11 @@ var apiMapping = {
             'endpoint': '/private/queue',
             'controller': 'project',
             'method': 'get-field-profile-labels'
+        },
+        syncDocuments: {
+            'endpoint': '/private/queue',
+            'controller': 'project',
+            'method': 'sync'
         }
     },
     ProjectRepository: {
@@ -165,7 +170,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-repository',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',
@@ -193,12 +198,17 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-authority',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',
             'controller': 'project-authority',
             'method': 'types'
+        },
+        uploadCsv: {
+            'endpoint': '/private/queue',
+            'controller': 'project-authority',
+            'method': 'upload-csv'
         }
     },
     ProjectSuggestor: {
@@ -221,7 +231,7 @@ var apiMapping = {
         remove: {
             'endpoint': '/private/queue',
             'controller': 'project-suggestor',
-            'method': 'delete'
+            'method': 'remove'
         },
         types: {
             'endpoint': '/private/queue',

@@ -1,9 +1,9 @@
-<div class="modal-header {{attr.modalHeaderClass}}">
-  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title">New Authority</h4>
-</div>
-<div class="modal-body">
-  <form name="addAuthority" novalidate>
+<form name="addAuthority" ng-submit="create(newAuthority,newAuthoritySettings,addAuthority.newAuthorityFile)" novalidate>
+  <div class="modal-header {{attr.modalHeaderClass}}">
+    <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">New Authority</h4>
+  </div>
+  <div class="modal-body">
     <div class="form-group">
       <label>Name</label>
       <input class="form-control" type="text" name="name" ng-model="newAuthority.name" />
@@ -12,16 +12,21 @@
       <label>Type</label>
       <select class="form-control" ng-model="newAuthority.type" ng-options="typeKey as typeKey for (typeKey,settingKeys) in types"></select>
     </div>
+
+    <div ng-if="newAuthority.type == 'CSV'" class="form-group">
+      <label for="attachmentLabel">Upload CSV file</label>
+      <input type="file" ngf-select ng-model="addAuthority.newAuthorityFile" name="newAuthorityFile" />
+    </div>
     <label>Settings</label>
     <ul class="list-group" ng-show="newAuthority.type">
-      <li class="list-group-item" ng-repeat="settingKey in types[newAuthority.type] track by $index">
+      <li ng-if="!(newAuthority.type == 'CSV' && settingKey == 'paths')" class="list-group-item" ng-repeat="settingKey in types[newAuthority.type] track by $index">
         <label>{{settingKey}}</label>
         <input class="form-control" type="{{settingKey == 'password' ? 'password':'text'}}" name="settingValue" ng-model="newAuthoritySettings[settingKey].value" />
       </li>
     </ul>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
-  <button type="button" class="btn btn-success" ng-click="create(newAuthority,newAuthoritySettings)" >Create</button>
-</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="closeModal()">Cancel</button>
+    <button type="submit" class="btn btn-success">Create</button>
+  </div>
+</form>

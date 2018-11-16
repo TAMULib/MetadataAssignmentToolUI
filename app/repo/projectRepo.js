@@ -44,6 +44,13 @@ metadataTool.repo("ProjectRepo", function ProjectRepo(WsApi) {
         return WsApi.fetch(this.mapping.getFieldProfileLabels);
     };
 
+    this.syncDocuments = function (projectId) {
+        angular.extend(this.mapping.syncDocuments, {
+            'method': 'sync/' + projectId
+        });
+        return WsApi.fetch(this.mapping.syncDocuments);
+    };
+
     return this;
 
 });

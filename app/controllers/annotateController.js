@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService) {
+metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -12,11 +12,15 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
 
     $scope.cv = ControlledVocabularyRepo.getAll();
 
+    $scope.repositories = ProjectRepositoryRepo.getAll();
+
     $scope.action = $routeParams.action;
 
     $scope.loadingText = "Loading...";
 
-    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready()]).then(function (args) {
+    var types = appConfig.contentMap;
+
+    $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready(), ProjectRepositoryRepo.ready()]).then(function (args) {
         $scope.document = args[0];
 
         $scope.resources = args[1];
@@ -40,29 +44,6 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
         });
 
-        var types = {
-            text: ['text/plain'],
-            pdf: ['application/pdf'],
-            image: ['image/jpeg', 'image/jpg', 'image/jp2', 'image/jpx', 'image/svg', 'image/bmp', 'image/gif', 'image/png', 'image/tif', 'image/tiff']
-        };
-
-        var selected = {
-            text: 0,
-            pdf: 0,
-            image: 0
-        };
-
-        var transition = function () {
-            $scope.loading = true;
-            $scope.switching = true;
-            $timeout(function () {
-                $scope.loading = false;
-            }, 1000);
-            $timeout(function () {
-                $scope.switching = false;
-            }, 250);
-        };
-
         $scope.hasFileType = function (type) {
             for (var k in $scope.resources) {
                 var resource = $scope.resources[k];
@@ -73,37 +54,13 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             return false;
         };
 
-        $scope.active = $scope.hasFileType('text') ? 'text' : $scope.hasFileType('pdf') ? 'pdf' : $scope.hasFileType('image') ? 'image' : undefined;
-
-        $scope.select = function (type) {
-            $scope.active = type;
-        };
-
-        $scope.getFiles = function () {
+        $scope.getFilesOfType = function (type) {
             if ($scope.resources === undefined) {
                 return [];
             }
             return $scope.resources.filter(function (resource) {
-                return types[$scope.active].indexOf(resource.mimeType) >= 0;
+                return types[type].indexOf(resource.mimeType) >= 0;
             });
-        };
-
-        $scope.selected = function () {
-            return selected[$scope.active];
-        };
-
-        $scope.next = function () {
-            if ($scope.selected() < $scope.getFiles().length - 1) {
-                transition();
-                selected[$scope.active]++;
-            }
-        };
-
-        $scope.previous = function () {
-            if ($scope.selected() > 0) {
-                transition();
-                selected[$scope.active]--;
-            }
         };
 
         $scope.removeMetadataField = function (field, index) {
@@ -232,17 +189,18 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
             var urls = [];
             for (var i in $scope.document.publishedLocations) {
                 var publishedLocation = $scope.document.publishedLocations[i];
-                if (publishedLocation.repository.type === 'FEDORA_PCDM') {
-                    var fedoraUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
-                    var fedoraRestPath = getSetting(publishedLocation.repository.settings, 'restPath').values[0];
+                var publishedRepository = $scope.getRepositoryById(publishedLocation.repository);
+                if (publishedRepository.type === 'FEDORA_PCDM') {
+                    var fedoraUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                    var fedoraRestPath = getSetting(publishedRepository.settings, 'restPath').values[0];
                     var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
                     var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
                     urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
                     urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
                 }
-                if (publishedLocation.repository.type === 'DSPACE') {
-                    var dspaceUrl = getSetting(publishedLocation.repository.settings, 'repoUrl').values[0];
-                    var dspaceXmluiPath = getSetting(publishedLocation.repository.settings, 'repoContextPath').values[0];
+                if (publishedRepository.type === 'DSPACE') {
+                    var dspaceUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                    var dspaceXmluiPath = getSetting(publishedRepository.settings, 'repoContextPath').values[0];
                     var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
                     var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
                     urls.push(appConfig.iiifService + '/dspace/presentation?context=' + handlePath);
@@ -250,6 +208,17 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
                 }
             }
             return urls;
+        };
+
+        $scope.getRepositoryById = function(repositoryId) {
+            var respository = null;
+            for (var i in $scope.repositories) {
+                if (repositoryId == $scope.repositories[i].id) {
+                    repository = $scope.repositories[i];
+                    break;
+                }
+            }
+            return repository;
         };
     });
 
