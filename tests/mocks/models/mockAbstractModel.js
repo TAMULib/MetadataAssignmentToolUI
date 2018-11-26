@@ -27,7 +27,10 @@ angular.module('mock.abstractModel', []).service('AbstractModel', function($q) {
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

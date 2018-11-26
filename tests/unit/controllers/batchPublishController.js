@@ -2,19 +2,11 @@ describe('controller: BatchPublishController', function () {
 
     var controller, scope;
 
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.alertService');
-        module('mock.modalService');
-        module('mock.projectRepo');
-        module('mock.restApi');
-        module('mock.storageService');
-        module('mock.wsApi');
-
+    var initializeController = function(settings) {
         inject(function ($controller, $rootScope, $window, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
-            installPromiseMatchers();
             scope = $rootScope.$new();
+
+            sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
 
             controller = $controller('BatchPublishController', {
                 $scope: scope,
@@ -30,10 +22,35 @@ describe('controller: BatchPublishController', function () {
             // ensure that the isReady() is called.
             scope.$digest();
         });
+    };
+
+    beforeEach(function() {
+        module('core');
+        module('metadataTool');
+        module('mock.alertService');
+        module('mock.document');
+        module('mock.modalService');
+        module('mock.project');
+        module('mock.projectRepo');
+        module('mock.restApi');
+        module('mock.storageService');
+        module('mock.wsApi');
+
+        installPromiseMatchers();
+        initializeController();
     });
 
     describe('Is the controller defined', function () {
-        it('should be defined', function () {
+        it('should be defined for admin', function () {
+            initializeController({role: "ROLE_ADMIN"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for manager', function () {
+            initializeController({role: "ROLE_MANAGER"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for anonymous', function () {
+            initializeController({role: "ROLE_ANONYMOUS"});
             expect(controller).toBeDefined();
         });
     });
@@ -42,6 +59,17 @@ describe('controller: BatchPublishController', function () {
         it('publishDocuments should be defined', function () {
             expect(scope.publishDocuments).toBeDefined();
             expect(typeof scope.publishDocuments).toEqual("function");
+        });
+    });
+
+    describe('Do the scope methods work as expected', function () {
+        it('publishDocuments should publish a document to a project', function () {
+            spyOn(scope, 'closeModal');
+
+            scope.publishDocuments(mockProject1, mockDocument1);
+            scope.$digest();
+
+            expect(scope.closeModal).toHaveBeenCalled();
         });
     });
 

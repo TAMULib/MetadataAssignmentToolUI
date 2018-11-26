@@ -49,10 +49,10 @@ angular.module('mock.assumedControl', []).service('AssumedControl', function($q)
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.user = toMock.user;
-        model.netid = toMock.netid;
-        model.button = toMock.button;
-        model.status = toMock.status;
+        var keys = ['id', 'button', 'netid', 'status', 'user'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

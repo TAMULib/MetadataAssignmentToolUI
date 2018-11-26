@@ -36,7 +36,10 @@ angular.module('mock.metadata', []).service('Metadata', function($q) {
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id', 'document', 'label', 'values'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

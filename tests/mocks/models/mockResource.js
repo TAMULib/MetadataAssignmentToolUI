@@ -39,7 +39,10 @@ angular.module('mock.resource', []).service('Resource', function($q) {
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id', 'document', 'name', 'path', 'mimeType'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {
@@ -53,6 +56,10 @@ angular.module('mock.resource', []).service('Resource', function($q) {
 
     model.dirty = function(boolean) {
         model.isDirty = boolean;
+    };
+
+    model.filter = function (functionCall) {
+        return functionCall(model);
     };
 
     model.reload = function() {

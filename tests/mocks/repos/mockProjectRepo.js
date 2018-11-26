@@ -104,24 +104,26 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
     var validationResults = {};
     var originalList;
 
-    var payloadResponse = function (payload) {
+    var payloadResponse = function (payload, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS'
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                 },
-                payload: payload
+                payload: payload,
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
 
-    var messageResponse = function (message) {
+    var messageResponse = function (message, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS',
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                     message: message
-                }
+                },
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
@@ -262,8 +264,8 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
 
     repo.getFieldProfileLabels = function (fieldProfileId) {
         defer = $q.defer();
-        // TODO
-        payloadResponse({});
+        var response = {"LinkedHashSet": []};
+        payloadResponse(response);
         return defer.promise;
     };
 
@@ -291,7 +293,20 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
         defer = $q.defer();
-        payloadResponse(mockProjectRepo3);
+        if (typeof cbOrActionOrActionArray === "function") {
+            cbOrActionOrActionArray();
+        }
+        else if (typeof cbOrActionOrActionArray === "array") {
+            for (var cbAction in cbOrActionOrActionArray) {
+                if (typeof cbAction === "function") {
+                    cbAction();
+                }
+            }
+        }
+        else if (typeof cb === "function") {
+            cb();
+        }
+        payloadResponse();
         return defer.promise;
     };
 
@@ -333,8 +348,28 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
     repo.setToDelete = function (id) {
         // TODO
     };
+
     repo.setToUpdate = function (id) {
         // TODO
+    };
+
+    repo.syncDocuments = function (projectId) {
+        defer = $q.defer();
+
+        if (projectId === false) {
+            messageResponse("Simulated Error", "ERROR");
+        }
+        else {
+            var project = repo.findById(projectId);
+            if (project) {
+                payloadResponse(project);
+            }
+            else {
+                messageResponse("Project (ID " + projectId + ") Not Found", "ERROR", 500);
+            }
+        }
+
+        return defer.promise;
     };
 
     repo.unshift = function (modelJson) {
@@ -357,8 +392,20 @@ angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
 
     repo.updateFieldProfile = function (projectId, fieldProfile, labels) {
         defer = $q.defer();
-        // TODO
-        payloadResponse(true);
+
+        if (projectId === false) {
+            messageResponse("Simulated Error", "ERROR");
+        }
+        else {
+            var project = repo.findById(projectId);
+            if (project) {
+                payloadResponse(project);
+            }
+            else {
+                messageResponse("Project (ID " + projectId + ") Not Found", "ERROR", 500);
+            }
+        }
+
         return defer.promise;
     };
 

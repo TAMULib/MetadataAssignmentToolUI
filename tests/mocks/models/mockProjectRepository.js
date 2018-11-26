@@ -1,12 +1,15 @@
 var mockProjectRepository1 = {
+    id: 1,
     projects: []
 };
 
 var mockProjectRepository2 = {
+    id: 2,
     projects: []
 };
 
 var mockProjectRepository3 = {
+    id: 3,
     projects: []
 };
 
@@ -27,7 +30,10 @@ angular.module('mock.projectRepository', []).service('ProjectRepository', functi
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id', 'projects'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

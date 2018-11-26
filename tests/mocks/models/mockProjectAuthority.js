@@ -30,7 +30,10 @@ angular.module('mock.projectAuthority', []).service('ProjectAuthority', function
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id', 'projects'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

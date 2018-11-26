@@ -41,24 +41,26 @@ angular.module('mock.abstractAppRepo', []).service('AbstractAppRepo', function($
     var validationResults = {};
     var originalList;
 
-    var payloadResponse = function (payload) {
+    var payloadResponse = function (payload, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS'
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                 },
-                payload: payload
+                payload: payload,
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
 
-    var messageResponse = function (message) {
+    var messageResponse = function (message, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS',
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                     message: message
-                }
+                },
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
@@ -180,7 +182,20 @@ angular.module('mock.abstractAppRepo', []).service('AbstractAppRepo', function($
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
         defer = $q.defer();
-        payloadResponse(mockAbstractAppRepo3);
+        if (typeof cbOrActionOrActionArray === "function") {
+            cbOrActionOrActionArray();
+        }
+        else if (typeof cbOrActionOrActionArray === "array") {
+            for (var cbAction in cbOrActionOrActionArray) {
+                if (typeof cbAction === "function") {
+                    cbAction();
+                }
+            }
+        }
+        else if (typeof cb === "function") {
+            cb();
+        }
+        payloadResponse();
         return defer.promise;
     };
 

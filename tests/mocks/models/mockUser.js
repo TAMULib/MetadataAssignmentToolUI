@@ -45,13 +45,10 @@ angular.module('mock.user', []).service('User', function ($q) {
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.lastName = toMock.lastName;
-        model.firstName = toMock.firstName;
-        model.uin = toMock.uin;
-        model.exp = toMock.exp;
-        model.email = toMock.email;
-        model.role = toMock.role;
-        model.netId = toMock.netId;
+        var keys = ['lastName', 'firstName', 'uin', 'exp', 'email', 'role', 'netId'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {

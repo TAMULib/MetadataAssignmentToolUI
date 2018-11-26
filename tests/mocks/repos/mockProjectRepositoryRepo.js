@@ -2,15 +2,48 @@ var mockProjectRepositoryRepo1 = {
     'HashMap': {
         '0': {
             id: 1,
-            projects: []
+            projects: [],
+            type: "FEDORA_PCDM",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo1']
+                },
+                {
+                    key: 'restPath',
+                    values: ['rest']
+                }
+            ]
         },
         '1': {
             id: 2,
-            projects: []
+            projects: [],
+            type: "DSPACE",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo2']
+                },
+                {
+                    key: 'repoContextPath',
+                    values: ['rest']
+                }
+            ]
         },
         '2': {
             id: 3,
-            projects: []
+            projects: [],
+            type: "DSPACE",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo3']
+                },
+                {
+                    key: 'repoContextPath',
+                    values: ['rest']
+                }
+            ]
         }
     }
 };
@@ -19,15 +52,48 @@ var mockProjectRepositoryRepo2 = {
     'HashMap': {
         '0': {
             id: 4,
-            projects: []
+            projects: [],
+            type: "FEDORA_PCDM",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo4']
+                },
+                {
+                    key: 'restPath',
+                    values: ['rest']
+                }
+            ]
         },
         '1': {
             id: 5,
-            projects: []
+            projects: [],
+            type: "FEDORA_PCDM",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo5']
+                },
+                {
+                    key: 'restPath',
+                    values: ['rest']
+                }
+            ]
         },
         '2': {
             id: 6,
-            projects: []
+            projects: [],
+            type: "DSPACE",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo6']
+                },
+                {
+                    key: 'repoContextPath',
+                    values: ['rest']
+                }
+            ]
         }
     }
 };
@@ -36,7 +102,18 @@ var mockProjectRepositoryRepo3 = {
     'HashMap': {
         '0': {
             id: 3,
-            projects: []
+            projects: [],
+            type: "DSPACE",
+            settings: [
+                {
+                    key: 'repoUrl',
+                    values: ['localhost-repo3']
+                },
+                {
+                    key: 'repoContextPath',
+                    values: ['rest']
+                }
+            ]
         }
     }
 };
@@ -48,24 +125,26 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
     var validationResults = {};
     var originalList;
 
-    var payloadResponse = function (payload) {
+    var payloadResponse = function (payload, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS'
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                 },
-                payload: payload
+                payload: payload,
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
 
-    var messageResponse = function (message) {
+    var messageResponse = function (message, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS',
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                     message: message
-                }
+                },
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
@@ -198,7 +277,20 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
         defer = $q.defer();
-        payloadResponse(mockProjectRepositoryRepo3);
+        if (typeof cbOrActionOrActionArray === "function") {
+            cbOrActionOrActionArray();
+        }
+        else if (typeof cbOrActionOrActionArray === "array") {
+            for (var cbAction in cbOrActionOrActionArray) {
+                if (typeof cbAction === "function") {
+                    cbAction();
+                }
+            }
+        }
+        else if (typeof cb === "function") {
+            cb();
+        }
+        payloadResponse();
         return defer.promise;
     };
 

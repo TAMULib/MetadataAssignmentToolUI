@@ -34,7 +34,7 @@ angular.module('mock.ngTableParams', []).service('NgTableParams', function ($q) 
         };
 
         this.dirty = function(boolean) {
-                this.isDirty = boolean;
+            this.isDirty = boolean;
         };
 
         this.reload = function() {

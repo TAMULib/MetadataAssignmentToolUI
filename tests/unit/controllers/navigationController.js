@@ -1,18 +1,13 @@
 describe('controller: NavigationController', function () {
 
-    var controller, scope;
+    var controller, window, scope;
 
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.modalService');
-        module('mock.restApi');
-        module('mock.storageService');
-        module('mock.wsApi');
-
+    var initializeController = function(settings) {
         inject(function ($controller, $location, $rootScope, $window, _ModalService_, _RestApi_, _StorageService_, _WsApi_) {
-            installPromiseMatchers();
             scope = $rootScope.$new();
+            window = $window;
+
+            sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
 
             controller = $controller('NavigationController', {
                 $location: $location,
@@ -27,19 +22,36 @@ describe('controller: NavigationController', function () {
             // ensure that the isReady() is called.
             scope.$digest();
         });
+    };
+
+    beforeEach(function() {
+        module('core');
+        module('metadataTool');
+        module('mock.modalService');
+        module('mock.restApi');
+        module('mock.storageService');
+        module('mock.wsApi');
+
+        installPromiseMatchers();
+        initializeController();
     });
 
     describe('Is the controller defined', function () {
-        it('should be defined', function () {
+        it('should be defined for admin', function () {
+            initializeController({role: "ROLE_ADMIN"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for manager', function () {
+            initializeController({role: "ROLE_MANAGER"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for anonymous', function () {
+            initializeController({role: "ROLE_ANONYMOUS"});
             expect(controller).toBeDefined();
         });
     });
 
     describe('Are the scope methods defined', function () {
-        it('$on should be defined', function () {
-            expect(scope.$on).toBeDefined();
-            expect(typeof scope.$on).toEqual("function");
-        });
         it('updateHeight should be defined', function () {
             expect(scope.updateHeight).toBeDefined();
             expect(typeof scope.updateHeight).toEqual("function");
@@ -47,6 +59,29 @@ describe('controller: NavigationController', function () {
         it('updateWidth should be defined', function () {
             expect(scope.updateWidth).toBeDefined();
             expect(typeof scope.updateWidth).toEqual("function");
+        });
+    });
+
+    describe('Do the window methods work as expected', function () {
+        it('window resize should call scope resize methods', function () {
+            spyOn(scope, 'updateWidth');
+            spyOn(scope, 'updateHeight');
+
+            window.onresize();
+
+            expect(scope.updateWidth).toHaveBeenCalled();
+            expect(scope.updateHeight).toHaveBeenCalled();
+        });
+    });
+
+    describe('Do the $on methods work as expected', function () {
+        it('$on $routeChangeStart should update the view', function () {
+            delete scope.view;
+
+            scope.$broadcast("$routeChangeStart");
+            scope.$apply();
+
+            expect(scope.view).toBeDefined();
         });
     });
 

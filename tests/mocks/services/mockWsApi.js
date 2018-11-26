@@ -3,24 +3,26 @@ angular.module('mock.wsApi', []).service('WsApi', function ($q) {
     var defer;
     var mapping;
 
-    var payloadResponse = function (payload) {
+    var payloadResponse = function (payload, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS'
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                 },
-                payload: payload
+                payload: payload,
+                status: httpStatus ? httpStatus : 200
             })
         });
     };
 
-    var messageResponse = function (message) {
+    var messageResponse = function (message, messageStatus, httpStatus) {
         return defer.resolve({
             body: angular.toJson({
                 meta: {
-                    status: 'SUCCESS',
+                    status: messageStatus ? messageStatus : 'SUCCESS',
                     message: message
-                }
+                },
+                status: httpStatus ? httpStatus : 200
             })
         });
     };

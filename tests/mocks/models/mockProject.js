@@ -54,7 +54,10 @@ angular.module('mock.project', []).service('Project', function($q) {
     model.isDirty = false;
 
     model.mock = function(toMock) {
-        model.id = toMock.id;
+        var keys = ['id', 'authorities', 'documents', 'headless', 'injestType', 'name', 'locked', 'profiles', 'repositories', 'suggestors'];
+        for (var i in keys) {
+            model[keys[i]] = toMock[keys[i]];
+        }
     };
 
     model.clearValidationResults = function () {
