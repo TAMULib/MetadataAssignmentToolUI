@@ -5,6 +5,12 @@ metadataTool.config(['$routeProvider', '$locationProvider', '$sceDelegateProvide
         appConfig.webService + "/**"
     ]);
     $routeProvider.
+    when('/home', {
+        redirectTo: '/'
+    }).
+    when('/', {
+        templateUrl: 'views/home.html'
+    }).
     when('/users', {
         templateUrl: 'views/users.html'
     }).
