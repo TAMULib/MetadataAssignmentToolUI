@@ -41,9 +41,6 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
                 }
                 return ['ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
             }
-            else {
-                return [userRole];
-            }
         };
 
         $scope.delete = function(user) {
