@@ -211,7 +211,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         };
 
         $scope.getRepositoryById = function(repositoryId) {
-            var respository = null;
+            var repository = null;
             for (var i in $scope.repositories) {
                 if (repositoryId == $scope.repositories[i].id) {
                     repository = $scope.repositories[i];
