@@ -29,8 +29,8 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
         };
 
         $scope.update = function(authority) {
-            repository.dirty(true);
-            manageRepository('save',authority);
+            authority.dirty(true);
+            manageAuthority('save',authority);
         };
 
         $scope.create = function(newAuthority,newAuthoritySettings,file) {
