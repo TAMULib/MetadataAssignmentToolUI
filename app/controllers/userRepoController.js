@@ -60,9 +60,6 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
                     canDelete = true;
                 }
             }
-            else {
-                canDelete = false;
-            }
             if(user.uin == $scope.user.uin) {
                 canDelete = false;
             }
