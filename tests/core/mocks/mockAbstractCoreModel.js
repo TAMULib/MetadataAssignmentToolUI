@@ -1,16 +1,3 @@
-var payloadPromise = function (defer, payload, messageStatus, httpStatus) {
-    defer.resolve({
-        body: angular.toJson({
-            meta: {
-                status: messageStatus ? messageStatus : 'SUCCESS',
-            },
-            payload: payload,
-            status: httpStatus ? httpStatus : 200
-        })
-    });
-    return defer.promise;
-};
-
 var mockModel = function ($q, mockDataObj) {
     var model = {};
 
