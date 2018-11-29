@@ -43,33 +43,8 @@ var mockUserService4 = {
 };
 
 angular.module('mock.userService', []).service('UserService', function ($q) {
-    var service = this;
-    var defer;
-    var currentUser = mockUserService1;
-
-    var payloadResponse = function (payload, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                },
-                payload: payload,
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
-
-    var messageResponse = function (message, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                    message: message
-                },
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
+    var service = mockService($q);
+    var currentUser = angular.copy(mockUserService1);
 
     service.mockCurrentUser = function(toMock) {
         delete sessionStorage.role;
@@ -87,11 +62,9 @@ angular.module('mock.userService', []).service('UserService', function ($q) {
     };
 
     service.fetchUser = function () {
-        defer = $q.defer();
         delete sessionStorage.role;
-        defer.resolve(currentUser);
         sessionStorage.role = currentUser.role;
-        return defer.promise;
+        return payloadPromise($q.defer(), currentUser);
     };
 
     service.getCurrentUser = function () {
@@ -103,14 +76,11 @@ angular.module('mock.userService', []).service('UserService', function ($q) {
     };
 
     service.userEvents = function () {
-        defer = $q.defer();
-        return defer.promise;
+        return payloadPromise($q.defer(), null);
     };
 
     service.userReady = function () {
-        defer = $q.defer();
-        defer.resolve(currentUser);
-        return defer.promise;
+        return payloadPromise($q.defer(), currentUser);
     };
 
     return service;
