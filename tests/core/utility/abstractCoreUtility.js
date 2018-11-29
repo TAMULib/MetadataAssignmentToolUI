@@ -13,7 +13,7 @@ var payloadPromise = function (defer, payload, messageStatus, httpStatus) {
     return defer.promise;
 };
 
-var messageResponse = function (defer, message, messageStatus, httpStatus) {
+var messagePromise = function (defer, message, messageStatus, httpStatus) {
      defer.resolve({
         body: angular.toJson({
             meta: {
