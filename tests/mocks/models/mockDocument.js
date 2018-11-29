@@ -48,6 +48,11 @@ var mockDocument = function($q) {
         return payloadPromise($q.defer(), true);
     };
 
+    model.getProject = function() {
+        // FIXME: should return a project, but it would be preferred to not depend on `mockProject1` from a separate mock.
+        return payloadPromise($q.defer(), mockProject1);
+    };
+
     return model;
 };
 

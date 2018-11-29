@@ -32,68 +32,41 @@ var mockAssumedControl3 = {
     user: {}
 };
 
-angular.module('mock.assumedControl', []).service('AssumedControl', function($q) {
-    var model = this;
-    var defer;
-    var payloadResponse = function (payload) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: 'SUCCESS'
-                },
-                payload: payload
-            })
-        });
+var mockAssumedControl = function($q) {
+    var model = mockModel($q, mockAssumedControl1);
+
+    model.addCallback = function(callback) {
+        // TODO
     };
 
-    model.isDirty = false;
-
-    model.mock = function(toMock) {
-        var keys = ['id', 'button', 'netid', 'status', 'user'];
-        for (var i in keys) {
-            model[keys[i]] = toMock[keys[i]];
-        }
+    model.assume = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
     };
 
-    model.clearValidationResults = function () {
-    };
-
-    model.delete = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
-    };
-
-    model.dirty = function(boolean) {
-        model.isDirty = boolean;
-    };
-
-    model.fetch = function() {
-        defer = $q.defer();
-        payloadResponse(mockAssumedControl3);
-        return defer.promise;
+    model.cancel = function() {
+        // TODO
     };
 
     model.get = function() {
-        defer = $q.defer();
-        payloadResponse(mockAssumedControl3);
-        return defer.promise;
+        return payloadPromise($q.defer(), mockAssumedControl3);
     };
 
-    model.reload = function() {
-    };
-
-    model.save = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
+    model.ready = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
     };
 
     model.set = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
+        return payloadPromise($q.defer(), true);
+    };
+
+    model.unassume = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
     };
 
     return model;
-});
+};
+
+angular.module('mock.assumedControl', []).service('AssumedControl', mockAssumedControl);

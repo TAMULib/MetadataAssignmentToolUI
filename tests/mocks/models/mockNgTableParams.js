@@ -7,6 +7,15 @@ var mockNgTableParams2 = {
 var mockNgTableParams3 = {
 };
 
+var mockNgTableParams = function($q) {
+    var model = mockModel($q, mockNgTableParams1);
+
+    return model;
+};
+
+// TODO: get this to work such that `new NgTableParams()` can be called.
+//angular.module('mock.ngTableParams', []).service('NgTableParams', mockNgTableParams);
+
 angular.module('mock.ngTableParams', []).service('NgTableParams', function ($q) {
     return function () {
         var model = this;
