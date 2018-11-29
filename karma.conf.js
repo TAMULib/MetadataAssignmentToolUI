@@ -63,6 +63,8 @@ module.exports = function (config) {
 
             'app/model/**/*.js',
 
+            'tests/core/**/*.js',
+
             'tests/mocks/**/*.js',
 
             'tests/unit/**/*.js'

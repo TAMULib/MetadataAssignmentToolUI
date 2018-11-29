@@ -1,113 +1,51 @@
-var mockResourceRepo1 = {
-    'HashMap': {
-        '0': {
-            id: 1,
-            document: "1",
-            mimeType: "text/plain",
-            name: "Resource 001",
-            path: "001"
-        },
-        '1': {
-            id: 2,
-            document: "1",
-            mimeType: "application/pdf",
-            name: "Resource 002",
-            path: "002"
-        },
-        '2': {
-            id: 3,
-            document: "1",
-            mimeType: "image/jpeg",
-            name: "Resource 003",
-            path: "003"
-        }
-    }
+var payloadPromise = function (defer, payload, messageStatus, httpStatus) {
+    defer.resolve({
+        body: angular.toJson({
+            meta: {
+                status: messageStatus ? messageStatus : 'SUCCESS',
+            },
+            payload: payload,
+            status: httpStatus ? httpStatus : 200
+        })
+    });
+    return defer.promise;
 };
 
-var mockResourceRepo2 = {
-    'HashMap': {
-        '0': {
-            id: 4,
-            document: "1",
-            mimeType: "text/plain",
-            name: "Resource 004",
-            path: "004"
-        },
-        '1': {
-            id: 5,
-            document: "1",
-            mimeType: "application/pdf",
-            name: "Resource 005",
-            path: "005"
-        },
-        '2': {
-            id: 6,
-            document: "1",
-            mimeType: "image/jpeg",
-            name: "Resource 006",
-            path: "006"
-        }
-    }
+var messageResponse = function (defer, message, messageStatus, httpStatus) {
+     defer.resolve({
+        body: angular.toJson({
+            meta: {
+                status: messageStatus ? messageStatus : 'SUCCESS',
+                message: message
+            },
+            status: httpStatus ? httpStatus : 200
+        })
+    });
+    return defer.promise;
 };
 
-var mockResourceRepo3 = {
-    'HashMap': {
-        '0': {
-            id: 3,
-            document: "1",
-            mimeType: "image/jpeg",
-            name: "Resource 003",
-            path: "003"
-        }
-    }
-};
+var mockRepo = function ($q, mockModelCtor, mockDataArray) {
+    var repo = {};
 
-angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
-    var repo = this;
-    var defer;
     var validations = {};
+
     var validationResults = {};
+
     var originalList;
-
-    var payloadResponse = function (payload, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                },
-                payload: payload,
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
-
-    var messageResponse = function (message, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                    message: message
-                },
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
 
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
         repo.mockedList = [];
         originalList = [];
-
-        if (toMock.HashMap) {
-            for (var i in toMock.HashMap) {
-                repo.mockedList.push(toMock.HashMap[i]);
-                originalList.push(toMock.HashMap[i]);
-            }
+        for (var i in toMock) {
+            var model = angular.extend(mockModelCtor($q), toMock[i]);
+            repo.mockedList.push(model);
+            originalList.push(model);
         }
     };
 
-    repo.mock(mockResourceRepo1);
+    repo.mock(mockDataArray);
 
     repo.add = function (modelJson) {
         if (!repo.contains(modelJson)) {
@@ -126,11 +64,9 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
     };
 
     repo.create = function (model) {
-        defer = $q.defer();
         model.id = repo.mockedList.length + 1;
         repo.mockedList.push(angular.copy(model));
-        payloadResponse(model);
-        return defer.promise;
+        return payloadPromise($q.defer(), model);
     };
 
     repo.contains = function (model) {
@@ -149,33 +85,27 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
     };
 
     repo.delete = function (model) {
-        defer = $q.defer();
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id === model.id) {
                 repo.mockedList.splice(i, 1);
                 break;
             }
         }
-        payloadResponse();
-        return defer.promise;
+        return payloadPromise($q.defer());
     };
 
     repo.deleteById = function (id) {
-        defer = $q.defer();
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id === id) {
                 repo.mockedList.splice(i, 1);
                 break;
             }
         }
-        payloadResponse();
-        return defer.promise;
+        return payloadPromise($q.defer());
     };
 
     repo.fetch = function () {
-        defer = $q.defer();
-        payloadResponse(mockResourceRepo3);
-        return defer.promise;
+        return payloadPromise($q.defer(), mockDataArray);
     };
 
     repo.findById = function (id) {
@@ -192,23 +122,12 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
         return angular.copy(repo.mockedList);
     };
 
-    repo.getAllByProjectNameAndDocumentName = function(projectName, documentName) {
-        defer = $q.defer();
-        var found = [];
-        for (var i in repo.mockedList) {
-            var resource = repo.mockedList[i];
-            found.push(angular.extend(mockResource($q), resource));
-        }
-        defer.resolve(found);
-        return defer.promise;
-    };
-
     repo.getContents = function () {
         return angular.copy(repo.mockedList);
     };
 
     repo.getEntityName = function () {
-        return "ResourceRepo";
+        return "DocumentRepo";
     };
 
     repo.getValidations = function () {
@@ -220,7 +139,6 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
     };
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
-        defer = $q.defer();
         if (typeof cbOrActionOrActionArray === "function") {
             cbOrActionOrActionArray();
         }
@@ -234,14 +152,11 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
         else if (typeof cb === "function") {
             cb();
         }
-        payloadResponse();
-        return defer.promise;
+        return payloadPromise($q.defer());
     };
 
     repo.ready = function () {
-        defer = $q.defer();
-        payloadResponse(mockResourceRepo3);
-        return defer.promise;
+        return payloadPromise($q.defer(), mockDataArray);
     };
 
     repo.remove = function (modelToRemove) {
@@ -254,17 +169,13 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
     };
 
     repo.reset = function () {
-        defer = $q.defer();
         repo.mockedList = repo.originalList;
-        payloadResponse();
-        return defer.promise;
+        return payloadPromise($q.defer());
     };
 
     repo.save = function (model) {
-        defer = $q.defer();
         // TODO
-        payloadResponse({});
-        return defer.promise;
+        return payloadPromise($q.defer(), {});
     };
 
     repo.saveAll = function () {
@@ -285,7 +196,6 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
     };
 
     repo.update = function (model) {
-        defer = $q.defer();
         var updated;
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id === model.id) {
@@ -294,9 +204,8 @@ angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {
                 break;
             }
         }
-        payloadResponse(updated);
-        return defer.promise;
+        return payloadPromise($q.defer(), updated);
     };
 
     return repo;
-});
+}

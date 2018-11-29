@@ -12,6 +12,7 @@ describe('model: DocumentRepo', function () {
             scope = $rootScope.$new();
 
             Document = _Document_;
+
             WsApi = _WsApi_;
 
             repo = _DocumentRepo_;

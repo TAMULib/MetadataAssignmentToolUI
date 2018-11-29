@@ -35,33 +35,22 @@ describe('controller: AnnotateController', function () {
         inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _Document_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _Resource_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
             q = $q;
+
+            angular.extend($routeParams, {
+                projectKey: 'Project 001',
+                documentKey: 'Document 001'
+            });
+
             routeParams = $routeParams;
             scope = $rootScope.$new();
 
             Document = _Document_;
             Resource = _Resource_;
 
-            // TODO: find a better way to do this.
-            // simulate arguments being passed to ensure that the required arg[0] is a mocked document and arg[1] is a mocked resource.
-            // this is required for the scope to be properly populated after $digest.
-            qInit = angular.extend({}, $q);
-            qInit.all = function(arguments) {
-                var defer = $q.defer();
-                var doc = _Document_;
-                var res = _Resource_;
-
-                doc.mock(mockDocument1);
-                res.mock(mockResource1);
-
-                defer.resolve([doc, res]);
-
-                return defer.promise;
-            };
-
             controller = $controller('AnnotateController', {
                 $http: $http,
                 $location: $location,
-                $q: qInit,
+                $q: $q,
                 $routeParams: $routeParams,
                 $scope: scope,
                 $timeout: $timeout,
@@ -226,7 +215,6 @@ describe('controller: AnnotateController', function () {
             scope.$digest();
 
             expect(document.delete).toHaveBeenCalled();
-            expect(document.delete).toHaveBeenCalled();
         });
         it('hasFileType should return a boolean', function () {
             var response;
@@ -282,8 +270,11 @@ describe('controller: AnnotateController', function () {
 
             response = scope.getFilesOfType('text');
 
-            // this returns true/false because the mocked filter on mockResources1 ends up returning true/false.
-            expect(response).toBe(true);
+            expect(response.length).toEqual(1);
+            expect(response[0].name).toEqual('Resource 001');
+            expect(response[0].document).toEqual('1');
+            expect(response[0].mimeType).toEqual('text/plain');
+
 
             delete scope.resources;
             response = scope.getFilesOfType('text');

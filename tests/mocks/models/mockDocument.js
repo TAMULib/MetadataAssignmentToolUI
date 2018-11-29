@@ -34,70 +34,21 @@ var mockDocument3 = {
     status: ""
 };
 
-angular.module('mock.document', []).service('Document', function($q) {
-    var model = this;
-    var defer;
-    var payloadResponse = function (payload) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: 'SUCCESS'
-                },
-                payload: payload
-            })
-        });
-    };
+var mockDocument = function($q) {
 
-    model.isDirty = false;
-
-    model.mock = function(toMock) {
-        var keys = ['id', 'annotator', 'fields', 'name', 'notes', 'path', 'project', 'publishedLocations', 'status'];
-        for (var i in keys) {
-            model[keys[i]] = toMock[keys[i]];
-        }
-    };
-
-    model.clearValidationResults = function () {
-    };
-
-    model.delete = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
-    };
-
-    model.dirty = function(boolean) {
-        model.isDirty = boolean;
-    };
-
-    model.getProject = function() {
-        defer = $q.defer();
-        payloadResponse(model.project);
-        return defer.promise;
-    };
+    var model = mockModel($q, mockDocument1);
 
     model.getSuggestions = function() {
-        defer = $q.defer();
         var suggestions = [];
         // TODO
-        payloadResponse(suggestions);
-        return defer.promise;
+        return payloadPromise($q.defer(), suggestions);
     };
 
     model.push = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
-    };
-
-    model.reload = function() {
-    };
-
-    model.save = function() {
-        defer = $q.defer();
-        payloadResponse(true);
-        return defer.promise;
+        return payloadPromise($q.defer(), true);
     };
 
     return model;
-});
+};
+
+angular.module('mock.document', []).service('Document', mockDocument);

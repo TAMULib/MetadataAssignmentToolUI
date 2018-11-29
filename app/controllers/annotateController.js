@@ -21,6 +21,7 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
     var types = appConfig.contentMap;
 
     $q.all([documentPromise, resourcesPromise, ControlledVocabularyRepo.ready(), ProjectRepositoryRepo.ready()]).then(function (args) {
+
         $scope.document = args[0];
 
         $scope.resources = args[1];
