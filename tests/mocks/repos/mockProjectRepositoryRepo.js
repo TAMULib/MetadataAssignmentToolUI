@@ -280,7 +280,7 @@ angular.module('mock.projectRepositoryRepo', []).service('ProjectRepositoryRepo'
         if (typeof cbOrActionOrActionArray === "function") {
             cbOrActionOrActionArray();
         }
-        else if (typeof cbOrActionOrActionArray === "array") {
+        else if (Array.isArray(cbOrActionOrActionArray)) {
             for (var cbAction in cbOrActionOrActionArray) {
                 if (typeof cbAction === "function") {
                     cbAction();

@@ -126,7 +126,7 @@ describe('controller: DocumentController', function () {
             scope.togglePublished();
 
             expect(scope.showPublished).toBe(true);
-            expect(scope.tableParams.reload).toHaveBeenCalled()
+            expect(scope.tableParams.reload).toHaveBeenCalled();
 
             scope.togglePublished();
             expect(scope.showPublished).toBe(false);

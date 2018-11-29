@@ -166,7 +166,7 @@ describe('controller: ProjectController', function () {
             scope.$digest();
 
             expect(scope.isEditing).toBe(true);
-            expect(scope.managingLabels).toBeDefined()
+            expect(scope.managingLabels).toBeDefined();
             expect(scope.managingProfile).toBe(profile);
         });
         it('syncDocuments should ', function () {

@@ -119,19 +119,19 @@ describe('controller: UserRepoController', function () {
             expect(roles).toBeDefined();
 
             initializeController({role: "ROLE_MANAGER"});
-            delete roles;
+            roles = null;
 
             roles = scope.allowableRoles("ROLE_ADMIN");
 
             expect(roles).toBeDefined();
 
-            delete roles;
+            roles = null;
 
             roles = scope.allowableRoles();
 
             expect(roles).toBeDefined();
 
-            delete roles;
+            roles = null;
 
             roles = scope.allowableRoles("ROLE_USER");
 

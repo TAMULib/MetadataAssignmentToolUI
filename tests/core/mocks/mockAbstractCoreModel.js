@@ -33,4 +33,4 @@ var mockModel = function ($q, mockDataObj) {
     };
 
     return model;
-}
+};

@@ -1,6 +1,6 @@
 describe('controller: AnnotateController', function () {
 
-    var controller, routeParams, scope, q, qInit, Document, Resource;
+    var controller, routeParams, scope, q, Document, Resource;
 
     var createMockMethods = function() {
         scope.document.push = function() {
@@ -14,7 +14,7 @@ describe('controller: AnnotateController', function () {
             defer.resolve();
             return defer.promise;
         };
-    }
+    };
 
     beforeEach(function() {
         module('core');
@@ -397,7 +397,7 @@ describe('controller: AnnotateController', function () {
             spyOn(scope.document, 'save').and.callThrough();
 
             scope.save();
-            scope.$digest;
+            scope.$digest();
 
             expect(scope.document.save).toHaveBeenCalled();
             expect(scope.openModal).toHaveBeenCalled();
@@ -412,7 +412,7 @@ describe('controller: AnnotateController', function () {
             spyOn(scope.document, 'save').and.callThrough();
 
             scope.submit();
-            scope.$digest;
+            scope.$digest();
 
             expect(scope.document.status).toEqual("Annotated");
             expect(scope.document.save).toHaveBeenCalled();
@@ -427,7 +427,7 @@ describe('controller: AnnotateController', function () {
             spyOn(scope.document, 'save').and.callThrough();
 
             scope.submitRejection(notes);
-            scope.$digest;
+            scope.$digest();
 
             expect(scope.document.status).toEqual("Rejected");
             expect(scope.document.notes).toBe(notes);
