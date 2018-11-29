@@ -63,9 +63,9 @@ describe('controller: UserRepoController', function () {
             expect(scope.updateRole).toBeDefined();
             expect(typeof scope.updateRole).toEqual("function");
         });
-        it('allowableRoles should be defined', function () {
-            expect(scope.allowableRoles).toBeDefined();
-            expect(typeof scope.allowableRoles).toEqual("function");
+        it('assignableRoles should be defined', function () {
+            expect(scope.assignableRoles).toBeDefined();
+            expect(typeof scope.assignableRoles).toEqual("function");
         });
         it('canDelete should be defined', function () {
             expect(scope.canDelete).toBeDefined();
@@ -111,29 +111,29 @@ describe('controller: UserRepoController', function () {
 
             expect(mockUser2.save).toHaveBeenCalled();
         });
-        it('allowableRoles should return a list of allowed roles', function () {
+        it('assignableRoles should return a list of allowed roles', function () {
             var roles;
 
-            roles = scope.allowableRoles();
+            roles = scope.assignableRoles();
 
             expect(roles).toBeDefined();
 
             initializeController({role: "ROLE_MANAGER"});
             roles = null;
 
-            roles = scope.allowableRoles("ROLE_ADMIN");
+            roles = scope.assignableRoles("ROLE_ADMIN");
 
             expect(roles).toBeDefined();
 
             roles = null;
 
-            roles = scope.allowableRoles();
+            roles = scope.assignableRoles();
 
             expect(roles).toBeDefined();
 
             roles = null;
 
-            roles = scope.allowableRoles("ROLE_USER");
+            roles = scope.assignableRoles("ROLE_USER");
 
             expect(roles).toBeDefined();
         });
