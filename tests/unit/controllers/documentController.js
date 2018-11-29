@@ -1,9 +1,9 @@
 describe('controller: DocumentController', function () {
 
-    var controller, scope;
+    var controller, scope, ApiResponseActions;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $location, $rootScope, $route, $routeParams, $window, _AlertService_, _ApiResponseActions_, _Document_, _DocumentRepo_, _ModalService_, _NgTableParams_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+        inject(function ($controller, $location, $rootScope, $route, $routeParams, $window, _AlertService_, _Document_, _DocumentRepo_, _ModalService_, _NgTableParams_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
@@ -15,7 +15,7 @@ describe('controller: DocumentController', function () {
                 $location: $location,
                 $window: $window,
                 AlertService: _AlertService_,
-                ApiResponseActions: _ApiResponseActions_,
+                ApiResponseActions: ApiResponseActions,
                 Document: _Document_,
                 DocumentRepo: _DocumentRepo_,
                 ModalService: _ModalService_,
@@ -37,7 +37,6 @@ describe('controller: DocumentController', function () {
         module('core');
         module('metadataTool');
         module('mock.alertService');
-        module('mock.apiResponseActions');
         module('mock.document');
         module('mock.documentRepo');
         module('mock.modalService');
@@ -48,6 +47,20 @@ describe('controller: DocumentController', function () {
         module('mock.userRepo');
         module('mock.userService');
         module('mock.wsApi');
+
+        // TODO: this should be in its own mock file as a mocked constant.
+        ApiResponseActions = {
+          CREATE: "CREATE",
+          READ: "READ",
+          UPDATE: "UPDATE",
+          DELETE: "DELETE",
+          REORDER: "REORDER",
+          REMOVE: "REMOVE",
+          SORT: "SORT",
+          BROADCAST: "BROADCAST",
+          CHANGE: "CHANGE",
+          ANY: "ANY"
+        };
 
         installPromiseMatchers();
         initializeController();
