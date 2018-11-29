@@ -85,7 +85,7 @@ var mockDocumentRepo3 = [
 ];
 
 angular.module('mock.documentRepo', []).service('DocumentRepo', function($q) {
-    var repo = mockRepo($q, mockDocument, mockDocumentRepo1);
+    var repo = mockRepo('DocumentRepo', $q, mockDocument, mockDocumentRepo1);
 
     repo.fetch = function () {
         return payloadPromise($q.defer(), mockDocumentRepo3);
