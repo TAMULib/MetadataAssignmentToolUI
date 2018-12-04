@@ -12,7 +12,7 @@ var appConfig = {
     //If cantaloupeService is null, a simple image viewer will be used instead of the OpenSeaDragon viewer
     'cantaloupeService': 'http://localhost:8182/iiif/2/',
 
-    'basePath': '/metadatatool',
+    'basePath': '/magpie',
 
     'storageType': 'session',
 
