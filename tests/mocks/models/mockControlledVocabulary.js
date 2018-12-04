@@ -1,77 +1,25 @@
 var mockControlledVocabulary1 = {
-   "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    id: 1,
+    value: "Controlled Vocabulary 001",
+    values: []
 };
 
 var mockControlledVocabulary2 = {
-   "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    id: 2,
+    value: "Controlled Vocabulary 002",
+    values: []
 };
 
 var mockControlledVocabulary3 = {
-    "thesis.degree.grantor":  [
-		"Agricultural and Mechanical College Of Texas",
-		"Texas A&M University"
-	],
-	"thesis.degree.name": [
-		"Doctor of Philosophy",
-		"Doctor of Engineering",
-		"Doctor of Mathematics"
-	]
+    id: 3,
+    value: "Controlled Vocabulary 003",
+    values: []
 };
 
-angular.module('mock.controlledVocabulary', []).
-    service('ControlledVocabulary', function($q) {
-    	
-    	var self;
-    	
-    	var ControlledVocabulary = function(futureData) {
-    		self = this;
-			
-    		if(!futureData.$$state) {
-    			angular.extend(self, futureData);
-    			return;
-    		}
+var mockControlledVocabulary = function($q) {
+    var model = mockModel($q, mockControlledVocabulary1);
 
-    		futureData.then(null, null, function(data) {
-    			angular.extend(self, data);	
-    		});
+    return model;
+};
 
-    	}
-    	
-    	ControlledVocabulary.get = function() {
-            return new ControlledVocabulary(mockControlledVocabulary1);
-        };
-        
-        ControlledVocabulary.set = function(data) {
-        	angular.extend(self, data);
-        };
-        
-        ControlledVocabulary.fetch = function() {
-        	return $q(function(resolve) {            	
-            	resolve(mockControlledVocabulary3);
-            });
-        }; 
-
-        ControlledVocabulary.ready = function() {
-            return $q(function(resolve) {               
-                resolve(mockControlledVocabulary3);
-            });
-        };
-        
-        return ControlledVocabulary;
-});
+angular.module('mock.controlledVocabulary', []).service('ControlledVocabulary', mockControlledVocabulary);

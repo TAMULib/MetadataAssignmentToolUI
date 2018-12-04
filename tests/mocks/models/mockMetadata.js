@@ -1,71 +1,28 @@
 var mockMetadata1 = {
-	'HashMap':{
-		'abstract':"This is my excellent abstract.",
-		'committee': {
-			'1':'Jack Daniels',
-			'2':'Jill Daniels'
-		}
-	}
+    id: 1,
+    document: "",
+    label: "Metadata 001",
+    values: []
 };
 
 var mockMetadata2 = {
-	'HashMap':{
-		'abstract':"This is my important abstract.",
-		'committee': {
-			'1':'Bob Boring',
-			'2':'Jill Daniels'
-		}
-	}
+    id: 2,
+    document: "",
+    label: "Metadata 002",
+    values: []
 };
 
 var mockMetadata3 = {
-	'HashMap':{
-		'abstract':"This is my classified abstract.",
-		'committee': {
-			'1':'George Bush',
-			'2':'Jeb Bush'
-		}
-	}
+    id: 3,
+    document: "",
+    label: "Metadata 003",
+    values: []
 };
 
-angular.module('mock.metadata', []).
-    service('Metadata', function($q) {
-    	
-    	var self;
-    	
-    	var Metadata = function(futureData) {
-    		self = this;
-			
-    		if(!futureData.$$state) {
-    			angular.extend(self, futureData);
-    			return;
-    		}
+var mockMetadata = function($q) {
+    var model = mockModel($q, mockMetadata1);
 
-    		futureData.then(null, null, function(data) {
-    			angular.extend(self, data);	
-    		});
+    return model;
+};
 
-    	}
-    	
-    	Metadata.get = function() {
-            return new Metadata(mockMetadata1);
-        };
-
-        Metadata.getProjects = function() {
-            return $q(function(resolve) {               
-                resolve(["project"]);
-            });
-        };
-        
-        Metadata.set = function(data) {
-        	angular.extend(self, data);
-        };
-        
-        Metadata.fetch = function() {
-        	return $q(function(resolve) {            	
-            	resolve(mockMetadata3);
-            });
-        }; 
-        
-        return Metadata;
-});
+angular.module('mock.metadata', []).service('Metadata', mockMetadata);

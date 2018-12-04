@@ -1,66 +1,72 @@
 var mockAssumedControl1 = {
-	'user': {
-		"uin": "123456789",
-	    "lastName": "Daniels",
-	    "firstName": "Jack",
-	    "role": "ROLE_ADMIN"
-	},
-	'netid': '',
-	'button': 'Unassume',
-	'status': ''
+    id: 1,
+    button: 'Unassume',
+    netid: '',
+    status: '',
+    user: {
+        firstName: "Jack",
+        lastName: "Daniels",
+        role: "ROLE_ADMIN",
+        uin: "123456789"
+    }
 };
 
 var mockAssumedControl2 = {
-	'user': {
-		"uin": "987654321",
-		"lastName": "Daniels",
-	    "firstName": "Jill",
-	    "role": "ROLE_USER"
-	},
-	'netid': '',
-	'button': 'Unassume',
-	'status': ''
+    id: 2,
+    button: 'Unassume',
+    netid: '',
+    status: '',
+    user: {
+        firstName: "Jill",
+        lastName: "Daniels",
+        role: "ROLE_USER",
+        uin: "987654321"
+    }
 };
 
 var mockAssumedControl3 = {
-	'user': {},
-	'netid': '',
-	'button': 'Assume',
-	'status': ''
+    id: 3,
+    button: 'Assume',
+    netid: '',
+    status: '',
+    user: {}
 };
 
-angular.module('mock.AssumedControl', []).
-    service('AssumedControl', function($q) {
-    	
-    	var self;
-    	
-    	var AssumedControl = function(futureData) {
-    		self = this;
-			
-    		if(!futureData.$$state) {
-    			angular.extend(self, futureData);
-    			return;
-    		}
+var mockAssumedControl = function($q) {
+    var model = mockModel($q, mockAssumedControl1);
 
-    		futureData.then(null, null, function(data) {
-    			angular.extend(self, data);	
-    		});
+    model.addCallback = function(callback) {
+        // TODO
+    };
 
-    	}
-    	
-    	AssumedControl.get = function() {
-            return new AssumedControl(mockAssumedControl1);
-        };
-        
-        AssumedControl.set = function(data) {
-        	angular.extend(self, data);
-        };
-        
-        AssumedControl.fetch = function() {
-        	return $q(function(resolve) {            	
-            	resolve(mockAssumedControl3);
-            });
-        }; 
-        
-        return AssumedControl;
-});
+    model.assume = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
+    };
+
+    model.cancel = function() {
+        // TODO
+    };
+
+    model.get = function() {
+        return payloadPromise($q.defer(), mockAssumedControl3);
+    };
+
+    model.ready = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
+    };
+
+    model.set = function() {
+        return payloadPromise($q.defer(), true);
+    };
+
+    model.unassume = function() {
+        // TODO
+        return payloadPromise($q.defer(), null);
+    };
+
+    return model;
+};
+
+angular.module('mock.assumedControl', []).service('AssumedControl', mockAssumedControl);
