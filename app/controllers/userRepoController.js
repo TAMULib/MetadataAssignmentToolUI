@@ -6,32 +6,7 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
 
     UserService.userReady().then(function() {
 
-    if($scope.isAdmin() || $scope.isManager()) {
-
-        var UserRepo = $injector.get("UserRepo");
-
-        $scope.userUpdated = {};
-
-        $scope.users = UserRepo.getAll();
-
-        $scope.updateRole = function(user) {
-
-            angular.extend($scope.userUpdated, user);
-
-            user.save();
-
-            if($scope.user.username == user.username) {
-                if(user.role == 'ROLE_ANNOTATOR') {
-                    $location.path('/assignments');
-                }
-                else if(user.role == 'ROLE_USER') {
-                    $location.path('/myview');
-                }
-                else {}
-            }
-        };
-
-        $scope.allowableRoles = function(userRole) {
+        $scope.assignableRoles = function(userRole) {
             if($scope.isAdmin()) {
                 return ['ROLE_ADMIN','ROLE_MANAGER','ROLE_ANNOTATOR','ROLE_USER'];
             }
@@ -44,10 +19,6 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
             else {
                 return [userRole];
             }
-        };
-
-        $scope.delete = function(user) {
-            user.delete();
         };
 
         $scope.canDelete = function(user) {
@@ -72,12 +43,41 @@ metadataTool.controller('UserRepoController', function ($controller, $location, 
             return canDelete;
         };
 
-        UserRepo.listen(function(response) {
-            $scope.userUpdated = {};
-            $route.reload();
-        });
+        if($scope.isAdmin() || $scope.isManager()) {
 
-    }
+            var UserRepo = $injector.get("UserRepo");
+
+            $scope.userUpdated = {};
+
+            $scope.users = UserRepo.getAll();
+
+            $scope.updateRole = function(user) {
+
+                angular.extend($scope.userUpdated, user);
+
+                user.save();
+
+                if($scope.user.username == user.username) {
+                    if(user.role == 'ROLE_ANNOTATOR') {
+                        $location.path('/assignments');
+                    }
+                    else if(user.role == 'ROLE_USER') {
+                        $location.path('/myview');
+                    }
+                    else {}
+                }
+            };
+
+            $scope.delete = function(user) {
+                user.delete();
+            };
+
+            UserRepo.listen(function(response) {
+                $scope.userUpdated = {};
+                $route.reload();
+            });
+
+        }
 
     });
 
