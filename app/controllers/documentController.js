@@ -84,7 +84,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
                 return DocumentRepo.page(params.page(), params.count(), key, params.sorting()[key], filters).then(function (page) {
                     params.total(page.totalElements);
                     $location.search('page', params.page());
-                    return DocumentRepo.getAll();
+                    return angular.extend([], DocumentRepo.getAll());
                 });
             }
         });
