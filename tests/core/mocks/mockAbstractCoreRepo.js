@@ -7,19 +7,46 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
 
     var originalList;
 
+    // set to TRUE to enable mocked models to be returned as the original object instead of a copy.
+    repo.mockSpyAssist = false;
+
     repo.mockedList = [];
 
     repo.mock = function(toMock) {
         repo.mockedList = [];
         originalList = [];
-        for (var i in toMock) {
-            var model = angular.extend(mockModelCtor($q), toMock[i]);
-            repo.mockedList.push(model);
-            originalList.push(model);
+
+        if (typeof mockModelCtor === "function" && typeof toMock === "object") {
+            for (var i in toMock) {
+                var model = repo.mockModel(toMock[i]);
+                repo.mockedList.push(model);
+                originalList.push(model);
+            }
         }
     };
 
+    repo.mockCopy = function(toCopy) {
+        if (repo.mockSpyAssist) {
+            return toCopy;
+        }
+
+        return angular.copy(toCopy);
+    };
+
+    repo.mockModel = function(toMock) {
+        if (typeof mockModelCtor === "function") {
+            var mocked = new mockModelCtor($q);
+            mocked.mock(toMock);
+            return mocked;
+        }
+
+        return toMock;
+    };
+
     repo.mock(mockDataArray);
+
+    repo.acceptChangesPending = function () {
+    };
 
     repo.add = function (modelJson) {
         if (!repo.contains(modelJson)) {
@@ -33,13 +60,21 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
         }
     };
 
+    repo.changesPending = function () {
+        return false;
+    };
+
     repo.clearValidationResults = function () {
         validationResults = {};
     };
 
     repo.create = function (model) {
+        if (repo.mockedList === undefined) {
+            repo.mockedList = [];
+        }
+
         model.id = repo.mockedList.length + 1;
-        repo.mockedList.push(angular.copy(model));
+        repo.mockedList.push(repo.mockCopy(model));
         return payloadPromise($q.defer(), model);
     };
 
@@ -78,6 +113,10 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
         return payloadPromise($q.defer());
     };
 
+    repo.empty = function () {
+        repo.list.length = 0;
+    };
+
     repo.fetch = function () {
         return payloadPromise($q.defer(), mockDataArray);
     };
@@ -86,18 +125,30 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
         var found;
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id == id) {
-                found = angular.copy(repo.mockedList[i]);
+                found = repo.mockCopy(repo.mockedList[i]);
             }
         }
         return found;
     };
 
     repo.getAll = function () {
-        return angular.copy(repo.mockedList);
+        return repo.mockCopy(repo.mockedList);
+    };
+
+    repo.getAllFiltered = function(predicate) {
+        var filteredData = [];
+
+        angular.forEach(repo.list, function(datum) {
+            if (predicate(datum)) {
+                filteredData.push(datum);
+            }
+        });
+
+        return filteredData;
     };
 
     repo.getContents = function () {
-        return angular.copy(repo.mockedList);
+        return repo.mockCopy(repo.mockedList);
     };
 
     repo.getEntityName = function () {
@@ -105,16 +156,23 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
     };
 
     repo.getValidations = function () {
-        return angular.copy(validations);
+        return repo.mockCopy(validations);
     };
 
     repo.getValidationResults = function () {
-        return angular.copy(validationResults);
+        return repo.mockCopy(validationResults);
     };
 
     repo.listen = function (cbOrActionOrActionArray, cb) {
         if (typeof cbOrActionOrActionArray === "function") {
-            cbOrActionOrActionArray();
+            var apiRes = {
+                meta: {
+                    status: 'SUCCESS',
+                    message: ""
+                },
+                status: 200
+            };
+            cbOrActionOrActionArray(apiRes);
         }
         else if (Array.isArray(cbOrActionOrActionArray)) {
             for (var cbAction in cbOrActionOrActionArray) {
@@ -134,12 +192,19 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
     };
 
     repo.remove = function (modelToRemove) {
-        for (var i in repo.mockedList) {
-            if (repo.mockedList[i].id === modelToRemove.id) {
-                repo.mockedList.splice(i, 1);
-                break;
+        if (typeof modelToRemove === "object") {
+            for (var i in repo.mockedList) {
+                if (repo.mockedList[i].id === modelToRemove.id) {
+                    repo.mockedList.splice(i, 1);
+                    break;
+                }
             }
         }
+    };
+
+    repo.reorder = function (src, dest) {
+        var payload = {};
+        return payloadPromise($q.defer(), payload);
     };
 
     repo.reset = function () {
@@ -147,9 +212,26 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
         return payloadPromise($q.defer());
     };
 
-    repo.save = function (model) {
-        // TODO
-        return payloadPromise($q.defer(), {});
+    repo.save = function (modelToSave) {
+        if (typeof modelToSave === "object") {
+            var isNew = true;
+            var savedModel = repo.mockModel(modelToSave);
+            for (var i in repo.mockedList) {
+                if (repo.mockedList[i].id === modelToSave.id) {
+                    angular.extend(repo.mockedList[i], savedModel);
+                    isNew = false;
+                    break;
+                }
+            }
+
+            if (isNew) {
+                repo.mockedList[repo.mockedList.length] = savedModel;
+            }
+
+            return payloadPromise($q.defer(), savedModel);
+        }
+
+        return rejectPromise($q.defer());
     };
 
     repo.saveAll = function () {
@@ -159,21 +241,24 @@ var mockRepo = function (RepoName, $q, mockModelCtor, mockDataArray) {
     };
 
     repo.setToDelete = function (id) {
-        // TODO
     };
+
     repo.setToUpdate = function (id) {
-        // TODO
+    };
+
+    repo.sort = function (guarantor, facet) {
+        var payload = {};
+        return payloadPromise($q.defer(), payload);
     };
 
     repo.unshift = function (modelJson) {
-        // TODO
     };
 
     repo.update = function (model) {
         var updated;
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id === model.id) {
-                updated = angular.copy(repo.mockedList[i]);
+                updated = repo.mockCopy(repo.mockedList[i]);
                 angular.extend(updated, model);
                 break;
             }
