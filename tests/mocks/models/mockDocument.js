@@ -1,7 +1,16 @@
 var dataDocument1 = {
     id: 1,
     annotator: "",
-    fields: [],
+    fields: [
+        {
+            id: 1,
+            label: {
+                profile: {defaultValue: ''},
+                value: "Value 001"
+            },
+            values: []
+        }
+    ],
     name: "Document 001",
     notes: "",
     path: "",
@@ -13,7 +22,19 @@ var dataDocument1 = {
 var dataDocument2 = {
     id: 2,
     annotator: "",
-    fields: [],
+    fields: [
+        {
+            id: 2,
+            label: {
+                profile: {defaultValue: ''},
+                value: "Value 002"
+            },
+            values: [{
+                field: 1,
+                value: "first"
+            }]
+        }
+    ],
     name: "Document 002",
     notes: "",
     path: "",
