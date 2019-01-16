@@ -118,26 +118,21 @@ describe('controller: UserRepoController', function () {
             var roles;
 
             roles = scope.assignableRoles();
-
             expect(roles).toBeDefined();
 
             initializeController({role: "ROLE_MANAGER"});
-            roles = null;
 
             roles = scope.assignableRoles("ROLE_ADMIN");
-
             expect(roles).toBeDefined();
-
-            roles = null;
 
             roles = scope.assignableRoles();
-
             expect(roles).toBeDefined();
 
-            roles = null;
-
             roles = scope.assignableRoles("ROLE_USER");
+            expect(roles).toBeDefined();
 
+            initializeController({role: "ROLE_USER"});
+            roles = scope.assignableRoles("ROLE_ADMIN");
             expect(roles).toBeDefined();
         });
         it('canDelete should return boolean if a user can be deleted', function () {
@@ -146,26 +141,32 @@ describe('controller: UserRepoController', function () {
             dataUser1.role = "ROLE_ADMIN";
 
             canDelete = scope.canDelete(dataUser1);
-
             expect(canDelete).toBe(false);
 
             dataUser2.role = "ROLE_ADMIN";
 
             canDelete = scope.canDelete(dataUser2);
-
             expect(canDelete).toBe(true);
 
             initializeController({role: "ROLE_MANAGER"});
             dataUser2.role = "ROLE_MANAGER";
 
             canDelete = scope.canDelete(dataUser2);
-
             expect(canDelete).toBe(true);
 
             dataUser2.role = "ROLE_ADMIN";
 
             canDelete = scope.canDelete(dataUser2);
+            expect(canDelete).toBe(false);
 
+            initializeController({role: "ROLE_USER"});
+
+            canDelete = scope.canDelete(dataUser2);
+            expect(canDelete).toBe(false);
+
+            dataUser2.role = "ROLE_ADMIN";
+
+            canDelete = scope.canDelete(dataUser2);
             expect(canDelete).toBe(false);
         });
         it('delete should delete a user', function () {
