@@ -1,18 +1,18 @@
 describe('model: ProjectRepository', function () {
-    var rootScope, scope, WsApi, model;
+    var model, rootScope, scope, WsApi;
 
     beforeEach(function() {
         module('core');
         module('metadataTool');
         module('mock.wsApi');
 
-        inject(function ($rootScope, _WsApi_, _ProjectRepository_) {
+        inject(function ($rootScope, ProjectRepository, _WsApi_) {
             rootScope = $rootScope;
             scope = $rootScope.$new();
 
             WsApi = _WsApi_;
 
-            model = _ProjectRepository_();
+            model = angular.extend(new ProjectRepository(), dataProjectRepository1);
         });
     });
 

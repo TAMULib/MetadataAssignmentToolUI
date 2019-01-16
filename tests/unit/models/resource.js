@@ -1,18 +1,18 @@
 describe('model: Resource', function () {
-    var rootScope, scope, WsApi, model;
+    var model, rootScope, scope, WsApi;
 
     beforeEach(function() {
         module('core');
         module('metadataTool');
         module('mock.wsApi');
 
-        inject(function ($rootScope, _WsApi_, _Resource_) {
+        inject(function ($rootScope, Resource, _WsApi_) {
             rootScope = $rootScope;
             scope = $rootScope.$new();
 
             WsApi = _WsApi_;
 
-            model = _Resource_();
+            model = angular.extend(new Resource(), dataResource1);
         });
     });
 

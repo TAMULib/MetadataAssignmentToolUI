@@ -1,5 +1,5 @@
 describe('model: Document', function () {
-    var rootScope, scope, WsApi, model, ProjectRepo;
+    var model, rootScope, scope, WsApi, ProjectRepo;
 
     beforeEach(function() {
         module('core');
@@ -14,7 +14,7 @@ describe('model: Document', function () {
             WsApi = _WsApi_;
             ProjectRepo = _ProjectRepo_;
 
-            model = Document();
+            model = angular.extend(new Document(), dataDocument1);
         });
     });
 

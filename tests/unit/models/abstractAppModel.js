@@ -1,18 +1,18 @@
 describe('model: AbstractAppModel', function () {
-    var rootScope, scope, WsApi, model;
+    var model, rootScope, scope, WsApi;
 
     beforeEach(function() {
         module('core');
         module('metadataTool');
         module('mock.wsApi');
 
-        inject(function ($rootScope, _WsApi_, _AbstractAppModel_) {
+        inject(function ($rootScope, AbstractAppModel, _WsApi_) {
             rootScope = $rootScope;
             scope = $rootScope.$new();
 
             WsApi = _WsApi_;
 
-            model = _AbstractAppModel_();
+            model = angular.extend(new AbstractAppModel());
         });
     });
 
