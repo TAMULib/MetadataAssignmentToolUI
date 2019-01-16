@@ -171,7 +171,7 @@ describe('controller: ProjectController', function () {
             expect(scope.managingLabels).toBeDefined();
             expect(scope.managingProfile).toBe(profile);
         });
-        it('syncDocuments should ', function () {
+        it('syncDocuments should sync documents', function () {
             delete scope.isSyncing;
 
             spyOn(scope, 'closeModal');
