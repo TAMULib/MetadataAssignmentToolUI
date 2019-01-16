@@ -2,33 +2,26 @@ describe('controller: AnnotateController', function () {
 
     var controller, q, routeParams, scope;
 
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.alertService');
-        module('mock.controlledVocabularyRepo');
-        module('mock.document');
-        module('mock.documentRepo');
-        module('mock.modalService');
-        module('mock.projectRepositoryRepo');
-        module('mock.restApi');
-        module('mock.resource');
-        module('mock.resourceRepo');
-        module('mock.storageService');
-        module('mock.userService');
-        module('mock.wsApi');
-
+    var initializeController = function(settings) {
         inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
-            installPromiseMatchers();
-
             q = $q;
             routeParams = $routeParams;
             scope = $rootScope.$new();
 
-            angular.extend($routeParams, {
-                projectKey: 'Project 001',
-                documentKey: 'Document 001'
-            });
+            sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
+            sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
+
+            if (settings && settings.routeParams) {
+                if (typeof settings.routeParams == "object") {
+                    angular.extend($routeParams, settings.routeParams);
+                }
+            }
+            else {
+                angular.extend($routeParams, {
+                    projectKey: 'Project 001',
+                    documentKey: 'Document 001'
+                });
+            }
 
             controller = $controller('AnnotateController', {
                 $http: $http,
@@ -55,10 +48,39 @@ describe('controller: AnnotateController', function () {
                 scope.$digest();
             }
         });
+    };
+
+    beforeEach(function() {
+        module('core');
+        module('metadataTool');
+        module('mock.alertService');
+        module('mock.controlledVocabularyRepo');
+        module('mock.document');
+        module('mock.documentRepo');
+        module('mock.modalService');
+        module('mock.projectRepositoryRepo');
+        module('mock.restApi');
+        module('mock.resource');
+        module('mock.resourceRepo');
+        module('mock.storageService');
+        module('mock.userService');
+        module('mock.wsApi');
+
+        installPromiseMatchers();
+        initializeController();
     });
 
     describe('Is the controller defined', function () {
-        it('should be defined', function () {
+        it('should be defined for admin', function () {
+            initializeController({role: "ROLE_ADMIN"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for manager', function () {
+            initializeController({role: "ROLE_MANAGER"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for anonymous', function () {
+            initializeController({role: "ROLE_ANONYMOUS"});
             expect(controller).toBeDefined();
         });
     });

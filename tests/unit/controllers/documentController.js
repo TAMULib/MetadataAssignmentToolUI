@@ -4,8 +4,6 @@ describe('controller: DocumentController', function () {
 
     var initializeController = function(settings) {
         inject(function ($controller, $location, $q, $rootScope, $route, $routeParams, $window, _AlertService_, _DocumentRepo_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
-            installPromiseMatchers();
-
             q = $q;
             scope = $rootScope.$new();
 
