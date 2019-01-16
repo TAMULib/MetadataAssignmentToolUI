@@ -15,6 +15,7 @@ describe('controller: AdminController', function () {
 
         inject(function ($controller, $q, $rootScope, $route, $injector, $window, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
+
             q = $q;
             scope = $rootScope.$new();
 

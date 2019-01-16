@@ -4,6 +4,8 @@ describe('controller: BatchPublishController', function () {
 
     var initializeController = function(settings) {
         inject(function ($controller, $q, $rootScope, $window, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+            installPromiseMatchers();
+
             q = $q;
             scope = $rootScope.$new();
 

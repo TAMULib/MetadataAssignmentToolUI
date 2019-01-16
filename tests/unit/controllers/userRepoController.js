@@ -4,6 +4,8 @@ describe('controller: UserRepoController', function () {
 
     var initializeController = function(settings) {
         inject(function ($controller, $q, $injector, $location, $rootScope, $route, $window, _ModalService_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+            installPromiseMatchers();
+
             q = $q;
             scope = $rootScope.$new();
 

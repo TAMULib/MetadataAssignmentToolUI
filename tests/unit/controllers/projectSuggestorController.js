@@ -4,6 +4,8 @@ describe('controller: ProjectSuggestorController', function () {
 
     var initializeController = function(settings) {
         inject(function ($controller, $q, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectSuggestorRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+            installPromiseMatchers();
+
             q = $q;
             scope = $rootScope.$new();
 

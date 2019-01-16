@@ -20,8 +20,8 @@ describe('controller: AnnotateController', function () {
 
         inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
-            q = $q;
 
+            q = $q;
             routeParams = $routeParams;
             scope = $rootScope.$new();
 

@@ -4,6 +4,8 @@ describe('controller: NavigationController', function () {
 
     var initializeController = function(settings) {
         inject(function ($controller, $location, $q, $rootScope, $window, _ModalService_, _RestApi_, _StorageService_, _WsApi_) {
+            installPromiseMatchers();
+
             q = $q;
             scope = $rootScope.$new();
             window = $window;
