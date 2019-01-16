@@ -60,7 +60,7 @@ describe('model: Document', function () {
             expect(WsApi.fetch).toHaveBeenCalled();
         });
         it('getProject should return the project', function () {
-            var project = mockProjectRepo1[0];
+            var project = dataProject1;
             model.project = project.name;
 
             spyOn(ProjectRepo, 'findByName');

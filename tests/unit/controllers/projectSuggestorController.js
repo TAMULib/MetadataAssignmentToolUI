@@ -1,9 +1,10 @@
 describe('controller: ProjectSuggestorController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectSuggestorRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectSuggestorRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
@@ -21,7 +22,9 @@ describe('controller: ProjectSuggestorController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -81,7 +84,7 @@ describe('controller: ProjectSuggestorController', function () {
             delete scope.newSuggestor;
             delete scope.newSuggestorSettings;
 
-            scope.create(mockProjectSuggestor1, settings);
+            scope.create(dataProjectSuggestor1, settings);
             scope.$digest();
 
             expect(scope.newSuggestor).toBeDefined();
@@ -91,7 +94,7 @@ describe('controller: ProjectSuggestorController', function () {
             delete scope.newSuggestor;
             delete scope.newSuggestorSettings;
 
-            scope.create(mockProjectSuggestor1, settings);
+            scope.create(dataProjectSuggestor1, settings);
             scope.$digest();
 
             expect(scope.newSuggestor).toBeDefined();
@@ -100,7 +103,7 @@ describe('controller: ProjectSuggestorController', function () {
         it('delete should delete a project suggestor', function () {
             spyOn(scope, 'closeModal');
 
-            scope.delete(mockProjectSuggestor1);
+            scope.delete(dataProjectSuggestor1);
             scope.$digest();
 
             expect(scope.closeModal).toHaveBeenCalled();

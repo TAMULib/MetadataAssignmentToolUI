@@ -1,94 +1,26 @@
-var mockDocumentRepo1 = [
-    {
-        id: 1,
-        annotator: "",
-        fields: [],
-        name: "Document 001",
-        notes: "",
-        path: "",
-        project: "Project 001",
-        publishedLocations: [],
-        status: ""
-    },
-    {
-        id: 2,
-        annotator: "",
-        fields: [],
-        name: "Document 002",
-        notes: "",
-        path: "",
-        project: "Project 001",
-        publishedLocations: [],
-        status: ""
-    },
-    {
-        id: 3,
-        annotator: "",
-        fields: [],
-        name: "Document 003",
-        notes: "",
-        path: "",
-        project: "Project 001",
-        publishedLocations: [],
-        status: ""
-    }
+var dataDocumentRepo1 = [
+    dataDocument1,
+    dataDocument2,
+    dataDocument3
 ];
 
-var mockDocumentRepo2 = [
-    {
-        id: 4,
-        annotator: "",
-        fields: [],
-        name: "Document 004",
-        notes: "",
-        path: "",
-        project: "Project 002",
-        publishedLocations: [],
-        status: ""
-    },
-    {
-        id: 5,
-        annotator: "",
-        fields: [],
-        name: "Document 005",
-        notes: "",
-        path: "",
-        project: "Project 002",
-        publishedLocations: [],
-        status: ""
-    },
-    {
-        id: 6,
-        annotator: "",
-        fields: [],
-        name: "Document 006",
-        notes: "",
-        path: "",
-        project: "Project 002",
-        publishedLocations: [],
-        status: ""
-    }
+var dataDocumentRepo2 = [
+    dataDocument3,
+    dataDocument2,
+    dataDocument1
 ];
 
-var mockDocumentRepo3 = [
-    {
-        id: 3,
-        annotator: "",
-        fields: [],
-        name: "Document 003",
-        notes: "",
-        path: "",
-        project: "Project 001",
-        publishedLocations: [],
-        status: ""
-    }
+var dataDocumentRepo3 = [
+    dataDocument4,
+    dataDocument5,
+    dataDocument6
 ];
 
 angular.module('mock.documentRepo', []).service('DocumentRepo', function($q) {
-    var repo = mockRepo('DocumentRepo', $q, mockDocument, mockDocumentRepo1);
+    var repo = mockRepo('DocumentRepo', $q, mockDocument, dataDocumentRepo1);
 
     repo.fetch = function () {
-        return payloadPromise($q.defer(), mockDocumentRepo3);
+        return payloadPromise($q.defer(), dataDocumentRepo3);
     };
 
     repo.get = function (projectName, documentName) {

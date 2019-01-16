@@ -1,9 +1,10 @@
 describe('controller: UserRepoController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $injector, $location, $rootScope, $route, $window, _ModalService_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+        inject(function ($controller, $q, $injector, $location, $rootScope, $route, $window, _ModalService_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             UserService = _UserService_;
@@ -25,7 +26,9 @@ describe('controller: UserRepoController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -79,37 +82,37 @@ describe('controller: UserRepoController', function () {
 
     describe('Do the scope methods work as expected', function () {
         it('updateRole should update a users role', function () {
-            var originalUser2 = angular.copy(mockUser2);
-            mockUser2.role = "ROLE_NEW";
-            mockUser2.save = function() {};
+            var originalUser2 = angular.copy(dataUser2);
+            dataUser2.role = "ROLE_NEW";
+            dataUser2.save = function() {};
 
-            spyOn(mockUser2, 'save');
+            spyOn(dataUser2, 'save');
 
-            scope.updateRole(mockUser2);
+            scope.updateRole(dataUser2);
             scope.$digest();
 
-            expect(mockUser2.role).not.toEqual(originalUser2.role);
-            expect(mockUser2.save).toHaveBeenCalled();
+            expect(dataUser2.role).not.toEqual(originalUser2.role);
+            expect(dataUser2.save).toHaveBeenCalled();
 
-            mockUser2.role = "ROLE_ANNOTATOR";
-            mockUser2.save = function() {};
+            dataUser2.role = "ROLE_ANNOTATOR";
+            dataUser2.save = function() {};
 
-            spyOn(mockUser2, 'save');
+            spyOn(dataUser2, 'save');
 
-            scope.updateRole(mockUser2);
+            scope.updateRole(dataUser2);
             scope.$digest();
 
-            expect(mockUser2.save).toHaveBeenCalled();
+            expect(dataUser2.save).toHaveBeenCalled();
 
-            mockUser2.role = "ROLE_USER";
-            mockUser2.save = function() {};
+            dataUser2.role = "ROLE_USER";
+            dataUser2.save = function() {};
 
-            spyOn(mockUser2, 'save');
+            spyOn(dataUser2, 'save');
 
-            scope.updateRole(mockUser2);
+            scope.updateRole(dataUser2);
             scope.$digest();
 
-            expect(mockUser2.save).toHaveBeenCalled();
+            expect(dataUser2.save).toHaveBeenCalled();
         });
         it('assignableRoles should return a list of allowed roles', function () {
             var roles;
@@ -140,39 +143,39 @@ describe('controller: UserRepoController', function () {
         it('canDelete should return boolean if a user can be deleted', function () {
             var canDelete;
 
-            mockUser1.role = "ROLE_ADMIN";
+            dataUser1.role = "ROLE_ADMIN";
 
-            canDelete = scope.canDelete(mockUser1);
+            canDelete = scope.canDelete(dataUser1);
 
             expect(canDelete).toBe(false);
 
-            mockUser2.role = "ROLE_ADMIN";
+            dataUser2.role = "ROLE_ADMIN";
 
-            canDelete = scope.canDelete(mockUser2);
+            canDelete = scope.canDelete(dataUser2);
 
             expect(canDelete).toBe(true);
 
             initializeController({role: "ROLE_MANAGER"});
-            mockUser2.role = "ROLE_MANAGER";
+            dataUser2.role = "ROLE_MANAGER";
 
-            canDelete = scope.canDelete(mockUser2);
+            canDelete = scope.canDelete(dataUser2);
 
             expect(canDelete).toBe(true);
 
-            mockUser2.role = "ROLE_ADMIN";
+            dataUser2.role = "ROLE_ADMIN";
 
-            canDelete = scope.canDelete(mockUser2);
+            canDelete = scope.canDelete(dataUser2);
 
             expect(canDelete).toBe(false);
         });
         it('delete should delete a user', function () {
-            mockUser1.delete = function() {};
-            spyOn(mockUser1, 'delete');
+            dataUser1.delete = function() {};
+            spyOn(dataUser1, 'delete');
 
-            scope.delete(mockUser1);
+            scope.delete(dataUser1);
             scope.$digest();
 
-            expect(mockUser1.delete).toHaveBeenCalled();
+            expect(dataUser1.delete).toHaveBeenCalled();
         });
     });
 

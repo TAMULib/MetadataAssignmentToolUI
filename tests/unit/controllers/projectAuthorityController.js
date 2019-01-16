@@ -1,9 +1,10 @@
 describe('controller: ProjectAuthorityController', function () {
 
-    var controller, controllerAsManager, scope, ProjectAuthorityRepo;
+    var controller, controllerAsManager, q, scope, ProjectAuthorityRepo;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectAuthorityRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectAuthorityRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
@@ -23,7 +24,9 @@ describe('controller: ProjectAuthorityController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -82,7 +85,7 @@ describe('controller: ProjectAuthorityController', function () {
             var authoritySettings = {a: "A"};
             var file;
 
-            scope.create(mockProjectAuthority1, authoritySettings, file);
+            scope.create(dataProjectAuthority1, authoritySettings, file);
             scope.$digest();
 
             expect(authoritySettings.paths).not.toBeDefined();
@@ -92,7 +95,7 @@ describe('controller: ProjectAuthorityController', function () {
 
             spyOn(scope, 'closeModal');
 
-            scope.create(mockProjectAuthority1, authoritySettings, file);
+            scope.create(dataProjectAuthority1, authoritySettings, file);
             scope.$digest();
 
             expect(authoritySettings.paths).toBeDefined();

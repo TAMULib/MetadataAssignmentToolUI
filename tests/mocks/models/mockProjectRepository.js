@@ -1,20 +1,101 @@
-var mockProjectRepository1 = {
+var dataProjectRepository1 = {
     id: 1,
-    projects: []
+    projects: [],
+    type: "FEDORA_PCDM",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo1']
+        },
+        {
+            key: 'restPath',
+            values: ['rest']
+        }
+    ]
 };
 
-var mockProjectRepository2 = {
+var dataProjectRepository2 = {
     id: 2,
-    projects: []
+    projects: [],
+    type: "DSPACE",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo2']
+        },
+        {
+            key: 'repoContextPath',
+            values: ['rest']
+        }
+    ]
 };
 
-var mockProjectRepository3 = {
+var dataProjectRepository3 = {
     id: 3,
-    projects: []
+    projects: [],
+    type: "DSPACE",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo3']
+        },
+        {
+            key: 'repoContextPath',
+            values: ['rest']
+        }
+    ]
+};
+
+var dataProjectRepository4 = {
+    id: 4,
+    projects: [],
+    type: "FEDORA_PCDM",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo4']
+        },
+        {
+            key: 'restPath',
+            values: ['rest']
+        }
+    ]
+};
+
+var dataProjectRepository5 = {
+    id: 5,
+    projects: [],
+    type: "FEDORA_PCDM",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo5']
+        },
+        {
+            key: 'restPath',
+            values: ['rest']
+        }
+    ]
+};
+
+var dataProjectRepository6 = {
+    id: 6,
+    projects: [],
+    type: "DSPACE",
+    settings: [
+        {
+            key: 'repoUrl',
+            values: ['localhost-repo6']
+        },
+        {
+            key: 'repoContextPath',
+            values: ['rest']
+        }
+    ]
 };
 
 var mockProjectRepository = function($q) {
-    var model = mockModel($q, mockProjectRepository1);
+    var model = mockModel("ProjectRepository", $q, dataProjectRepository1);
 
     return model;
 };

@@ -1,4 +1,4 @@
-var mockAssumedControl1 = {
+var dataAssumedControl1 = {
     id: 1,
     button: 'Unassume',
     netid: '',
@@ -11,7 +11,7 @@ var mockAssumedControl1 = {
     }
 };
 
-var mockAssumedControl2 = {
+var dataAssumedControl2 = {
     id: 2,
     button: 'Unassume',
     netid: '',
@@ -24,7 +24,7 @@ var mockAssumedControl2 = {
     }
 };
 
-var mockAssumedControl3 = {
+var dataAssumedControl3 = {
     id: 3,
     button: 'Assume',
     netid: '',
@@ -33,7 +33,7 @@ var mockAssumedControl3 = {
 };
 
 var mockAssumedControl = function($q) {
-    var model = mockModel($q, mockAssumedControl1);
+    var model = mockModel("AssumedControl", $q, dataAssumedControl1);
 
     model.addCallback = function(callback) {
         // TODO
@@ -49,7 +49,7 @@ var mockAssumedControl = function($q) {
     };
 
     model.get = function() {
-        return payloadPromise($q.defer(), mockAssumedControl3);
+        return payloadPromise($q.defer(), dataAssumedControl3);
     };
 
     model.ready = function() {

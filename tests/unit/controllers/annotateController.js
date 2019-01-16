@@ -1,20 +1,6 @@
 describe('controller: AnnotateController', function () {
 
-    var controller, routeParams, scope, q, Document, Resource;
-
-    var createMockMethods = function() {
-        scope.document.push = function() {
-            var defer = q.defer();
-            defer.resolve();
-            return defer.promise;
-        };
-
-        scope.document.save = function() {
-            var defer = q.defer();
-            defer.resolve();
-            return defer.promise;
-        };
-    };
+    var controller, q, routeParams, scope;
 
     beforeEach(function() {
         module('core');
@@ -32,20 +18,17 @@ describe('controller: AnnotateController', function () {
         module('mock.userService');
         module('mock.wsApi');
 
-        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _Document_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _Resource_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
             q = $q;
+
+            routeParams = $routeParams;
+            scope = $rootScope.$new();
 
             angular.extend($routeParams, {
                 projectKey: 'Project 001',
                 documentKey: 'Document 001'
             });
-
-            routeParams = $routeParams;
-            scope = $rootScope.$new();
-
-            Document = _Document_;
-            Resource = _Resource_;
 
             controller = $controller('AnnotateController', {
                 $http: $http,
@@ -68,7 +51,9 @@ describe('controller: AnnotateController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     });
 
@@ -207,8 +192,8 @@ describe('controller: AnnotateController', function () {
             expect(field.values[0].value).toEqual("third");
         });
         it('delete should delete a document', function () {
-            var document = Document;
-            document.mock(mockDocument1);
+            var document = new mockDocument(q);
+
             spyOn(document, 'delete').and.callThrough();
 
             scope.delete(document);
@@ -272,7 +257,7 @@ describe('controller: AnnotateController', function () {
 
             expect(response.length).toEqual(1);
             expect(response[0].name).toEqual('Resource 001');
-            expect(response[0].document).toEqual('1');
+            expect(response[0].document).toEqual('Document 001');
             expect(response[0].mimeType).toEqual('text/plain');
 
 
@@ -284,7 +269,7 @@ describe('controller: AnnotateController', function () {
         it('getIIIFUrls should return a list of URLs', function () {
             var response;
 
-            scope.document = mockDocument1;
+            scope.document = new mockDocument(q);
 
             response = scope.getIIIFUrls();
 
@@ -309,10 +294,8 @@ describe('controller: AnnotateController', function () {
             expect(response).toBe(null);
         });
         it('push should push a document', function () {
+            scope.document = new mockDocument(q);
             delete scope.document.status;
-
-            scope.document = mockDocument1;
-            createMockMethods();
 
             spyOn(scope.document, 'push').and.callThrough();
             spyOn(scope, 'openModal');
@@ -390,8 +373,7 @@ describe('controller: AnnotateController', function () {
         it('save should save a document', function () {
             scope.openModal = function() {};
             scope.closeModal = function() {};
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope, 'openModal');
             spyOn(scope.document, 'save').and.callThrough();
@@ -405,8 +387,7 @@ describe('controller: AnnotateController', function () {
         it('submit should submit a document as annotated', function () {
             scope.openModal = function() {};
             scope.closeModal = function() {};
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope, 'openModal');
             spyOn(scope.document, 'save').and.callThrough();
@@ -421,8 +402,7 @@ describe('controller: AnnotateController', function () {
         it('submitRejection should save a document as rejected', function () {
             var notes = "notes";
 
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope.document, 'save').and.callThrough();
 

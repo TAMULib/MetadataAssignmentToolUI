@@ -1,9 +1,10 @@
 describe('controller: ExportController', function () {
 
-    var controller, scope, ProjectRepo;
+    var controller, q, scope, ProjectRepo;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $rootScope, $window, _AlertService_, _MetadataRepo_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $window, _AlertService_, _MetadataRepo_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             ProjectRepo = _ProjectRepo_;
@@ -23,7 +24,9 @@ describe('controller: ExportController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -79,7 +82,7 @@ describe('controller: ExportController', function () {
                 spyOn(scope, 'closeModal');
                 scope.isExporting = null;
 
-                response = scope.export(mockProject1, format);
+                response = scope.export(dataProject1, format);
                 scope.$digest();
 
                 expect(scope.closeModal).toHaveBeenCalled();
@@ -87,7 +90,7 @@ describe('controller: ExportController', function () {
                 expect(typeof response).toEqual(formats[format]);
             }
 
-            response = scope.export(mockProject1, "!does_not_exist!");
+            response = scope.export(dataProject1, "!does_not_exist!");
             scope.$digest();
 
             expect(typeof response).toEqual('undefined');

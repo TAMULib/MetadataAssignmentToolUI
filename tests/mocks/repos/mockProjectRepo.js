@@ -1,98 +1,23 @@
-var mockProjectRepo1 = [
-    {
-        id: 1,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 001",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    },
-    {
-        id: 2,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 002",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    },
-    {
-        id: 3,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 003",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    }
+var dataProjectRepo1 = [
+    dataProject1,
+    dataProject2,
+    dataProject3
 ];
 
-var mockProjectRepo2 = [
-    {
-        id: 4,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 004",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    },
-    {
-        id: 5,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 005",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    },
-    {
-        id: 6,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 006",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    }
+var dataProjectRepo2 = [
+    dataProject3,
+    dataProject2,
+    dataProject1
 ];
 
-var mockProjectRepo3 = [
-    {
-        id: 3,
-        authorities: [],
-        documents: [],
-        headless: false,
-        injestType: null,
-        name: "Project 003",
-        locked: false,
-        profiles: [],
-        repositories: [],
-        suggestors: []
-    },
+var dataProjectRepo3 = [
+    dataProject4,
+    dataProject5,
+    dataProject6
 ];
 
 angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
-    var repo = mockRepo('ProjectRepo', $q, mockProject, mockProjectRepo1);
+    var repo = mockRepo('ProjectRepo', $q, mockProject, dataProjectRepo1);
 
     repo.addFieldProfile = function (projectId, fieldProfile, labels) {
         // TODO

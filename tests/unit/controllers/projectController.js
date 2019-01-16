@@ -25,7 +25,9 @@ describe('controller: ProjectController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -112,7 +114,7 @@ describe('controller: ProjectController', function () {
             delete scope.newProject;
             delete scope.newProjectServices;
 
-            scope.create(mockProject1, services);
+            scope.create(dataProject1, services);
             scope.$digest();
 
             expect(scope.newProject).toBeDefined();
@@ -123,7 +125,7 @@ describe('controller: ProjectController', function () {
             delete scope.newProject;
             delete scope.newProjectServices;
 
-            scope.create(mockProject1, services);
+            scope.create(dataProject1, services);
             scope.$digest();
 
             expect(scope.newProject).toBeDefined();
@@ -132,7 +134,7 @@ describe('controller: ProjectController', function () {
         it('delete should delete an existing project', function () {
             spyOn(scope, 'closeModal');
 
-            scope.delete(mockProject1);
+            scope.delete(dataProject1);
             scope.$digest();
 
             expect(scope.closeModal).toHaveBeenCalled();
@@ -145,10 +147,10 @@ describe('controller: ProjectController', function () {
 
             expect(response).toBe(false);
 
-            mockProject1.ExampleServiceType = [serviceType];
+            dataProject1.ExampleServiceType = [serviceType];
             scope.projectServices.ExampleServiceType = [serviceType];
 
-            response = scope.projectHasService(mockProject1, "ExampleServiceType", 0);
+            response = scope.projectHasService(dataProject1, "ExampleServiceType", 0);
 
             expect(response).toBe(true);
         });
@@ -182,7 +184,7 @@ describe('controller: ProjectController', function () {
 
             delete scope.isSyncing;
 
-            scope.syncDocuments(mockProject1);
+            scope.syncDocuments(dataProject1);
             scope.$digest();
 
             expect(scope.isSyncing).toBe(false);

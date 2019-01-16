@@ -1,6 +1,6 @@
 describe('controller: AdminController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
     beforeEach(function() {
         module('core');
@@ -13,8 +13,9 @@ describe('controller: AdminController', function () {
         module('mock.userService');
         module('mock.wsApi');
 
-        inject(function ($controller, $rootScope, $route, $injector, $window, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $route, $injector, $window, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
             installPromiseMatchers();
+            q = $q;
             scope = $rootScope.$new();
 
             controller = $controller('AdminController', {
@@ -32,7 +33,9 @@ describe('controller: AdminController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     });
 
