@@ -1,12 +1,14 @@
 describe('controller: BatchPublishController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $rootScope, $window, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $window, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
+            sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
 
             controller = $controller('BatchPublishController', {
                 $scope: scope,
@@ -20,7 +22,9 @@ describe('controller: BatchPublishController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -66,7 +70,7 @@ describe('controller: BatchPublishController', function () {
         it('publishDocuments should publish a document to a project', function () {
             spyOn(scope, 'closeModal');
 
-            scope.publishDocuments(mockProject1, mockDocument1);
+            scope.publishDocuments(dataProject1, dataDocument1);
             scope.$digest();
 
             expect(scope.closeModal).toHaveBeenCalled();

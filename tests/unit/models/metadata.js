@@ -1,18 +1,18 @@
 describe('model: Metadata', function () {
-    var rootScope, scope, WsApi, model;
+    var model, rootScope, scope, WsApi;
 
     beforeEach(function() {
         module('core');
         module('metadataTool');
         module('mock.wsApi');
 
-        inject(function ($rootScope, _WsApi_, _Metadata_) {
+        inject(function ($rootScope, Metadata, _WsApi_) {
             rootScope = $rootScope;
             scope = $rootScope.$new();
 
             WsApi = _WsApi_;
 
-            model = _Metadata_();
+            model = angular.extend(new Metadata(), dataMetadata1);
         });
     });
 

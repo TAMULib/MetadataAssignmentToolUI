@@ -1,4 +1,4 @@
-var mockProject1 = {
+var dataProject1 = {
     id: 1,
     authorities: [],
     documents: [],
@@ -11,7 +11,7 @@ var mockProject1 = {
     suggestors: []
 };
 
-var mockProject2 = {
+var dataProject2 = {
     id: 2,
     authorities: [],
     documents: [],
@@ -24,7 +24,7 @@ var mockProject2 = {
     suggestors: []
 };
 
-var mockProject3 = {
+var dataProject3 = {
     id: 3,
     authorities: [],
     documents: [],
@@ -37,8 +37,47 @@ var mockProject3 = {
     suggestors: []
 };
 
+var dataProject4 = {
+    id: 4,
+    authorities: [],
+    documents: [],
+    headless: false,
+    injestType: null,
+    name: "Project 004",
+    locked: false,
+    profiles: [],
+    repositories: [],
+    suggestors: []
+};
+
+var dataProject5 = {
+    id: 5,
+    authorities: [],
+    documents: [],
+    headless: false,
+    injestType: null,
+    name: "Project 005",
+    locked: false,
+    profiles: [],
+    repositories: [],
+    suggestors: []
+};
+
+var dataProject6 = {
+    id: 6,
+    authorities: [],
+    documents: [],
+    headless: false,
+    injestType: null,
+    name: "Project 006",
+    locked: false,
+    profiles: [],
+    repositories: [],
+    suggestors: []
+};
+
 var mockProject = function($q) {
-    var model = mockModel($q, mockProject1);
+    var model = mockModel("Project", $q, dataProject1);
 
     return model;
 };

@@ -1,9 +1,10 @@
 describe('controller: NavigationController', function () {
 
-    var controller, window, scope;
+    var controller, q, scope, window;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $location, $rootScope, $window, _ModalService_, _RestApi_, _StorageService_, _WsApi_) {
+        inject(function ($controller, $location, $q, $rootScope, $window, _ModalService_, _RestApi_, _StorageService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
             window = $window;
 
@@ -20,7 +21,9 @@ describe('controller: NavigationController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 

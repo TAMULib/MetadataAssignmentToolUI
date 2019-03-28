@@ -1,9 +1,10 @@
 describe('controller: DocumentController', function () {
 
-    var controller, scope, ApiResponseActions;
+    var controller, q, scope, ApiResponseActions;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $location, $rootScope, $route, $routeParams, $window, _AlertService_, _Document_, _DocumentRepo_, _ModalService_, _NgTableParams_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+        inject(function ($controller, $location, $q, $rootScope, $route, $routeParams, $window, _AlertService_, _DocumentRepo_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
@@ -16,10 +17,10 @@ describe('controller: DocumentController', function () {
                 $window: $window,
                 AlertService: _AlertService_,
                 ApiResponseActions: ApiResponseActions,
-                Document: _Document_,
+                Document: mockParameterModel(q, mockDocument),
                 DocumentRepo: _DocumentRepo_,
                 ModalService: _ModalService_,
-                NgTableParams: _NgTableParams_,
+                NgTableParams: mockParameterModel(q, mockNgTableParams),
                 ProjectRepo: _ProjectRepo_,
                 RestApi: _RestApi_,
                 StorageService: _StorageService_,
@@ -29,7 +30,9 @@ describe('controller: DocumentController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -119,10 +122,12 @@ describe('controller: DocumentController', function () {
             expect(typeof response).toEqual("object");
         });
         it('setSelectedUser should assign the selected user', function () {
+            var user = new mockUser(q);
             scope.selectedUser = null;
-            scope.setSelectedUser(mockUser1);
 
-            expect(scope.selectedUser).toBe(mockUser1);
+            scope.setSelectedUser(user);
+
+            expect(scope.selectedUser).toEqual(user);
         });
         it('setTable should setup the table', function () {
             scope.tableParams = null;
@@ -154,23 +159,23 @@ describe('controller: DocumentController', function () {
             expect(scope.showProjectsFilter).toBe(false);
         });
         it('update should update the document status', function () {
-            mockDocument1.status = '';
-            mockDocument1.save = function() {};
+            var document = new mockDocument(q);
+            document.status = '';
 
-            spyOn(mockDocument1, 'save');
+            spyOn(document, 'save');
 
-            scope.update(mockDocument1, 'Open');
+            scope.update(document, 'Open');
 
-            expect(mockDocument1.status).toEqual('Open');
-            expect(mockDocument1.annotator).not.toBeDefined();
-            expect(mockDocument1.save).toHaveBeenCalled();
+            expect(document.status).toEqual('Open');
+            expect(document.annotator).not.toBeDefined();
+            expect(document.save).toHaveBeenCalled();
 
-            scope.update(mockDocument1, 'Closed');
-            expect(mockDocument1.status).toEqual('Closed');
-            expect(mockDocument1.annotator).toEqual(scope.user.firstName + ' ' + scope.user.lastName);
+            scope.update(document, 'Closed');
+            expect(document.status).toEqual('Closed');
+            expect(document.annotator).toEqual(scope.user.firstName + ' ' + scope.user.lastName);
 
-            scope.update(mockDocument1, 'Other');
-            expect(mockDocument1.status).toEqual('Other');
+            scope.update(document, 'Other');
+            expect(document.status).toEqual('Other');
         });
         it('updateTable should reload the table', function () {
             scope.setTable();

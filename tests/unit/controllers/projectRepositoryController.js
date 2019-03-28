@@ -1,9 +1,10 @@
 describe('controller: ProjectRepositoryController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
     var initializeController = function(settings) {
-        inject(function ($controller, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectRepositoryRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+        inject(function ($controller, $q, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectRepositoryRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
@@ -21,7 +22,9 @@ describe('controller: ProjectRepositoryController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
     };
 
@@ -81,7 +84,7 @@ describe('controller: ProjectRepositoryController', function () {
             delete scope.newRepository;
             delete scope.newRepositorySettings;
 
-            scope.create(mockProjectRepository1, settings);
+            scope.create(dataProjectRepository1, settings);
             scope.$digest();
 
             expect(scope.newRepository).toBeDefined();
@@ -91,7 +94,7 @@ describe('controller: ProjectRepositoryController', function () {
             delete scope.newRepository;
             delete scope.newRepositorySettings;
 
-            scope.create(mockProjectRepository1, settings);
+            scope.create(dataProjectRepository1, settings);
             scope.$digest();
 
             expect(scope.newRepository).toBeDefined();
@@ -100,7 +103,7 @@ describe('controller: ProjectRepositoryController', function () {
         it('delete should delete a project repository', function () {
             spyOn(scope, 'closeModal');
 
-            scope.delete(mockProjectRepository1);
+            scope.delete(dataProjectRepository1);
             scope.$digest();
 
             expect(scope.closeModal).toHaveBeenCalled();

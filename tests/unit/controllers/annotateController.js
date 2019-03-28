@@ -1,51 +1,31 @@
 describe('controller: AnnotateController', function () {
 
-    var controller, routeParams, scope, q, Document, Resource;
+    var controller, location, q, routeParams, scope, timeout, AlertService;
 
-    var createMockMethods = function() {
-        scope.document.push = function() {
-            var defer = q.defer();
-            defer.resolve();
-            return defer.promise;
-        };
-
-        scope.document.save = function() {
-            var defer = q.defer();
-            defer.resolve();
-            return defer.promise;
-        };
-    };
-
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.alertService');
-        module('mock.controlledVocabularyRepo');
-        module('mock.document');
-        module('mock.documentRepo');
-        module('mock.modalService');
-        module('mock.projectRepositoryRepo');
-        module('mock.restApi');
-        module('mock.resource');
-        module('mock.resourceRepo');
-        module('mock.storageService');
-        module('mock.userService');
-        module('mock.wsApi');
-
-        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _Document_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _Resource_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
-            installPromiseMatchers();
+    var initializeController = function(settings) {
+        inject(function ($controller, $http, $location, $q, $rootScope, $routeParams, $timeout, $window, _AlertService_, _ControlledVocabularyRepo_, _DocumentRepo_, _ModalService_, _ProjectRepositoryRepo_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_, _WsApi_) {
+            location = $location;
             q = $q;
-
-            angular.extend($routeParams, {
-                projectKey: 'Project 001',
-                documentKey: 'Document 001'
-            });
-
             routeParams = $routeParams;
             scope = $rootScope.$new();
+            timeout = $timeout;
 
-            Document = _Document_;
-            Resource = _Resource_;
+            AlertService = _AlertService_;
+
+            sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
+            sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
+
+            if (settings && settings.routeParams) {
+                if (typeof settings.routeParams == "object") {
+                    angular.extend($routeParams, settings.routeParams);
+                }
+            }
+            else {
+                angular.extend($routeParams, {
+                    projectKey: 'Project 001',
+                    documentKey: 'Document 001'
+                });
+            }
 
             controller = $controller('AnnotateController', {
                 $http: $http,
@@ -68,12 +48,43 @@ describe('controller: AnnotateController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
+    };
+
+    beforeEach(function() {
+        module('core');
+        module('metadataTool');
+        module('mock.alertService');
+        module('mock.controlledVocabularyRepo');
+        module('mock.document');
+        module('mock.documentRepo');
+        module('mock.modalService');
+        module('mock.projectRepositoryRepo');
+        module('mock.restApi');
+        module('mock.resource');
+        module('mock.resourceRepo');
+        module('mock.storageService');
+        module('mock.userService');
+        module('mock.wsApi');
+
+        installPromiseMatchers();
+        initializeController();
     });
 
     describe('Is the controller defined', function () {
-        it('should be defined', function () {
+        it('should be defined for admin', function () {
+            initializeController({role: "ROLE_ADMIN"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for manager', function () {
+            initializeController({role: "ROLE_MANAGER"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for anonymous', function () {
+            initializeController({role: "ROLE_ANONYMOUS"});
             expect(controller).toBeDefined();
         });
     });
@@ -160,6 +171,7 @@ describe('controller: AnnotateController', function () {
             spyOn(scope.document, 'save').and.callThrough();
 
             scope.accept();
+            scope.$digest();
 
             expect(scope.document.status).toEqual("Accepted");
             expect(scope.document.save).toHaveBeenCalled();
@@ -207,12 +219,13 @@ describe('controller: AnnotateController', function () {
             expect(field.values[0].value).toEqual("third");
         });
         it('delete should delete a document', function () {
-            var document = Document;
-            document.mock(mockDocument1);
+            var document = new mockDocument(q);
+
             spyOn(document, 'delete').and.callThrough();
 
             scope.delete(document);
             scope.$digest();
+            timeout.flush();
 
             expect(document.delete).toHaveBeenCalled();
         });
@@ -224,8 +237,11 @@ describe('controller: AnnotateController', function () {
             // FIXME: needs work, is scope.resource supposed to be a resource object or an array of resource objects?
             //expect(response).toBe(true);
 
-            //response = scope.hasFileType("image");
+            response = scope.hasFileType("image");
+            //expect(response).toBe(false);
 
+            scope.resources = [];
+            response = scope.hasFileType("text");
             //expect(response).toBe(false);
         });
         it('managerAnnotating should return a boolean', function () {
@@ -272,7 +288,7 @@ describe('controller: AnnotateController', function () {
 
             expect(response.length).toEqual(1);
             expect(response[0].name).toEqual('Resource 001');
-            expect(response[0].document).toEqual('1');
+            expect(response[0].document).toEqual('Document 001');
             expect(response[0].mimeType).toEqual('text/plain');
 
 
@@ -284,7 +300,7 @@ describe('controller: AnnotateController', function () {
         it('getIIIFUrls should return a list of URLs', function () {
             var response;
 
-            scope.document = mockDocument1;
+            scope.document = new mockDocument(q);
 
             response = scope.getIIIFUrls();
 
@@ -309,15 +325,14 @@ describe('controller: AnnotateController', function () {
             expect(response).toBe(null);
         });
         it('push should push a document', function () {
+            scope.document = new mockDocument(q);
             delete scope.document.status;
-
-            scope.document = mockDocument1;
-            createMockMethods();
 
             spyOn(scope.document, 'push').and.callThrough();
             spyOn(scope, 'openModal');
 
             scope.push();
+            scope.$digest();
 
             expect(scope.document.push).toHaveBeenCalled();
             expect(scope.openModal).toHaveBeenCalled();
@@ -381,6 +396,7 @@ describe('controller: AnnotateController', function () {
             delete scope.document.status;
 
             spyOn(scope.document, 'save').and.callThrough();
+            spyOn(location, "path");
 
             scope.requiresCuration();
 
@@ -390,8 +406,7 @@ describe('controller: AnnotateController', function () {
         it('save should save a document', function () {
             scope.openModal = function() {};
             scope.closeModal = function() {};
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope, 'openModal');
             spyOn(scope.document, 'save').and.callThrough();
@@ -405,29 +420,33 @@ describe('controller: AnnotateController', function () {
         it('submit should submit a document as annotated', function () {
             scope.openModal = function() {};
             scope.closeModal = function() {};
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope, 'openModal');
             spyOn(scope.document, 'save').and.callThrough();
+            spyOn(location, "path");
 
             scope.submit();
             scope.$digest();
+            timeout.flush();
 
             expect(scope.document.status).toEqual("Annotated");
             expect(scope.document.save).toHaveBeenCalled();
             expect(scope.openModal).toHaveBeenCalled();
+            expect(location.path).toHaveBeenCalled();
         });
         it('submitRejection should save a document as rejected', function () {
             var notes = "notes";
 
-            scope.document = mockDocument1;
-            createMockMethods();
+            scope.document = new mockDocument(q);
 
             spyOn(scope.document, 'save').and.callThrough();
+            spyOn(AlertService, "add");
+            spyOn(location, "path");
 
             scope.submitRejection(notes);
             scope.$digest();
+            timeout.flush();
 
             expect(scope.document.status).toEqual("Rejected");
             expect(scope.document.notes).toBe(notes);

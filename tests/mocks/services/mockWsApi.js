@@ -1,31 +1,6 @@
 angular.module('mock.wsApi', []).service('WsApi', function ($q) {
-    var service = this;
-    var defer;
+    var service = mockService($q);
     var mapping;
-
-    var payloadResponse = function (payload, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                },
-                payload: payload,
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
-
-    var messageResponse = function (message, messageStatus, httpStatus) {
-        return defer.resolve({
-            body: angular.toJson({
-                meta: {
-                    status: messageStatus ? messageStatus : 'SUCCESS',
-                    message: message
-                },
-                status: httpStatus ? httpStatus : 200
-            })
-        });
-    };
 
     service.mockMapping = function(toMock) {
         mapping = {};
@@ -35,56 +10,52 @@ angular.module('mock.wsApi', []).service('WsApi', function ($q) {
     };
 
     service.fetch = function (apiReq) {
-        defer = $q.defer();
-
         var payload = {};
 
         switch (apiReq.method) {
             case 'credentials':
-                payload = mockUser1;
+                payload = dataUser1;
                 break;
             case 'page':
-                payload = mockDocumentPage1;
+                payload = dataDocumentPage1;
                 break;
             case 'all':
                 switch (apiReq.controller) {
                     case 'user':
-                        payload = mockUserRepo1;
+                        payload = dataUser1;
                         break;
                     case 'document':
-                        payload = mockDocumentRepo1;
+                        payload = dataDocument1;
                         break;
                     case 'cv':
-                        payload = mockControlledVocabulary1;
+                        payload = dataControlledVocabulary1;
                         break;
                 }
                 break;
             case 'get':
                 switch (apiReq.controller) {
                     case 'user':
-                        payload = mockUser1;
+                        payload = dataUser1;
                         break;
                     case 'metadata':
-                        payload = mockMetadata1;
+                        payload = dataMetadata1;
                         break;
                     case 'document':
-                        payload = mockDocumentRepo1;
+                        payload = dataDocument1;
                         break;
                 }
                 break;
             case 'update_role':
-                mockUserRepo1.HashMap[2].role = JSON.parse(apiReq.data).role;
-                payload = mockUserRepo1;
+                dataUser1.role = JSON.parse(apiReq.data).role;
+                payload = dataUser1;
                 break;
             case 'update_annotator':
-                mockDocumentRepo1.HashMap.annatator = JSON.parse(apiReq.data).annotator;
-                payload = mockDocumentRepo1;
+                dataDocument1.annatator = JSON.parse(apiReq.data).annotator;
+                payload = dataDocumentRepo1;
                 break;
         }
 
-        payloadResponse(payload);
-
-        return defer.promise;
+        return payloadPromise($q.defer(), payload);
     };
 
     service.getMapping = function () {
@@ -92,8 +63,7 @@ angular.module('mock.wsApi', []).service('WsApi', function ($q) {
     };
 
     service.listen = function (apiReq) {
-        defer = $q.defer();
-        return defer.promise;
+        return payloadPromise($q.defer());
     };
 
     return service;

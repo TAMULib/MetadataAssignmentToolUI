@@ -1,42 +1,23 @@
-var mockProjectSuggestorRepo1 = [
-    {
-        id: 1,
-        projects: []
-    },
-    {
-        id: 2,
-        projects: []
-    },
-    {
-        id: 3,
-        projects: []
-    }
+var dataProjectSuggestorRepo1 = [
+    dataProjectSuggestor1,
+    dataProjectSuggestor2,
+    dataProjectSuggestor3
 ];
 
-var mockProjectSuggestorRepo2 = [
-    {
-        id: 4,
-        projects: []
-    },
-    {
-        id: 5,
-        projects: []
-    },
-    {
-        id: 6,
-        projects: []
-    }
+var dataProjectSuggestorRepo2 = [
+    dataProjectSuggestor3,
+    dataProjectSuggestor2,
+    dataProjectSuggestor1
 ];
 
-var mockProjectSuggestorRepo3 = [
-    {
-        id: 3,
-        projects: []
-    }
+var dataProjectSuggestorRepo3 = [
+    dataProjectSuggestor4,
+    dataProjectSuggestor5,
+    dataProjectSuggestor6
 ];
 
 angular.module('mock.projectSuggestorRepo', []).service('ProjectSuggestorRepo', function($q) {
-    var repo = mockRepo('ProjectSuggestorRepo', $q, mockProjectSuggestor, mockProjectSuggestorRepo1);
+    var repo = mockRepo('ProjectSuggestorRepo', $q, mockProjectSuggestor, dataProjectSuggestorRepo1);
     var mockedTypes = {};
 
     repo.mockTypes = function(toMock) {

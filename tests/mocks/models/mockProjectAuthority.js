@@ -1,20 +1,35 @@
-var mockProjectAuthority1 = {
+var dataProjectAuthority1 = {
     id: 1,
     projects: []
 };
 
-var mockProjectAuthority2 = {
+var dataProjectAuthority2 = {
     id: 2,
     projects: []
 };
 
-var mockProjectAuthority3 = {
+var dataProjectAuthority3 = {
     id: 3,
     projects: []
 };
 
+var dataProjectAuthority4 = {
+    id: 4,
+    projects: []
+};
+
+var dataProjectAuthority5 = {
+    id: 5,
+    projects: []
+};
+
+var dataProjectAuthority6 = {
+    id: 6,
+    projects: []
+};
+
 var mockProjectAuthority = function($q) {
-    var model = mockModel($q, mockProjectAuthority1);
+    var model = mockModel("ProjectAuthority", $q, dataProjectAuthority1);
 
     return model;
 };

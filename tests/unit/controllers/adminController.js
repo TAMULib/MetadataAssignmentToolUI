@@ -1,20 +1,10 @@
 describe('controller: AdminController', function () {
 
-    var controller, scope;
+    var controller, q, scope;
 
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.assumedControl');
-        module('mock.authService');
-        module('mock.modalService');
-        module('mock.restApi');
-        module('mock.storageService');
-        module('mock.userService');
-        module('mock.wsApi');
-
-        inject(function ($controller, $rootScope, $route, $injector, $window, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
-            installPromiseMatchers();
+    var initializeController = function(settings) {
+        inject(function ($controller, $q, $rootScope, $route, $injector, $window, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
+            q = $q;
             scope = $rootScope.$new();
 
             controller = $controller('AdminController', {
@@ -32,12 +22,38 @@ describe('controller: AdminController', function () {
             });
 
             // ensure that the isReady() is called.
-            scope.$digest();
+            if (!scope.$$phase) {
+                scope.$digest();
+            }
         });
+    };
+
+    beforeEach(function() {
+        module('core');
+        module('metadataTool');
+        module('mock.assumedControl');
+        module('mock.authService');
+        module('mock.modalService');
+        module('mock.restApi');
+        module('mock.storageService');
+        module('mock.userService');
+        module('mock.wsApi');
+
+        installPromiseMatchers();
+        initializeController();
     });
 
     describe('Is the controller defined', function () {
-        it('should be defined', function () {
+        it('should be defined for admin', function () {
+            initializeController({role: "ROLE_ADMIN"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for manager', function () {
+            initializeController({role: "ROLE_MANAGER"});
+            expect(controller).toBeDefined();
+        });
+        it('should be defined for anonymous', function () {
+            initializeController({role: "ROLE_ANONYMOUS"});
             expect(controller).toBeDefined();
         });
     });
