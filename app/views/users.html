@@ -49,7 +49,7 @@
                             <td ng-if="!((isAdmin() || isManager()) && (thisUser.role == 'ROLE_ANNOTATOR' || thisUser.role == 'ROLE_MANAGER' || thisUser.role == 'ROLE_ADMIN'))"></td>
                             <td ng-if="(isAdmin() || isManager()) && canDelete(thisUser)">
 
-                                <modal modal-id="ConfirmDeleteUserModal"
+                                <modal modal-id="ConfirmDeleteUserModal{{$index}}"
                                        modal-view="views/modals/confirmDeleteUserModal.html"
                                        modal-btn-classes="btn btn-danger"
                                        modal-header-class="modal-header-primary">
