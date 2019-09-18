@@ -178,10 +178,12 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
         };
 
         var getSetting = function (settings, key) {
-            for (var j in settings) {
-                var setting = settings[j];
-                if (setting.key === key) {
-                    return setting;
+            for (var i in settings) {
+                if (settings.hasOwnProperty(i)) {
+                    var setting = settings[i];
+                    if (setting.key === key) {
+                        return setting;
+                    }
                 }
             }
         };
@@ -192,7 +194,7 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
                 if ($scope.document.publishedLocations.hasOwnProperty(i)) {
                     var publishedLocation = $scope.document.publishedLocations[i];
                     var publishedRepository = $scope.getRepositoryById(publishedLocation.repository);
-                    if (publishedRepository) {
+                    if (publishedRepository !== undefined) {
                         if (publishedRepository.type === 'FEDORA_PCDM') {
                             var fedoraUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
                             var fedoraRestPath = getSetting(publishedRepository.settings, 'restPath').values[0];
@@ -200,8 +202,7 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
                             var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
                             urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
                             urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
-                        }
-                        if (publishedRepository.type === 'DSPACE') {
+                        } else if (publishedRepository.type === 'DSPACE') {
                             var dspaceUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
                             var dspaceXmluiPath = getSetting(publishedRepository.settings, 'repoContextPath').values[0];
                             var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
@@ -217,8 +218,10 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
 
         $scope.getRepositoryById = function (repositoryId) {
             for (var i in $scope.repositories) {
-                if (repositoryId === $scope.repositories[i].id) {
-                    return $scope.repositories[i];
+                if ($scope.repositories.hasOwnProperty(i)) {
+                    if (repositoryId === $scope.repositories[i].id) {
+                        return $scope.repositories[i];
+                    }
                 }
             }
         };
