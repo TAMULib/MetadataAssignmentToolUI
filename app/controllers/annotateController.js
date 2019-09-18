@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $http, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
+metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -189,37 +189,38 @@ metadataTool.controller('AnnotateController', function ($controller, $http, $loc
         $scope.getIIIFUrls = function () {
             var urls = [];
             for (var i in $scope.document.publishedLocations) {
-                var publishedLocation = $scope.document.publishedLocations[i];
-                var publishedRepository = $scope.getRepositoryById(publishedLocation.repository);
-                if (publishedRepository.type === 'FEDORA_PCDM') {
-                    var fedoraUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
-                    var fedoraRestPath = getSetting(publishedRepository.settings, 'restPath').values[0];
-                    var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
-                    var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
-                    urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
-                    urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
-                }
-                if (publishedRepository.type === 'DSPACE') {
-                    var dspaceUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
-                    var dspaceXmluiPath = getSetting(publishedRepository.settings, 'repoContextPath').values[0];
-                    var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
-                    var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
-                    urls.push(appConfig.iiifService + '/dspace/presentation?context=' + handlePath);
-                    urls.push(appConfig.iiifService + '/dspace/collection?context=' + handlePath);
+                if ($scope.document.publishedLocations.hasOwnProperty(i)) {
+                    var publishedLocation = $scope.document.publishedLocations[i];
+                    var publishedRepository = $scope.getRepositoryById(publishedLocation.repository);
+                    if (publishedRepository) {
+                        if (publishedRepository.type === 'FEDORA_PCDM') {
+                            var fedoraUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                            var fedoraRestPath = getSetting(publishedRepository.settings, 'restPath').values[0];
+                            var fedoraRestBaseUrl = fedoraUrl + '/' + fedoraRestPath + '/';
+                            var containerContextPath = publishedLocation.url.replace(fedoraRestBaseUrl, '');
+                            urls.push(appConfig.iiifService + '/fedora/presentation?context=' + containerContextPath);
+                            urls.push(appConfig.iiifService + '/fedora/collection?context=' + containerContextPath.substring(0, containerContextPath.lastIndexOf('/')).replace('_objects', ''));
+                        }
+                        if (publishedRepository.type === 'DSPACE') {
+                            var dspaceUrl = getSetting(publishedRepository.settings, 'repoUrl').values[0];
+                            var dspaceXmluiPath = getSetting(publishedRepository.settings, 'repoContextPath').values[0];
+                            var dspaceXmluiBaseUrl = dspaceUrl + '/' + dspaceXmluiPath + '/';
+                            var handlePath = publishedLocation.url.replace(dspaceXmluiBaseUrl, '');
+                            urls.push(appConfig.iiifService + '/dspace/presentation?context=' + handlePath);
+                            urls.push(appConfig.iiifService + '/dspace/collection?context=' + handlePath);
+                        }
+                    }
                 }
             }
             return urls;
         };
 
-        $scope.getRepositoryById = function(repositoryId) {
-            var repository = null;
+        $scope.getRepositoryById = function (repositoryId) {
             for (var i in $scope.repositories) {
-                if (repositoryId == $scope.repositories[i].id) {
-                    repository = $scope.repositories[i];
-                    break;
+                if (repositoryId === $scope.repositories[i].id) {
+                    return $scope.repositories[i];
                 }
             }
-            return repository;
         };
     });
 
