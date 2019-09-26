@@ -40,7 +40,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             filter: {
                 name: undefined,
                 status: (assignmentsView() || usersView()) ? 'Assigned' : (sessionStorage.role === 'ROLE_ANNOTATOR') ? 'Open' : undefined,
-                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.username : undefined,
+                annotator: (assignmentsView() || usersView()) ? ($scope.selectedUser) ? $scope.selectedUser.username : $scope.user.uin : undefined,
                 projects: undefined
             }
         }, {
@@ -48,7 +48,7 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
             getData: function (params) {
 
                 var key;
-                for (key in params.sorting()) {}
+                for (key in params.sorting()) { }
 
                 var filters = {
                     name: [],
@@ -91,8 +91,8 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
 
     };
 
-    UserService.userReady().then(function(event) {
-      $scope.setTable();
+    UserService.userReady().then(function (event) {
+        $scope.setTable();
     });
 
     $scope.setSelectedUser = function (user) {
@@ -132,9 +132,9 @@ metadataTool.controller('DocumentController', function ($controller, $location, 
         $scope.showProjectsFilter = !$scope.showProjectsFilter;
     };
 
-    $scope.updateTable = function() {
-      $scope.tableParams.reload();
-      $scope.tableNeedsUpdating = false;
+    $scope.updateTable = function () {
+        $scope.tableParams.reload();
+        $scope.tableNeedsUpdating = false;
     };
 
     DocumentRepo.listen([ApiResponseActions.CREATE, ApiResponseActions.DELETE], function () {

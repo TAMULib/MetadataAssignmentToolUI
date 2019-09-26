@@ -4,6 +4,8 @@ var appConfig = {
 
     'allowAnonymous': false,
 
+    'anonymousRole': 'ROLE_ANONYMOUS',
+
     // Set this to the webService if mocking AuthService
 
     'authService': 'http://labs.library.tamu.edu/auth3',
@@ -34,7 +36,7 @@ var appConfig = {
     */
     'sockJsConnectionType': ['websocket', 'iframe-eventsource', 'iframe-htmlfile', 'jsonp-polling'],
 
-    'contentMap': {"image": ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg", "image/bmp", "image/jp2", "image/jpx", "image/tif", "image/tiff"],"pdf": ["application/pdf"], "text": ["text/plain"]},
+    'contentMap': { "image": ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg", "image/bmp", "image/jp2", "image/jpx", "image/tif", "image/tiff"], "pdf": ["application/pdf"], "text": ["text/plain"] },
 
     // Set this to 'admin' or 'user' if using mock AuthService
     // otherwise set to null or false
