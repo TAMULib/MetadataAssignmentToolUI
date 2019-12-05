@@ -256,3 +256,13 @@ main footer {
 .openseadragon-container {
   min-height: 675px;
 }
+
+content-viewer {
+  .viewer-wrapper {
+    .image-wrapper {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+  }
+}
