@@ -25,10 +25,15 @@
             </div>
         </div>
     </div>
-    <div ng-if="action === 'view' && document.status === 'Accepted' && document.getProject().repositories.length > 0" class="panel panel-warning">
+    <div ng-if="action === 'view' && document.status === 'Accepted' && !document.publishing && document.getProject().repositories.length > 0" class="panel panel-warning panel-documentPublishing">
         <div class="panel-heading">This document is accepted but not published.</div>
         <div class="panel-body">
             <button class="btn btn-success" ng-click="push()">Publish</button>
+        </div>
+    </div>
+    <div ng-if="action === 'view' && document.status === 'Accepted' && document.publishing && document.getProject().repositories.length > 0" class="panel panel-warning panel-documentPublishing">
+        <div class="panel-heading">This document is pending publication.</div>
+        <div class="panel-body">
         </div>
     </div>
 

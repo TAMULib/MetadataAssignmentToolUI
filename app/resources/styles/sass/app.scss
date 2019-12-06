@@ -253,6 +253,12 @@ main footer {
   overflow-y:auto;
 }
 
+.panel-documentPublishing {
+  .panel-body {
+    min-height: 50px;
+  }
+}
+
 .openseadragon-container {
   min-height: 675px;
 }
