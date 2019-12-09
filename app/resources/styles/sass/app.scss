@@ -259,6 +259,46 @@ main footer {
   }
 }
 
+.panel-document-publishing.publishing-log {
+  .panel-body {
+    .log-items {
+      max-height: 100px;
+      overflow-y: auto;
+      vertical-align: super;
+
+      margin: 0px 0px 0px 0px;
+      padding-left: 0px;
+
+      .alert-warning,
+      .alert-danger {
+        font-weight: bold;
+      }
+
+      .log-item {
+        clear: both;
+
+        list-style-type: none;
+
+        padding: 2px 2px 2px 4px;
+        margin: 3px 2px;
+
+        .item-date {
+          float: right;
+          margin: 0px 10px;
+        }
+      }
+
+      .log-item:first-of-type {
+        margin-top: 0px;
+      }
+
+      .log-item:last-of-type {
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+
 .openseadragon-container {
   min-height: 675px;
 }
