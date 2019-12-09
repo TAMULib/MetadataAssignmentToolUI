@@ -16,6 +16,7 @@ var dataDocument1 = {
     path: "",
     project: "Project 001",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
@@ -40,6 +41,7 @@ var dataDocument2 = {
     path: "",
     project: "Project 001",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
@@ -52,6 +54,7 @@ var dataDocument3 = {
     path: "",
     project: "Project 002",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
@@ -64,6 +67,7 @@ var dataDocument4 = {
     path: "",
     project: "Project 003",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
@@ -76,6 +80,7 @@ var dataDocument5 = {
     path: "",
     project: "Project 003",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
@@ -88,6 +93,7 @@ var dataDocument6 = {
     path: "",
     project: "Project 004",
     publishedLocations: [],
+    publishing: false,
     status: ""
 };
 
