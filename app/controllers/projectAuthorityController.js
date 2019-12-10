@@ -59,7 +59,7 @@ metadataTool.controller('ProjectAuthorityController', function ($controller, $sc
         var create = function(newAuthority,newAuthoritySettings) {
             var settings = [];
             angular.forEach(newAuthoritySettings, function(valueObj,key) {
-                this.push({"key":key,"values": [valueObj.value]});
+                this.push({"key":key,"protect":valueObj.protect,"values": [valueObj.value]});
             },settings);
             newAuthority.settings = settings;
             manageAuthority('create',newAuthority).then(function() {

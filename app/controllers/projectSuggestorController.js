@@ -36,7 +36,7 @@ metadataTool.controller('ProjectSuggestorController', function ($controller, $sc
         $scope.create = function(newSuggestor,newSuggestorSettings) {
             var settings = [];
             angular.forEach(newSuggestorSettings, function(valueObj,key) {
-                this.push({"key":key,"values": [valueObj.value]});
+                this.push({"key":key,"protect":valueObj.protect,"values": [valueObj.value]});
             },settings);
             newSuggestor.settings = settings;
             manageSuggestor('create',newSuggestor).then(function() {

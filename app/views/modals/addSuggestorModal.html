@@ -16,7 +16,8 @@
     <ul class="list-group" ng-show="newSuggestor.type">
       <li class="list-group-item" ng-repeat="settingKey in types[newSuggestor.type] track by $index">
         <label>{{settingKey}}</label>
-        <input class="form-control" type="{{settingKey == 'password' ? 'password':'text'}}" name="settingValue" ng-model="newSuggestorSettings[settingKey].value" />
+        <input class="form-control" type="{{newSuggestorSettings[settingKey].protect ? 'password':'text'}}" name="settingValue" ng-model="newSuggestorSettings[settingKey].value" />
+        <div><input type="checkbox" name="protect" value="true" ng-model="newSuggestorSettings[settingKey].protect" /> Protect value?</div>
       </li>
     </ul>
   </form>
