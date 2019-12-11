@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
+metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -33,17 +33,16 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
             };
         };
 
-        for (var k in $scope.document.fields) {
-            var field = $scope.document.fields[k];
-            if (field.values.length === 0) {
-                field.values.push(emptyFieldValue(field));
+        var getSetting = function (settings, key) {
+            for (var i in settings) {
+                if (settings.hasOwnProperty(i)) {
+                    var setting = settings[i];
+                    if (setting.key === key) {
+                        return setting;
+                    }
+                }
             }
-        }
-
-        $scope.document.getSuggestions().then(function (response) {
-            var payload = angular.fromJson(response.body).payload;
-            $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
-        });
+        };
 
         $scope.hasFileType = function (type) {
             for (var k in $scope.resources) {
@@ -177,17 +176,6 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
             }
         };
 
-        var getSetting = function (settings, key) {
-            for (var i in settings) {
-                if (settings.hasOwnProperty(i)) {
-                    var setting = settings[i];
-                    if (setting.key === key) {
-                        return setting;
-                    }
-                }
-            }
-        };
-
         $scope.getIIIFUrls = function () {
             var urls = [];
             for (var i in $scope.document.publishedLocations) {
@@ -225,6 +213,27 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
                 }
             }
         };
+
+        if ($scope.document.status === "Assigned") {
+            // Add all listeners and logic here to avoid processing during the redirect case.
+
+            for (var k in $scope.document.fields) {
+                var field = $scope.document.fields[k];
+                if (field.values.length === 0) {
+                    field.values.push(emptyFieldValue(field));
+                }
+            }
+
+            $scope.document.getSuggestions().then(function (response) {
+                var payload = angular.fromJson(response.body).payload;
+                $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
+            });
+        } else {
+            var url = $location.path().split("/");
+            url.length--;
+            url.push("view");
+            $location.path(url.join("/"));
+        }
     });
 
 });
