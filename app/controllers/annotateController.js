@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo, WsApi) {
+metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
