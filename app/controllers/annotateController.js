@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo, ApiResponseActions, WsApi) {
+metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo, PublishingEvent, ApiResponseActions, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -239,16 +239,16 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
               }
             }
         });
-    });
 
-    DocumentRepo.listen([ApiResponseActions.UPDATE, ApiResponseActions.DELETE], function (response) {
-        if (response.meta.action === "UPDATE") {
-          if (response.payload && response.payload.Document && response.payload.Document.publishing === false && $scope.publishingEvents.length) {
-            $scope.publishingEvents.length = 0;
-          }
-        } else if (response.meta.action === "DELETE") {
-          $scope.publishingEvents.length = 0;
-        }
+        DocumentRepo.listen([ApiResponseActions.UPDATE, ApiResponseActions.DELETE], function (response) {
+            if (response.meta.action === "UPDATE") {
+              if (response.payload && response.payload.Document && response.payload.Document.publishing === false && $scope.publishingEvents.length) {
+                $scope.publishingEvents.length = 0;
+              }
+            } else if (response.meta.action === "DELETE") {
+              $scope.publishingEvents.length = 0;
+            }
+        });
     });
 
 });
