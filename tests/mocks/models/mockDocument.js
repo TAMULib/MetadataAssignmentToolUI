@@ -16,6 +16,7 @@ var dataDocument1 = {
     path: "/projects/mock/mocked_1",
     project: "Project 001",
     publishedLocations: [],
+    publishing: false,
     status: "Open"
 };
 
@@ -40,6 +41,7 @@ var dataDocument2 = {
     path: "/projects/mock/mocked_2",
     project: "Project 001",
     publishedLocations: [],
+    publishing: false,
     status: "Assigned"
 };
 
@@ -52,6 +54,7 @@ var dataDocument3 = {
     path: "/projects/mock/mocked_3",
     project: "Project 002",
     publishedLocations: [],
+    publishing: false,
     status: "Published"
 };
 
@@ -64,6 +67,7 @@ var dataDocument4 = {
     path: "/projects/mock/mocked_4",
     project: "Project 003",
     publishedLocations: [],
+    publishing: false,
     status: "Assigned"
 };
 
@@ -76,6 +80,7 @@ var dataDocument5 = {
     path: "/projects/mock/mocked_5",
     project: "Project 003",
     publishedLocations: [],
+    publishing: false,
     status: "Open"
 };
 
@@ -88,6 +93,7 @@ var dataDocument6 = {
     path: "/projects/mock/mocked_6",
     project: "Project 004",
     publishedLocations: [],
+    publishing: false,
     status: "Requires Curation"
 };
 
