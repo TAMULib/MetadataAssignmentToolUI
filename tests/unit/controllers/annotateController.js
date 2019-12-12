@@ -36,7 +36,7 @@ describe('controller: AnnotateController', function () {
             else {
                 angular.extend($routeParams, {
                     projectKey: 'Project 001',
-                    documentKey: 'Document 001'
+                    documentKey: 'Document 002'
                 });
             }
 
@@ -289,7 +289,7 @@ describe('controller: AnnotateController', function () {
         });
 
         it('delete should delete a document', function () {
-            var document = new mockDocument($q);
+            var document = $scope.document;
 
             spyOn(document, 'delete').and.callThrough();
 
@@ -414,7 +414,6 @@ describe('controller: AnnotateController', function () {
         });
 
         it('push should push a document', function () {
-            $scope.document = new mockDocument($q);
             delete $scope.document.status;
 
             spyOn($scope.document, 'push').and.callThrough();
@@ -428,13 +427,12 @@ describe('controller: AnnotateController', function () {
         it('removeMetadataField should remove a specific metadata field', function () {
             var length;
 
-            $scope.document = {
-                fields: {
-                    a: {
-                        values: ["first", "second"]
-                    }
+            $scope.document.fields = {
+                a: {
+                    values: ["first", "second"]
                 }
             };
+
             $scope.document.dirty = function () { };
             length = $scope.document.fields.a.values.length;
 
@@ -449,13 +447,11 @@ describe('controller: AnnotateController', function () {
         it('requiredFieldsPresent should return a boolean', function () {
             var response;
 
-            $scope.document = {
-                fields: {
-                    a: {
-                        label: {
-                            profile: {
-                                required: true
-                            }
+            $scope.document.fields = {
+                a: {
+                    label: {
+                        profile: {
+                            required: true
                         }
                     }
                 }
@@ -465,13 +461,12 @@ describe('controller: AnnotateController', function () {
 
             expect(response).toBe(true);
 
-            $scope.document = {
-                fields: {
-                    a: {
-                        label: {
-                            profile: {
-                                required: false
-                            }
+            $scope.document.mock(dataDocument2);
+            $scope.document.fields = {
+                a: {
+                    label: {
+                        profile: {
+                            required: false
                         }
                     }
                 }
@@ -497,7 +492,6 @@ describe('controller: AnnotateController', function () {
         it('save should save a document', function () {
             $scope.openModal = function () { };
             $scope.closeModal = function () { };
-            $scope.document = new mockDocument($q);
 
             spyOn($scope, 'openModal');
             spyOn($scope.document, 'save').and.callThrough();
@@ -512,7 +506,6 @@ describe('controller: AnnotateController', function () {
         it('submit should submit a document as annotated', function () {
             $scope.openModal = function () { };
             $scope.closeModal = function () { };
-            $scope.document = new mockDocument($q);
 
             spyOn($scope, 'openModal');
             spyOn($scope.document, 'save').and.callThrough();
@@ -530,8 +523,6 @@ describe('controller: AnnotateController', function () {
 
         it('submitRejection should save a document as rejected', function () {
             var notes = "notes";
-
-            $scope.document = new mockDocument($q);
 
             spyOn($scope.document, 'save').and.callThrough();
             spyOn(AlertService, "add");
@@ -597,6 +588,53 @@ describe('controller: AnnotateController', function () {
             // @todo
             //$scope.publishingEvents.push(new mockPublishingEvent($q));
             //expect($scope.publishingEvents.length).toBe(0);
+        });
+    });
+
+    describe('Is the controller initialized as expected', function () {
+        it('should be process field.values', function () {
+            var document = new mockDocument($q);
+            document.mock(dataDocument2);
+            document.fields[0].values = [];
+
+            DocumentRepo.update(document);
+            $scope.$digest();
+
+            initializeController();
+            expect(controller).toBeDefined();
+        });
+
+        it('should be redirect on disallowed document statuses', function () {
+            var originalPath = $location.path;
+            spyOn($location, "path").and.callThrough();
+
+            initializeController();
+            expect(controller).toBeDefined();
+            expect($location.path).not.toHaveBeenCalled();
+
+            $location.path = originalPath;
+            spyOn($location, "path").and.callThrough();
+
+            initializeController({
+                $routeParams: {
+                  projectKey: 'Project 001',
+                  documentKey: 'Document 001'
+                }
+            });
+            expect(controller).toBeDefined();
+            expect($location.path).toHaveBeenCalled();
+
+            $location.path = originalPath;
+            spyOn($location, "path").and.callThrough();
+
+            initializeController({
+                $routeParams: {
+                  projectKey: 'Project 002',
+                  documentKey: 'Document 003'
+                }
+            });
+            expect(controller).toBeDefined();
+            expect($location.path).toHaveBeenCalled();
         });
     });
 

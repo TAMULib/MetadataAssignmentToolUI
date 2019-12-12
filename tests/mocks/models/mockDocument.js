@@ -13,16 +13,16 @@ var dataDocument1 = {
     ],
     name: "Document 001",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_1",
     project: "Project 001",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Open"
 };
 
 var dataDocument2 = {
     id: 2,
-    annotator: "",
+    annotator: "Jack Daniels (123456789)",
     fields: [
         {
             id: 2,
@@ -38,11 +38,11 @@ var dataDocument2 = {
     ],
     name: "Document 002",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_2",
     project: "Project 001",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Assigned"
 };
 
 var dataDocument3 = {
@@ -51,11 +51,11 @@ var dataDocument3 = {
     fields: [],
     name: "Document 003",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_3",
     project: "Project 002",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Published"
 };
 
 var dataDocument4 = {
@@ -64,11 +64,11 @@ var dataDocument4 = {
     fields: [],
     name: "Document 004",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_4",
     project: "Project 003",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Assigned"
 };
 
 var dataDocument5 = {
@@ -77,24 +77,24 @@ var dataDocument5 = {
     fields: [],
     name: "Document 005",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_5",
     project: "Project 003",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Open"
 };
 
 var dataDocument6 = {
     id: 6,
-    annotator: "",
+    annotator: "Jack Daniels (123456789)",
     fields: [],
     name: "Document 006",
     notes: "",
-    path: "",
+    path: "/projects/mock/mocked_6",
     project: "Project 004",
     publishedLocations: [],
     publishing: false,
-    status: ""
+    status: "Requires Curation"
 };
 
 var mockDocument = function($q) {
