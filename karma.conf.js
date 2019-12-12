@@ -3,7 +3,7 @@ module.exports = function (config) {
 
         preprocessors: {
             "app/!(node_modules)/**/*.js": "coverage",
-            '**/*.html': ['ng-html2js']
+            "app/views/**/*.html": ["ng-html2js"]
         },
 
         reporters: ['progress', 'coverage'],
@@ -11,7 +11,6 @@ module.exports = function (config) {
         basePath: './',
 
         files: [
-
             'app/config/appConfig.js',
             'app/config/apiMapping.js',
 
@@ -57,9 +56,11 @@ module.exports = function (config) {
 
             'app/directives/**/*.js',
 
+            'app/filters/**/*.js',
+
             'app/repo/**/*.js',
 
-            'app/services/**/*.js',
+            //'app/services/**/*.js',
 
             'app/model/**/*.js',
 
@@ -87,6 +88,11 @@ module.exports = function (config) {
             'karma-junit-reporter',
             'karma-ng-html2js-preprocessor'
         ],
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: "app/",
+            moduleName: "templates"
+        },
 
         coverageReporter: {
             type: "lcov",

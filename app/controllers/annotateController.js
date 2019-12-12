@@ -1,4 +1,4 @@
-metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo) {
+metadataTool.controller('AnnotateController', function ($controller, $location, $routeParams, $q, $scope, $timeout, AlertService, ControlledVocabularyRepo, DocumentRepo, ResourceRepo, StorageService, UserService, ProjectRepositoryRepo, PublishingEvent, ApiResponseActions, WsApi) {
 
     angular.extend(this, $controller('AbstractController', {
         $scope: $scope
@@ -17,6 +17,8 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
     $scope.action = $routeParams.action;
 
     $scope.loadingText = "Loading...";
+
+    $scope.publishingEvents = [];
 
     var types = appConfig.contentMap;
 
@@ -39,8 +41,8 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
                     var setting = settings[i];
                     if (setting.key === key) {
                         return setting;
-                    }
-                }
+            }
+        }
             }
         };
 
@@ -93,6 +95,10 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
             });
         };
 
+        $scope.cannotPublish = function () {
+            return $scope.document.publishing === true;
+        };
+
         $scope.accept = function () {
             $scope.loadingText = "Accepting...";
             $scope.openModal('#pleaseWaitDialog');
@@ -106,9 +112,7 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
 
         $scope.push = function () {
             $scope.loadingText = "Pushing document to registered repositories...";
-            $scope.openModal('#pleaseWaitDialog');
             $scope.document.push().then(function (data) {
-                $scope.closeModal();
                 $scope.action = 'view';
             });
         };
@@ -227,6 +231,26 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
             $scope.document.getSuggestions().then(function (response) {
                 var payload = angular.fromJson(response.body).payload;
                 $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
+            });
+
+            WsApi.listen("/channel/publishing/document/" + $scope.document.id).then(null, null, function (rawResponse) {
+                var response = angular.fromJson(rawResponse.body);
+
+                if (response.meta.action === "BROADCAST") {
+                  if (response.payload.PublishingEvent) {
+                    $scope.publishingEvents.unshift(response.payload.PublishingEvent);
+                  }
+                }
+            });
+
+            DocumentRepo.listen([ApiResponseActions.UPDATE, ApiResponseActions.DELETE], function (response) {
+                if (response.meta.action === "UPDATE") {
+                  if (response.payload && response.payload.Document && response.payload.Document.publishing === false && $scope.publishingEvents.length) {
+                    $scope.publishingEvents.length = 0;
+                  }
+                } else if (response.meta.action === "DELETE") {
+                  $scope.publishingEvents.length = 0;
+                }
             });
         } else {
             var url = $location.path().split("/");

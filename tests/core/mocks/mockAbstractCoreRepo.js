@@ -45,6 +45,8 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
 
     repo.mock(mockDataArray);
 
+    repo.scaffold = {};
+
     repo.acceptChangesPending = function () {
     };
 
@@ -150,6 +152,30 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         return filteredData;
     };
 
+    repo.getScaffold = function(defaults) {
+        var updatedScaffold = repo.scaffold;
+
+        if (!defaults) defaults = {};
+        angular.extend(updatedScaffold, defaults);
+
+        return updatedScaffold;
+    };
+
+    repo.isInScaffold = function(property) {
+        var propertyFound = false;
+        var scaffoldKeys = Object.keys(repo.scaffold);
+
+        for (var i in scaffoldKeys) {
+            var scaffoldProperty = scaffoldKeys[i];
+            if (scaffoldProperty === property) {
+                propertyFound = true;
+                break;
+            }
+        }
+
+        return propertyFound;
+    };
+
     repo.getContents = function () {
         return repo.mockCopy(repo.mockedList);
     };
@@ -189,7 +215,7 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         return payloadPromise($q.defer());
     };
 
-    repo.ready = function () {
+    repo.ready = function() {
         return payloadPromise($q.defer(), mockDataArray);
     };
 

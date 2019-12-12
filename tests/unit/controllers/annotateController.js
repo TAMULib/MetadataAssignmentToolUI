@@ -1,5 +1,5 @@
 describe('controller: AnnotateController', function () {
-    var $location, $q, $routeParams, $scope, $timeout, $window, AlertService, MockedUser, DocumentRepo, ProjectRepositoryRepo, WsApi, controller;
+    var $location, $q, $routeParams, $scope, $timeout, $window, AlertService, MockedUser, PublishingEvent, DocumentRepo, ProjectRepositoryRepo, WsApi, controller;
     var $stomp;
 
     var initializeVariables = function(settings) {
@@ -19,10 +19,11 @@ describe('controller: AnnotateController', function () {
     };
 
     var initializeController = function(settings) {
-        inject(function (_$controller_, _$http_, _$rootScope_, _$window_, _AlertService_, _ControlledVocabularyRepo_, _ModalService_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_) {
+        inject(function (_$controller_, _$http_, _$rootScope_, _$window_, _AlertService_, _ControlledVocabularyRepo_, _ModalService_, _PublishingEvent_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_) {
             $scope = _$rootScope_.$new();
 
             AlertService = _AlertService_;
+            PublishingEvent = _PublishingEvent_;
 
             sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
             sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
@@ -52,6 +53,7 @@ describe('controller: AnnotateController', function () {
                 DocumentRepo: DocumentRepo,
                 ModalService: _ModalService_,
                 ProjectRepositoryRepo: ProjectRepositoryRepo,
+                PublishingEvent: PublishingEvent,
                 RestApi: _RestApi_,
                 ResourceRepo: _ResourceRepo_,
                 StorageService: _StorageService_,
@@ -76,6 +78,7 @@ describe('controller: AnnotateController', function () {
         module('mock.modalService');
         module('mock.projectRepository');
         module('mock.projectRepositoryRepo');
+        module('mock.publishingEvent');
         module('mock.restApi');
         module('mock.resource');
         module('mock.resourceRepo');
@@ -125,6 +128,11 @@ describe('controller: AnnotateController', function () {
         it('addSuggestion should be defined', function () {
             expect($scope.addSuggestion).toBeDefined();
             expect(typeof $scope.addSuggestion).toEqual("function");
+        });
+
+        it('cannotPublish should be defined', function () {
+            expect($scope.cannotPublish).toBeDefined();
+            expect(typeof $scope.cannotPublish).toEqual("function");
         });
 
         it('delete should be defined', function () {
@@ -258,6 +266,26 @@ describe('controller: AnnotateController', function () {
             $scope.addSuggestion(field, suggestion);
 
             expect(field.values[0].value).toEqual("third");
+        });
+
+        it('cannotPublish should return a boolean', function () {
+          var response;
+          var document1 = new mockDocument($q);
+          var document2 = new mockDocument($q);
+          document1.publishing = false;
+          document2.publishing = true;
+
+          $scope.document = document1
+          response = $scope.cannotPublish();
+          expect(response).toBe(false);
+
+          $scope.document = document2
+          response = $scope.cannotPublish();
+          expect(response).toBe(true);
+
+          document2.publishing = "failsafe check";
+          response = $scope.cannotPublish();
+          expect(response).toBe(false);
         });
 
         it('delete should delete a document', function () {
@@ -404,6 +432,7 @@ describe('controller: AnnotateController', function () {
                     values: ["first", "second"]
                 }
             };
+
             $scope.document.dirty = function () { };
             length = $scope.document.fields.a.values.length;
 
@@ -506,6 +535,59 @@ describe('controller: AnnotateController', function () {
             expect($scope.document.status).toEqual("Rejected");
             expect($scope.document.notes).toBe(notes);
             expect($scope.document.save).toHaveBeenCalled();
+        });
+    });
+
+    describe("Do the listeners work as expected", function () {
+        it("Listen on '/channel/publishing/document/' should work as expected", function () {
+            var publishingEvent = new mockPublishingEvent($q);
+
+            WsApi.listen = function(path) {
+                var payload = {
+                    PublishingEvent: publishingEvent
+                };
+                return notifyPromise($timeout, $q.defer(), payload, null, null, "BROADCAST");
+            };
+
+            initializeController();
+            $scope.$digest();
+            $timeout.flush();
+
+            expect($scope.publishingEvents.length).toBe(1);
+            expect($scope.publishingEvents[0].id).toBe(publishingEvent.id);
+
+            WsApi.listen = function(path) {
+                var payload = {
+                    PublishingEvent: publishingEvent
+                };
+                return notifyPromise($timeout, $q.defer(), payload, null, null, "INVALID");
+            };
+
+            initializeController();
+            $scope.$digest();
+            $timeout.flush();
+
+            expect($scope.publishingEvents.length).toBe(0);
+
+            WsApi.listen = function(path) {
+                var payload = {
+                };
+                return notifyPromise($timeout, $q.defer(), payload, null, null, "BROADCAST");
+            };
+
+            initializeController();
+            $scope.$digest();
+            $timeout.flush();
+
+            expect($scope.publishingEvents.length).toBe(0);
+        });
+
+        it("Listen on '/channel/document' should work as expected", function () {
+            var document = new mockDocument($q);
+
+            // @todo
+            //$scope.publishingEvents.push(new mockPublishingEvent($q));
+            //expect($scope.publishingEvents.length).toBe(0);
         });
     });
 
