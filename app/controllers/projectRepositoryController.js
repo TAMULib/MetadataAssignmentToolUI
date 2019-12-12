@@ -36,7 +36,7 @@ metadataTool.controller('ProjectRepositoryController', function ($controller, $s
         $scope.create = function(newRepository,newRepositorySettings) {
             var settings = [];
             angular.forEach(newRepositorySettings, function(valueObj,key) {
-                this.push({"key":key,"values": [valueObj.value]});
+                this.push({"key":key,"protect":valueObj.protect,"values": [valueObj.value]});
             },settings);
             newRepository.settings = settings;
             manageRepository('create',newRepository).then(function() {

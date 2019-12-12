@@ -16,7 +16,8 @@
     <ul class="list-group" ng-show="newRepository.type">
       <li class="list-group-item" ng-repeat="settingKey in types[newRepository.type] track by $index">
         <label>{{settingKey}}</label>
-        <input class="form-control" type="{{settingKey == 'password' ? 'password':'text'}}" name="settingValue" ng-model="newRepositorySettings[settingKey].value" />
+        <input class="form-control" type="{{newRepositorySettings[settingKey].protect ? 'password':'text'}}" name="settingValue" ng-model="newRepositorySettings[settingKey].value" />
+        <div><input type="checkbox" name="protect" value="true" ng-model="newRepositorySettings[settingKey].protect" /> Protect value?</div>
       </li>
     </ul>
   </form>
