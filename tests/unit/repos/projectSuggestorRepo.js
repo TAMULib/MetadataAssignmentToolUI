@@ -1,42 +1,42 @@
 describe('model: ProjectSuggestorRepo', function () {
-    var rootScope, scope, WsApi, repo;
+  var rootScope, scope, WsApi, repo;
 
-    beforeEach(function() {
-        module('core');
-        module('metadataTool');
-        module('mock.wsApi');
+  beforeEach(function() {
+    module('core');
+    module('metadataTool');
+    module('mock.wsApi');
 
-        inject(function ($rootScope, _WsApi_, _ProjectSuggestorRepo_) {
-            rootScope = $rootScope;
-            scope = $rootScope.$new();
+    inject(function ($rootScope, _WsApi_, _ProjectSuggestorRepo_) {
+      rootScope = $rootScope;
+      scope = $rootScope.$new();
 
-            WsApi = _WsApi_;
+      WsApi = _WsApi_;
 
-            repo = _ProjectSuggestorRepo_;
-        });
+      repo = _ProjectSuggestorRepo_;
     });
+  });
 
-    describe('Is the repo defined', function () {
-        it('should be defined', function () {
-            expect(repo).toBeDefined();
-        });
+  describe('Is the repo defined', function () {
+    it('should be defined', function () {
+      expect(repo).toBeDefined();
     });
+  });
 
-    describe('Are the repo methods defined', function () {
-        it('getTypes should be defined', function () {
-            expect(repo.getTypes).toBeDefined();
-            expect(typeof repo.getTypes).toEqual("function");
-        });
+  describe('Are the repo methods defined', function () {
+    it('getTypes should be defined', function () {
+      expect(repo.getTypes).toBeDefined();
+      expect(typeof repo.getTypes).toEqual("function");
     });
+  });
 
-    describe('Do the repo methods work as expected', function () {
-        it('delete should perform an API fetch', function () {
-            spyOn(WsApi, 'fetch').and.callThrough();
+  describe('Do the repo methods work as expected', function () {
+    it('delete should perform an API fetch', function () {
+      spyOn(WsApi, 'fetch').and.callThrough();
 
-            repo.getTypes();
-            scope.$digest();
+      repo.getTypes();
+      scope.$digest();
 
-            expect(WsApi.fetch).toHaveBeenCalled();
-        });
+      expect(WsApi.fetch).toHaveBeenCalled();
     });
+  });
 });

@@ -1,46 +1,46 @@
 angular.module('mock.userService', []).service('UserService', function ($q) {
-    var service = mockService($q, mockUser);
-    var currentUser;
+  var service = mockService($q, mockUser);
+  var currentUser;
 
-    service.mockCurrentUser = function(toMock) {
-        delete sessionStorage.role;
+  service.mockCurrentUser = function(toMock) {
+    delete sessionStorage.role;
 
-        if (toMock === undefined || toMock === null) {
-            currentUser = null;
-        }
-        else {
-            currentUser = service.mockModel(toMock);
-            sessionStorage.role = toMock.role;
-        }
-    };
+    if (toMock === undefined || toMock === null) {
+      currentUser = null;
+    }
+    else {
+      currentUser = service.mockModel(toMock);
+      sessionStorage.role = toMock.role;
+    }
+  };
 
-    service.mockCurrentUser(dataUser1);
+  service.mockCurrentUser(dataUser1);
 
-    service.fetchUser = function () {
-        delete sessionStorage.role;
-        sessionStorage.role = currentUser.role;
-        return payloadPromise($q.defer(), currentUser);
-    };
+  service.fetchUser = function () {
+    delete sessionStorage.role;
+    sessionStorage.role = currentUser.role;
+    return payloadPromise($q.defer(), currentUser);
+  };
 
-    service.getCurrentUser = function () {
-        return currentUser;
-    };
+  service.getCurrentUser = function () {
+    return currentUser;
+  };
 
-    service.setCurrentUser = function (user) {
-        currentUser = mockModel(user);
+  service.setCurrentUser = function (user) {
+    currentUser = mockModel(user);
 
-        sessionStorage.role = toMock.role;
-    };
+    sessionStorage.role = toMock.role;
+  };
 
-    service.userEvents = function () {
-        var defer = $q.defer();
-        defer.notify("RECEIVED");
-        return payloadPromise(defer);
-    };
+  service.userEvents = function () {
+    var defer = $q.defer();
+    defer.notify("RECEIVED");
+    return payloadPromise(defer);
+  };
 
-    service.userReady = function () {
-        return payloadPromise($q.defer(), currentUser);
-    };
+  service.userReady = function () {
+    return payloadPromise($q.defer(), currentUser);
+  };
 
-    return service;
+  return service;
 });
