@@ -1,8 +1,8 @@
 var dataAssumedControl1 = {
   id: 1,
-  button: 'Unassume',
-  netid: '',
-  status: '',
+  button: "Unassume",
+  netid: "",
+  status: "",
   user: {
     firstName: "Jack",
     lastName: "Daniels",
@@ -13,9 +13,9 @@ var dataAssumedControl1 = {
 
 var dataAssumedControl2 = {
   id: 2,
-  button: 'Unassume',
-  netid: '',
-  status: '',
+  button: "Unassume",
+  netid: "",
+  status: "",
   user: {
     firstName: "Jill",
     lastName: "Daniels",
@@ -26,9 +26,9 @@ var dataAssumedControl2 = {
 
 var dataAssumedControl3 = {
   id: 3,
-  button: 'Assume',
-  netid: '',
-  status: '',
+  button: "Assume",
+  netid: "",
+  status: "",
   user: {}
 };
 
@@ -69,4 +69,4 @@ var mockAssumedControl = function($q) {
   return model;
 };
 
-angular.module('mock.assumedControl', []).service('AssumedControl', mockAssumedControl);
+angular.module("mock.assumedControl", []).service("AssumedControl", mockAssumedControl);

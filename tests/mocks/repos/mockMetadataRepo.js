@@ -16,8 +16,8 @@ var dataMetadataRepo3 = [
   dataMetadata2
 ];
 
-angular.module('mock.metadataRepo', []).service('MetadataRepo', function($q) {
-  var repo = mockRepo('MetadataRepo', $q, mockMetadata, dataMetadataRepo1);
+angular.module("mock.metadataRepo", []).service("MetadataRepo", function($q) {
+  var repo = mockRepo("MetadataRepo", $q, mockMetadata, dataMetadataRepo1);
 
   repo.export = function (project, format) {
     return payloadPromise($q.defer(), {});

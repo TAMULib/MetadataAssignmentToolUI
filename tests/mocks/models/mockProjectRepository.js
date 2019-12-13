@@ -4,12 +4,12 @@ var dataProjectRepository1 = {
   type: "FEDORA_PCDM",
   settings: [
     {
-      key: 'repoUrl',
-      values: ['localhost-repo1']
+      key: "repoUrl",
+      values: ["localhost-repo1"]
     },
     {
-      key: 'restPath',
-      values: ['rest']
+      key: "restPath",
+      values: ["rest"]
     }
   ]
 };
@@ -20,12 +20,12 @@ var dataProjectRepository2 = {
   type: "DSPACE",
   settings: [
     {
-      key: 'repoUrl',
-      values: ['localhost-repo2']
+      key: "repoUrl",
+      values: ["localhost-repo2"]
     },
     {
-      key: 'repoContextPath',
-      values: ['rest']
+      key: "repoContextPath",
+      values: ["rest"]
     }
   ]
 };
@@ -36,12 +36,12 @@ var dataProjectRepository3 = {
   type: "DSPACE",
   settings: [
     {
-      key: 'repoUrl',
-      values: ['localhost-repo3']
+      key: "repoUrl",
+      values: ["localhost-repo3"]
     },
     {
-      key: 'repoContextPath',
-      values: ['rest']
+      key: "repoContextPath",
+      values: ["rest"]
     }
   ]
 };
@@ -52,5 +52,5 @@ var mockProjectRepository = function($q) {
   return model;
 };
 
-angular.module('mock.projectRepository', []).service('ProjectRepository', mockProjectRepository);
+angular.module("mock.projectRepository", []).service("ProjectRepository", mockProjectRepository);
 

@@ -1,4 +1,4 @@
-describe('controller: AnnotateController', function () {
+describe("controller: AnnotateController", function () {
   var $location, $q, $routeParams, $scope, $timeout, $window, AlertService, MockedUser, PublishingEvent, DocumentRepo, ProjectRepositoryRepo, WsApi, controller;
   var $stomp;
 
@@ -35,13 +35,13 @@ describe('controller: AnnotateController', function () {
       }
       else {
         angular.extend($routeParams, {
-          projectKey: 'Project 001',
-          documentKey: 'Document 002',
+          projectKey: "Project 001",
+          documentKey: "Document 002",
           action: "annotate"
         });
       }
 
-      controller = _$controller_('AnnotateController', {
+      controller = _$controller_("AnnotateController", {
         $http: _$http_,
         $location: $location,
         $q: $q,
@@ -71,26 +71,26 @@ describe('controller: AnnotateController', function () {
 
   beforeEach(function() {
     module("core");
-    module('metadataTool');
-    module('mock.alertService');
-    module('mock.controlledVocabularyRepo');
-    module('mock.document');
-    module('mock.documentRepo');
-    module('mock.modalService');
-    module('mock.projectRepository');
-    module('mock.projectRepositoryRepo');
-    module('mock.publishingEvent');
-    module('mock.restApi');
-    module('mock.resource');
-    module('mock.resourceRepo');
-    module('mock.storageService');
+    module("metadataTool");
+    module("mock.alertService");
+    module("mock.controlledVocabularyRepo");
+    module("mock.document");
+    module("mock.documentRepo");
+    module("mock.modalService");
+    module("mock.projectRepository");
+    module("mock.projectRepositoryRepo");
+    module("mock.publishingEvent");
+    module("mock.restApi");
+    module("mock.resource");
+    module("mock.resourceRepo");
+    module("mock.storageService");
     module("mock.user", function($provide) {
       var User = function() {
       return MockedUser;
       };
       $provide.value("User", User);
     });
-    module('mock.userService');
+    module("mock.userService");
     module("mock.wsApi");
 
     installPromiseMatchers();
@@ -98,125 +98,125 @@ describe('controller: AnnotateController', function () {
     initializeController();
   });
 
-  describe('Is the controller defined', function () {
-    it('should be defined for admin', function () {
+  describe("Is the controller defined", function () {
+    it("should be defined for admin", function () {
       initializeController({ role: "ROLE_ADMIN" });
       expect(controller).toBeDefined();
     });
 
-    it('should be defined for manager', function () {
+    it("should be defined for manager", function () {
       initializeController({ role: "ROLE_MANAGER" });
       expect(controller).toBeDefined();
     });
 
-    it('should be defined for anonymous', function () {
+    it("should be defined for anonymous", function () {
       initializeController({ role: "ROLE_ANONYMOUS" });
       expect(controller).toBeDefined();
     });
   });
 
-  describe('Are the $scope methods defined', function () {
-    it('accept should be defined', function () {
+  describe("Are the $scope methods defined", function () {
+    it("accept should be defined", function () {
       expect($scope.accept).toBeDefined();
       expect(typeof $scope.accept).toEqual("function");
     });
 
-    it('addMetadataField should be defined', function () {
+    it("addMetadataField should be defined", function () {
       expect($scope.addMetadataField).toBeDefined();
       expect(typeof $scope.addMetadataField).toEqual("function");
     });
 
-    it('addSuggestion should be defined', function () {
+    it("addSuggestion should be defined", function () {
       expect($scope.addSuggestion).toBeDefined();
       expect(typeof $scope.addSuggestion).toEqual("function");
     });
 
-    it('cannotPublish should be defined', function () {
+    it("cannotPublish should be defined", function () {
       expect($scope.cannotPublish).toBeDefined();
       expect(typeof $scope.cannotPublish).toEqual("function");
     });
 
-    it('delete should be defined', function () {
+    it("delete should be defined", function () {
       expect($scope.delete).toBeDefined();
       expect(typeof $scope.delete).toEqual("function");
     });
 
-    it('hasFileType should be defined', function () {
+    it("hasFileType should be defined", function () {
       expect($scope.hasFileType).toBeDefined();
       expect(typeof $scope.hasFileType).toEqual("function");
     });
 
-    it('managerAnnotating should be defined', function () {
+    it("managerAnnotating should be defined", function () {
       expect($scope.managerAnnotating).toBeDefined();
       expect(typeof $scope.managerAnnotating).toEqual("function");
     });
 
-    it('managerReviewing should be defined', function () {
+    it("managerReviewing should be defined", function () {
       expect($scope.managerReviewing).toBeDefined();
       expect(typeof $scope.managerReviewing).toEqual("function");
     });
 
-    it('getControlledVocabulary should be defined', function () {
+    it("getControlledVocabulary should be defined", function () {
       expect($scope.getControlledVocabulary).toBeDefined();
       expect(typeof $scope.getControlledVocabulary).toEqual("function");
     });
 
-    it('getFilesOfType should be defined', function () {
+    it("getFilesOfType should be defined", function () {
       expect($scope.getFilesOfType).toBeDefined();
       expect(typeof $scope.getFilesOfType).toEqual("function");
     });
 
-    it('getIIIFUrls should be defined', function () {
+    it("getIIIFUrls should be defined", function () {
       expect($scope.getIIIFUrls).toBeDefined();
       expect(typeof $scope.getIIIFUrls).toEqual("function");
     });
 
-    it('getRepositoryById should be defined', function () {
+    it("getRepositoryById should be defined", function () {
       expect($scope.getRepositoryById).toBeDefined();
       expect(typeof $scope.getRepositoryById).toEqual("function");
     });
 
-    it('push should be defined', function () {
+    it("push should be defined", function () {
       expect($scope.push).toBeDefined();
       expect(typeof $scope.push).toEqual("function");
     });
 
-    it('removeMetadataField should be defined', function () {
+    it("removeMetadataField should be defined", function () {
       expect($scope.removeMetadataField).toBeDefined();
       expect(typeof $scope.removeMetadataField).toEqual("function");
     });
 
-    it('requiredFieldsPresent should be defined', function () {
+    it("requiredFieldsPresent should be defined", function () {
       expect($scope.requiredFieldsPresent).toBeDefined();
       expect(typeof $scope.requiredFieldsPresent).toEqual("function");
     });
 
-    it('requiresCuration should be defined', function () {
+    it("requiresCuration should be defined", function () {
       expect($scope.requiresCuration).toBeDefined();
       expect(typeof $scope.requiresCuration).toEqual("function");
     });
 
-    it('save should be defined', function () {
+    it("save should be defined", function () {
       expect($scope.save).toBeDefined();
       expect(typeof $scope.save).toEqual("function");
     });
 
-    it('submit should be defined', function () {
+    it("submit should be defined", function () {
       expect($scope.submit).toBeDefined();
       expect(typeof $scope.submit).toEqual("function");
     });
 
-    it('submitRejection should be defined', function () {
+    it("submitRejection should be defined", function () {
       expect($scope.submitRejection).toBeDefined();
       expect(typeof $scope.submitRejection).toEqual("function");
     });
   });
 
-  describe('Do the $scope methods work as expected', function () {
-    it('accept should submit a document as accepted', function () {
+  describe("Do the $scope methods work as expected", function () {
+    it("accept should submit a document as accepted", function () {
       delete $scope.document.status;
 
-      spyOn($scope.document, 'save').and.callThrough();
+      spyOn($scope.document, "save").and.callThrough();
 
       $scope.accept();
       $scope.$digest();
@@ -225,11 +225,11 @@ describe('controller: AnnotateController', function () {
       expect($scope.document.save).toHaveBeenCalled();
     });
 
-    it('addMetadataField should add a new field value', function () {
+    it("addMetadataField should add a new field value", function () {
       var field = {
         id: 1,
         label: {
-          profile: { defaultValue: '' },
+          profile: { defaultValue: "" },
           value: "Mock Field"
         },
         values: [{
@@ -243,11 +243,11 @@ describe('controller: AnnotateController', function () {
       expect(field.values.length).toEqual(2);
     });
 
-    it('addSuggestion should add a suggestion', function () {
+    it("addSuggestion should add a suggestion", function () {
       var field = {
         id: 1,
         label: {
-          profile: { defaultValue: '' },
+          profile: { defaultValue: "" },
           value: "Mock Field"
         },
         values: [{
@@ -269,7 +269,7 @@ describe('controller: AnnotateController', function () {
       expect(field.values[0].value).toEqual("third");
     });
 
-    it('cannotPublish should return a boolean', function () {
+    it("cannotPublish should return a boolean", function () {
       var response;
       var document1 = new mockDocument($q);
       var document2 = new mockDocument($q);
@@ -289,10 +289,10 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(false);
     });
 
-    it('delete should delete a document', function () {
+    it("delete should delete a document", function () {
       var document = $scope.document;
 
-      spyOn(document, 'delete').and.callThrough();
+      spyOn(document, "delete").and.callThrough();
 
       $scope.delete(document);
       $scope.$digest();
@@ -301,7 +301,7 @@ describe('controller: AnnotateController', function () {
       expect(document.delete).toHaveBeenCalled();
     });
 
-    it('hasFileType should return a boolean', function () {
+    it("hasFileType should return a boolean", function () {
       var response;
 
       response = $scope.hasFileType("text");
@@ -316,10 +316,10 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(false);
     });
 
-    it('managerAnnotating should return a boolean', function () {
+    it("managerAnnotating should return a boolean", function () {
       var response;
 
-      $routeParams.action = 'annotate';
+      $routeParams.action = "annotate";
       response = $scope.managerAnnotating();
 
       expect(response).toBe(true);
@@ -330,10 +330,10 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(false);
     });
 
-    it('managerReviewing should return a boolean', function () {
+    it("managerReviewing should return a boolean", function () {
       var response;
 
-      $routeParams.action = 'review';
+      $routeParams.action = "review";
       response = $scope.managerReviewing();
 
       expect(response).toBe(true);
@@ -344,7 +344,7 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(false);
     });
 
-    it('getControlledVocabulary should return a controlled vocabulary', function () {
+    it("getControlledVocabulary should return a controlled vocabulary", function () {
       var response;
 
       response = $scope.getControlledVocabulary(0);
@@ -356,24 +356,24 @@ describe('controller: AnnotateController', function () {
       expect(response).toEqual([]);
     });
 
-    it('getFilesOfType should return a list of files', function () {
+    it("getFilesOfType should return a list of files", function () {
       var response;
 
-      response = $scope.getFilesOfType('text');
+      response = $scope.getFilesOfType("text");
 
       expect(response.length).toEqual(1);
-      expect(response[0].name).toEqual('Resource 001');
-      expect(response[0].document).toEqual('Document 001');
-      expect(response[0].mimeType).toEqual('text/plain');
+      expect(response[0].name).toEqual("Resource 001");
+      expect(response[0].document).toEqual("Document 001");
+      expect(response[0].mimeType).toEqual("text/plain");
 
 
       delete $scope.resources;
-      response = $scope.getFilesOfType('text');
+      response = $scope.getFilesOfType("text");
 
       expect(response).toEqual([]);
     });
 
-    it('getIIIFUrls should return a list of URLs', function () {
+    it("getIIIFUrls should return a list of URLs", function () {
       var response;
 
       $scope.document = new mockDocument($q);
@@ -399,7 +399,7 @@ describe('controller: AnnotateController', function () {
       // expect(response.length).toEqual(6);
     });
 
-    it('getRepositoryById should return a repository', function () {
+    it("getRepositoryById should return a repository", function () {
       var response;
 
       for (var i in $scope.repositories) {
@@ -414,10 +414,10 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(undefined);
     });
 
-    it('push should push a document', function () {
+    it("push should push a document", function () {
       delete $scope.document.status;
 
-      spyOn($scope.document, 'push').and.callThrough();
+      spyOn($scope.document, "push").and.callThrough();
 
       $scope.push();
       $scope.$digest();
@@ -425,7 +425,7 @@ describe('controller: AnnotateController', function () {
       expect($scope.document.push).toHaveBeenCalled();
     });
 
-    it('removeMetadataField should remove a specific metadata field', function () {
+    it("removeMetadataField should remove a specific metadata field", function () {
       var length;
 
       $scope.document.fields = {
@@ -437,7 +437,7 @@ describe('controller: AnnotateController', function () {
       $scope.document.dirty = function () { };
       length = $scope.document.fields.a.values.length;
 
-      spyOn($scope.document, 'dirty');
+      spyOn($scope.document, "dirty");
 
       $scope.removeMetadataField($scope.document.fields.a, 0);
 
@@ -445,7 +445,7 @@ describe('controller: AnnotateController', function () {
       expect($scope.document.dirty).toHaveBeenCalled();
     });
 
-    it('requiredFieldsPresent should return a boolean', function () {
+    it("requiredFieldsPresent should return a boolean", function () {
       var response;
 
       $scope.document.fields = {
@@ -478,10 +478,10 @@ describe('controller: AnnotateController', function () {
       expect(response).toBe(false);
     });
 
-    it('requiresCuration should submit a document as requires curation', function () {
+    it("requiresCuration should submit a document as requires curation", function () {
       delete $scope.document.status;
 
-      spyOn($scope.document, 'save').and.callThrough();
+      spyOn($scope.document, "save").and.callThrough();
       spyOn($location, "path");
 
       $scope.requiresCuration();
@@ -490,12 +490,12 @@ describe('controller: AnnotateController', function () {
       expect($scope.document.save).toHaveBeenCalled();
     });
 
-    it('save should save a document', function () {
+    it("save should save a document", function () {
       $scope.openModal = function () { };
       $scope.closeModal = function () { };
 
-      spyOn($scope, 'openModal');
-      spyOn($scope.document, 'save').and.callThrough();
+      spyOn($scope, "openModal");
+      spyOn($scope.document, "save").and.callThrough();
 
       $scope.save();
       $scope.$digest();
@@ -504,12 +504,12 @@ describe('controller: AnnotateController', function () {
       expect($scope.openModal).toHaveBeenCalled();
     });
 
-    it('submit should submit a document as annotated', function () {
+    it("submit should submit a document as annotated", function () {
       $scope.openModal = function () { };
       $scope.closeModal = function () { };
 
-      spyOn($scope, 'openModal');
-      spyOn($scope.document, 'save').and.callThrough();
+      spyOn($scope, "openModal");
+      spyOn($scope.document, "save").and.callThrough();
       spyOn($location, "path");
 
       $scope.submit();
@@ -522,10 +522,10 @@ describe('controller: AnnotateController', function () {
       expect($location.path).toHaveBeenCalled();
     });
 
-    it('submitRejection should save a document as rejected', function () {
+    it("submitRejection should save a document as rejected", function () {
       var notes = "notes";
 
-      spyOn($scope.document, 'save').and.callThrough();
+      spyOn($scope.document, "save").and.callThrough();
       spyOn(AlertService, "add");
       spyOn($location, "path");
 
@@ -592,8 +592,8 @@ describe('controller: AnnotateController', function () {
     });
   });
 
-  describe('Is the controller initialized as expected', function () {
-    it('should be process field.values', function () {
+  describe("Is the controller initialized as expected", function () {
+    it("should be process field.values", function () {
       var document = new mockDocument($q);
       document.mock(dataDocument2);
       document.fields[0].values = [];
@@ -605,15 +605,15 @@ describe('controller: AnnotateController', function () {
       expect(controller).toBeDefined();
     });
 
-    it('should be view action on disallowed document statuses', function () {
+    it("should be view action on disallowed document statuses", function () {
       initializeController();
       expect(controller).toBeDefined();
       expect($scope.action).toBe("annotate");
 
       initializeController({
         $routeParams: {
-          projectKey: 'Project 001',
-          documentKey: 'Document 001'
+          projectKey: "Project 001",
+          documentKey: "Document 001"
         }
       });
       expect(controller).toBeDefined();
@@ -621,8 +621,8 @@ describe('controller: AnnotateController', function () {
 
       initializeController({
         $routeParams: {
-          projectKey: 'Project 002',
-          documentKey: 'Document 003'
+          projectKey: "Project 002",
+          documentKey: "Document 003"
         }
       });
       expect(controller).toBeDefined();

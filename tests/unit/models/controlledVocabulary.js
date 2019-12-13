@@ -1,10 +1,10 @@
-describe('model: ControlledVocabulary', function () {
+describe("model: ControlledVocabulary", function () {
   var model, rootScope, scope, WsApi;
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
-    module('mock.wsApi');
+    module("core");
+    module("metadataTool");
+    module("mock.wsApi");
 
     inject(function ($rootScope, ControlledVocabulary, _WsApi_) {
       rootScope = $rootScope;
@@ -16,8 +16,8 @@ describe('model: ControlledVocabulary', function () {
     });
   });
 
-  describe('Is the model defined', function () {
-    it('should be defined', function () {
+  describe("Is the model defined", function () {
+    it("should be defined", function () {
       expect(model).toBeDefined();
     });
   });

@@ -1,4 +1,4 @@
-describe('controller: ExportController', function () {
+describe("controller: ExportController", function () {
 
   var controller, q, scope, ProjectRepo;
 
@@ -11,7 +11,7 @@ describe('controller: ExportController', function () {
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
 
-      controller = $controller('ExportController', {
+      controller = $controller("ExportController", {
         $scope: scope,
         $window: $window,
         AlertService: _AlertService_,
@@ -31,55 +31,55 @@ describe('controller: ExportController', function () {
   };
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
-    module('mock.alertService');
-    module('mock.metadataRepo');
-    module('mock.modalService');
-    module('mock.projectRepo');
-    module('mock.restApi');
-    module('mock.storageService');
-    module('mock.wsApi');
+    module("core");
+    module("metadataTool");
+    module("mock.alertService");
+    module("mock.metadataRepo");
+    module("mock.modalService");
+    module("mock.projectRepo");
+    module("mock.restApi");
+    module("mock.storageService");
+    module("mock.wsApi");
 
     installPromiseMatchers();
     initializeController();
   });
 
-  describe('Is the controller defined', function () {
-    it('should be defined for admin', function () {
+  describe("Is the controller defined", function () {
+    it("should be defined for admin", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for manager', function () {
+    it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for anonymous', function () {
+    it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
     });
   });
 
-  describe('Are the scope methods defined', function () {
-    it('export should be defined', function () {
+  describe("Are the scope methods defined", function () {
+    it("export should be defined", function () {
       expect(scope.export).toBeDefined();
       expect(typeof scope.export).toEqual("function");
     });
-    it('unlock should be defined', function () {
+    it("unlock should be defined", function () {
       expect(scope.unlock).toBeDefined();
       expect(typeof scope.unlock).toEqual("function");
     });
   });
 
-  describe('Do the scope methods work as expected', function () {
-    it('export should perform an export', function () {
+  describe("Do the scope methods work as expected", function () {
+    it("export should perform an export", function () {
       var response;
       var originalCloseModal = angular.copy(scope.closeModal);
       var formats = {"dspace-saf": "undefined", "dspace-csv": "object", "spotlight-csv": "object"};
 
       for (var format in formats) {
         scope.closeModal = angular.copy(originalCloseModal);
-        spyOn(scope, 'closeModal');
+        spyOn(scope, "closeModal");
         scope.isExporting = null;
 
         response = scope.export(dataProject1, format);
@@ -93,10 +93,10 @@ describe('controller: ExportController', function () {
       response = scope.export(dataProject1, "!does_not_exist!");
       scope.$digest();
 
-      expect(typeof response).toEqual('undefined');
+      expect(typeof response).toEqual("undefined");
     });
-    it('unlock should unlock the project', function () {
-      spyOn(ProjectRepo, 'reset');
+    it("unlock should unlock the project", function () {
+      spyOn(ProjectRepo, "reset");
 
       scope.unlock();
       scope.$digest();

@@ -1,4 +1,4 @@
-describe('controller: DocumentController', function () {
+describe("controller: DocumentController", function () {
 
   var controller, q, scope, ApiResponseActions;
 
@@ -9,7 +9,7 @@ describe('controller: DocumentController', function () {
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
 
-      controller = $controller('DocumentController', {
+      controller = $controller("DocumentController", {
         $route: $route,
         $routeParams: $routeParams,
         $scope: scope,
@@ -37,19 +37,19 @@ describe('controller: DocumentController', function () {
   };
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
-    module('mock.alertService');
-    module('mock.document');
-    module('mock.documentRepo');
-    module('mock.modalService');
-    module('mock.ngTableParams');
-    module('mock.projectRepo');
-    module('mock.restApi');
-    module('mock.storageService');
-    module('mock.userRepo');
-    module('mock.userService');
-    module('mock.wsApi');
+    module("core");
+    module("metadataTool");
+    module("mock.alertService");
+    module("mock.document");
+    module("mock.documentRepo");
+    module("mock.modalService");
+    module("mock.ngTableParams");
+    module("mock.projectRepo");
+    module("mock.restApi");
+    module("mock.storageService");
+    module("mock.userRepo");
+    module("mock.userService");
+    module("mock.wsApi");
 
     // TODO: this should be in its own mock file as a mocked constant.
     ApiResponseActions = {
@@ -69,59 +69,59 @@ describe('controller: DocumentController', function () {
     initializeController();
   });
 
-  describe('Is the controller defined', function () {
-    it('should be defined for admin', function () {
+  describe("Is the controller defined", function () {
+    it("should be defined for admin", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for manager', function () {
+    it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for anonymous', function () {
+    it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
     });
   });
 
-  describe('Are the scope methods defined', function () {
-    it('availableAnnotators should be defined', function () {
+  describe("Are the scope methods defined", function () {
+    it("availableAnnotators should be defined", function () {
       expect(scope.availableAnnotators).toBeDefined();
       expect(typeof scope.availableAnnotators).toEqual("function");
     });
-    it('setSelectedUser should be defined', function () {
+    it("setSelectedUser should be defined", function () {
       expect(scope.setSelectedUser).toBeDefined();
       expect(typeof scope.setSelectedUser).toEqual("function");
     });
-    it('setTable should be defined', function () {
+    it("setTable should be defined", function () {
       expect(scope.setTable).toBeDefined();
       expect(typeof scope.setTable).toEqual("function");
     });
-    it('togglePublished should be defined', function () {
+    it("togglePublished should be defined", function () {
       expect(scope.togglePublished).toBeDefined();
       expect(typeof scope.togglePublished).toEqual("function");
     });
-    it('toggleProjectsFilter should be defined', function () {
+    it("toggleProjectsFilter should be defined", function () {
       expect(scope.toggleProjectsFilter).toBeDefined();
       expect(typeof scope.toggleProjectsFilter).toEqual("function");
     });
-    it('update should be defined', function () {
+    it("update should be defined", function () {
       expect(scope.update).toBeDefined();
       expect(typeof scope.update).toEqual("function");
     });
-    it('updateTable should be defined', function () {
+    it("updateTable should be defined", function () {
       expect(scope.updateTable).toBeDefined();
       expect(typeof scope.updateTable).toEqual("function");
     });
   });
 
-  describe('Do the scope methods work as expected', function () {
-    it('availableAnnotators should return an array list', function () {
+  describe("Do the scope methods work as expected", function () {
+    it("availableAnnotators should return an array list", function () {
       var response = scope.availableAnnotators();
 
       expect(typeof response).toEqual("object");
     });
-    it('setSelectedUser should assign the selected user', function () {
+    it("setSelectedUser should assign the selected user", function () {
       var user = new mockUser(q);
       scope.selectedUser = null;
 
@@ -129,17 +129,17 @@ describe('controller: DocumentController', function () {
 
       expect(scope.selectedUser).toEqual(user);
     });
-    it('setTable should setup the table', function () {
+    it("setTable should setup the table", function () {
       scope.tableParams = null;
       scope.setTable();
 
       expect(scope.tableParams).toBeDefined();
     });
-    it('togglePublished should toggle the showPublished boolean', function () {
+    it("togglePublished should toggle the showPublished boolean", function () {
       scope.showPublished = false;
       scope.setTable();
 
-      spyOn(scope.tableParams, 'reload');
+      spyOn(scope.tableParams, "reload");
 
       scope.togglePublished();
 
@@ -149,7 +149,7 @@ describe('controller: DocumentController', function () {
       scope.togglePublished();
       expect(scope.showPublished).toBe(false);
     });
-    it('toggleProjectsFilter should toggle the showProjectsFilter boolean', function () {
+    it("toggleProjectsFilter should toggle the showProjectsFilter boolean", function () {
       scope.showProjectsFilter = false;
 
       scope.toggleProjectsFilter();
@@ -158,30 +158,30 @@ describe('controller: DocumentController', function () {
       scope.toggleProjectsFilter();
       expect(scope.showProjectsFilter).toBe(false);
     });
-    it('update should update the document status', function () {
+    it("update should update the document status", function () {
       var document = new mockDocument(q);
-      document.status = '';
+      document.status = "";
 
-      spyOn(document, 'save');
+      spyOn(document, "save");
 
-      scope.update(document, 'Open');
+      scope.update(document, "Open");
 
-      expect(document.status).toEqual('Open');
+      expect(document.status).toEqual("Open");
       expect(document.annotator).not.toBeDefined();
       expect(document.save).toHaveBeenCalled();
 
-      scope.update(document, 'Closed');
-      expect(document.status).toEqual('Closed');
-      expect(document.annotator).toEqual(scope.user.firstName + ' ' + scope.user.lastName);
+      scope.update(document, "Closed");
+      expect(document.status).toEqual("Closed");
+      expect(document.annotator).toEqual(scope.user.firstName + " " + scope.user.lastName);
 
-      scope.update(document, 'Other');
-      expect(document.status).toEqual('Other');
+      scope.update(document, "Other");
+      expect(document.status).toEqual("Other");
     });
-    it('updateTable should reload the table', function () {
+    it("updateTable should reload the table", function () {
       scope.setTable();
       scope.tableNeedsUpdating = true;
 
-      spyOn(scope.tableParams, 'reload');
+      spyOn(scope.tableParams, "reload");
 
       scope.updateTable();
 

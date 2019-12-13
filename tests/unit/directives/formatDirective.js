@@ -1,9 +1,9 @@
-describe('directive: formatDirective', function () {
+describe("directive: formatDirective", function () {
   var compile, controller, directive, httpBackend, scope, templateCache;
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
+    module("core");
+    module("metadataTool");
 
     inject(function ($compile, $httpBackend, $rootScope, $templateCache) {
       compile = $compile;
@@ -11,14 +11,14 @@ describe('directive: formatDirective', function () {
       scope = $rootScope.$new();
       templateCache = $templateCache;
 
-      directive = angular.element('<format ng-model="model"></format>');
+      directive = angular.element("<format ng-model=\"model\"></format>");
       compile(directive)(scope);
       scope.$digest();
     });
   });
 
-  describe('Is the directive defined', function () {
-    it('should be defined', function () {
+  describe("Is the directive defined", function () {
+    it("should be defined", function () {
       expect(directive).toBeDefined();
     });
   });

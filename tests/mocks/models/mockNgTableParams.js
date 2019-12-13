@@ -32,5 +32,5 @@ var mockNgTableParams = function($q) {
   return model;
 };
 
-angular.module('mock.ngTableParams', []).service('NgTableParams', mockNgTableParams);
+angular.module("mock.ngTableParams", []).service("NgTableParams", mockNgTableParams);
 

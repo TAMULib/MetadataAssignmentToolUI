@@ -19,5 +19,5 @@ var mockProjectSuggestor = function($q) {
   return model;
 };
 
-angular.module('mock.projectSuggestor', []).service('ProjectSuggestor', mockProjectSuggestor);
+angular.module("mock.projectSuggestor", []).service("ProjectSuggestor", mockProjectSuggestor);
 

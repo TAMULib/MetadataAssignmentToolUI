@@ -37,4 +37,4 @@ var mockUser = function($q) {
   return model;
 };
 
-angular.module('mock.user', []).service('User', mockUser);
+angular.module("mock.user", []).service("User", mockUser);

@@ -25,4 +25,4 @@ var mockPublishingEvent = function($q) {
   return model;
 };
 
-angular.module('mock.publishingEvent', []).service('PublishingEvent', mockPublishingEvent);
+angular.module("mock.publishingEvent", []).service("PublishingEvent", mockPublishingEvent);

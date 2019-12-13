@@ -1,10 +1,10 @@
-describe('model: AbstractAppRepo', function () {
+describe("model: AbstractAppRepo", function () {
   var rootScope, scope, WsApi, repo;
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
-    module('mock.wsApi');
+    module("core");
+    module("metadataTool");
+    module("mock.wsApi");
 
     inject(function ($rootScope, _WsApi_, _AbstractAppRepo_) {
       rootScope = $rootScope;
@@ -16,8 +16,8 @@ describe('model: AbstractAppRepo', function () {
     });
   });
 
-  describe('Is the repo defined', function () {
-    it('should be defined', function () {
+  describe("Is the repo defined", function () {
+    it("should be defined", function () {
       expect(repo).toBeDefined();
     });
   });

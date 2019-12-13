@@ -19,5 +19,5 @@ var mockProjectAuthority = function($q) {
   return model;
 };
 
-angular.module('mock.projectAuthority', []).service('ProjectAuthority', mockProjectAuthority);
+angular.module("mock.projectAuthority", []).service("ProjectAuthority", mockProjectAuthority);
 

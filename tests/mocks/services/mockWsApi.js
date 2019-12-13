@@ -45,43 +45,43 @@ angular.module("mock.wsApi", []).service("WsApi", function ($q) {
       }
     } else {
       switch (apiReq.method) {
-        case 'credentials':
+        case "credentials":
           payload = dataUser1;
           break;
-        case 'page':
+        case "page":
           payload = dataDocumentPage1;
           break;
-        case 'all':
+        case "all":
           switch (apiReq.controller) {
-            case 'user':
+            case "user":
               payload = dataUser1;
               break;
-            case 'document':
+            case "document":
               payload = dataDocument1;
               break;
-            case 'cv':
+            case "cv":
               payload = dataControlledVocabulary1;
               break;
           }
           break;
-        case 'get':
+        case "get":
           switch (apiReq.controller) {
-            case 'user':
+            case "user":
               payload = dataUser1;
               break;
-            case 'metadata':
+            case "metadata":
               payload = dataMetadata1;
               break;
-            case 'document':
+            case "document":
               payload = dataDocument1;
               break;
           }
           break;
-        case 'update_role':
+        case "update_role":
           dataUser1.role = JSON.parse(apiReq.data).role;
           payload = dataUser1;
           break;
-        case 'update_annotator':
+        case "update_annotator":
           dataDocument1.annatator = JSON.parse(apiReq.data).annotator;
           payload = dataDocumentRepo1;
           break;

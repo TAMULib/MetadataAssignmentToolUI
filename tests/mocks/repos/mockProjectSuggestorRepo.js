@@ -16,8 +16,8 @@ var dataProjectSuggestorRepo3 = [
   dataProjectSuggestor2
 ];
 
-angular.module('mock.projectSuggestorRepo', []).service('ProjectSuggestorRepo', function($q) {
-  var repo = mockRepo('ProjectSuggestorRepo', $q, mockProjectSuggestor, dataProjectSuggestorRepo1);
+angular.module("mock.projectSuggestorRepo", []).service("ProjectSuggestorRepo", function($q) {
+  var repo = mockRepo("ProjectSuggestorRepo", $q, mockProjectSuggestor, dataProjectSuggestorRepo1);
   var mockedTypes = {};
 
   repo.mockTypes = function(toMock) {

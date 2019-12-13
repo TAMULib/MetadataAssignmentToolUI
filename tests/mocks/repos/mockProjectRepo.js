@@ -16,8 +16,8 @@ var dataProjectRepo3 = [
   dataProject2
 ];
 
-angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {
-  var repo = mockRepo('ProjectRepo', $q, mockProject, dataProjectRepo1);
+angular.module("mock.projectRepo", []).service("ProjectRepo", function($q) {
+  var repo = mockRepo("ProjectRepo", $q, mockProject, dataProjectRepo1);
 
   repo.addFieldProfile = function (projectId, fieldProfile, labels) {
     // TODO

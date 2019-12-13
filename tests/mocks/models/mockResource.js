@@ -32,4 +32,4 @@ var mockResource = function($q) {
   return model;
 };
 
-angular.module('mock.resource', []).service('Resource', mockResource);
+angular.module("mock.resource", []).service("Resource", mockResource);

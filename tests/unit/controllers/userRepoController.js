@@ -1,4 +1,4 @@
-describe('controller: UserRepoController', function () {
+describe("controller: UserRepoController", function () {
 
   var controller, q, scope;
 
@@ -11,7 +11,7 @@ describe('controller: UserRepoController', function () {
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
 
-      controller = $controller('UserRepoController', {
+      controller = $controller("UserRepoController", {
         $route: $route,
         $scope: scope,
         $injector: $injector,
@@ -33,60 +33,60 @@ describe('controller: UserRepoController', function () {
   };
 
   beforeEach(function() {
-    module('core');
-    module('metadataTool');
-    module('mock.modalService');
-    module('mock.restApi');
-    module('mock.storageService');
-    module('mock.userRepo');
-    module('mock.userService');
-    module('mock.wsApi');
+    module("core");
+    module("metadataTool");
+    module("mock.modalService");
+    module("mock.restApi");
+    module("mock.storageService");
+    module("mock.userRepo");
+    module("mock.userService");
+    module("mock.wsApi");
 
     installPromiseMatchers();
     initializeController();
   });
 
-  describe('Is the controller defined', function () {
-    it('should be defined for admin', function () {
+  describe("Is the controller defined", function () {
+    it("should be defined for admin", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for manager', function () {
+    it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
-    it('should be defined for anonymous', function () {
+    it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
     });
   });
 
-  describe('Are the scope methods defined', function () {
-    it('updateRole should be defined', function () {
+  describe("Are the scope methods defined", function () {
+    it("updateRole should be defined", function () {
       expect(scope.updateRole).toBeDefined();
       expect(typeof scope.updateRole).toEqual("function");
     });
-    it('assignableRoles should be defined', function () {
+    it("assignableRoles should be defined", function () {
       expect(scope.assignableRoles).toBeDefined();
       expect(typeof scope.assignableRoles).toEqual("function");
     });
-    it('canDelete should be defined', function () {
+    it("canDelete should be defined", function () {
       expect(scope.canDelete).toBeDefined();
       expect(typeof scope.canDelete).toEqual("function");
     });
-    it('delete should be defined', function () {
+    it("delete should be defined", function () {
       expect(scope.delete).toBeDefined();
       expect(typeof scope.delete).toEqual("function");
     });
   });
 
-  describe('Do the scope methods work as expected', function () {
-    it('updateRole should update a users role', function () {
+  describe("Do the scope methods work as expected", function () {
+    it("updateRole should update a users role", function () {
       var originalUser2 = angular.copy(dataUser2);
       dataUser2.role = "ROLE_NEW";
       dataUser2.save = function() {};
 
-      spyOn(dataUser2, 'save');
+      spyOn(dataUser2, "save");
 
       scope.updateRole(dataUser2);
       scope.$digest();
@@ -97,7 +97,7 @@ describe('controller: UserRepoController', function () {
       dataUser2.role = "ROLE_ANNOTATOR";
       dataUser2.save = function() {};
 
-      spyOn(dataUser2, 'save');
+      spyOn(dataUser2, "save");
 
       scope.updateRole(dataUser2);
       scope.$digest();
@@ -107,14 +107,14 @@ describe('controller: UserRepoController', function () {
       dataUser2.role = "ROLE_USER";
       dataUser2.save = function() {};
 
-      spyOn(dataUser2, 'save');
+      spyOn(dataUser2, "save");
 
       scope.updateRole(dataUser2);
       scope.$digest();
 
       expect(dataUser2.save).toHaveBeenCalled();
     });
-    it('assignableRoles should return a list of allowed roles', function () {
+    it("assignableRoles should return a list of allowed roles", function () {
       var roles;
 
       roles = scope.assignableRoles();
@@ -135,7 +135,7 @@ describe('controller: UserRepoController', function () {
       roles = scope.assignableRoles("ROLE_ADMIN");
       expect(roles).toBeDefined();
     });
-    it('canDelete should return boolean if a user can be deleted', function () {
+    it("canDelete should return boolean if a user can be deleted", function () {
       var canDelete;
 
       dataUser1.role = "ROLE_ADMIN";
@@ -169,9 +169,9 @@ describe('controller: UserRepoController', function () {
       canDelete = scope.canDelete(dataUser2);
       expect(canDelete).toBe(false);
     });
-    it('delete should delete a user', function () {
+    it("delete should delete a user", function () {
       dataUser1.delete = function() {};
-      spyOn(dataUser1, 'delete');
+      spyOn(dataUser1, "delete");
 
       scope.delete(dataUser1);
       scope.$digest();

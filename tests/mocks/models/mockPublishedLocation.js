@@ -22,4 +22,4 @@ var mockPublishedLocation = function($q) {
   return model;
 };
 
-angular.module('mock.publishedLocation', []).service('PublishedLocation', mockPublishedLocation);
+angular.module("mock.publishedLocation", []).service("PublishedLocation", mockPublishedLocation);

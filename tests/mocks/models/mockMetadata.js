@@ -25,4 +25,4 @@ var mockMetadata = function($q) {
   return model;
 };
 
-angular.module('mock.metadata', []).service('Metadata', mockMetadata);
+angular.module("mock.metadata", []).service("Metadata", mockMetadata);
