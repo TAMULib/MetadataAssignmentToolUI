@@ -11,9 +11,9 @@ var dataMetadataRepo2 = [
 ];
 
 var dataMetadataRepo3 = [
-  dataMetadata4,
-  dataMetadata5,
-  dataMetadata6
+  dataMetadata1,
+  dataMetadata3,
+  dataMetadata2
 ];
 
 angular.module('mock.metadataRepo', []).service('MetadataRepo', function($q) {

@@ -46,54 +46,6 @@ var dataProjectRepository3 = {
   ]
 };
 
-var dataProjectRepository4 = {
-  id: 4,
-  projects: [],
-  type: "FEDORA_PCDM",
-  settings: [
-    {
-      key: 'repoUrl',
-      values: ['localhost-repo4']
-    },
-    {
-      key: 'restPath',
-      values: ['rest']
-    }
-  ]
-};
-
-var dataProjectRepository5 = {
-  id: 5,
-  projects: [],
-  type: "FEDORA_PCDM",
-  settings: [
-    {
-      key: 'repoUrl',
-      values: ['localhost-repo5']
-    },
-    {
-      key: 'restPath',
-      values: ['rest']
-    }
-  ]
-};
-
-var dataProjectRepository6 = {
-  id: 6,
-  projects: [],
-  type: "DSPACE",
-  settings: [
-    {
-      key: 'repoUrl',
-      values: ['localhost-repo6']
-    },
-    {
-      key: 'repoContextPath',
-      values: ['rest']
-    }
-  ]
-};
-
 var mockProjectRepository = function($q) {
   var model = mockModel("ProjectRepository", $q, dataProjectRepository1);
 

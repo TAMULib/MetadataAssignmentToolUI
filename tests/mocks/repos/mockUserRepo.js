@@ -11,9 +11,9 @@ var dataUserRepo2 = [
 ];
 
 var dataUserRepo3 = [
-  dataUser4,
-  dataUser5,
-  dataUser6
+  dataUser1,
+  dataUser3,
+  dataUser2
 ];
 
 angular.module('mock.userRepo', []).service('UserRepo', function($q) {

@@ -11,9 +11,9 @@ var dataProjectRepo2 = [
 ];
 
 var dataProjectRepo3 = [
-  dataProject4,
-  dataProject5,
-  dataProject6
+  dataProject1,
+  dataProject3,
+  dataProject2
 ];
 
 angular.module('mock.projectRepo', []).service('ProjectRepo', function($q) {

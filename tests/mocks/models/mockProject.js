@@ -37,45 +37,6 @@ var dataProject3 = {
   suggestors: []
 };
 
-var dataProject4 = {
-  id: 4,
-  authorities: [],
-  documents: [],
-  headless: false,
-  injestType: null,
-  name: "Project 004",
-  locked: false,
-  profiles: [],
-  repositories: [],
-  suggestors: []
-};
-
-var dataProject5 = {
-  id: 5,
-  authorities: [],
-  documents: [],
-  headless: false,
-  injestType: null,
-  name: "Project 005",
-  locked: false,
-  profiles: [],
-  repositories: [],
-  suggestors: []
-};
-
-var dataProject6 = {
-  id: 6,
-  authorities: [],
-  documents: [],
-  headless: false,
-  injestType: null,
-  name: "Project 006",
-  locked: false,
-  profiles: [],
-  repositories: [],
-  suggestors: []
-};
-
 var mockProject = function($q) {
   var model = mockModel("Project", $q, dataProject1);
 

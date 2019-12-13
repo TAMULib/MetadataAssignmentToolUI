@@ -22,30 +22,6 @@ var dataResource3 = {
   mimeType: "image/jpeg"
 };
 
-var dataResource4 = {
-  id: 4,
-  document: "Document 004",
-  name: "Resource 001",
-  path: "001",
-  mimeType: "text/plain"
-};
-
-var dataResource5 = {
-  id: 5,
-  document: "Document 005",
-  name: "Resource 002",
-  path: "002",
-  mimeType: "application/pdf"
-};
-
-var dataResource6 = {
-  id: 6,
-  document: "Document 006",
-  name: "Resource 003",
-  path: "003",
-  mimeType: "image/jpeg"
-};
-
 var mockResource = function($q) {
   var model = mockModel("Resource", $q, dataResource1);
 

@@ -11,9 +11,9 @@ var dataResourceRepo2 = [
 ];
 
 var dataResourceRepo3 = [
-  dataResource4,
-  dataResource5,
-  dataResource6
+  dataResource1,
+  dataResource3,
+  dataResource2
 ];
 
 angular.module('mock.resourceRepo', []).service('ResourceRepo', function($q) {

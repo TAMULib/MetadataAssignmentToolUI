@@ -11,9 +11,9 @@ var dataDocumentRepo2 = [
 ];
 
 var dataDocumentRepo3 = [
-  dataDocument4,
-  dataDocument5,
-  dataDocument6
+  dataDocument1,
+  dataDocument3,
+  dataDocument2
 ];
 
 angular.module('mock.documentRepo', []).service('DocumentRepo', function($q) {

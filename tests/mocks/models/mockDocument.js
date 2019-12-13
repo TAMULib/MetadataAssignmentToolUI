@@ -58,45 +58,6 @@ var dataDocument3 = {
   status: "Published"
 };
 
-var dataDocument4 = {
-  id: 4,
-  annotator: "",
-  fields: [],
-  name: "Document 004",
-  notes: "",
-  path: "/projects/mock/mocked_4",
-  project: "Project 003",
-  publishedLocations: [],
-  publishing: false,
-  status: "Assigned"
-};
-
-var dataDocument5 = {
-  id: 5,
-  annotator: "",
-  fields: [],
-  name: "Document 005",
-  notes: "",
-  path: "/projects/mock/mocked_5",
-  project: "Project 003",
-  publishedLocations: [],
-  publishing: false,
-  status: "Open"
-};
-
-var dataDocument6 = {
-  id: 6,
-  annotator: "Jack Daniels (123456789)",
-  fields: [],
-  name: "Document 006",
-  notes: "",
-  path: "/projects/mock/mocked_6",
-  project: "Project 004",
-  publishedLocations: [],
-  publishing: false,
-  status: "Requires Curation"
-};
-
 var mockDocument = function($q) {
   var model = mockModel("Document", $q, dataDocument1);
 

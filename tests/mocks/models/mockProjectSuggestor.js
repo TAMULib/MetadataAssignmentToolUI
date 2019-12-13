@@ -13,21 +13,6 @@ var dataProjectSuggestor3 = {
   projects: []
 };
 
-var dataProjectSuggestor4 = {
-  id: 4,
-  projects: []
-};
-
-var dataProjectSuggestor5 = {
-  id: 5,
-  projects: []
-};
-
-var dataProjectSuggestor6 = {
-  id: 6,
-  projects: []
-};
-
 var mockProjectSuggestor = function($q) {
   var model = mockModel("ProjectSuggestor", $q, dataProjectSuggestor1);
 

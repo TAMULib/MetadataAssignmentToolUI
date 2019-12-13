@@ -31,39 +31,6 @@ var dataUser3 = {
   uin: "192837465"
 };
 
-var dataUser4 = {
-  anonymous: false,
-  email: "aggieJack@library.tamu.edu",
-  exp: "1425393875282",
-  firstName: "Test",
-  lastName: "User1",
-  netId: "user1",
-  role: "ROLE_ADMIN",
-  uin: "111111111"
-};
-
-var dataUser5 = {
-  anonymous: false,
-  email: "aggieJack@library.tamu.edu",
-  exp: "1425393875282",
-  firstName: "Test",
-  lastName: "User2",
-  netId: "user2",
-  role: "ROLE_STUDENT",
-  uin: "222222222"
-};
-
-var dataUser6 = {
-  anonymous: false,
-  email: "aggieJack@library.tamu.edu",
-  exp: "1425393875282",
-  firstName: "Test",
-  lastName: "User3",
-  netId: "user3",
-  role: "ROLE_STUDENT",
-  uin: "333333333"
-};
-
 var mockUser = function($q) {
   var model = mockModel("User", $q, dataUser1);
 

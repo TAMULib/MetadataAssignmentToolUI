@@ -13,21 +13,6 @@ var dataNgTableParams3 = {
   data: []
 };
 
-var dataNgTableParams4 = {
-  id: 4,
-  data: []
-};
-
-var dataNgTableParams5 = {
-  id: 5,
-  data: []
-};
-
-var dataNgTableParams6 = {
-  id: 6,
-  data: []
-};
-
 var mockNgTableParams = function($q) {
   var model = mockModel("NgTableParams", $q, dataNgTableParams1);
 

@@ -11,9 +11,9 @@ var dataControlledVocabularyRepo2 = [
 ];
 
 var dataControlledVocabularyRepo3 = [
-  dataControlledVocabulary4,
-  dataControlledVocabulary5,
-  dataControlledVocabulary6
+  dataControlledVocabulary1,
+  dataControlledVocabulary3,
+  dataControlledVocabulary2
 ];
 
 angular.module('mock.controlledVocabularyRepo', []).service('ControlledVocabularyRepo', function($q) {
