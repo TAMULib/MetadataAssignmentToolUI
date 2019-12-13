@@ -41,8 +41,8 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
                     var setting = settings[i];
                     if (setting.key === key) {
                         return setting;
-            }
-        }
+                    }
+                }
             }
         };
 
@@ -218,46 +218,41 @@ metadataTool.controller('AnnotateController', function ($controller, $location, 
             }
         };
 
-        if ($scope.document.status === "Assigned") {
-            // Add all listeners and logic here to avoid processing during the redirect case.
+        if ($routeParams.action !== "view" && $scope.document.status !== "Assigned") {
+            $scope.action = "view";
+        }
 
-            for (var k in $scope.document.fields) {
-                var field = $scope.document.fields[k];
-                if (field.values.length === 0) {
-                    field.values.push(emptyFieldValue(field));
+        for (var k in $scope.document.fields) {
+            var field = $scope.document.fields[k];
+            if (field.values.length === 0) {
+                field.values.push(emptyFieldValue(field));
+            }
+        }
+
+        $scope.document.getSuggestions().then(function (response) {
+            var payload = angular.fromJson(response.body).payload;
+            $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
+        });
+
+        WsApi.listen("/channel/publishing/document/" + $scope.document.id).then(null, null, function (rawResponse) {
+            var response = angular.fromJson(rawResponse.body);
+
+            if (response.meta.action === "BROADCAST") {
+                if (response.payload.PublishingEvent) {
+                    $scope.publishingEvents.unshift(response.payload.PublishingEvent);
                 }
             }
+        });
 
-            $scope.document.getSuggestions().then(function (response) {
-                var payload = angular.fromJson(response.body).payload;
-                $scope.suggestions = payload["ArrayList<Suggestion>"] !== undefined ? payload["ArrayList<Suggestion>"] : payload.ArrayList;
-            });
-
-            WsApi.listen("/channel/publishing/document/" + $scope.document.id).then(null, null, function (rawResponse) {
-                var response = angular.fromJson(rawResponse.body);
-
-                if (response.meta.action === "BROADCAST") {
-                  if (response.payload.PublishingEvent) {
-                    $scope.publishingEvents.unshift(response.payload.PublishingEvent);
-                  }
-                }
-            });
-
-            DocumentRepo.listen([ApiResponseActions.UPDATE, ApiResponseActions.DELETE], function (response) {
-                if (response.meta.action === "UPDATE") {
-                  if (response.payload && response.payload.Document && response.payload.Document.publishing === false && $scope.publishingEvents.length) {
+        DocumentRepo.listen([ApiResponseActions.UPDATE, ApiResponseActions.DELETE], function (response) {
+            if (response.meta.action === "UPDATE") {
+                if (response.payload && response.payload.Document && response.payload.Document.publishing === false && $scope.publishingEvents.length) {
                     $scope.publishingEvents.length = 0;
-                  }
-                } else if (response.meta.action === "DELETE") {
-                  $scope.publishingEvents.length = 0;
                 }
-            });
-        } else {
-            var url = $location.path().split("/");
-            url.length--;
-            url.push("view");
-            $location.path(url.join("/"));
-        }
+            } else if (response.meta.action === "DELETE") {
+                $scope.publishingEvents.length = 0;
+            }
+        });
     });
 
 });

@@ -36,7 +36,8 @@ describe('controller: AnnotateController', function () {
             else {
                 angular.extend($routeParams, {
                     projectKey: 'Project 001',
-                    documentKey: 'Document 002'
+                    documentKey: 'Document 002',
+                    action: "annotate"
                 });
             }
 
@@ -604,16 +605,10 @@ describe('controller: AnnotateController', function () {
             expect(controller).toBeDefined();
         });
 
-        it('should be redirect on disallowed document statuses', function () {
-            var originalPath = $location.path;
-            spyOn($location, "path").and.callThrough();
-
+        it('should be view action on disallowed document statuses', function () {
             initializeController();
             expect(controller).toBeDefined();
-            expect($location.path).not.toHaveBeenCalled();
-
-            $location.path = originalPath;
-            spyOn($location, "path").and.callThrough();
+            expect($scope.action).toBe("annotate");
 
             initializeController({
                 $routeParams: {
@@ -622,10 +617,7 @@ describe('controller: AnnotateController', function () {
                 }
             });
             expect(controller).toBeDefined();
-            expect($location.path).toHaveBeenCalled();
-
-            $location.path = originalPath;
-            spyOn($location, "path").and.callThrough();
+            expect($scope.action).toBe("view");
 
             initializeController({
                 $routeParams: {
@@ -634,7 +626,7 @@ describe('controller: AnnotateController', function () {
                 }
             });
             expect(controller).toBeDefined();
-            expect($location.path).toHaveBeenCalled();
+            expect($scope.action).toBe("view");
         });
     });
 
