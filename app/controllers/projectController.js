@@ -1,4 +1,4 @@
-metadataTool.controller('ProjectController', function ($q, $controller, $scope, AlertService, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo, MetadataRepo) {
+metadataTool.controller('ProjectController', function ($controller, $scope, AlertService, UserService, ProjectRepo, ProjectRepositoryRepo, ProjectAuthorityRepo, ProjectSuggestorRepo, MetadataRepo) {
 
     angular.extend(this, $controller('AbstractController', {$scope: $scope}));
 
