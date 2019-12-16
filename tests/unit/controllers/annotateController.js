@@ -32,8 +32,7 @@ describe("controller: AnnotateController", function () {
         if (typeof settings.$routeParams == "object") {
           angular.extend($routeParams, settings.$routeParams);
         }
-      }
-      else {
+      } else {
         angular.extend($routeParams, {
           projectKey: "Project 001",
           documentKey: "Document 002",
@@ -276,11 +275,11 @@ describe("controller: AnnotateController", function () {
       document1.publishing = false;
       document2.publishing = true;
 
-      $scope.document = document1
+      $scope.document = document1;
       response = $scope.cannotPublish();
       expect(response).toBe(false);
 
-      $scope.document = document2
+      $scope.document = document2;
       response = $scope.cannotPublish();
       expect(response).toBe(true);
 
