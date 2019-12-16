@@ -5,7 +5,7 @@ var dataDocument1 = {
     {
       id: 1,
       label: {
-        profile: {defaultValue: ""},
+        profile: { defaultValue: "" },
         value: "Value 001"
       },
       values: []
@@ -27,7 +27,7 @@ var dataDocument2 = {
     {
       id: 2,
       label: {
-        profile: {defaultValue: ""},
+        profile: { defaultValue: "" },
         value: "Value 002"
       },
       values: [{
