@@ -1,5 +1,5 @@
 <div class="modal-header {{attr.modalHeaderClass}}">
-  <button type="button" class="close modal-close" aria-label="Close" ng-click="closeModal()"><span aria-hidden="true">&times;</span></button>
+  <button type="button" class="close modal-close" aria-label="Close" ng-click="onCancelFieldProfileForm()"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title">Edit Field Profiles for {{project.name}}</h4>
 </div>
 <div class="modal-body">
@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-6">
       <h4>{{fieldProfileFormTitle}}</h4>
-      <div ng-if="displayResponse.message" class="alert alert-wrapper" ng-class="{'alert-success':displayResponse.status,'alert-danger':!displayResponse.status}" ng-click="clearDisplayResponse()" role="alert">{{displayResponse.message}}</div>
+      <alerts seconds="60" channels="project/{{project.id}}/add-field-profile,project/{{project.id}}/update-field-profile" types="SUCCESS,WARNING,ERROR" exclusive></alerts>
       <form name="manageProfile" novalidate>
         <div class="form-group">
           <label>Gloss</label>
@@ -26,7 +26,7 @@
           <label>Label</label>
           <input ng-if="!isEditing" class="form-control" type="text" name="label" ng-model="managingLabels[0].name" />
           <input ng-if="isEditing" class="form-control" type="text" name="label" ng-model="label.name" ng-repeat="label in managingLabels" />
-        </div>        
+        </div>
         <div class="form-group">
           <label>Default Value</label>
           <input class="form-control" type="text" name="defaultValue" ng-model="managingProfile.defaultValue" />
@@ -87,6 +87,7 @@
             </label>
           </div>
         </div>
+        <button type="button" class="btn btn-default" ng-click="onCancelFieldProfileForm()">Cancel</button>
         <button type="button" class="btn btn-success" ng-click="updateFieldProfile(project.id, managingProfile, managingLabels)">{{isEditing ? 'Update':'Create'}} Profile</button>
         <button ng-if="isEditing" type="button" class="btn btn-warning" ng-click="setFieldProfileForm()">Cancel Edit</button>
       </form>

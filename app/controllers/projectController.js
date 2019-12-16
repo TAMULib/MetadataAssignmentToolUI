@@ -19,8 +19,6 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
     $scope.isEditing = false;
     $scope.isSyncing = false;
 
-    $scope.displayResponse = {"status":null,"message":null};
-
     $scope.setFieldProfileForm = function(profile) {
         if (profile) {
             $scope.fieldProfileFormTitle = "Editing "+profile.gloss;
@@ -38,11 +36,9 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
         }
     };
 
-    $scope.setFieldProfileForm();
-
     UserService.userReady().then(function() {
 
-    if($scope.isAdmin() || $scope.isManager()) {
+      if ($scope.isAdmin() || $scope.isManager()) {
         $scope.projectServices.repositories = ProjectRepositoryRepo.getAll();
         $scope.projectServices.authorities = ProjectAuthorityRepo.getAll();
         $scope.projectServices.suggestors = ProjectSuggestorRepo.getAll();
@@ -92,7 +88,35 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
             });
         };
 
-        $scope.projectHasService = function(project, serviceType, index) {
+        $scope.resetFieldProfileForm = function () {
+            $scope.closeModal();
+            $scope.setFieldProfileForm();
+
+            if ($scope.project) {
+              var facets = [
+                "project/" + $scope.project.id + "/add-field-profile",
+                "project/" + $scope.project.id + "/update-field-profile"
+              ];
+
+              var alerts;
+              var j;
+              for (var i in facets) {
+                alerts = AlertService.get(facets[i]);
+
+                if (alerts) {
+                  for (j in alerts.list) {
+                    AlertService.remove(alerts.list[j]);
+                  }
+                }
+              }
+            }
+        };
+
+        $scope.onCancelFieldProfileForm = function () {
+            $scope.resetFieldProfileForm();
+        };
+
+        $scope.projectHasService = function (project, serviceType, index) {
             var hasService = false;
 
             angular.forEach(project[serviceType], function (projectService) {
@@ -106,7 +130,7 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
 
         var manageProject = function(method,project) {
             return ProjectRepo[method](project).then(function() {
-                $scope.closeModal();
+                $scope.resetFieldProfileForm();
             });
         };
 
@@ -118,23 +142,17 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
             var success = false;
             if ($scope.isEditing) {
                 ProjectRepo.updateFieldProfile(projectId, profile, labels).then(function(data) {
-                    var response = processRestResponse(data, 'displayResponse');
-                    if (response) {
+                    if (processRestResponse(data)) {
                         $scope.setFieldProfileForm();
                     }
                 });
             } else {
                 ProjectRepo.addFieldProfile(projectId, profile, labels).then(function(data) {
-                    var response = processRestResponse(data, 'displayResponse');
-                    if (response) {
+                    if (processRestResponse(data)) {
                         $scope.setFieldProfileForm();
                     }
                 });
             }
-        };
-
-        $scope.clearDisplayResponse = function() {
-            $scope.displayResponse = {"status":null,"message":null};
         };
 
         /*
@@ -145,21 +163,12 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
          *
          */
 
-        var processRestResponse = function(data, displayModelName) {
+        var processRestResponse = function (data) {
             var response = angular.fromJson(data.body);
-            var result = null;
-            if (response.status == 500) {
-                $scope[displayModelName].status = false;
-                $scope[displayModelName].message = response.error;
-            } else if (response.meta.status == "ERROR") {
-                $scope[displayModelName].status = false;
-                $scope[displayModelName].message = response.meta.message;
-            } else {
-                $scope[displayModelName].status = true;
-                $scope[displayModelName].message = response.meta.message;
-                result = response;
+            if (response.status === 500 || response.meta.status === "ERROR") {
+                return false;
             }
-            return result;
+            return true;
         };
 
         $scope.syncDocuments = function (project) {
@@ -169,11 +178,13 @@ metadataTool.controller('ProjectController', function ($controller, $scope, Aler
                 if (response.meta.status === "SUCCESS") {
                   AlertService.add(response.meta, "app/projects");
                 }
-                $scope.closeModal();
+                $scope.resetFieldProfileForm();
                 $scope.isSyncing = false;
             });
         };
-    }
-  });
+
+        $scope.resetFieldProfileForm();
+      }
+    });
 
 });
