@@ -19,6 +19,17 @@ var dataUserRepo3 = [
 angular.module("mock.userRepo", []).service("UserRepo", function($q) {
   var repo = mockRepo("UserRepo", $q, mockUser, dataUserRepo1);
 
+  repo.scaffold = {
+    anonymous: false,
+    email: "",
+    exp: "",
+    firstName: "",
+    lastName: "",
+    netId: "",
+    role: "",
+    uin: ""
+  };
+
   repo.getAllByRole = function (roles) {
     var found;
     for (var i in repo.list) {
