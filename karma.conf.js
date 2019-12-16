@@ -44,11 +44,11 @@ module.exports = function (config) {
       "app/node_modules/sockjs-client/dist/sockjs.min.js",
       "app/node_modules/stompjs/lib/stomp.min.js",
 
-      "app/components/**/*.js",
-
       "tests/testSetup.js",
 
       "app/app.js",
+
+      "app/components/**/*.js",
 
       "app/config/runTime.js",
 
@@ -58,11 +58,13 @@ module.exports = function (config) {
 
       "app/filters/**/*.js",
 
+      "app/model/**/*.js",
+
       "app/repo/**/*.js",
 
       //"app/services/**/*.js",
 
-      "app/model/**/*.js",
+      "app/views/**/*.html",
 
       "tests/core/**/*.js",
 
@@ -76,9 +78,14 @@ module.exports = function (config) {
 
     frameworks: ["jasmine"],
 
-    failOnEmptyTestSuite: false,
+    browsers: ["Firefox", "Chrome", "ChromeHeadless", "ChromeHeadlessNoSandbox"],
 
-    browsers: ["Chrome", "Firefox"],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: "ChromeHeadless",
+        flags: ["--no-sandbox"]
+      }
+    },
 
     plugins: [
       "karma-chrome-launcher",
@@ -88,6 +95,11 @@ module.exports = function (config) {
       "karma-junit-reporter",
       "karma-ng-html2js-preprocessor"
     ],
+
+    junitReporter: {
+      outputFile: "test_out/unit.xml",
+      suite: "unit"
+    },
 
     ngHtml2JsPreprocessor: {
       stripPrefix: "app/",
