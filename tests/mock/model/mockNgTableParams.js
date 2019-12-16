@@ -16,17 +16,24 @@ var dataNgTableParams3 = {
 var mockNgTableParams = function($q) {
   var model = mockModel("NgTableParams", $q, dataNgTableParams1);
 
+  model._settings = {
+    counts: [],
+    total: 0,
+    getData: function(params) {
+      return model.data;
+    }
+  };
+
   model.count = function() {
-  var total = 0;
-  return total;
+    return model._settings.total;
   };
 
   model.sorting = function(sort) {
-  return {};
+    return {};
   };
 
   model.page = function(sort) {
-  return {};
+    return {};
   };
 
   return model;
