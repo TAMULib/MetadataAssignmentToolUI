@@ -1,18 +1,24 @@
 describe("controller: BatchPublishController", function () {
+  var $q, $scope, WsApi, controller;
 
-  var controller, q, scope;
+  var initializeVariables = function() {
+    inject(function (_$q_, _WsApi_) {
+      $q = _$q_;
+
+      WsApi = _WsApi_;
+    });
+  };
 
   var initializeController = function(settings) {
-    inject(function ($controller, $q, $rootScope, $window, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
-      q = $q;
-      scope = $rootScope.$new();
+    inject(function (_$controller_, _$rootScope_, _$window_, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
+      $scope = _$rootScope_.$new();
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
       sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
 
-      controller = $controller("BatchPublishController", {
-        $scope: scope,
-        $window: $window,
+      controller = _$controller_("BatchPublishController", {
+        $scope: $scope,
+        $window: _$window_,
         AlertService: _AlertService_,
         ModalService: _ModalService_,
         RestApi: _RestApi_,
@@ -22,8 +28,8 @@ describe("controller: BatchPublishController", function () {
       });
 
       // ensure that the isReady() is called.
-      if (!scope.$$phase) {
-        scope.$digest();
+      if (!$scope.$$phase) {
+        $scope.$digest();
       }
     });
   };
@@ -41,6 +47,7 @@ describe("controller: BatchPublishController", function () {
     module("mock.wsApi");
 
     installPromiseMatchers();
+    initializeVariables();
     initializeController();
   });
 
@@ -49,10 +56,12 @@ describe("controller: BatchPublishController", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
@@ -61,19 +70,19 @@ describe("controller: BatchPublishController", function () {
 
   describe("Are the scope methods defined", function () {
     it("publishDocuments should be defined", function () {
-      expect(scope.publishDocuments).toBeDefined();
-      expect(typeof scope.publishDocuments).toEqual("function");
+      expect($scope.publishDocuments).toBeDefined();
+      expect(typeof $scope.publishDocuments).toEqual("function");
     });
   });
 
   describe("Do the scope methods work as expected", function () {
     it("publishDocuments should publish a document to a project", function () {
-      spyOn(scope, "closeModal");
+      spyOn($scope, "closeModal");
 
-      scope.publishDocuments(dataProject1, dataDocument1);
-      scope.$digest();
+      $scope.publishDocuments(dataProject1, dataDocument1);
+      $scope.$digest();
 
-      expect(scope.closeModal).toHaveBeenCalled();
+      expect($scope.closeModal).toHaveBeenCalled();
     });
   });
 

@@ -1,19 +1,27 @@
 describe("controller: ProjectController", function () {
+  var $q, $scope, AlertService, MockedUser, WsApi, controller;
 
-  var controller, q, scope, AlertService;
+  var initializeVariables = function() {
+    inject(function (_$q_, _AlertService_, _WsApi_) {
+      $q = _$q_;
 
-  var initializeController = function(settings) {
-    inject(function ($controller, $q, $rootScope, $window, _AlertService_, _MetadataRepo_, _ModalService_, _RestApi_, _ProjectAuthorityRepo_, _ProjectRepo_, _ProjectRepositoryRepo_, _StorageService_, _ProjectSuggestorRepo_, _UserService_, _WsApi_) {
-      q = $q;
-      scope = $rootScope.$new();
+      MockedUser = new mockUser($q);
 
       AlertService = _AlertService_;
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeController = function(settings) {
+    inject(function (_$controller_, _$rootScope_, _$window_, _MetadataRepo_, _ModalService_, _RestApi_, _ProjectAuthorityRepo_, _ProjectRepo_, _ProjectRepositoryRepo_, _StorageService_, _ProjectSuggestorRepo_, _UserService_) {
+      $scope = _$rootScope_.$new();
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
+      sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
 
-      controller = $controller("ProjectController", {
-        $scope: scope,
-        $window: $window,
+      controller = _$controller_("ProjectController", {
+        $scope: $scope,
+        $window: _$window_,
         AlertService: AlertService,
         MetadataRepo: _MetadataRepo_,
         ModalService: _ModalService_,
@@ -24,12 +32,12 @@ describe("controller: ProjectController", function () {
         StorageService: _StorageService_,
         ProjectSuggestorRepo: _ProjectSuggestorRepo_,
         UserService: _UserService_,
-        WsApi: _WsApi_
+        WsApi: WsApi
       });
 
       // ensure that the isReady() is called.
-      if (!scope.$$phase) {
-        scope.$digest();
+      if (!$scope.$$phase) {
+        $scope.$digest();
       }
     });
   };
@@ -43,13 +51,20 @@ describe("controller: ProjectController", function () {
     module("mock.projectAuthorityRepo");
     module("mock.projectRepo");
     module("mock.projectRepositoryRepo");
+    module("mock.projectSuggestorRepo");
     module("mock.restApi");
     module("mock.storageService");
-    module("mock.projectSuggestorRepo");
+    module("mock.user", function($provide) {
+      var User = function() {
+        return MockedUser;
+      };
+      $provide.value("User", User);
+    });
     module("mock.userService");
     module("mock.wsApi");
 
     installPromiseMatchers();
+    initializeVariables();
     initializeController();
   });
 
@@ -58,10 +73,12 @@ describe("controller: ProjectController", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
@@ -70,40 +87,48 @@ describe("controller: ProjectController", function () {
 
   describe("Are the scope methods defined", function () {
     it("create should be defined", function () {
-      expect(scope.create).toBeDefined();
-      expect(typeof scope.create).toEqual("function");
+      expect($scope.create).toBeDefined();
+      expect(typeof $scope.create).toEqual("function");
     });
+
     it("delete should be defined", function () {
-      expect(scope.delete).toBeDefined();
-      expect(typeof scope.delete).toEqual("function");
+      expect($scope.delete).toBeDefined();
+      expect(typeof $scope.delete).toEqual("function");
     });
+
     it("onCancelFieldProfileForm should be defined", function () {
-      expect(scope.onCancelFieldProfileForm).toBeDefined();
-      expect(typeof scope.onCancelFieldProfileForm).toEqual("function");
+      expect($scope.onCancelFieldProfileForm).toBeDefined();
+      expect(typeof $scope.onCancelFieldProfileForm).toEqual("function");
     });
+
     it("projectHasService should be defined", function () {
-      expect(scope.projectHasService).toBeDefined();
-      expect(typeof scope.projectHasService).toEqual("function");
+      expect($scope.projectHasService).toBeDefined();
+      expect(typeof $scope.projectHasService).toEqual("function");
     });
+
     it("resetFieldProfileForm should be defined", function () {
-      expect(scope.resetFieldProfileForm).toBeDefined();
-      expect(typeof scope.resetFieldProfileForm).toEqual("function");
+      expect($scope.resetFieldProfileForm).toBeDefined();
+      expect(typeof $scope.resetFieldProfileForm).toEqual("function");
     });
+
     it("setFieldProfileForm should be defined", function () {
-      expect(scope.setFieldProfileForm).toBeDefined();
-      expect(typeof scope.setFieldProfileForm).toEqual("function");
+      expect($scope.setFieldProfileForm).toBeDefined();
+      expect(typeof $scope.setFieldProfileForm).toEqual("function");
     });
+
     it("syncDocuments should be defined", function () {
-      expect(scope.syncDocuments).toBeDefined();
-      expect(typeof scope.syncDocuments).toEqual("function");
+      expect($scope.syncDocuments).toBeDefined();
+      expect(typeof $scope.syncDocuments).toEqual("function");
     });
+
     it("update should be defined", function () {
-      expect(scope.update).toBeDefined();
-      expect(typeof scope.update).toEqual("function");
+      expect($scope.update).toBeDefined();
+      expect(typeof $scope.update).toEqual("function");
     });
+
     it("updateFieldProfile should be defined", function () {
-      expect(scope.updateFieldProfile).toBeDefined();
-      expect(typeof scope.updateFieldProfile).toEqual("function");
+      expect($scope.updateFieldProfile).toBeDefined();
+      expect(typeof $scope.updateFieldProfile).toEqual("function");
     });
   });
 
@@ -111,59 +136,63 @@ describe("controller: ProjectController", function () {
     it("create should create a new project", function () {
       var services = {};
 
-      delete scope.newProject;
-      delete scope.newProjectServices;
+      delete $scope.newProject;
+      delete $scope.newProjectServices;
 
-      scope.create(dataProject1, services);
-      scope.$digest();
+      $scope.create(dataProject1, services);
+      $scope.$digest();
 
-      expect(scope.newProject).toBeDefined();
-      expect(scope.newProjectServices).toBeDefined();
+      expect($scope.newProject).toBeDefined();
+      expect($scope.newProjectServices).toBeDefined();
 
-      scope.projectServices.a = [];
+      $scope.projectServices.a = [];
       services = {a: "A"};
-      delete scope.newProject;
-      delete scope.newProjectServices;
+      delete $scope.newProject;
+      delete $scope.newProjectServices;
 
-      scope.create(dataProject1, services);
-      scope.$digest();
+      $scope.create(dataProject1, services);
+      $scope.$digest();
 
-      expect(scope.newProject).toBeDefined();
-      expect(scope.newProjectServices).toBeDefined();
+      expect($scope.newProject).toBeDefined();
+      expect($scope.newProjectServices).toBeDefined();
     });
+
     it("delete should delete an existing project", function () {
-      spyOn(scope, "resetFieldProfileForm");
+      spyOn($scope, "resetFieldProfileForm");
 
-      scope.delete(dataProject1);
-      scope.$digest();
+      $scope.delete(dataProject1);
+      $scope.$digest();
 
-      expect(scope.resetFieldProfileForm).toHaveBeenCalled();
+      expect($scope.resetFieldProfileForm).toHaveBeenCalled();
     });
+
     it("onCancelFieldProfileForm should clear the response", function () {
-      spyOn(scope, "resetFieldProfileForm");
+      spyOn($scope, "resetFieldProfileForm");
 
-      scope.onCancelFieldProfileForm();
+      $scope.onCancelFieldProfileForm();
 
-      expect(scope.resetFieldProfileForm).toHaveBeenCalled();
+      expect($scope.resetFieldProfileForm).toHaveBeenCalled();
     });
+
     it("projectHasService should return a boolean", function () {
       var response;
       var serviceType = {id: 0};
 
-      response = scope.projectHasService(scope.projects[0], "!DoesNotExist!", 0);
+      response = $scope.projectHasService($scope.projects[0], "!DoesNotExist!", 0);
 
       expect(response).toBe(false);
 
       dataProject1.ExampleServiceType = [serviceType];
-      scope.projectServices.ExampleServiceType = [serviceType];
+      $scope.projectServices.ExampleServiceType = [serviceType];
 
-      response = scope.projectHasService(dataProject1, "ExampleServiceType", 0);
+      response = $scope.projectHasService(dataProject1, "ExampleServiceType", 0);
 
       expect(response).toBe(true);
     });
+
     it("resetFieldProfileForm should clear the response", function () {
-      var alert2 = new mockAlert(q);
-      var alert3 = new mockAlert(q);
+      var alert2 = new mockAlert($q);
+      var alert3 = new mockAlert($q);
       var mockedAlerts;
 
       alert2.mock(dataAlert2);
@@ -176,14 +205,14 @@ describe("controller: ProjectController", function () {
         return mockedAlerts;
       };
 
-      scope.project = new mockProject(q);
+      $scope.project = new mockProject($q);
 
-      spyOn(scope, "closeModal");
-      spyOn(scope, "setFieldProfileForm");
+      spyOn($scope, "closeModal");
+      spyOn($scope, "setFieldProfileForm");
 
-      scope.resetFieldProfileForm();
-      expect(scope.closeModal).toHaveBeenCalled();
-      expect(scope.setFieldProfileForm).toHaveBeenCalled();
+      $scope.resetFieldProfileForm();
+      expect($scope.closeModal).toHaveBeenCalled();
+      expect($scope.setFieldProfileForm).toHaveBeenCalled();
 
 
       spyOn(AlertService, "remove");
@@ -195,90 +224,94 @@ describe("controller: ProjectController", function () {
         ]
       };
 
-      scope.resetFieldProfileForm();
+      $scope.resetFieldProfileForm();
       expect(AlertService.remove).toHaveBeenCalled();
     });
+
     it("setFieldProfileForm should setup the profile", function () {
       var profile = {
         gloss: "Test Profile",
         id: 2345
       };
 
-      scope.isEditing = false;
-      delete scope.managingLabels;
-      delete scope.managingProfile;
+      $scope.isEditing = false;
+      delete $scope.managingLabels;
+      delete $scope.managingProfile;
 
-      scope.setFieldProfileForm(profile);
-      scope.$digest();
+      $scope.setFieldProfileForm(profile);
+      $scope.$digest();
 
-      expect(scope.isEditing).toBe(true);
-      expect(scope.managingLabels).toBeDefined();
-      expect(scope.managingProfile).toBe(profile);
+      expect($scope.isEditing).toBe(true);
+      expect($scope.managingLabels).toBeDefined();
+      expect($scope.managingProfile).toBe(profile);
     });
+
     it("syncDocuments should sync documents", function () {
-      delete scope.isSyncing;
+      delete $scope.isSyncing;
 
-      spyOn(scope, "resetFieldProfileForm");
+      spyOn($scope, "resetFieldProfileForm");
 
-      scope.syncDocuments(scope.projects[0]);
-      scope.$digest();
+      $scope.syncDocuments($scope.projects[0]);
+      $scope.$digest();
 
-      expect(scope.isSyncing).toBe(false);
-      expect(scope.resetFieldProfileForm).toHaveBeenCalled();
+      expect($scope.isSyncing).toBe(false);
+      expect($scope.resetFieldProfileForm).toHaveBeenCalled();
 
-      delete scope.isSyncing;
+      delete $scope.isSyncing;
 
-      scope.syncDocuments(dataProject1);
-      scope.$digest();
+      $scope.syncDocuments(dataProject1);
+      $scope.$digest();
 
-      expect(scope.isSyncing).toBe(false);
+      expect($scope.isSyncing).toBe(false);
     });
+
     it("update should change the project", function () {
-      var project = angular.copy(scope.projects[0]);
+      var project = angular.copy($scope.projects[0]);
       var serviceType = {id: 0};
 
       project.name += " updated";
       project.dirty = function() {};
 
-      spyOn(scope, "resetFieldProfileForm");
+      spyOn($scope, "resetFieldProfileForm");
       spyOn(project, "dirty");
 
-      scope.update(project);
-      scope.$digest();
+      $scope.update(project);
+      $scope.$digest();
 
-      expect(scope.resetFieldProfileForm).toHaveBeenCalled();
+      expect($scope.resetFieldProfileForm).toHaveBeenCalled();
       expect(project.dirty).toHaveBeenCalled();
 
       project.dirty = function() {};
-      scope.projectServices.ExampleServiceType = [serviceType];
-      scope.updateableProjectServices.ExampleServiceType = [serviceType];
+      $scope.projectServices.ExampleServiceType = [serviceType];
+      $scope.updateableProjectServices.ExampleServiceType = [serviceType];
 
       spyOn(project, "dirty");
 
-      scope.update(project);
-      scope.$digest();
+      $scope.update(project);
+      $scope.$digest();
 
       expect(project.dirty).toHaveBeenCalled();
     });
+
     it("updateFieldProfile should update the field profile", function () {
       var profile = {};
       var labels = [];
       var result;
 
-      scope.projects[0].dirty = function() {};
+      $scope.projects[0].dirty = function() {};
 
-      result = scope.updateFieldProfile(scope.projects[0].id, profile, labels);
-      scope.$digest();
+      result = $scope.updateFieldProfile($scope.projects[0].id, profile, labels);
+      $scope.$digest();
 
-      scope.isEditing = true;
+      $scope.isEditing = true;
 
-      q.all([
-        scope.updateFieldProfile(-1, profile, labels),
-        scope.updateFieldProfile(false, profile, labels),
-        scope.updateFieldProfile(scope.projects[0].id, profile, labels)
+      $q.all([
+        $scope.updateFieldProfile(-1, profile, labels),
+        $scope.updateFieldProfile(false, profile, labels),
+        $scope.updateFieldProfile($scope.projects[0].id, profile, labels)
       ]).then(function (results) {
       });
-      scope.$digest();
+      $scope.$digest();
     });
   });
 

@@ -1,29 +1,38 @@
 describe("controller: ProjectRepositoryController", function () {
+  var $q, $scope, MockedUser, WsApi, controller;
 
-  var controller, q, scope;
+  var initializeVariables = function() {
+    inject(function (_$q_, _WsApi_) {
+      $q = _$q_;
+
+      MockedUser = new mockUser($q);
+
+      WsApi = _WsApi_;
+    });
+  };
 
   var initializeController = function(settings) {
-    inject(function ($controller, $q, $rootScope, $window, _ModalService_, _ProjectRepo_, _ProjectRepositoryRepo_, _RestApi_, _StorageService_, _UserService_, _WsApi_) {
-      q = $q;
-      scope = $rootScope.$new();
+    inject(function (_$controller_, _$rootScope_, _$window_, _ModalService_, _ProjectRepo_, _ProjectRepositoryRepo_, _RestApi_, _StorageService_, _UserService_) {
+      $scope = _$rootScope_.$new();
 
       sessionStorage.role = settings && settings.role ? settings.role : "ROLE_ADMIN";
+      sessionStorage.token = settings && settings.token ? settings.token : "faketoken";
 
-      controller = $controller("ProjectRepositoryController", {
-        $scope: scope,
-        $window: $window,
+      controller = _$controller_("ProjectRepositoryController", {
+        $scope: $scope,
+        $window: _$window_,
         ModalService: _ModalService_,
         ProjectRepo: _ProjectRepo_,
         ProjectRepositoryRepo: _ProjectRepositoryRepo_,
         RestApi: _RestApi_,
         StorageService: _StorageService_,
         UserService: _UserService_,
-        WsApi: _WsApi_
+        WsApi: WsApi
       });
 
       // ensure that the isReady() is called.
-      if (!scope.$$phase) {
-        scope.$digest();
+      if (!$scope.$$phase) {
+        $scope.$digest();
       }
     });
   };
@@ -36,10 +45,17 @@ describe("controller: ProjectRepositoryController", function () {
     module("mock.projectRepo");
     module("mock.projectRepositoryRepo");
     module("mock.storageService");
+    module("mock.user", function($provide) {
+      var User = function() {
+        return MockedUser;
+      };
+      $provide.value("User", User);
+    });
     module("mock.userService");
     module("mock.wsApi");
 
     installPromiseMatchers();
+    initializeVariables();
     initializeController();
   });
 
@@ -48,10 +64,12 @@ describe("controller: ProjectRepositoryController", function () {
       initializeController({role: "ROLE_ADMIN"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for manager", function () {
       initializeController({role: "ROLE_MANAGER"});
       expect(controller).toBeDefined();
     });
+
     it("should be defined for anonymous", function () {
       initializeController({role: "ROLE_ANONYMOUS"});
       expect(controller).toBeDefined();
@@ -60,20 +78,23 @@ describe("controller: ProjectRepositoryController", function () {
 
   describe("Are the scope methods defined", function () {
     it("create should be defined", function () {
-      expect(scope.create).toBeDefined();
-      expect(typeof scope.create).toEqual("function");
+      expect($scope.create).toBeDefined();
+      expect(typeof $scope.create).toEqual("function");
     });
+
     it("delete should be defined", function () {
-      expect(scope.delete).toBeDefined();
-      expect(typeof scope.delete).toEqual("function");
+      expect($scope.delete).toBeDefined();
+      expect(typeof $scope.delete).toEqual("function");
     });
+
     it("getProjectById should be defined", function () {
-      expect(scope.getProjectById).toBeDefined();
-      expect(typeof scope.getProjectById).toEqual("function");
+      expect($scope.getProjectById).toBeDefined();
+      expect(typeof $scope.getProjectById).toEqual("function");
     });
+
     it("update should be defined", function () {
-      expect(scope.update).toBeDefined();
-      expect(typeof scope.update).toEqual("function");
+      expect($scope.update).toBeDefined();
+      expect(typeof $scope.update).toEqual("function");
     });
   });
 
@@ -81,59 +102,62 @@ describe("controller: ProjectRepositoryController", function () {
     it("create should create a new project repository", function () {
       var settings = {};
 
-      delete scope.newRepository;
-      delete scope.newRepositorySettings;
+      delete $scope.newRepository;
+      delete $scope.newRepositorySettings;
 
-      scope.create(dataProjectRepository1, settings);
-      scope.$digest();
+      $scope.create(dataProjectRepository1, settings);
+      $scope.$digest();
 
-      expect(scope.newRepository).toBeDefined();
-      expect(scope.newRepositorySettings).toBeDefined();
+      expect($scope.newRepository).toBeDefined();
+      expect($scope.newRepositorySettings).toBeDefined();
 
       settings = {a: "A"};
-      delete scope.newRepository;
-      delete scope.newRepositorySettings;
+      delete $scope.newRepository;
+      delete $scope.newRepositorySettings;
 
-      scope.create(dataProjectRepository1, settings);
-      scope.$digest();
+      $scope.create(dataProjectRepository1, settings);
+      $scope.$digest();
 
-      expect(scope.newRepository).toBeDefined();
-      expect(scope.newRepositorySettings).toBeDefined();
+      expect($scope.newRepository).toBeDefined();
+      expect($scope.newRepositorySettings).toBeDefined();
     });
+
     it("delete should delete a project repository", function () {
-      spyOn(scope, "closeModal");
+      spyOn($scope, "closeModal");
 
-      scope.delete(dataProjectRepository1);
-      scope.$digest();
+      $scope.delete(dataProjectRepository1);
+      $scope.$digest();
 
-      expect(scope.closeModal).toHaveBeenCalled();
+      expect($scope.closeModal).toHaveBeenCalled();
     });
+
     it("getProjectById should return a project", function () {
       var project;
 
-      project = scope.getProjectById(scope.projects[0].id);
-      scope.$digest();
+      project = $scope.getProjectById($scope.projects[0].id);
+      $scope.$digest();
 
       expect(project).toBeDefined();
 
-      project = scope.getProjectById(-1);
-      scope.$digest();
+      project = $scope.getProjectById(-1);
+      $scope.$digest();
 
       expect(project).toBe(null);
     });
+
     it("update should change the project repository", function () {
-      var projectRepository = angular.copy(scope.projectRepositories[0]);
+      var projectRepository = angular.copy($scope.projectRepositories[0]);
 
       projectRepository.name += " updated";
       projectRepository.dirty = function() {};
 
-      spyOn(scope, "closeModal");
+      spyOn($scope, "closeModal");
       spyOn(projectRepository, "dirty");
 
-      scope.update(projectRepository);
-      scope.$digest();
+      $scope.update(projectRepository);
+      $scope.$digest();
 
-      expect(scope.closeModal).toHaveBeenCalled();
+      expect($scope.closeModal).toHaveBeenCalled();
       expect(projectRepository.dirty).toHaveBeenCalled();
     });
   });

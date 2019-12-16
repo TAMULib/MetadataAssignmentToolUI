@@ -1,6 +1,5 @@
 describe("controller: AnnotateController", function () {
   var $location, $q, $routeParams, $scope, $timeout, $window, AlertService, MockedUser, PublishingEvent, DocumentRepo, ProjectRepositoryRepo, WsApi, controller;
-  var $stomp;
 
   var initializeVariables = function(settings) {
     inject(function (_$location_, _$q_, _$routeParams_, _$timeout_, _$window_, _DocumentRepo_, _ProjectRepositoryRepo_, _WsApi_) {
@@ -85,7 +84,7 @@ describe("controller: AnnotateController", function () {
     module("mock.storageService");
     module("mock.user", function($provide) {
       var User = function() {
-      return MockedUser;
+        return MockedUser;
       };
       $provide.value("User", User);
     });
