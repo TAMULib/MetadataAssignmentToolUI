@@ -162,7 +162,15 @@ describe("controller: ProjectController", function () {
       expect(response).toBe(true);
     });
     it("resetFieldProfileForm should clear the response", function () {
+      var alert2 = new mockAlert(q);
+      var alert3 = new mockAlert(q);
       var mockedAlerts;
+
+      alert2.mock(dataAlert2);
+      alert3.mock(dataAlert3);
+
+      alert2.channel = "project/1/add-field-profile";
+      alert3.channel = "project/1/update-field-profile";
 
       AlertService.get = function() {
         return mockedAlerts;
@@ -182,8 +190,8 @@ describe("controller: ProjectController", function () {
 
       mockedAlerts = {
         list: [
-          dataAlert2,
-          dataAlert3
+          alert2,
+          alert3
         ]
       };
 
