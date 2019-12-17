@@ -1,24 +1,39 @@
 describe("directive: formatDirective", function () {
-  var compile, controller, directive, httpBackend, scope, templateCache;
+  var $compile, $q, $scope, directive, element;
+
+  var initializeVariables = function() {
+    inject(function (_$q_, _$compile_) {
+      $q = _$q_;
+      $compile = _$compile_;
+    });
+  };
+
+  var initializeDirective = function(settings) {
+    inject(function (_$httpBackend_, _$rootScope_) {
+      $scope = _$rootScope_.$new();
+
+      var attr = settings && settings.attr ? settings.attr : " ng-model";
+      var body = settings && settings.body ? settings.body : "";
+
+      element = angular.element("<format ng-model=\"model\" " + attr + ">" + body + "</format>");
+      directive = $compile(element)($scope);
+
+      $scope.$digest();
+    });
+  };
 
   beforeEach(function() {
     module("core");
     module("metadataTool");
+    module("templates");
 
-    inject(function ($compile, $httpBackend, $rootScope, $templateCache) {
-      compile = $compile;
-      httpBackend = $httpBackend;
-      scope = $rootScope.$new();
-      templateCache = $templateCache;
-
-      directive = angular.element("<format ng-model=\"model\"></format>");
-      compile(directive)(scope);
-      scope.$digest();
-    });
+    installPromiseMatchers();
+    initializeVariables();
   });
 
   describe("Is the directive defined", function () {
     it("should be defined", function () {
+      initializeDirective();
       expect(directive).toBeDefined();
     });
   });

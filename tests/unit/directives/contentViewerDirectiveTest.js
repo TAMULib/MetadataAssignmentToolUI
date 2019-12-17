@@ -1,28 +1,64 @@
-describe("directive: inputDirective", function () {
-  var compile, controller, directive, httpBackend, scope, templateCache;
+describe("directive: contentViewer", function () {
+  var $compile, $q, $scope, directive, element;
+
+  var initializeVariables = function() {
+    inject(function (_$q_, _$compile_) {
+      $q = _$q_;
+      $compile = _$compile_;
+    });
+  };
+
+  var initializeDirective = function(settings) {
+    inject(function (_$httpBackend_, _$rootScope_) {
+      $scope = _$rootScope_.$new();
+
+      var attr = settings && settings.attr ? settings.attr : "";
+      var body = settings && settings.body ? settings.body : "";
+      var viewers = settings && settings.viewers ? settings.viewers : ["default", "image", "pdf", "seadragon", "text"];
+
+      for (var i in viewers) {
+        _$httpBackend_.whenGET("views/directives/viewers/" + i + "Viewer.html").respond("<div></div>");
+      }
+
+      element = angular.element("<contentviewer " + attr + ">" + body + "</contentviewer>");
+      directive = $compile(element)($scope);
+
+      $scope.$digest();
+    });
+  };
 
   beforeEach(function() {
     module("core");
     module("metadataTool");
+    module("templates");
 
-    inject(function ($compile, $httpBackend, $rootScope, $templateCache) {
-      compile = $compile;
-      httpBackend = $httpBackend;
-      scope = $rootScope.$new();
-      templateCache = $templateCache;
-
-      for (var i in ["default", "image", "pdf", "seadragon", "text"] ) {
-        httpBackend.whenGET("views/directives/viewers/" + i + "Viewer.html").respond("<div></div>");
-      }
-
-      directive = angular.element("<contentviewer ng-model=\"model\"></contentviewer>");
-      compile(directive)(scope);
-      scope.$digest();
-    });
+    installPromiseMatchers();
+    initializeVariables();
   });
 
   describe("Is the directive defined", function () {
     it("should be defined", function () {
+      initializeDirective();
+      expect(directive).toBeDefined();
+    });
+
+    it("should work with default", function () {
+      initializeDirective({ attr: "title=\"Default\" type=\"default\"" });
+      expect(directive).toBeDefined();
+    });
+
+    it("should work with image", function () {
+      initializeDirective({ attr: "title=\"Image\" type=\"image\"" });
+      expect(directive).toBeDefined();
+    });
+
+    it("should work with seadragon", function () {
+      initializeDirective({ attr: "title=\"Seadragon\" type=\"seadragon\"" });
+      expect(directive).toBeDefined();
+    });
+
+    it("should work with text", function () {
+      initializeDirective({ attr: "title=\"Text\" type=\"text\"" });
       expect(directive).toBeDefined();
     });
   });
