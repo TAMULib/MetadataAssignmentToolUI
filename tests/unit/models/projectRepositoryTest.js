@@ -1,19 +1,29 @@
 describe("model: ProjectRepository", function () {
-  var model, rootScope, scope, WsApi;
+  var $rootScope, $scope, WsApi, model;
+
+  var initializeVariables = function(settings) {
+    inject(function (_$rootScope_, _WsApi_) {
+      $rootScope = _$rootScope_;
+
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeModel = function(settings) {
+    inject(function (_ProjectRepository_) {
+      $scope = $rootScope.$new();
+
+      model = angular.extend(new _ProjectRepository_(), dataProjectRepository1);
+    });
+  };
 
   beforeEach(function() {
     module("core");
     module("metadataTool");
     module("mock.wsApi");
 
-    inject(function ($rootScope, ProjectRepository, _WsApi_) {
-      rootScope = $rootScope;
-      scope = $rootScope.$new();
-
-      WsApi = _WsApi_;
-
-      model = angular.extend(new ProjectRepository(), dataProjectRepository1);
-    });
+    initializeVariables();
+    initializeModel();
   });
 
   describe("Is the model defined", function () {
