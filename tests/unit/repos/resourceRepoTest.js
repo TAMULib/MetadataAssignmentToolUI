@@ -16,21 +16,27 @@ describe("model: ResourceRepo", function () {
     });
   });
 
-  describe("Is the repo defined", function () {
-    it("should be defined", function () {
+  describe("Is the repo", function () {
+    it("defined", function () {
       expect(repo).toBeDefined();
     });
   });
 
-  describe("Are the repo methods defined", function () {
-    it("getAllByProjectNameAndDocumentName should be defined", function () {
-      expect(repo.getAllByProjectNameAndDocumentName).toBeDefined();
-      expect(typeof repo.getAllByProjectNameAndDocumentName).toEqual("function");
-    });
+  describe("Is the repo method", function () {
+    var methods = [
+      "getAllByProjectNameAndDocumentName"
+    ];
+
+    for (var i in methods) {
+      it(methods[i] + " defined", function () {
+        expect(repo[methods[i]]).toBeDefined();
+        expect(typeof repo[methods[i]]).toEqual("function");
+      });
+    }
   });
 
-  describe("Do the repo methods work as expected", function () {
-    it("delete should perform an API fetch", function () {
+  describe("Do the repo method", function () {
+    it("getAllByProjectNameAndDocumentName perform an API fetch", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getAllByProjectNameAndDocumentName("A", "B");

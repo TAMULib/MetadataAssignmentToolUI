@@ -19,25 +19,28 @@ describe("model: DocumentRepo", function () {
     });
   });
 
-  describe("Is the repo defined", function () {
-    it("should be defined", function () {
+  describe("Is the repo", function () {
+    it("defined", function () {
       expect(repo).toBeDefined();
     });
   });
 
-  describe("Are the repo methods defined", function () {
-    it("get should be defined", function () {
-      expect(repo.get).toBeDefined();
-      expect(typeof repo.get).toEqual("function");
-    });
-    it("page should be defined", function () {
-      expect(repo.page).toBeDefined();
-      expect(typeof repo.page).toEqual("function");
-    });
+  describe("Is the repo method", function () {
+    var methods = [
+      "get",
+      "page"
+    ];
+
+    for (var i in methods) {
+      it(methods[i] + " defined", function () {
+        expect(repo[methods[i]]).toBeDefined();
+        expect(typeof repo[methods[i]]).toEqual("function");
+      });
+    }
   });
 
-  describe("Do the repo methods work as expected", function () {
-    it("get should delete a user", function () {
+  describe("Does the repo method", function () {
+    it("get work as expected", function () {
       /* TODO
       spyOn(WsApi, "fetch").and.callThrough();
 
@@ -47,7 +50,8 @@ describe("model: DocumentRepo", function () {
       expect(WsApi.fetch).toHaveBeenCalled();
       */
     });
-    it("page should delete a user", function () {
+
+    it("page work as expected", function () {
       /* TODO
       spyOn(WsApi, "fetch").and.callThrough();
 

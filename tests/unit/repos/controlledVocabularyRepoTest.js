@@ -16,8 +16,8 @@ describe("model: ControlledVocabularyRepo", function () {
     });
   });
 
-  describe("Is the repo defined", function () {
-    it("should be defined", function () {
+  describe("Is the repo", function () {
+    it("defined", function () {
       expect(repo).toBeDefined();
     });
   });
