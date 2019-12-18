@@ -68,68 +68,35 @@ describe("controller: ProjectController", function () {
     initializeController();
   });
 
-  describe("Is the controller defined", function () {
-    it("should be defined for admin", function () {
-      initializeController({role: "ROLE_ADMIN"});
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for manager", function () {
-      initializeController({role: "ROLE_MANAGER"});
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for anonymous", function () {
-      initializeController({role: "ROLE_ANONYMOUS"});
-      expect(controller).toBeDefined();
-    });
+  describe("Is the controller", function () {
+    var roles = [ "ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER", "ROLE_ANONYMOUS" ];
+    for (var i in roles) {
+      it("defined for " + roles[i], function () {
+        initializeController({ role: roles[i] });
+        expect(controller).toBeDefined();
+      });
+    }
   });
 
-  describe("Are the scope methods defined", function () {
-    it("create should be defined", function () {
-      expect($scope.create).toBeDefined();
-      expect(typeof $scope.create).toEqual("function");
-    });
+  describe("Is the scope method", function () {
+    var methods = [
+      "create",
+      "delete",
+      "onCancelFieldProfileForm",
+      "projectHasService",
+      "resetFieldProfileForm",
+      "setFieldProfileForm",
+      "syncDocuments",
+      "update",
+      "updateFieldProfile"
+    ];
 
-    it("delete should be defined", function () {
-      expect($scope.delete).toBeDefined();
-      expect(typeof $scope.delete).toEqual("function");
-    });
-
-    it("onCancelFieldProfileForm should be defined", function () {
-      expect($scope.onCancelFieldProfileForm).toBeDefined();
-      expect(typeof $scope.onCancelFieldProfileForm).toEqual("function");
-    });
-
-    it("projectHasService should be defined", function () {
-      expect($scope.projectHasService).toBeDefined();
-      expect(typeof $scope.projectHasService).toEqual("function");
-    });
-
-    it("resetFieldProfileForm should be defined", function () {
-      expect($scope.resetFieldProfileForm).toBeDefined();
-      expect(typeof $scope.resetFieldProfileForm).toEqual("function");
-    });
-
-    it("setFieldProfileForm should be defined", function () {
-      expect($scope.setFieldProfileForm).toBeDefined();
-      expect(typeof $scope.setFieldProfileForm).toEqual("function");
-    });
-
-    it("syncDocuments should be defined", function () {
-      expect($scope.syncDocuments).toBeDefined();
-      expect(typeof $scope.syncDocuments).toEqual("function");
-    });
-
-    it("update should be defined", function () {
-      expect($scope.update).toBeDefined();
-      expect(typeof $scope.update).toEqual("function");
-    });
-
-    it("updateFieldProfile should be defined", function () {
-      expect($scope.updateFieldProfile).toBeDefined();
-      expect(typeof $scope.updateFieldProfile).toEqual("function");
-    });
+    for (var i in methods) {
+      it(methods[i] + " defined", function () {
+        expect($scope[methods[i]]).toBeDefined();
+        expect(typeof $scope[methods[i]]).toEqual("function");
+      });
+    }
   });
 
   describe("Do the scope methods work as expected", function () {

@@ -96,118 +96,45 @@ describe("controller: AnnotateController", function () {
     initializeController();
   });
 
-  describe("Is the controller defined", function () {
-    it("should be defined for admin", function () {
-      initializeController({ role: "ROLE_ADMIN" });
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for manager", function () {
-      initializeController({ role: "ROLE_MANAGER" });
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for anonymous", function () {
-      initializeController({ role: "ROLE_ANONYMOUS" });
-      expect(controller).toBeDefined();
-    });
+  describe("Is the controller", function () {
+    var roles = [ "ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER", "ROLE_ANONYMOUS" ];
+    for (var i in roles) {
+      it("defined for " + roles[i], function () {
+        initializeController({ role: roles[i] });
+        expect(controller).toBeDefined();
+      });
+    }
   });
 
-  describe("Are the $scope methods defined", function () {
-    it("accept should be defined", function () {
-      expect($scope.accept).toBeDefined();
-      expect(typeof $scope.accept).toEqual("function");
-    });
+  describe("Is the scope method", function () {
+    var methods = [
+      "accept",
+      "addMetadataField",
+      "addSuggestion",
+      "cannotPublish",
+      "delete",
+      "hasFileType",
+      "managerAnnotating",
+      "managerReviewing",
+      "getControlledVocabulary",
+      "getFilesOfType",
+      "getIIIFUrls",
+      "getRepositoryById",
+      "push",
+      "removeMetadataField",
+      "requiredFieldsPresent",
+      "requiresCuration",
+      "save",
+      "submit",
+      "submitRejection"
+    ];
 
-    it("addMetadataField should be defined", function () {
-      expect($scope.addMetadataField).toBeDefined();
-      expect(typeof $scope.addMetadataField).toEqual("function");
-    });
-
-    it("addSuggestion should be defined", function () {
-      expect($scope.addSuggestion).toBeDefined();
-      expect(typeof $scope.addSuggestion).toEqual("function");
-    });
-
-    it("cannotPublish should be defined", function () {
-      expect($scope.cannotPublish).toBeDefined();
-      expect(typeof $scope.cannotPublish).toEqual("function");
-    });
-
-    it("delete should be defined", function () {
-      expect($scope.delete).toBeDefined();
-      expect(typeof $scope.delete).toEqual("function");
-    });
-
-    it("hasFileType should be defined", function () {
-      expect($scope.hasFileType).toBeDefined();
-      expect(typeof $scope.hasFileType).toEqual("function");
-    });
-
-    it("managerAnnotating should be defined", function () {
-      expect($scope.managerAnnotating).toBeDefined();
-      expect(typeof $scope.managerAnnotating).toEqual("function");
-    });
-
-    it("managerReviewing should be defined", function () {
-      expect($scope.managerReviewing).toBeDefined();
-      expect(typeof $scope.managerReviewing).toEqual("function");
-    });
-
-    it("getControlledVocabulary should be defined", function () {
-      expect($scope.getControlledVocabulary).toBeDefined();
-      expect(typeof $scope.getControlledVocabulary).toEqual("function");
-    });
-
-    it("getFilesOfType should be defined", function () {
-      expect($scope.getFilesOfType).toBeDefined();
-      expect(typeof $scope.getFilesOfType).toEqual("function");
-    });
-
-    it("getIIIFUrls should be defined", function () {
-      expect($scope.getIIIFUrls).toBeDefined();
-      expect(typeof $scope.getIIIFUrls).toEqual("function");
-    });
-
-    it("getRepositoryById should be defined", function () {
-      expect($scope.getRepositoryById).toBeDefined();
-      expect(typeof $scope.getRepositoryById).toEqual("function");
-    });
-
-    it("push should be defined", function () {
-      expect($scope.push).toBeDefined();
-      expect(typeof $scope.push).toEqual("function");
-    });
-
-    it("removeMetadataField should be defined", function () {
-      expect($scope.removeMetadataField).toBeDefined();
-      expect(typeof $scope.removeMetadataField).toEqual("function");
-    });
-
-    it("requiredFieldsPresent should be defined", function () {
-      expect($scope.requiredFieldsPresent).toBeDefined();
-      expect(typeof $scope.requiredFieldsPresent).toEqual("function");
-    });
-
-    it("requiresCuration should be defined", function () {
-      expect($scope.requiresCuration).toBeDefined();
-      expect(typeof $scope.requiresCuration).toEqual("function");
-    });
-
-    it("save should be defined", function () {
-      expect($scope.save).toBeDefined();
-      expect(typeof $scope.save).toEqual("function");
-    });
-
-    it("submit should be defined", function () {
-      expect($scope.submit).toBeDefined();
-      expect(typeof $scope.submit).toEqual("function");
-    });
-
-    it("submitRejection should be defined", function () {
-      expect($scope.submitRejection).toBeDefined();
-      expect(typeof $scope.submitRejection).toEqual("function");
-    });
+    for (var i in methods) {
+      it(methods[i] + " defined", function () {
+        expect($scope[methods[i]]).toBeDefined();
+        expect(typeof $scope[methods[i]]).toEqual("function");
+      });
+    }
   });
 
   describe("Do the $scope methods work as expected", function () {
@@ -627,5 +554,4 @@ describe("controller: AnnotateController", function () {
       expect($scope.action).toBe("view");
     });
   });
-
 });

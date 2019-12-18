@@ -47,33 +47,28 @@ describe("controller: NavigationController", function () {
     initializeController();
   });
 
-  describe("Is the controller defined", function () {
-    it("should be defined for admin", function () {
-      initializeController({role: "ROLE_ADMIN"});
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for manager", function () {
-      initializeController({role: "ROLE_MANAGER"});
-      expect(controller).toBeDefined();
-    });
-
-    it("should be defined for anonymous", function () {
-      initializeController({role: "ROLE_ANONYMOUS"});
-      expect(controller).toBeDefined();
-    });
+  describe("Is the controller", function () {
+    var roles = [ "ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER", "ROLE_ANONYMOUS" ];
+    for (var i in roles) {
+      it("defined for " + roles[i], function () {
+        initializeController({ role: roles[i] });
+        expect(controller).toBeDefined();
+      });
+    }
   });
 
-  describe("Are the scope methods defined", function () {
-    it("updateHeight should be defined", function () {
-      expect($scope.updateHeight).toBeDefined();
-      expect(typeof $scope.updateHeight).toEqual("function");
-    });
+  describe("Is the scope method", function () {
+    var methods = [
+      "updateHeight",
+      "updateWidth"
+    ];
 
-    it("updateWidth should be defined", function () {
-      expect($scope.updateWidth).toBeDefined();
-      expect(typeof $scope.updateWidth).toEqual("function");
-    });
+    for (var i in methods) {
+      it(methods[i] + " defined", function () {
+        expect($scope[methods[i]]).toBeDefined();
+        expect(typeof $scope[methods[i]]).toEqual("function");
+      });
+    }
   });
 
   describe("Do the window methods work as expected", function () {
