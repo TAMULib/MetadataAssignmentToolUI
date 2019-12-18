@@ -36,28 +36,30 @@ describe("directive: contentViewer", function () {
     initializeVariables();
   });
 
-  describe("Is the directive defined", function () {
-    it("should be defined", function () {
+  describe("Is the directive", function () {
+    it("defined", function () {
       initializeDirective();
       expect(directive).toBeDefined();
     });
+  });
 
-    it("should work with default", function () {
+  describe("Does the directive", function () {
+    it("work with default", function () {
       initializeDirective({ attr: "title=\"Default\" type=\"default\"" });
       expect(directive).toBeDefined();
     });
 
-    it("should work with image", function () {
+    it("work with image", function () {
       initializeDirective({ attr: "title=\"Image\" type=\"image\"" });
       expect(directive).toBeDefined();
     });
 
-    it("should work with seadragon", function () {
+    it("work with seadragon", function () {
       initializeDirective({ attr: "title=\"Seadragon\" type=\"seadragon\"" });
       expect(directive).toBeDefined();
     });
 
-    it("should work with text", function () {
+    it("work with text", function () {
       initializeDirective({ attr: "title=\"Text\" type=\"text\"" });
       expect(directive).toBeDefined();
     });

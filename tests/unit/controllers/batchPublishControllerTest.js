@@ -74,8 +74,8 @@ describe("controller: BatchPublishController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("publishDocuments should publish a document to a project", function () {
+  describe("Does the scope method", function () {
+    it("publishDocuments publish a document to a project", function () {
       spyOn($scope, "closeModal");
 
       $scope.publishDocuments(dataProject1, dataDocument1);

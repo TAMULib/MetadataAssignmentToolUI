@@ -86,8 +86,8 @@ describe("controller: UserRepoController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("updateRole should update a users role", function () {
+  describe("Does the scope method", function () {
+    it("updateRole update a users role", function () {
       var originalUser2 = angular.copy(dataUser2);
       dataUser2.role = "ROLE_NEW";
       dataUser2.save = function () {};
@@ -121,7 +121,7 @@ describe("controller: UserRepoController", function () {
       expect(dataUser2.save).toHaveBeenCalled();
     });
 
-    it("assignableRoles should return a list of allowed roles", function () {
+    it("assignableRoles return a list of allowed roles", function () {
       var roles;
 
       roles = $scope.assignableRoles();
@@ -143,7 +143,7 @@ describe("controller: UserRepoController", function () {
       expect(roles).toBeDefined();
     });
 
-    it("canDelete should return boolean if a user can be deleted", function () {
+    it("canDelete return boolean if a user can be deleted", function () {
       var canDelete;
 
       dataUser1.role = "ROLE_ADMIN";
@@ -178,7 +178,7 @@ describe("controller: UserRepoController", function () {
       expect(canDelete).toBe(false);
     });
 
-    it("delete should delete a user", function () {
+    it("delete delete a user", function () {
       dataUser1.delete = function () {};
       spyOn(dataUser1, "delete");
 

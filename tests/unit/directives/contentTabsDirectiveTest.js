@@ -36,13 +36,15 @@ describe("directive: contentTabs", function () {
     initializeVariables();
   });
 
-  describe("Is the directive defined", function () {
-    it("should be defined", function () {
+  describe("Is the directive", function () {
+    it("defined", function () {
       initializeDirective();
       expect(directive).toBeDefined();
     });
+  });
 
-    it("should work with content-viewers", function () {
+  describe("Does the directive", function () {
+    it("work with content-viewers", function () {
       initializeDirective({ body: "<content-viewer title=\"Text\" type=\"text\"></content-viewer><content-viewer title=\"PDF\" type=\"pdf\"></content-viewer>" });
       expect(directive).toBeDefined();
     });

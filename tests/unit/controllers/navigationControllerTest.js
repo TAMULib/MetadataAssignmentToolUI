@@ -71,8 +71,8 @@ describe("controller: NavigationController", function () {
     }
   });
 
-  describe("Do the window methods work as expected", function () {
-    it("window resize should call scope resize methods", function () {
+  describe("Does the window method", function () {
+    it("onresize call scope resize methods", function () {
       spyOn($scope, "updateWidth");
       spyOn($scope, "updateHeight");
 
@@ -83,8 +83,8 @@ describe("controller: NavigationController", function () {
     });
   });
 
-  describe("Do the $on methods work as expected", function () {
-    it("$on $routeChangeStart should update the view", function () {
+  describe("Does the $on method", function () {
+    it("$routeChangeStart update the view", function () {
       delete $scope.view;
 
       $scope.$broadcast("$routeChangeStart");

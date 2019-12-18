@@ -85,8 +85,8 @@ describe("controller: ProjectSuggestorController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("create should create a new project suggestor", function () {
+  describe("Does the scope method", function () {
+    it("create create a new project suggestor", function () {
       var settings = {};
 
       delete $scope.newSuggestor;
@@ -109,7 +109,7 @@ describe("controller: ProjectSuggestorController", function () {
       expect($scope.newSuggestorSettings).toBeDefined();
     });
 
-    it("delete should delete a project suggestor", function () {
+    it("delete delete a project suggestor", function () {
       spyOn($scope, "closeModal");
 
       $scope.delete(dataProjectSuggestor1);
@@ -118,7 +118,7 @@ describe("controller: ProjectSuggestorController", function () {
       expect($scope.closeModal).toHaveBeenCalled();
     });
 
-    it("getProjectById should return a project", function () {
+    it("getProjectById return a project", function () {
       var project;
 
       project = $scope.getProjectById($scope.projects[0].id);
@@ -132,7 +132,7 @@ describe("controller: ProjectSuggestorController", function () {
       expect(project).toBe(null);
     });
 
-    it("update should change the project suggestor", function () {
+    it("update change the project suggestor", function () {
       var projectSuggestor = angular.copy($scope.projectSuggestors[0]);
 
       projectSuggestor.name += " updated";

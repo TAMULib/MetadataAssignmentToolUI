@@ -21,28 +21,28 @@ describe("filter: logTypeClass", function () {
     initializeFilter();
   });
 
-  describe("Is the filter defined", function () {
-    it("should be defined", function () {
+  describe("Is the filter", function () {
+    it("defined", function () {
       expect(filter).toBeDefined();
     });
   });
 
-  describe("Does the filter work as expected", function () {
-    it("should return nothing on empty input", function () {
+  describe("Does the filter", function () {
+    it("return nothing on empty input", function () {
       var result;
 
       result = filter("");
       expect(result).toBe("");
     });
 
-    it("should return nothing on unknown input", function () {
+    it("return nothing on unknown input", function () {
       var result;
 
       result = filter("xxshould never exist xx");
       expect(result).toBe("");
     });
 
-    it("should return class name on valid input", function () {
+    it("return class name on valid input", function () {
       var result;
       var type = "ATTACHMENT";
 

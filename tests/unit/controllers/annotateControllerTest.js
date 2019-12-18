@@ -137,8 +137,8 @@ describe("controller: AnnotateController", function () {
     }
   });
 
-  describe("Do the $scope methods work as expected", function () {
-    it("accept should submit a document as accepted", function () {
+  describe("Does the $scope method", function () {
+    it("accept submit a document as accepted", function () {
       delete $scope.document.status;
 
       spyOn($scope.document, "save").and.callThrough();
@@ -150,7 +150,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.document.save).toHaveBeenCalled();
     });
 
-    it("addMetadataField should add a new field value", function () {
+    it("addMetadataField add a new field value", function () {
       var field = {
         id: 1,
         label: {
@@ -168,7 +168,7 @@ describe("controller: AnnotateController", function () {
       expect(field.values.length).toEqual(2);
     });
 
-    it("addSuggestion should add a suggestion", function () {
+    it("addSuggestion add a suggestion", function () {
       var field = {
         id: 1,
         label: {
@@ -194,7 +194,7 @@ describe("controller: AnnotateController", function () {
       expect(field.values[0].value).toEqual("third");
     });
 
-    it("cannotPublish should return a boolean", function () {
+    it("cannotPublish return a boolean", function () {
       var response;
       var document1 = new mockDocument($q);
       var document2 = new mockDocument($q);
@@ -214,7 +214,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(false);
     });
 
-    it("delete should delete a document", function () {
+    it("delete delete a document", function () {
       var document = $scope.document;
 
       spyOn(document, "delete").and.callThrough();
@@ -226,7 +226,7 @@ describe("controller: AnnotateController", function () {
       expect(document.delete).toHaveBeenCalled();
     });
 
-    it("hasFileType should return a boolean", function () {
+    it("hasFileType return a boolean", function () {
       var response;
 
       response = $scope.hasFileType("text");
@@ -241,7 +241,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(false);
     });
 
-    it("managerAnnotating should return a boolean", function () {
+    it("managerAnnotating return a boolean", function () {
       var response;
 
       $routeParams.action = "annotate";
@@ -255,7 +255,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(false);
     });
 
-    it("managerReviewing should return a boolean", function () {
+    it("managerReviewing return a boolean", function () {
       var response;
 
       $routeParams.action = "review";
@@ -269,7 +269,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(false);
     });
 
-    it("getControlledVocabulary should return a controlled vocabulary", function () {
+    it("getControlledVocabulary return a controlled vocabulary", function () {
       var response;
 
       response = $scope.getControlledVocabulary(0);
@@ -281,7 +281,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toEqual([]);
     });
 
-    it("getFilesOfType should return a list of files", function () {
+    it("getFilesOfType return a list of files", function () {
       var response;
 
       response = $scope.getFilesOfType("text");
@@ -298,7 +298,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toEqual([]);
     });
 
-    it("getIIIFUrls should return a list of URLs", function () {
+    it("getIIIFUrls return a list of URLs", function () {
       var response;
 
       $scope.document = new mockDocument($q);
@@ -324,7 +324,7 @@ describe("controller: AnnotateController", function () {
       // expect(response.length).toEqual(6);
     });
 
-    it("getRepositoryById should return a repository", function () {
+    it("getRepositoryById return a repository", function () {
       var response;
 
       for (var i in $scope.repositories) {
@@ -339,7 +339,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(undefined);
     });
 
-    it("push should push a document", function () {
+    it("push push a document", function () {
       delete $scope.document.status;
 
       spyOn($scope.document, "push").and.callThrough();
@@ -350,7 +350,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.document.push).toHaveBeenCalled();
     });
 
-    it("removeMetadataField should remove a specific metadata field", function () {
+    it("removeMetadataField remove a specific metadata field", function () {
       var length;
 
       $scope.document.fields = {
@@ -370,7 +370,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.document.dirty).toHaveBeenCalled();
     });
 
-    it("requiredFieldsPresent should return a boolean", function () {
+    it("requiredFieldsPresent return a boolean", function () {
       var response;
 
       $scope.document.fields = {
@@ -403,7 +403,7 @@ describe("controller: AnnotateController", function () {
       expect(response).toBe(false);
     });
 
-    it("requiresCuration should submit a document as requires curation", function () {
+    it("requiresCuration submit a document as requires curation", function () {
       delete $scope.document.status;
 
       spyOn($scope.document, "save").and.callThrough();
@@ -415,7 +415,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.document.save).toHaveBeenCalled();
     });
 
-    it("save should save a document", function () {
+    it("save save a document", function () {
       $scope.openModal = function () { };
       $scope.closeModal = function () { };
 
@@ -429,7 +429,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.openModal).toHaveBeenCalled();
     });
 
-    it("submit should submit a document as annotated", function () {
+    it("submit submit a document as annotated", function () {
       $scope.openModal = function () { };
       $scope.closeModal = function () { };
 
@@ -447,7 +447,7 @@ describe("controller: AnnotateController", function () {
       expect($location.path).toHaveBeenCalled();
     });
 
-    it("submitRejection should save a document as rejected", function () {
+    it("submitRejection save a document as rejected", function () {
       var notes = "notes";
 
       spyOn($scope.document, "save").and.callThrough();
@@ -464,8 +464,8 @@ describe("controller: AnnotateController", function () {
     });
   });
 
-  describe("Do the listeners work as expected", function () {
-    it("Listen on '/channel/publishing/document/' should work as expected", function () {
+  describe("Does the control listen on", function () {
+    it("'/channel/publishing/document/' work as expected", function () {
       var publishingEvent = new mockPublishingEvent($q);
 
       WsApi.listen = function (path) {
@@ -508,7 +508,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.publishingEvents.length).toBe(0);
     });
 
-    it("Listen on '/channel/document' should work as expected", function () {
+    it("'/channel/document' work as expected", function () {
       var document = new mockDocument($q);
 
       // @todo
@@ -517,8 +517,8 @@ describe("controller: AnnotateController", function () {
     });
   });
 
-  describe("Is the controller initialized as expected", function () {
-    it("should be process field.values", function () {
+  describe("Does the controller initialization", function () {
+    it("process field.values", function () {
       var document = new mockDocument($q);
       document.mock(dataDocument2);
       document.fields[0].values = [];
@@ -530,7 +530,7 @@ describe("controller: AnnotateController", function () {
       expect(controller).toBeDefined();
     });
 
-    it("should be view action on disallowed document statuses", function () {
+    it("render view action on disallowed document statuses", function () {
       initializeController();
       expect(controller).toBeDefined();
       expect($scope.action).toBe("annotate");

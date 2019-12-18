@@ -99,8 +99,8 @@ describe("controller: ProjectController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("create should create a new project", function () {
+  describe("Does the scope method", function () {
+    it("create create a new project", function () {
       var services = {};
 
       delete $scope.newProject;
@@ -124,7 +124,7 @@ describe("controller: ProjectController", function () {
       expect($scope.newProjectServices).toBeDefined();
     });
 
-    it("delete should delete an existing project", function () {
+    it("delete delete an existing project", function () {
       spyOn($scope, "resetFieldProfileForm");
 
       $scope.delete(dataProject1);
@@ -133,7 +133,7 @@ describe("controller: ProjectController", function () {
       expect($scope.resetFieldProfileForm).toHaveBeenCalled();
     });
 
-    it("onCancelFieldProfileForm should clear the response", function () {
+    it("onCancelFieldProfileForm clear the response", function () {
       spyOn($scope, "resetFieldProfileForm");
 
       $scope.onCancelFieldProfileForm();
@@ -141,7 +141,7 @@ describe("controller: ProjectController", function () {
       expect($scope.resetFieldProfileForm).toHaveBeenCalled();
     });
 
-    it("projectHasService should return a boolean", function () {
+    it("projectHasService return a boolean", function () {
       var response;
       var serviceType = {id: 0};
 
@@ -157,7 +157,7 @@ describe("controller: ProjectController", function () {
       expect(response).toBe(true);
     });
 
-    it("resetFieldProfileForm should clear the response", function () {
+    it("resetFieldProfileForm clear the response", function () {
       var alert2 = new mockAlert($q);
       var alert3 = new mockAlert($q);
       var mockedAlerts;
@@ -195,7 +195,7 @@ describe("controller: ProjectController", function () {
       expect(AlertService.remove).toHaveBeenCalled();
     });
 
-    it("setFieldProfileForm should setup the profile", function () {
+    it("setFieldProfileForm setup the profile", function () {
       var profile = {
         gloss: "Test Profile",
         id: 2345
@@ -213,7 +213,7 @@ describe("controller: ProjectController", function () {
       expect($scope.managingProfile).toBe(profile);
     });
 
-    it("syncDocuments should sync documents", function () {
+    it("syncDocuments sync documents", function () {
       delete $scope.isSyncing;
 
       spyOn($scope, "resetFieldProfileForm");
@@ -232,7 +232,7 @@ describe("controller: ProjectController", function () {
       expect($scope.isSyncing).toBe(false);
     });
 
-    it("update should change the project", function () {
+    it("update change the project", function () {
       var project = angular.copy($scope.projects[0]);
       var serviceType = {id: 0};
 
@@ -260,7 +260,7 @@ describe("controller: ProjectController", function () {
       expect(project.dirty).toHaveBeenCalled();
     });
 
-    it("updateFieldProfile should update the field profile", function () {
+    it("updateFieldProfile update the field profile", function () {
       var profile = {};
       var labels = [];
       var result;

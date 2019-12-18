@@ -76,8 +76,8 @@ describe("controller: ExportController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("export should perform an export", function () {
+  describe("Does the scope method", function () {
+    it("export perform an export", function () {
       var response;
       var originalCloseModal = angular.copy($scope.closeModal);
       var formats = {"dspace-saf": "undefined", "dspace-csv": "object", "spotlight-csv": "object"};
@@ -101,7 +101,7 @@ describe("controller: ExportController", function () {
       expect(typeof response).toEqual("undefined");
     });
 
-    it("unlock should unlock the project", function () {
+    it("unlock unlock the project", function () {
       spyOn(ProjectRepo, "reset");
 
       $scope.unlock();

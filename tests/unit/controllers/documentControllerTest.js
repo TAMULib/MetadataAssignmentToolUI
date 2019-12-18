@@ -126,14 +126,14 @@ describe("controller: DocumentController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("availableAnnotators should return an array list", function () {
+  describe("Does the scope method", function () {
+    it("availableAnnotators return an array list", function () {
       var response = $scope.availableAnnotators();
 
       expect(typeof response).toEqual("object");
     });
 
-    it("setSelectedUser should assign the selected user", function () {
+    it("setSelectedUser assign the selected user", function () {
       var user = new mockUser($q);
       $scope.selectedUser = null;
 
@@ -142,14 +142,14 @@ describe("controller: DocumentController", function () {
       expect($scope.selectedUser).toEqual(user);
     });
 
-    it("setTable should setup the table", function () {
+    it("setTable setup the table", function () {
       $scope.tableParams = null;
       $scope.setTable();
 
       expect($scope.tableParams).toBeDefined();
     });
 
-    it("togglePublished should toggle the showPublished boolean", function () {
+    it("togglePublished toggle the showPublished boolean", function () {
       $scope.showPublished = false;
       $scope.setTable();
 
@@ -164,7 +164,7 @@ describe("controller: DocumentController", function () {
       expect($scope.showPublished).toBe(false);
     });
 
-    it("toggleProjectsFilter should toggle the showProjectsFilter boolean", function () {
+    it("toggleProjectsFilter toggle the showProjectsFilter boolean", function () {
       $scope.showProjectsFilter = false;
 
       $scope.toggleProjectsFilter();
@@ -174,7 +174,7 @@ describe("controller: DocumentController", function () {
       expect($scope.showProjectsFilter).toBe(false);
     });
 
-    it("update should update the document status", function () {
+    it("update update the document status", function () {
       var document = new mockDocument($q);
       document.status = "";
 
@@ -194,7 +194,7 @@ describe("controller: DocumentController", function () {
       expect(document.status).toEqual("Other");
     });
 
-    it("updateTable should reload the table", function () {
+    it("updateTable reload the table", function () {
       $scope.setTable();
       $scope.tableNeedsUpdating = true;
 

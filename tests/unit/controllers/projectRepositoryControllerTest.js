@@ -85,8 +85,8 @@ describe("controller: ProjectRepositoryController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("create should create a new project repository", function () {
+  describe("Does the scope method", function () {
+    it("create create a new project repository", function () {
       var settings = {};
 
       delete $scope.newRepository;
@@ -109,7 +109,7 @@ describe("controller: ProjectRepositoryController", function () {
       expect($scope.newRepositorySettings).toBeDefined();
     });
 
-    it("delete should delete a project repository", function () {
+    it("delete delete a project repository", function () {
       spyOn($scope, "closeModal");
 
       $scope.delete(dataProjectRepository1);
@@ -118,7 +118,7 @@ describe("controller: ProjectRepositoryController", function () {
       expect($scope.closeModal).toHaveBeenCalled();
     });
 
-    it("getProjectById should return a project", function () {
+    it("getProjectById return a project", function () {
       var project;
 
       project = $scope.getProjectById($scope.projects[0].id);
@@ -132,7 +132,7 @@ describe("controller: ProjectRepositoryController", function () {
       expect(project).toBe(null);
     });
 
-    it("update should change the project repository", function () {
+    it("update change the project repository", function () {
       var projectRepository = angular.copy($scope.projectRepositories[0]);
 
       projectRepository.name += " updated";

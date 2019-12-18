@@ -87,8 +87,8 @@ describe("controller: ProjectAuthorityController", function () {
     }
   });
 
-  describe("Do the scope methods work as expected", function () {
-    it("create should create a new authority", function () {
+  describe("Does the scope method", function () {
+    it("create create a new authority", function () {
       var authoritySettings = {a: "A"};
       var file;
 
@@ -109,7 +109,7 @@ describe("controller: ProjectAuthorityController", function () {
       expect($scope.closeModal).toHaveBeenCalled();
     });
 
-    it("delete should delete an existing authority", function () {
+    it("delete delete an existing authority", function () {
       spyOn($scope, "closeModal");
 
       $scope.delete($scope.projectAuthorities[0]);
@@ -118,7 +118,7 @@ describe("controller: ProjectAuthorityController", function () {
       expect($scope.closeModal).toHaveBeenCalled();
     });
 
-    it("getProjectById should return a project", function () {
+    it("getProjectById return a project", function () {
       var project;
 
       project = $scope.getProjectById($scope.projects[0].id);
@@ -130,7 +130,7 @@ describe("controller: ProjectAuthorityController", function () {
       expect(project).toBe(null);
     });
 
-    it("update should change an authority", function () {
+    it("update change an authority", function () {
       var authority;
 
       authority = angular.copy($scope.projectAuthorities[0]);
