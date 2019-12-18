@@ -1,21 +1,31 @@
 describe("model: MetadataRepo", function () {
-  var rootScope, scope, Metadata, WsApi, repo;
+  var $q, $rootScope, $scope, Metadata, WsApi, repo;
+
+  var initializeVariables = function (settings) {
+    inject(function (_$q_, _$rootScope_, _Metadata_, _WsApi_) {
+      $q = _$q_;
+      $rootScope = _$rootScope_;
+
+      Metadata = _Metadata_;
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeRepo = function (settings) {
+    inject(function ($injector, _MetadataRepo_) {
+      $scope = $rootScope.$new();
+
+      repo = _MetadataRepo_;
+    });
+  };
 
   beforeEach(function () {
     module("core");
     module("metadataTool");
-    module("mock.metadata");
     module("mock.wsApi");
 
-    inject(function ($rootScope, _WsApi_, _Metadata_, _MetadataRepo_) {
-      rootScope = $rootScope;
-      scope = $rootScope.$new();
-
-      Metadata = _Metadata_;
-      WsApi = _WsApi_;
-
-      repo = _MetadataRepo_;
-    });
+    initializeVariables();
+    initializeRepo();
   });
 
   describe("Is the repo", function () {
@@ -46,7 +56,7 @@ describe("model: MetadataRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.export("A", "B");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -56,7 +66,7 @@ describe("model: MetadataRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.get("A");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
       */
@@ -66,7 +76,7 @@ describe("model: MetadataRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getByStatus("A");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -75,7 +85,7 @@ describe("model: MetadataRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getHeaders("A", "B");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -84,7 +94,7 @@ describe("model: MetadataRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.unlockProject("A");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });

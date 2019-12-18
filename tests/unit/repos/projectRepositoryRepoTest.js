@@ -1,19 +1,30 @@
 describe("model: ProjectRepositoryRepo", function () {
-  var rootScope, scope, WsApi, repo;
+  var $q, $rootScope, $scope, WsApi, repo;
+
+  var initializeVariables = function (settings) {
+    inject(function (_$q_, _$rootScope_, _WsApi_) {
+      $q = _$q_;
+      $rootScope = _$rootScope_;
+
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeRepo = function (settings) {
+    inject(function ($injector, _ProjectRepositoryRepo_) {
+      $scope = $rootScope.$new();
+
+      repo = _ProjectRepositoryRepo_;
+    });
+  };
 
   beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.wsApi");
 
-    inject(function ($rootScope, _WsApi_, _ProjectRepositoryRepo_) {
-      rootScope = $rootScope;
-      scope = $rootScope.$new();
-
-      WsApi = _WsApi_;
-
-      repo = _ProjectRepositoryRepo_;
-    });
+    initializeVariables();
+    initializeRepo();
   });
 
   describe("Is the repo", function () {
@@ -40,7 +51,7 @@ describe("model: ProjectRepositoryRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getTypes();
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });

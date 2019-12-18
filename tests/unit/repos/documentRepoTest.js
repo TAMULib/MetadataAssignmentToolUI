@@ -1,22 +1,31 @@
 describe("model: DocumentRepo", function () {
-  var rootScope, scope, Document, WsApi, repo;
+  var $q, $rootScope, $scope, Document, WsApi, repo;
+
+  var initializeVariables = function (settings) {
+    inject(function (_$q_, _$rootScope_, _Document_, _WsApi_) {
+      $q = _$q_;
+      $rootScope = _$rootScope_;
+
+      Document = _Document_;
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeRepo = function (settings) {
+    inject(function ($injector, _DocumentRepo_) {
+      $scope = $rootScope.$new();
+
+      repo = _DocumentRepo_;
+    });
+  };
 
   beforeEach(function () {
     module("core");
     module("metadataTool");
-    module("mock.document");
     module("mock.wsApi");
 
-    inject(function ($rootScope, _WsApi_, _Document_, _DocumentRepo_) {
-      rootScope = $rootScope;
-      scope = $rootScope.$new();
-
-      Document = _Document_;
-
-      WsApi = _WsApi_;
-
-      repo = _DocumentRepo_;
-    });
+    initializeVariables();
+    initializeRepo();
   });
 
   describe("Is the repo", function () {
@@ -45,7 +54,7 @@ describe("model: DocumentRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.get("A");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
       */
@@ -56,7 +65,7 @@ describe("model: DocumentRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.page("A", "B", "C", "D", "E");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
       */

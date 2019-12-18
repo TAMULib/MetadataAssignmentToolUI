@@ -1,19 +1,30 @@
 describe("model: ProjectRepo", function () {
-  var rootScope, scope, WsApi, repo;
+  var $q, $rootScope, $scope, WsApi, repo;
+
+  var initializeVariables = function (settings) {
+    inject(function (_$q_, _$rootScope_, _WsApi_) {
+      $q = _$q_;
+      $rootScope = _$rootScope_;
+
+      WsApi = _WsApi_;
+    });
+  };
+
+  var initializeRepo = function (settings) {
+    inject(function ($injector, _ProjectRepo_) {
+      $scope = $rootScope.$new();
+
+      repo = _ProjectRepo_;
+    });
+  };
 
   beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.wsApi");
 
-    inject(function ($rootScope, _WsApi_, _ProjectRepo_) {
-      rootScope = $rootScope;
-      scope = $rootScope.$new();
-
-      WsApi = _WsApi_;
-
-      repo = _ProjectRepo_;
-    });
+    initializeVariables();
+    initializeRepo();
   });
 
   describe("Is the repo", function () {
@@ -47,7 +58,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.addFieldProfile(1, "A", "B");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -56,7 +67,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.batchPublishDocuments(1, 2);
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -67,7 +78,7 @@ describe("model: ProjectRepo", function () {
 
       // TODO: write a test for mocked repo data and test the results.
       results = repo.findByName("A");
-      scope.$digest();
+      $scope.$digest();
 
       expect(repo.getAll).toHaveBeenCalled();
     });
@@ -76,7 +87,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getFieldProfileLabels(1);
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -85,7 +96,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getIngestTypes();
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -94,7 +105,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.getInputTypes();
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -103,7 +114,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.syncDocuments(1);
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
@@ -112,7 +123,7 @@ describe("model: ProjectRepo", function () {
       spyOn(WsApi, "fetch").and.callThrough();
 
       repo.updateFieldProfile(1, "A", "B");
-      scope.$digest();
+      $scope.$digest();
 
       expect(WsApi.fetch).toHaveBeenCalled();
     });
