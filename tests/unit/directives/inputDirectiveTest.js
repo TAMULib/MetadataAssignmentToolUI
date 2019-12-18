@@ -1,7 +1,7 @@
 describe("directive: inputDirective", function () {
   var $compile, $q, $scope, directive, element, field;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _$compile_) {
       $q = _$q_;
       $compile = _$compile_;
@@ -12,7 +12,7 @@ describe("directive: inputDirective", function () {
     });
   };
 
-  var initializeDirective = function(settings) {
+  var initializeDirective = function (settings) {
     inject(function (_$httpBackend_, _$rootScope_) {
       $scope = _$rootScope_.$new();
       $scope.field = angular.copy(field);
@@ -29,7 +29,7 @@ describe("directive: inputDirective", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("templates");

@@ -53,7 +53,7 @@ var dataMetadataFieldLabel3 = {
 };
 
 // Note: MetadataFieldLabel actually represents the model for MetadataFieldLabelFieldGroup.
-var mockMetadataFieldLabel = function($q) {
+var mockMetadataFieldLabel = function ($q) {
   var model = mockModel("MetadataFieldLabel", $q, dataMetadataFieldLabel1);
 
   return model;

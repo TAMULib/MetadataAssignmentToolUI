@@ -16,7 +16,7 @@ var dataDocumentRepo3 = [
   dataDocument2
 ];
 
-angular.module("mock.documentRepo", []).service("DocumentRepo", function($q) {
+angular.module("mock.documentRepo", []).service("DocumentRepo", function ($q) {
   var repo = mockRepo("DocumentRepo", $q, mockDocument, dataDocumentRepo1);
 
   repo.fetch = function () {

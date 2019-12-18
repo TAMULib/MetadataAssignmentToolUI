@@ -1,7 +1,7 @@
 describe("controller: ProjectController", function () {
   var $q, $scope, AlertService, MockedUser, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _AlertService_, _WsApi_) {
       $q = _$q_;
 
@@ -12,7 +12,7 @@ describe("controller: ProjectController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$rootScope_, _$window_, _MetadataRepo_, _ModalService_, _RestApi_, _ProjectAuthorityRepo_, _ProjectRepo_, _ProjectRepositoryRepo_, _StorageService_, _ProjectSuggestorRepo_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -42,7 +42,7 @@ describe("controller: ProjectController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.alert");
@@ -54,8 +54,8 @@ describe("controller: ProjectController", function () {
     module("mock.projectSuggestorRepo");
     module("mock.restApi");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);
@@ -201,7 +201,7 @@ describe("controller: ProjectController", function () {
       alert2.channel = "project/1/add-field-profile";
       alert3.channel = "project/1/update-field-profile";
 
-      AlertService.get = function() {
+      AlertService.get = function () {
         return mockedAlerts;
       };
 
@@ -270,7 +270,7 @@ describe("controller: ProjectController", function () {
       var serviceType = {id: 0};
 
       project.name += " updated";
-      project.dirty = function() {};
+      project.dirty = function () {};
 
       spyOn($scope, "resetFieldProfileForm");
       spyOn(project, "dirty");
@@ -281,7 +281,7 @@ describe("controller: ProjectController", function () {
       expect($scope.resetFieldProfileForm).toHaveBeenCalled();
       expect(project.dirty).toHaveBeenCalled();
 
-      project.dirty = function() {};
+      project.dirty = function () {};
       $scope.projectServices.ExampleServiceType = [serviceType];
       $scope.updateableProjectServices.ExampleServiceType = [serviceType];
 
@@ -298,7 +298,7 @@ describe("controller: ProjectController", function () {
       var labels = [];
       var result;
 
-      $scope.projects[0].dirty = function() {};
+      $scope.projects[0].dirty = function () {};
 
       result = $scope.updateFieldProfile($scope.projects[0].id, profile, labels);
       $scope.$digest();

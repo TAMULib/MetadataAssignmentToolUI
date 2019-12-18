@@ -1,7 +1,7 @@
 describe("model: DocumentRepo", function () {
   var rootScope, scope, Document, WsApi, repo;
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.document");

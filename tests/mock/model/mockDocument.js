@@ -58,20 +58,20 @@ var dataDocument3 = {
   status: "Published"
 };
 
-var mockDocument = function($q) {
+var mockDocument = function ($q) {
   var model = mockModel("Document", $q, dataDocument1);
 
-  model.getSuggestions = function() {
+  model.getSuggestions = function () {
     var suggestions = [];
     // TODO
     return payloadPromise($q.defer(), suggestions);
   };
 
-  model.push = function() {
+  model.push = function () {
     return payloadPromise($q.defer(), true);
   };
 
-  model.getProject = function() {
+  model.getProject = function () {
     var project = new mockProject(q);
 
     if (model.project == dataProject2.name) {

@@ -1,7 +1,7 @@
 describe("model: AbstractAppRepo", function () {
   var rootScope, scope, WsApi, repo;
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.wsApi");

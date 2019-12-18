@@ -35,7 +35,7 @@ var dataMetadataFieldValue3 = {
 };
 
 // Note: MetadataFieldValue actually represents the model for MetadataFieldValueFieldGroup.
-var mockMetadataFieldValue = function($q) {
+var mockMetadataFieldValue = function ($q) {
   var model = mockModel("MetadataFieldValue", $q, dataMetadataFieldValue1);
 
   return model;

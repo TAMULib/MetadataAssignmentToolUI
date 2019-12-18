@@ -1,7 +1,7 @@
 describe("model: MetadataRepo", function () {
   var rootScope, scope, Metadata, WsApi, repo;
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.metadata");

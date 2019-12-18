@@ -1,7 +1,7 @@
 describe("controller: BatchPublishController", function () {
   var $q, $scope, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _WsApi_) {
       $q = _$q_;
 
@@ -9,7 +9,7 @@ describe("controller: BatchPublishController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$rootScope_, _$window_, _AlertService_, _ModalService_, _ProjectRepo_, _RestApi_, _StorageService_, _WsApi_) {
       $scope = _$rootScope_.$new();
 
@@ -34,7 +34,7 @@ describe("controller: BatchPublishController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.alertService");

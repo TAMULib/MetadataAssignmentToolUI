@@ -20,7 +20,7 @@ var dataMetadata3 = {
 };
 
 // Note: Metadata actually represents the model for MetadataFieldGroup.
-var mockMetadata = function($q) {
+var mockMetadata = function ($q) {
   var model = mockModel("Metadata", $q, dataMetadata1);
 
   return model;

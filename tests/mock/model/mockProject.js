@@ -37,7 +37,7 @@ var dataProject3 = {
   suggestors: []
 };
 
-var mockProject = function($q) {
+var mockProject = function ($q) {
   var model = mockModel("Project", $q, dataProject1);
 
   return model;

@@ -1,7 +1,7 @@
 describe("controller: ExportController", function () {
   var $q, $scope, ProjectRepo, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _ProjectRepo_, _WsApi_) {
       $q = _$q_;
 
@@ -10,7 +10,7 @@ describe("controller: ExportController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
       inject(function (_$controller_, _$rootScope_, _$window_, _AlertService_, _MetadataRepo_, _ModalService_, _RestApi_, _StorageService_) {
       $scope = _$rootScope_.$new();
 
@@ -36,7 +36,7 @@ describe("controller: ExportController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.alertService");

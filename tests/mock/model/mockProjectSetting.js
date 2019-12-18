@@ -25,7 +25,7 @@ var dataProjectSettings3 = {
   ]
 };
 
-var mockProjectSettings = function($q) {
+var mockProjectSettings = function ($q) {
   var model = mockModel("ProjectSettings", $q, dataProjectSettings1);
 
   return model;

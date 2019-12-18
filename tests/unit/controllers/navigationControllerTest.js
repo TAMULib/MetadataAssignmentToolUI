@@ -1,7 +1,7 @@
 describe("controller: NavigationController", function () {
   var $q, $scope, $window, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _$window_, _WsApi_) {
       $q = _$q_;
       $window = _$window_;
@@ -10,7 +10,7 @@ describe("controller: NavigationController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$location_, _$rootScope_, _ModalService_, _RestApi_, _StorageService_) {
       $scope = _$rootScope_.$new();
 
@@ -34,7 +34,7 @@ describe("controller: NavigationController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.modalService");

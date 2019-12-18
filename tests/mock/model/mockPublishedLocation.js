@@ -16,7 +16,7 @@ var dataPublishedLocation3 = {
   url: "http://localhost"
 };
 
-var mockPublishedLocation = function($q) {
+var mockPublishedLocation = function ($q) {
   var model = mockModel("PublishedLocation", $q, dataPublishedLocation1);
 
   return model;

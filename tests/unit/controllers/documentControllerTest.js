@@ -1,7 +1,7 @@
 describe("controller: DocumentController", function () {
   var $q, $scope, ApiResponseActions, MockedDocument, MockedNgTableParams, MockedUser, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _WsApi_) {
       $q = _$q_;
 
@@ -27,7 +27,7 @@ describe("controller: DocumentController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$location_, _$rootScope_, _$route_, _$routeParams_, _$window_, _AlertService_, _Document_, _DocumentRepo_, _ModalService_, _NgTableParams_, _ProjectRepo_, _RestApi_, _StorageService_, _UserRepo_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -61,20 +61,20 @@ describe("controller: DocumentController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.alertService");
-    module("mock.document", function($provide) {
-      var Document = function() {
+    module("mock.document", function ($provide) {
+      var Document = function () {
         return MockedDocument;
       };
       $provide.value("Document", Document);
     });
     module("mock.documentRepo");
     module("mock.modalService");
-    module("mock.ngTableParams", function($provide) {
-      var NgTableParams = function() {
+    module("mock.ngTableParams", function ($provide) {
+      var NgTableParams = function () {
         return MockedNgTableParams;
       };
       $provide.value("NgTableParams", NgTableParams);
@@ -82,8 +82,8 @@ describe("controller: DocumentController", function () {
     module("mock.projectRepo");
     module("mock.restApi");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);

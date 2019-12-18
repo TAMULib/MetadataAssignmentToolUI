@@ -1,7 +1,7 @@
 describe("controller: AdminController", function () {
   var $q, $scope, MockedUser, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _WsApi_) {
       $q = _$q_;
 
@@ -11,7 +11,7 @@ describe("controller: AdminController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$injector_, _$rootScope_, _$route_, _$window_, _AssumedControl_, _AuthService_, _ModalService_, _RestApi_, _StorageService_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -39,7 +39,7 @@ describe("controller: AdminController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.assumedControl");
@@ -47,8 +47,8 @@ describe("controller: AdminController", function () {
     module("mock.modalService");
     module("mock.restApi");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);

@@ -1,7 +1,7 @@
 describe("controller: ProjectAuthorityController", function () {
   var $q, $scope, MockedUser, ProjectAuthorityRepo, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _ProjectAuthorityRepo_, _WsApi_) {
       $q = _$q_;
 
@@ -12,7 +12,7 @@ describe("controller: ProjectAuthorityController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$rootScope_, _$window_, _ModalService_, _ProjectRepo_, _ProjectAuthorityRepo_, _RestApi_, _StorageService_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -38,7 +38,7 @@ describe("controller: ProjectAuthorityController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.modalService");
@@ -47,8 +47,8 @@ describe("controller: ProjectAuthorityController", function () {
     module("mock.projectAuthorityRepo");
     module("mock.restApi");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);
@@ -148,7 +148,7 @@ describe("controller: ProjectAuthorityController", function () {
 
       authority = angular.copy($scope.projectAuthorities[0]);
       authority.something = "new";
-      authority.dirty = function() {};
+      authority.dirty = function () {};
 
       spyOn(authority, "dirty");
 

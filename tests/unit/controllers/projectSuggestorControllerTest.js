@@ -1,7 +1,7 @@
 describe("controller: ProjectSuggestorController", function () {
   var $q, $scope, MockedUser, WsApi, controller;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _WsApi_) {
       $q = _$q_;
 
@@ -11,7 +11,7 @@ describe("controller: ProjectSuggestorController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$rootScope_, _$window_, _ModalService_, _ProjectRepo_, _ProjectSuggestorRepo_, _RestApi_, _StorageService_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -37,7 +37,7 @@ describe("controller: ProjectSuggestorController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.modalService");
@@ -45,8 +45,8 @@ describe("controller: ProjectSuggestorController", function () {
     module("mock.projectRepo");
     module("mock.projectSuggestorRepo");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);
@@ -149,7 +149,7 @@ describe("controller: ProjectSuggestorController", function () {
       var projectSuggestor = angular.copy($scope.projectSuggestors[0]);
 
       projectSuggestor.name += " updated";
-      projectSuggestor.dirty = function() {};
+      projectSuggestor.dirty = function () {};
 
       spyOn($scope, "closeModal");
       spyOn(projectSuggestor, "dirty");

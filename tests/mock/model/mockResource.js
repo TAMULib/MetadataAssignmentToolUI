@@ -22,7 +22,7 @@ var dataResource3 = {
   mimeType: "image/jpeg"
 };
 
-var mockResource = function($q) {
+var mockResource = function ($q) {
   var model = mockModel("Resource", $q, dataResource1);
 
   model.filter = function (functionCall) {

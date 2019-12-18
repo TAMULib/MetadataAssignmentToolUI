@@ -1,14 +1,14 @@
 describe("directive: formatDirective", function () {
   var $compile, $q, $scope, directive, element;
 
-  var initializeVariables = function() {
+  var initializeVariables = function () {
     inject(function (_$q_, _$compile_) {
       $q = _$q_;
       $compile = _$compile_;
     });
   };
 
-  var initializeDirective = function(settings) {
+  var initializeDirective = function (settings) {
     inject(function (_$httpBackend_, _$rootScope_) {
       $scope = _$rootScope_.$new();
 
@@ -22,7 +22,7 @@ describe("directive: formatDirective", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("templates");

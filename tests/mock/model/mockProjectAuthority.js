@@ -13,7 +13,7 @@ var dataProjectAuthority3 = {
   projects: []
 };
 
-var mockProjectAuthority = function($q) {
+var mockProjectAuthority = function ($q) {
   var model = mockModel("ProjectAuthority", $q, dataProjectAuthority1);
 
   return model;

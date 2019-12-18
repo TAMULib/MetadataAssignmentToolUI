@@ -40,7 +40,7 @@ var dataFieldProfile3 = {
   values: []
 };
 
-var mockFieldProfile = function($q) {
+var mockFieldProfile = function ($q) {
   var model = mockModel("FieldProfile", $q, dataFieldProfile1);
 
   return model;

@@ -46,7 +46,7 @@ var dataProjectRepository3 = {
   ]
 };
 
-var mockProjectRepository = function($q) {
+var mockProjectRepository = function ($q) {
   var model = mockModel("ProjectRepository", $q, dataProjectRepository1);
 
   return model;

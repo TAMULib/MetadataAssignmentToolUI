@@ -1,7 +1,7 @@
 describe("controller: AnnotateController", function () {
   var $location, $q, $routeParams, $scope, $timeout, $window, AlertService, MockedUser, PublishingEvent, DocumentRepo, ProjectRepositoryRepo, WsApi, controller;
 
-  var initializeVariables = function(settings) {
+  var initializeVariables = function (settings) {
     inject(function (_$location_, _$q_, _$routeParams_, _$timeout_, _$window_, _DocumentRepo_, _ProjectRepositoryRepo_, _WsApi_) {
       $location = _$location_;
       $q = _$q_;
@@ -17,7 +17,7 @@ describe("controller: AnnotateController", function () {
     });
   };
 
-  var initializeController = function(settings) {
+  var initializeController = function (settings) {
     inject(function (_$controller_, _$http_, _$rootScope_, _$window_, _AlertService_, _ControlledVocabularyRepo_, _ModalService_, _PublishingEvent_, _RestApi_, _ResourceRepo_, _StorageService_, _UserService_) {
       $scope = _$rootScope_.$new();
 
@@ -67,7 +67,7 @@ describe("controller: AnnotateController", function () {
     });
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     module("core");
     module("metadataTool");
     module("mock.alertService");
@@ -82,8 +82,8 @@ describe("controller: AnnotateController", function () {
     module("mock.resource");
     module("mock.resourceRepo");
     module("mock.storageService");
-    module("mock.user", function($provide) {
-      var User = function() {
+    module("mock.user", function ($provide) {
+      var User = function () {
         return MockedUser;
       };
       $provide.value("User", User);
@@ -541,7 +541,7 @@ describe("controller: AnnotateController", function () {
     it("Listen on '/channel/publishing/document/' should work as expected", function () {
       var publishingEvent = new mockPublishingEvent($q);
 
-      WsApi.listen = function(path) {
+      WsApi.listen = function (path) {
         var payload = {
           PublishingEvent: publishingEvent
         };
@@ -555,7 +555,7 @@ describe("controller: AnnotateController", function () {
       expect($scope.publishingEvents.length).toBe(1);
       expect($scope.publishingEvents[0].id).toBe(publishingEvent.id);
 
-      WsApi.listen = function(path) {
+      WsApi.listen = function (path) {
         var payload = {
           PublishingEvent: publishingEvent
         };
@@ -568,7 +568,7 @@ describe("controller: AnnotateController", function () {
 
       expect($scope.publishingEvents.length).toBe(0);
 
-      WsApi.listen = function(path) {
+      WsApi.listen = function (path) {
         var payload = {
         };
         return notifyPromise($timeout, $q.defer(), payload, null, null, "BROADCAST");

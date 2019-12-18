@@ -16,15 +16,15 @@ var dataProjectSuggestorRepo3 = [
   dataProjectSuggestor2
 ];
 
-angular.module("mock.projectSuggestorRepo", []).service("ProjectSuggestorRepo", function($q) {
+angular.module("mock.projectSuggestorRepo", []).service("ProjectSuggestorRepo", function ($q) {
   var repo = mockRepo("ProjectSuggestorRepo", $q, mockProjectSuggestor, dataProjectSuggestorRepo1);
   var mockedTypes = {};
 
-  repo.mockTypes = function(toMock) {
+  repo.mockTypes = function (toMock) {
     mockedTypes = toMock;
   };
 
-  repo.getTypes = function() {
+  repo.getTypes = function () {
     return payloadPromise($q.defer(), mockedTypes);
   };
 

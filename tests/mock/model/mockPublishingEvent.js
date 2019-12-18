@@ -19,7 +19,7 @@ var dataPublishingEvent3 = {
   timestamp: 1575989035
 };
 
-var mockPublishingEvent = function($q) {
+var mockPublishingEvent = function ($q) {
   var model = mockModel("PublishingEvent", $q, dataPublishingEvent1);
 
   return model;

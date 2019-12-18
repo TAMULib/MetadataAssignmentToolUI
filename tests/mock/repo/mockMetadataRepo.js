@@ -17,14 +17,14 @@ var dataMetadataRepo3 = [
 ];
 
 // Note: MetadataRepo actually represents the repo for MetadataFieldGroup.
-angular.module("mock.metadataRepo", []).service("MetadataRepo", function($q) {
+angular.module("mock.metadataRepo", []).service("MetadataRepo", function ($q) {
   var repo = mockRepo("MetadataRepo", $q, mockMetadata, dataMetadataRepo1);
 
   repo.export = function (project, format) {
     return payloadPromise($q.defer(), {});
   };
 
-  repo.get = function(document) {
+  repo.get = function (document) {
     return angular.copy(mockMetadata);
   };
 

@@ -16,7 +16,7 @@ var dataControlledVocabulary3 = {
   values: []
 };
 
-var mockControlledVocabulary = function($q) {
+var mockControlledVocabulary = function ($q) {
   var model = mockModel("ControlledVocabulary", $q, dataControlledVocabulary1);
 
   return model;
