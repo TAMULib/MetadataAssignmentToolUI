@@ -62,65 +62,40 @@ describe("controller: UserRepoController", function () {
 
   describe("Is the controller", function () {
     var roles = [ "ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER", "ROLE_ANONYMOUS" ];
-    for (var i in roles) {
-      it("defined for " + roles[i], function () {
-        initializeController({ role: roles[i] });
+
+    var controllerExists = function (setting) {
+      return function() {
+        initializeController(setting);
         expect(controller).toBeDefined();
-      });
+      };
+    };
+
+    for (var i in roles) {
+      it("defined for " + roles[i], controllerExists({ role: roles[i] }));
     }
   });
 
   describe("Is the scope method", function () {
     var methods = [
-      "updateRole",
       "assignableRoles",
       "canDelete",
-      "delete"
+      "delete",
+      "updateRole"
     ];
 
+    var scopeMethodExists = function (method) {
+      return function() {
+        expect($scope[method]).toBeDefined();
+        expect(typeof $scope[method]).toEqual("function");
+      };
+    };
+
     for (var i in methods) {
-      it(methods[i] + " defined", function () {
-        expect($scope[methods[i]]).toBeDefined();
-        expect(typeof $scope[methods[i]]).toEqual("function");
-      });
+      it(methods[i] + " defined", scopeMethodExists(methods[i]));
     }
   });
 
   describe("Does the scope method", function () {
-    it("updateRole update a users role", function () {
-      var originalUser2 = angular.copy(dataUser2);
-      dataUser2.role = "ROLE_NEW";
-      dataUser2.save = function () {};
-
-      spyOn(dataUser2, "save");
-
-      $scope.updateRole(dataUser2);
-      $scope.$digest();
-
-      expect(dataUser2.role).not.toEqual(originalUser2.role);
-      expect(dataUser2.save).toHaveBeenCalled();
-
-      dataUser2.role = "ROLE_ANNOTATOR";
-      dataUser2.save = function () {};
-
-      spyOn(dataUser2, "save");
-
-      $scope.updateRole(dataUser2);
-      $scope.$digest();
-
-      expect(dataUser2.save).toHaveBeenCalled();
-
-      dataUser2.role = "ROLE_USER";
-      dataUser2.save = function () {};
-
-      spyOn(dataUser2, "save");
-
-      $scope.updateRole(dataUser2);
-      $scope.$digest();
-
-      expect(dataUser2.save).toHaveBeenCalled();
-    });
-
     it("assignableRoles return a list of allowed roles", function () {
       var roles;
 
@@ -187,6 +162,41 @@ describe("controller: UserRepoController", function () {
 
       expect(dataUser1.delete).toHaveBeenCalled();
     });
+
+    it("updateRole update a users role", function () {
+      var originalUser2 = angular.copy(dataUser2);
+      dataUser2.role = "ROLE_NEW";
+      dataUser2.save = function () {};
+
+      spyOn(dataUser2, "save");
+
+      $scope.updateRole(dataUser2);
+      $scope.$digest();
+
+      expect(dataUser2.role).not.toEqual(originalUser2.role);
+      expect(dataUser2.save).toHaveBeenCalled();
+
+      dataUser2.role = "ROLE_ANNOTATOR";
+      dataUser2.save = function () {};
+
+      spyOn(dataUser2, "save");
+
+      $scope.updateRole(dataUser2);
+      $scope.$digest();
+
+      expect(dataUser2.save).toHaveBeenCalled();
+
+      dataUser2.role = "ROLE_USER";
+      dataUser2.save = function () {};
+
+      spyOn(dataUser2, "save");
+
+      $scope.updateRole(dataUser2);
+      $scope.$digest();
+
+      expect(dataUser2.save).toHaveBeenCalled();
+    });
+
   });
 
 });
