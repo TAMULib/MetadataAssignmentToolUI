@@ -17,7 +17,8 @@
     <ul class="list-group">
     <li class="list-group-item" ng-repeat="setting in repository.settings track by $index">
       <label>{{setting.key}}</label>
-      <input class="form-control" ng-repeat="value in setting.values track by $index" type="{{setting.key == 'password' ? 'password':'text'}}" name="name" ng-model="repository.settings[$parent.$index].values[$index]" />
+      <input class="form-control" ng-repeat="value in setting.values track by $index" type="{{setting.protect ? 'password':'text'}}" name="name" ng-model="repository.settings[$parent.$index].values[$index]" ng-attr-placeholder="{{setting.protect ? 'Type here to update protected value':''}}" />
+      <div><input type="checkbox" name="protect" value="true" ng-model="setting.protect" /> Protect value?</div>
     </li>
   </ul>
   </form>

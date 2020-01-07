@@ -239,6 +239,11 @@ var apiMapping = {
             'method': 'types'
         }
     },
+    PublishingEvent: {
+      channel: '/channel/publishing',
+      lazy: true,
+      validations: false
+    },
     User: {
         channel: '/channel/user',
         instantiate: {

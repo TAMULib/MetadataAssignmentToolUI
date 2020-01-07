@@ -25,10 +25,18 @@
             </div>
         </div>
     </div>
-    <div ng-if="action === 'view' && document.status === 'Accepted' && document.getProject().repositories.length > 0" class="panel panel-warning">
+    <div ng-if="action === 'view' && document.status === 'Accepted' && !document.publishing && document.getProject().repositories.length > 0" class="panel panel-warning panel-document-publishing">
         <div class="panel-heading">This document is accepted but not published.</div>
         <div class="panel-body">
-            <button class="btn btn-success" ng-click="push()">Publish</button>
+            <button class="btn btn-success" ng-click="push()" ng-disabled="cannotPublish()">Publish</button>
+        </div>
+    </div>
+    <div ng-if="action === 'view' && document.getProject().repositories.length > 0 && document.publishing" class="panel panel-warning panel-document-publishing publishing-log">
+        <div class="panel-heading">This document is pending publication.</div>
+        <div class="panel-body">
+          <ol ng-if="publishingEvents.length" class="log-items" reversed>
+            <li ng-repeat="(key, log) in publishingEvents track by key" class="log-item {{log.type | logTypeClass}}"><span class="item-message">{{log.message}}</span><span class="item-date">{{log.timestamp | date: 'medium'}}</span></li>
+          </ol>
         </div>
     </div>
 

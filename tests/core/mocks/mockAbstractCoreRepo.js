@@ -45,6 +45,8 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
 
     repo.mock(mockDataArray);
 
+    repo.scaffold = {};
+
     repo.acceptChangesPending = function () {
     };
 
@@ -100,6 +102,7 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
                 break;
             }
         }
+
         return payloadPromise($q.defer());
     };
 
@@ -110,6 +113,7 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
                 break;
             }
         }
+
         return payloadPromise($q.defer());
     };
 
@@ -128,6 +132,7 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
                 found = repo.mockCopy(repo.mockedList[i]);
             }
         }
+
         return found;
     };
 
@@ -145,6 +150,30 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         });
 
         return filteredData;
+    };
+
+    repo.getScaffold = function(defaults) {
+        var updatedScaffold = repo.scaffold;
+
+        if (!defaults) defaults = {};
+        angular.extend(updatedScaffold, defaults);
+
+        return updatedScaffold;
+    };
+
+    repo.isInScaffold = function(property) {
+        var propertyFound = false;
+        var scaffoldKeys = Object.keys(repo.scaffold);
+
+        for (var i in scaffoldKeys) {
+            var scaffoldProperty = scaffoldKeys[i];
+            if (scaffoldProperty === property) {
+                propertyFound = true;
+                break;
+            }
+        }
+
+        return propertyFound;
     };
 
     repo.getContents = function () {
@@ -167,27 +196,26 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         if (typeof cbOrActionOrActionArray === "function") {
             var apiRes = {
                 meta: {
-                    status: 'SUCCESS',
+                    status: "SUCCESS",
                     message: ""
                 },
                 status: 200
             };
             cbOrActionOrActionArray(apiRes);
-        }
-        else if (Array.isArray(cbOrActionOrActionArray)) {
+        } else if (Array.isArray(cbOrActionOrActionArray)) {
             for (var cbAction in cbOrActionOrActionArray) {
                 if (typeof cbAction === "function") {
                     cbAction();
                 }
             }
-        }
-        else if (typeof cb === "function") {
+        } else if (typeof cb === "function") {
             cb();
         }
+
         return payloadPromise($q.defer());
     };
 
-    repo.ready = function () {
+    repo.ready = function() {
         return payloadPromise($q.defer(), mockDataArray);
     };
 
@@ -216,6 +244,7 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         if (typeof modelToSave === "object") {
             var isNew = true;
             var savedModel = repo.mockModel(modelToSave);
+
             for (var i in repo.mockedList) {
                 if (repo.mockedList[i].id === modelToSave.id) {
                     angular.extend(repo.mockedList[i], savedModel);
@@ -258,11 +287,12 @@ var mockRepo = function (repoName, $q, mockModelCtor, mockDataArray) {
         var updated;
         for (var i in repo.mockedList) {
             if (repo.mockedList[i].id === model.id) {
+                angular.extend(repo.mockedList[i], model);
                 updated = repo.mockCopy(repo.mockedList[i]);
-                angular.extend(updated, model);
                 break;
             }
         }
+
         return payloadPromise($q.defer(), updated);
     };
 

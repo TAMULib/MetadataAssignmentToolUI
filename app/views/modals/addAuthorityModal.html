@@ -21,7 +21,8 @@
     <ul class="list-group" ng-show="newAuthority.type">
       <li ng-if="!(newAuthority.type == 'CSV' && settingKey == 'paths')" class="list-group-item" ng-repeat="settingKey in types[newAuthority.type] track by $index">
         <label>{{settingKey}}</label>
-        <input class="form-control" type="{{settingKey == 'password' ? 'password':'text'}}" name="settingValue" ng-model="newAuthoritySettings[settingKey].value" />
+        <input class="form-control" type="{{newAuthoritySettings[settingKey].protect ? 'password':'text'}}" name="settingValue" ng-model="newAuthoritySettings[settingKey].value" />
+        <div ng-if="newAuthority.type != 'CSV'"><input type="checkbox" name="protect" value="true" ng-model="newAuthoritySettings[settingKey].protect" /> Protect value?</div>
       </li>
     </ul>
   </div>
