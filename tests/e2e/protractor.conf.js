@@ -2,16 +2,16 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    '*.js'
+    "*.js"
   ],
 
   capabilities: {
-    'browserName': 'chrome'
+    "browserName": "chrome"
   },
 
-  baseUrl: 'http://localhost:8080/mylibrary/',
+  baseUrl: "http://localhost:8080/mylibrary/",
 
-  framework: 'jasmine',
+  framework: "jasmine",
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
