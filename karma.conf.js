@@ -14,19 +14,20 @@ module.exports = function (config) {
       "app/config/appConfig.js",
       "app/config/apiMapping.js",
 
-      "app/node_modules/jquery/dist/jquery.js",
-      "app/node_modules/bootstrap/dist/js/bootstrap.js",
+      "app/node_modules/@wvr/core/node_modules/jquery/dist/jquery.js",
+      "app/node_modules/@wvr/core/node_modules/bootstrap/dist/js/bootstrap.js",
 
-      "app/node_modules/sockjs-client/dist/sockjs.js",
+      "app/node_modules/@wvr/core/node_modules/sockjs-client/dist/sockjs.js",
+
+      "app/node_modules/@wvr/core/node_modules/angular/angular.js",
+
+      "app/node_modules/@wvr/core/node_modules/angular-sanitize/angular-sanitize.js",
+      "app/node_modules/@wvr/core/node_modules/angular-route/angular-route.js",
+      "app/node_modules/@wvr/core/node_modules/angular-loader/angular-loader.js",
+      "app/node_modules/@wvr/core/node_modules/angular-messages/angular-messages.js",
+      "app/node_modules/@wvr/core/node_modules/angular-mocks/angular-mocks.js",
+
       "app/node_modules/stompjs/lib/stomp.js",
-
-      "app/node_modules/angular/angular.js",
-
-      "app/node_modules/angular-sanitize/angular-sanitize.js",
-      "app/node_modules/angular-route/angular-route.js",
-      "app/node_modules/angular-loader/angular-loader.js",
-      "app/node_modules/angular-messages/angular-messages.js",
-      "app/node_modules/angular-mocks/angular-mocks.js",
 
       "app/node_modules/ng-csv/build/ng-csv.js",
 

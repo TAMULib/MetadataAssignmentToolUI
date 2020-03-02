@@ -38,18 +38,18 @@
     "grunt-karma-coveralls": "2.5.4",
     "grunt-sass": "3.1.0",
     "grunt-usemin": "3.1.1",
-    "http-server": "0.11.1",
+    "http-server": "0.12.1",
     "jasmine-core": "3.5.0",
     "jasmine-promise-matchers": "2.6.0",
     "jshint-stylish": "2.2.1",
     "karma": "4.4.1",
     "karma-chrome-launcher": "3.1.0",
     "karma-coverage": "2.0.1",
-    "karma-firefox-launcher": "1.2.0",
-    "karma-jasmine": "2.0.1",
+    "karma-firefox-launcher": "1.3.0",
+    "karma-jasmine": "3.1.1",
     "karma-junit-reporter": "2.0.1",
     "karma-ng-html2js-preprocessor": "1.0.0",
     "node-sass": "4.13.1",
-    "protractor": "5.4.2"
+    "protractor": "5.4.3"
   }
 }
