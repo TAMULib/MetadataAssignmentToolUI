@@ -45,7 +45,9 @@ module.exports = function (grunt) {
                 '!node_modules/**/*',
                 '!<%= build.app %>/node_modules/**/*',
                 '!<%= build.app %>/components/**/*',
-                '!<%= build.app %>/resources/**/*'
+                '!<%= build.app %>/resources/**/*',
+                // TODO: remove when using CDN for tl-components
+                "!<%= build.app %>/tl-components.js",
             ]
         },
 
