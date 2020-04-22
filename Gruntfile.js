@@ -46,7 +46,6 @@ module.exports = function (grunt) {
                 '!<%= build.app %>/node_modules/**/*',
                 '!<%= build.app %>/components/**/*',
                 '!<%= build.app %>/resources/**/*',
-                '!<%= build.app %>/tl-components.js'
             ]
         },
 
