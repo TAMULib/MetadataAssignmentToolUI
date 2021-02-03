@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TAMULib/MetadataAssignmentToolUI.svg?branch=master)](https://travis-ci.org/TAMULib/MetadataAssignmentToolUI)
+[![Build Status](https://github.com/TAMULib/MetadataAssignmentToolUI/workflows/Build/badge.svg)](https://github.com/TAMULib/MetadataAssignmentToolUI/actions?query=workflow%3ABuild)
 [![Coverage Status](https://coveralls.io/repos/github/TAMULib/MetadataAssignmentToolUI/badge.svg)](https://coveralls.io/github/TAMULib/MetadataAssignmentToolUI)
 
 # Scanned Document Metadata Assignment Tool UI
