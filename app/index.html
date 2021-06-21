@@ -51,16 +51,22 @@
           <nav class="userMenu pull-right">
 
             <div>
-              <modal modal-id="assumeUserModal" modal-view="node_modules/@wvr/core/app/views/modals/assumeUserModal.html" modal-header-class="modal-header-primary"></modal>
-              <modal modal-id="exportMetadataModal" modal-controller="ExportController" modal-view="views/modals/exportMetadataModal.html" modal-header-class="modal-header-primary"></modal>
-              <modal modal-id="batchPublishModal" modal-controller="BatchPublishController" modal-view="views/modals/batchPublishModal.html" modal-header-class="modal-header-primary"></modal>
-              <modal modal-id="syncDocumentsModal" modal-controller="ProjectController" modal-view="views/modals/syncDocumentsModal.html" modal-header-class="modal-header-primary"></modal>
+              <modal modal-id="assumeUserModal"
+                modal-view="node_modules/@wvr/core/app/views/modals/assumeUserModal.html"
+                modal-header-class="modal-header-primary"></modal>
+              <modal modal-id="exportMetadataModal" modal-controller="ExportController"
+                modal-view="views/modals/exportMetadataModal.html" modal-header-class="modal-header-primary"></modal>
+              <modal modal-id="batchPublishModal" modal-controller="BatchPublishController"
+                modal-view="views/modals/batchPublishModal.html" modal-header-class="modal-header-primary"></modal>
+              <modal modal-id="syncDocumentsModal" modal-controller="ProjectController"
+                modal-view="views/modals/syncDocumentsModal.html" modal-header-class="modal-header-primary"></modal>
             </div>
 
             <div class="dropdown">
               <span class="glyphicon glyphicon-user"></span>
 
-              <a ng-if="isAdmin() || isManager() || isAssuming() == 'true'" class="dropdown-toggle toggle-href" data-toggle="dropdown" aria-expanded="false">
+              <a ng-if="isAdmin() || isManager() || isAssuming() == 'true'" class="dropdown-toggle toggle-href"
+                data-toggle="dropdown" aria-expanded="false">
                 <username></username> <span class="caret"></span>
               </a>
 
@@ -69,19 +75,28 @@
               </span>
 
               <ul class="dropdown-menu" role="menu">
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Manager Actions</li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'" role="presentation"
+                  class="dropdown-header">Manager Actions</li>
                 <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="users">Manage Users</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="projects">Manage Projects</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="repositories">Manage Repositories</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="suggestors">Manage Suggestors</a></li>
-                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="authorities">Manage Authorities</a></li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href
+                    ng-click="openModal('#exportMetadataModal')">Export Metadata</a></li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href
+                    ng-click="openModal('#batchPublishModal')">Batch Publish Documents</a></li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="projects">Manage Projects</a>
+                </li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="repositories">Manage
+                    Repositories</a></li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="suggestors">Manage
+                    Suggestors</a></li>
+                <li ng-if="isAdmin() || isManager() || isAssuming() == 'true'"><a href="authorities">Manage
+                    Authorities</a></li>
                 <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="divider"></li>
 
-                <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin Actions header</li>
+                <li ng-if="isAdmin() || isAssuming() == 'true'" role="presentation" class="dropdown-header">Admin
+                  Actions header</li>
                 <li ng-if="isAdmin() || isAssuming() == 'true'">
-                  <a href ng-if="isAssuming() == 'false'" data-toggle="modal" ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
+                  <a href ng-if="isAssuming() == 'false'" data-toggle="modal"
+                    ng-click="openModal('#assumeUserModal')">{{assumedControl.button}}</a>
                   <a href ng-if="isAssuming() == 'true'" ng-click="assumeUser(assume)">{{assumedControl.button}}</a>
                 </li>
                 <li><a ng-if="isAdmin()" ng-click="openModal('#syncDocumentsModal')" href="#">Sync Documents</a></li>
@@ -94,9 +109,12 @@
 
             <div class="col-12 col-lg-12">
 
-              <div class="btn-group btn-group-lg app-menu" ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}" role="group">
+              <div class="btn-group btn-group-lg app-menu"
+                ng-class="{'btn-group-justified': windowWidth > 750, 'btn-group-vertical vertical-justified': windowWidth <= 750}"
+                role="group">
                 <a class="btn btn-default" href="documents" ng-class="{'active' : view == '/documents'}">Documents</a>
-                <a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}" class="btn btn-default" href="assignments">My Assigned Documents</a>
+                <a ng-class="{'active' : view == '/assignments' || view.substring(0,9)=='/annotate'}"
+                  class="btn btn-default" href="assignments">My Assigned Documents</a>
               </div>
             </div>
           </div>
@@ -112,7 +130,9 @@
   </main>
 
   <tl-footer></tl-footer>
+
   <tl-themes active-theme="tamu"></tl-themes>
+
   <!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
 
 
@@ -277,6 +297,8 @@
   <script src="controllers/projectSuggestorController.js"></script>
   <script src="controllers/projectAuthorityController.js"></script>
   <!-- endbuild -->
+
+  <script src="https://labs.library.tamu.edu/tl-components/latest/tl-components.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>
